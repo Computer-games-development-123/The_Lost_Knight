@@ -9,6 +9,8 @@ public class YojiInteraction : MonoBehaviour
 
     [TextArea(2, 5)]
     public string[] dialogueLines;
+    [SerializeField] private YojiGateBarrier gateBarrier;
+
 
     public KeyCode interactKey = KeyCode.UpArrow;   // חץ למעלה
 
@@ -82,7 +84,14 @@ public class YojiInteraction : MonoBehaviour
         {
             GameManager.Instance.SetYojiTalked();
         }
+
+        // הורדת המחסום
+        if (gateBarrier != null)
+        {
+            gateBarrier.DisableBarrier();
+        }
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

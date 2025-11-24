@@ -1,0 +1,18 @@
+The Lost Knight – ForestHub & Green Forest Demo
+
+This is a small prototype for my 2D action game "The Lost Knight".
+
+What’s included in this build:
+- ForestHub scene with an NPC (Yoji) and a locked gate.
+- Dialogue system (press ↑ to talk).
+- Gate that unlocks only after talking to Yoji.
+- Green Forest combat arena with enemy waves and a first boss.
+- Basic combat, health bar, enemy spawning and boss fight.
+
+Controls:
+- Move: A / D or Left / Right Arrows
+- Jump: Space
+- Attack: X
+- Interact (talk / enter gate): Up Arrow
+
+This is a coursework prototype focused on the core gameplay loop.
