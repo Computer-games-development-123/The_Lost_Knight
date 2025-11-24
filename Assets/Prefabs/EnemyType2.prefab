@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 2365221055033065230}
   - component: {fileID: 1929076190006721288}
   - component: {fileID: 7110608717696294503}
+  - component: {fileID: -4750400247908610245}
   m_Layer: 7
-  m_Name: Enemy
+  m_Name: EnemyType2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -178,4 +179,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ee8ff38714400459b821a4ccd7b452, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  maxHealth: 3
+  maxHealth: 5
+  contactDamage: 10
+--- !u!114 &-4750400247908610245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2158448503102619500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db5ba3c1642c84a48beb2fe7105df721, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  moveSpeed: 2
+  maxChaseDistance: 20
