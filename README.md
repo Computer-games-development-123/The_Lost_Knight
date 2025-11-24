@@ -7,7 +7,7 @@ This version focuses on:
 - Green combat arena with enemy waves and a first boss.
 - Basic combat, health and enemy wave system.
 
-Unity version: **Unity 6 (6000.2.10f1)**  
+Unity version: **Unity 6 (6000.2.8f1)**  
 Target platform: WebGL / PC
 
 ---
