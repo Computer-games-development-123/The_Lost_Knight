@@ -6,9 +6,14 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [Header("Progress Flags")]
-    public bool hasTalkedToYoji = false;   // הפלג החדש
+    public bool hasTalkedToYoji = false;
 
+    [Header("Game State")]
     public bool gameWon = false;
+
+    [Header("Scene Names")]
+    [SerializeField] private string winSceneName = "WinScene";
+    [SerializeField] private string deathSceneName = "DeathScene";
 
     private void Awake()
     {
@@ -17,22 +22,31 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else
+        else if (Instance != this)
         {
             Destroy(gameObject);
         }
     }
 
+    // נקרא מ-WaveManager כשבוס מת
     public void OnBossDefeated()
     {
         if (gameWon) return;
 
         gameWon = true;
         Debug.Log("Boss defeated! YOU WIN!");
-        // בהמשך: מעבר לסצנת מעבר ליער הבא
+
+        SceneManager.LoadScene(winSceneName);
     }
 
-    // פונקציה נוחה ליוג'י לקרוא
+    // נקרא כששחקן מת
+    public void OnPlayerDied()
+    {
+        Debug.Log("Loading death scene...");
+        SceneManager.LoadScene(deathSceneName);
+    }
+
+    // ליוג'י
     public void SetYojiTalked()
     {
         if (!hasTalkedToYoji)

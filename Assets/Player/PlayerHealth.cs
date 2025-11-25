@@ -36,8 +36,15 @@ public class PlayerHealth : MonoBehaviour
         isDead = true;
         Debug.Log("Player died! Game Over");
 
-        // הכי פשוט למטלה – ריסט לסצנה
-        Scene current = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(current.name);
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnPlayerDied();
+        }
+        else
+        {
+            Scene current = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(current.name);
+        }
+
     }
 }
