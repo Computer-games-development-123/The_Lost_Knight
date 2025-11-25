@@ -1,7 +1,7 @@
 # The Lost Knight – Core Loop Prototype
 
 Unity 2D prototype for the core gameplay loop of **The Lost Knight**.
-
+ITCH.IO LINK : https://imrfatty.itch.io/the-lost-knight
 This version focuses on:
 - ForestHub (hub) scene with NPC interaction (Yoji) and a locked gate.
 - Green combat arena with enemy waves and a first boss.
