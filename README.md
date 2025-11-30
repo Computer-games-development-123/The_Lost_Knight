@@ -1,266 +1,121 @@
-# The Lost Knight – Core Loop Prototype
+# The Lost Knight  
+2D Action / Wave Survival Platformer – Unity Project  
+**ITCH.IO:** https://imrfatty.itch.io/the-lost-knight  
+**Wiki:** [https://github.com/Computer-games-development-123/The-Lost_Knight.wiki.git](https://github.com/Computer-games-development-123/The_Lost_Knight/wiki/The_Lost_Knight_elements%E2%80%90formal)  
 
-Unity 2D prototype for the core gameplay loop of **The Lost Knight**.
-ITCH.IO LINK : https://imrfatty.itch.io/the-lost-knight
-This version focuses on:
-- ForestHub (hub) scene with NPC interaction (Yoji) and a locked gate.
-- Green combat arena with enemy waves and a first boss.
-- Basic combat, health and enemy wave system.
-
-Unity version: **Unity 6 (6000.2.8f1)**  
-Target platform: WebGL / PC
+Unity Version: **Unity 6 (6000.2.8f1)**  
+Target Platforms: **WebGL / PC**
 
 ---
 
-## 1. Game Overview
+# 🧭 Project Overview
+**The Lost Knight** is a 2D combat-focused platformer prototype centered around enemy waves, boss fights, and a simple hub area (ForestHub) that connects narrative and gameplay progression.
 
-**Genre:** 2D combat platformer / wave survival  
-**Core Loop (current prototype):**
+This version implements the **Core Loop of Act I – Green Forest**:
+- Hub with NPC (Yoji)
+- Gate unlocking through dialogue
+- Enemy wave arena
+- Boss fight
+- Respawn rules
 
-1. Player starts in **ForestHub**.
-2. Player talks with **Yoji** to unlock the gate.
-3. Player enters the **Green Forest combat scene** through the gate.
-4. Player fights several waves of enemies.
-5. After all waves are cleared, the **boss** spawns.
-6. If the player dies – he will restart the combat scene from the beginning.
-7. When the boss dies – the level is considered cleared (future versions will move to the next forest).
-
-This assignment focuses only on **Act I – Green Forest** and on the **core gameplay systems**:
-movement, combat, health, waves, boss, and hub progression.
+The project is structured for gradual expansion into Act II & Act III (Red and Dark Forests) and includes a connected full Wiki.
 
 ---
 
-## 2. Scenes
+# 🔁 Core Loop  
+**The Lost Knight – Core Gameplay Loop (Prototype)**
 
-### 2.1 ForestHub
-- Simple flat ground with:
-  - **Player**
-  - **Yoji** (NPC + shop object)
-  - **GreenForestGate** (portal to combat scene)
-  - Scoreboard placeholder
-- When the player gets close to Yoji, a message appears.
-- Press **Up Arrow** to start dialogue with Yoji.
-- After the required dialogue, the **gate is unlocked** and the player can enter the combat scene.
-
-### 2.2 Combat_GreenForest
-- Platforms layout with:
-  - Player spawn point
-  - Left / Right enemy spawn points
-  - Boss spawn point
-  - WaveManager + SpawnManager
-  - PlayerHealthBar (UI)
-- Enemies spawn in **waves**.
-- After all waves are cleared, the **boss** spawns.
-- Player and enemies can kill each other using the combat system.
+1. Player starts in **ForestHub**.  
+2. Player interacts with **Yoji (NPC)**.  
+3. Yoji unlocks the **Green Forest Gate**.  
+4. Player enters **GreenForest Combat Scene**.  
+5. Fight enemy waves (Wave Manager).  
+6. Boss appears after all enemies die.  
+7. If the player dies → restart the combat scene.  
+8. If the boss dies → level is cleared (future expansion: move to next forest).
 
 ---
 
-## 3. Controls
+# 🗺️ Scenes
 
-- **Move** – `A`/`D` or Left / Right Arrows  
-- **Jump** – `Space` (Jump input)  
-- **Attack** – `X` (melee attack in front of the player)  
-- **Interact** – `Up Arrow` (talk to Yoji, use gates, etc.)  
-- **Pause / Editor** – default Unity play/stop (not implemented in UI yet).
+## 🌳 1. ForestHub
+- Player spawn
+- Yoji (NPC) with interaction prompt
+- Locked gate → unlocks after required dialogue
+- Scoreboard placeholder  
+- Leads to the combat arena
 
----
-
-## 4. Core Systems
-
-### 4.1 Player
-
-**Scripts:**
-- `PlayerController`
-  - Handles movement, jumping, facing direction.
-  - Uses Unity Input (`Horizontal`, `Jump`).
-  - Clamps the player to the camera view.
-- `PlayerAttack`
-  - Reads `facingDir` from `PlayerController`.
-  - On `X` key:
-    - Uses an `attackPoint` transform and `OverlapCircle` to detect enemies on `enemyLayer`.
-    - Calls `Enemy.TakeDamage(damage)` on all hit enemies.
-- `PlayerHealth`
-  - Stores `maxHealth` and current HP.
-  - Public method `TakeDamage(int amount)`.
-  - When HP ≤ 0:
-    - Logs “Player died!” (future versions will handle respawn / game over).
-
-### 4.2 Enemies & Boss
-
-**Scripts:**
-- `Enemy`
-  - Stores max HP, current HP.
-  - `TakeDamage(int amount)` reduces HP and destroys the GameObject on death.
-- `EnemyMovement` (planned / simple version)
-  - Moves enemy back and forth between two X positions.
-  - Flips direction when reaching edges.
-- `EnemyDeathNotifier`
-  - Added to enemies by `WaveManager`.
-  - Holds reference to `WaveManager` and calls `OnEnemyDied()` on death.
-
-**Boss:**
-- Uses `Enemy` for HP.
-- Uses dedicated **boss controller** (e.g. `GeorgeBossController`) for movement/AI.
-- Spawns only after all normal waves are cleared.
-
-### 4.3 Wave & Spawn Management
-
-**Scripts:**
-- `SpawnManager`
-  - Holds references to spawn points (e.g. left / right).
-  - Method `GetRandomSpawnPoint()` returns a random `Transform`.
-  - Method `SpawnEnemy(GameObject prefab)` instantiates an enemy at a random spawn point.
-- `WaveManager`
-  - Defines nested `Wave` struct/class:
-    - `GameObject enemyPrefab`
-    - `int enemyCount`
-    - `float spawnInterval`
-  - Inspector fields:
-    - `Wave[] waves`
-    - `GameObject bossPrefab`
-    - `SpawnManager spawnManager`
-    - `Transform bossSpawnPoint`
-  - Responsibilities:
-    - Spawns enemies wave by wave (Option B: “waves then boss”).
-    - Tracks `enemiesAlive` using `EnemyDeathNotifier`.
-    - When all waves are cleared → spawn boss.
-    - When boss dies → marks level as completed (future scenes will be triggered here).
-
-### 4.4 NPC & Progression (ForestHub)
-
-**Scripts:**
-- `ShopObject`
-  - Existing script attached to Yoji – handles shop logic / interaction placeholder.
-- `YojiInteraction`
-  - Detects when player is in range (collider trigger).
-  - Shows “press UpArrow to talk” message.
-  - Displays dialogue lines using a simple UI panel and `TextMeshPro` text.
-  - After the first important dialogue:
-    - Sets a **progress flag** (for example, in `GameManager` or via serialized boolean).
-    - Notifies the gate that the player is allowed to pass.
-- `ForestGateController`
-  - Has reference to:
-    - Scene name to load (e.g. `"Combat_GreenForest"`).
-    - Prompt text object.
-    - Some progression flag / reference to Yoji.
-  - Only allows entering the gate (UpArrow) if the player has talked with Yoji.
-
-### 4.5 UI – Health Bar
-
-**Scripts:**
-- `PlayerHealthUI`
-  - References:
-    - `PlayerHealth playerHealth`
-    - `Slider healthSlider`
-    - `Image fillImage` (for color)
-  - Every frame:
-    - Updates slider value to `currentHP / maxHP`.
-    - Changes bar color between **green → yellow → red** depending on HP%.
+## ⚔️ 2. Combat_GreenForest
+- Platform layout
+- Enemy spawn points (left & right)
+- Boss spawn point
+- UI: Player Health Bar
+- WaveManager + SpawnManager
+- On clearing waves → boss appears
 
 ---
 
-## 5. Project Structure (Folders)
+# 🎮 Controls
 
-Under `Assets/`:
-
-- `Scenes/`
-  - `ForestHub.unity`
-  - `Combat_GreenForest.unity`
-- `Player/`
-  - `PlayerController.cs`
-  - `PlayerAttack.cs`
-  - `PlayerHealth.cs`
-- `Enemies/`
-  - `Enemy.cs`
-  - `EnemyMovement.cs`
-  - `EnemyDeathNotifier.cs`
-  - `GeorgeBossController.cs` (or other boss controller)
-- `Managers/`
-  - `WaveManager.cs`
-  - `SpawnManager.cs`
-  - `GameManager.cs` (if used for global flags)
-- `Scripts/NPCs/`
-  - `YojiInteraction.cs`
-  - `ForestGateController.cs`
-  - `ShopObject.cs`
-- `UI/`
-  - `PlayerHealthUI.cs`
-- `Prefabs/`
-  - `Player.prefab`
-  - `EnemyType1.prefab`, `EnemyType2.prefab`, `GeorgeBoss.prefab`
-  - `Ground.prefab`, `Platform.prefab`
-- `Settings/`, `TextMesh Pro/`, `Utils/`  
-  (Unity and helper assets)
+| Action | Key |
+|-------|------|
+| Move  | A / D or Left / Right Arrows |
+| Jump  | Space |
+| Attack | X |
+| Interact | Up Arrow |
+| Pause | Editor-only for now |
 
 ---
 
-## 6. UML Diagram (text)
+# ⚙️ Core Systems
 
-The UML diagram below is a **high-level class diagram** of the main scripts.
+## 🧍 Player
+- **PlayerController** – movement, jumping, facing direction  
+- **PlayerAttack** – melee hit detection via OverlapCircle  
+- **PlayerHealth** – HP, damage handling, death events  
 
-```text
-+------------------+          uses            +-------------------+
-|  GameManager     |------------------------->|  WaveManager      |
-+------------------+                         +-------------------+
-| - flags          |                         | - waves[]         |
-|                  |                         | - spawnManager    |
-+------------------+                         | - bossPrefab      |
-                                             | - enemiesAlive    |
-                                             +---------+---------+
-                                                       |
-                                                       | uses
-                                                       v
-                                             +-------------------+
-                                             |  SpawnManager     |
-                                             +-------------------+
-                                             | - spawnPoints[]   |
-                                             +---------+---------+
-                                                       |
-                                                       | instantiates
-                                                       v
-                     +-------------------+    has      +-------------------+
-                     |   Enemy           |<----------- | EnemyDeathNotifier|
-                     +-------------------+             +-------------------+
-                     | - maxHealth       |             | - manager:WaveMgr |
-                     | - currentHealth   |             +-------------------+
-                     +---------^---------+
-                               |
-                               | composition
-                               v
-                     +-------------------+
-                     | BossController    |
-                     +-------------------+
+## 👾 Enemies & Boss
+- **Enemy**, **EnemyMovement**, **EnemyDeathNotifier**  
+- **GeorgeBossController** for boss logic  
 
-+-------------------+      has           +-------------------+
-| PlayerController  |------------------->| PlayerAttack      |
-+-------------------+                    +-------------------+
-| - moveSpeed       |                    | - attackRange     |
-| - jumpForce       |                    | - damage          |
-| - facingDir       |                    | - enemyLayer      |
-+---------+---------+                    +-------------------+
-          |
-          | has
-          v
-+-------------------+      observed by    +-------------------+
-|  PlayerHealth     |<------------------- | PlayerHealthUI    |
-+-------------------+                     +-------------------+
-| - maxHealth       |                     | - healthSlider    |
-| - currentHP       |                     | - fillImage       |
-+-------------------+                     +-------------------+
+## 🌊 Wave & Spawn Management
+- **SpawnManager** – spawn points  
+- **WaveManager** – waves, boss spawning, enemy tracking  
 
-+-------------------+   interacts via UpArrow   +-------------------+
-|     Player        |-------------------------->| YojiInteraction   |
-| (GameObject       |                           +-------------------+
-|  + Controller     |                           | - dialogueLines[] |
-|  + Attack         |                           | - UI references   |
-|  + Health)        |                           | - unlockGateFlag  |
-+-------------------+                           +---------+---------+
-                                                           |
-                                                           | notifies
-                                                           v
-                                                  +-------------------+
-                                                  | ForestGateControl |
-                                                  +-------------------+
-                                                  | - sceneToLoad     |
-                                                  | - isUnlocked      |
-                                                  +-------------------+
+## 🧩 NPC & Hub Progression
+- **YojiInteraction** – dialogue & unlocking gate  
+- **ForestGateController** – loads combat scene  
+
+## ❤️ UI
+- **PlayerHealthUI** – slider updates & color changes  
+
+---
+
+# 📁 Project Structure (Unity Folders)
+
+Assets/
+- Scenes/
+- Player/
+- Enemies/
+- Managers/
+- Scripts/NPCs/
+- UI/
+- Prefabs/
+
+---
+
+# 📢 Credits  
+Developer: Itzhak Bista, Adir Ofir
+Course: Computer Games Development  
+Engine: Unity 6  
+Platform: WebGL & PC
+
+---
+
+# 🚀 Future Expansion
+- Act II – Red Forest  
+- Act III – Dark Forest  
+- Full story & endings  
+- Shop system  
+- Scoreboard  
+- Save system  
