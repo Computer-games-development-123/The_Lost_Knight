@@ -6,7 +6,7 @@ public class EnemyBase : MonoBehaviour
 {
     [Header("Enemy Settings")]
     public EnemyData enemyData;
-    
+
     [Header("Fallback Stats (if no EnemyData)")]
     public int fallbackMaxHP = 10;
     public int fallbackDamage = 5;
@@ -117,7 +117,7 @@ public class EnemyBase : MonoBehaviour
 
         Vector2 direction = (player.position - transform.position).normalized;
         rb.linearVelocity = new Vector2(direction.x * MoveSpeed, rb.linearVelocity.y);
-        
+
         UpdateFacing(direction.x);
     }
 
@@ -127,7 +127,7 @@ public class EnemyBase : MonoBehaviour
 
         Vector2 direction = (player.position - transform.position).normalized;
         rb.linearVelocity = new Vector2(direction.x * MoveSpeed * 1.5f, rb.linearVelocity.y);
-        
+
         UpdateFacing(direction.x);
     }
 
@@ -135,7 +135,7 @@ public class EnemyBase : MonoBehaviour
     {
         // Base movement
         WalkerBehavior();
-        
+
         // TODO: Add jump logic
         // Example: Jump when close to player
     }
@@ -155,7 +155,7 @@ public class EnemyBase : MonoBehaviour
     protected void UpdateFacing(float directionX)
     {
         if (spriteRenderer == null) return;
-        
+
         if (directionX > 0)
             spriteRenderer.flipX = false;
         else if (directionX < 0)
@@ -171,7 +171,7 @@ public class EnemyBase : MonoBehaviour
         if (isDead) return;
 
         currentHP -= damage;
-        
+
         Debug.Log($"{gameObject.name} took {damage} damage. HP: {currentHP}/{MaxHP}");
 
         // Play hurt animation
@@ -202,13 +202,13 @@ public class EnemyBase : MonoBehaviour
     protected virtual void Die()
     {
         if (isDead) return;
-        
+
         isDead = true;
         Debug.Log($"{gameObject.name} died!");
 
         // Stop movement
         rb.linearVelocity = Vector2.zero;
-        
+
         // Disable collider to prevent further interactions
         if (col != null)
         {

@@ -101,18 +101,18 @@ public class PlayerController : MonoBehaviour
     {
         return facingRight ? Vector2.right : Vector2.left;
     }
-    
+
     public void TakeDamage(int damageAmount)
-{
-    if (playerHealth != null)
     {
-        playerHealth.TakeDamage(damageAmount);
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(damageAmount);
+        }
+        else
+        {
+            Debug.LogWarning("PlayerHealth component not found!");
+        }
     }
-    else
-    {
-        Debug.LogWarning("PlayerHealth component not found!");
-    }
-}
 
     public void TriggerInvulnerability()
     {
@@ -136,9 +136,9 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 teleportDirection = facingRight ? Vector2.right : Vector2.left;
         Vector2 newPosition = (Vector2)transform.position + (teleportDirection * teleportDistance);
-        
+
         RaycastHit2D hit = Physics2D.Raycast(transform.position, teleportDirection, teleportDistance, groundLayer);
-        
+
         if (hit.collider == null)
         {
             transform.position = newPosition;
