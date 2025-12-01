@@ -10,6 +10,10 @@ public class BossBase : MonoBehaviour
     public float moveSpeed = 3f;
     public bool isInvulnerable = false; // For first encounter mechanics
 
+    [Header("Dialogues")]
+    public DialogueData spawnDialogue;
+    public DialogueData deathDialogue;
+
     [Header("References")]
     public WaveManager waveManager;
     public Transform player;
@@ -35,6 +39,10 @@ public class BossBase : MonoBehaviour
         }
 
         OnBossStart();
+        if (DialogueManager.Instance != null && spawnDialogue != null)
+        {
+            DialogueManager.Instance.Play(spawnDialogue);
+        }
     }
 
     protected virtual void Update()

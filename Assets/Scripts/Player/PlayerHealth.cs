@@ -1,7 +1,9 @@
 using UnityEngine;
-
+using TMPro;
 public class PlayerHealth : MonoBehaviour
 {
+    [Header("Dialogue")]
+    public DialogueData deathDialogue; 
     [Header("Player HP")]
     [SerializeField] private float maxHealth = 50f;
     [SerializeField] private float currentHealth = 50f;
@@ -60,20 +62,37 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Min(currentHealth, maxHealth);
     }
 
-    private void Die()
+private void Die()
+{
+    Debug.Log("Player died!");
+
+    if (playerController != null)
     {
-        Debug.Log("Player died!");
+        playerController.PlayDeathAnimation();
+    }
 
-        if (playerController != null)
+    // If we have a death dialogue, show it first, then do OnPlayerDied
+    if (DialogueManager.Instance != null && deathDialogue != null)
+    {
+        DialogueManager.Instance.Play(deathDialogue, () =>
         {
-            playerController.PlayDeathAnimation();
-        }
-
+            // After the dialogue finishes, apply death logic (coins + reload scene)
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.OnPlayerDied();
+            }
+        });
+    }
+    else
+    {
+        // No dialogue? Just do death logic immediately
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnPlayerDied();
         }
     }
+}
+
 
     public void ResetHealth()
     {

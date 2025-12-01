@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
         // Death penalty
         coins = Mathf.Max(0, coins - 10);
 
-        // Reload scene (player health will reset in PlayerHealth.Start)
+        // TODO: Change Death to always load ForestHub. 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -114,6 +114,12 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("Act2Cleared", act2Cleared ? 1 : 0);
         PlayerPrefs.SetInt("Act3Cleared", act3Cleared ? 1 : 0);
         PlayerPrefs.SetInt("YojiDead", yojiDead ? 1 : 0);
+
+        PlayerPrefs.SetInt(
+            "HasSeenOpeningDialogue",
+            hasSeenOpeningDialogue ? 1 : 0
+        );
+
         PlayerPrefs.Save();
         Debug.Log("Progress saved!");
     }
@@ -129,6 +135,11 @@ public class GameManager : MonoBehaviour
         act2Cleared = PlayerPrefs.GetInt("Act2Cleared", 0) == 1;
         act3Cleared = PlayerPrefs.GetInt("Act3Cleared", 0) == 1;
         yojiDead = PlayerPrefs.GetInt("YojiDead", 0) == 1;
+
+        hasSeenOpeningDialogue =
+            PlayerPrefs.GetInt("HasSeenOpeningDialogue", 0) == 1;
+
         Debug.Log("Progress loaded!");
     }
+
 }

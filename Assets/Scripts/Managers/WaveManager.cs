@@ -21,6 +21,10 @@ public class WaveManager : MonoBehaviour
     public Transform bossSpawnPoint;
     public string nextSceneName = "ForestHub"; // Scene to load after boss
 
+    [Header("Dialogues")]
+    public DialogueData beforeWaveDialogue;
+    public DialogueData afterWaveDialogue;
+
     [Header("UI References")]
     public GameObject waveCompleteUI;
     public TMPro.TextMeshProUGUI waveText;
