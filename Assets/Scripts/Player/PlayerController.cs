@@ -125,9 +125,9 @@ public class PlayerController : MonoBehaviour
     {
         if (anim != null)
             anim.SetTrigger("Death");
-        
+
         Debug.Log("Player died!");
-        
+
         if (GameManager.Instance != null)
         {
             Invoke("CallGameManagerDeath", 2f);
@@ -143,9 +143,9 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 teleportDirection = facingRight ? Vector2.right : Vector2.left;
         Vector2 newPosition = (Vector2)transform.position + (teleportDirection * teleportDistance);
-        
+
         RaycastHit2D hit = Physics2D.Raycast(transform.position, teleportDirection, teleportDistance, groundLayer);
-        
+
         if (hit.collider == null)
         {
             transform.position = newPosition;

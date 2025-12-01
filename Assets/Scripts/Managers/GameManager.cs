@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
         // You can add death penalties here
         coins = Mathf.Max(0, coins - 10); // Lose 10 coins on death
         currentHP = maxHP; // Reset HP
-        
+
         // Reload current scene or respawn point
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

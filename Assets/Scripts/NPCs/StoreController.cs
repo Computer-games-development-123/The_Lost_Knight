@@ -49,7 +49,7 @@ public class StoreController : MonoBehaviour
         for (int i = 0; i < purchaseButtons.Length && i < shopItems.Length; i++)
         {
             int index = i; // Capture for lambda
-            
+
             if (purchaseButtons[i] != null)
             {
                 purchaseButtons[i].onClick.AddListener(() => PurchaseItem(index));
