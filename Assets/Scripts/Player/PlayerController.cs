@@ -101,18 +101,18 @@ public class PlayerController : MonoBehaviour
     {
         return facingRight ? Vector2.right : Vector2.left;
     }
-    
+
     public void TakeDamage(int damageAmount)
-{
-    if (playerHealth != null)
     {
-        playerHealth.TakeDamage(damageAmount);
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(damageAmount);
+        }
+        else
+        {
+            Debug.LogWarning("PlayerHealth component not found!");
+        }
     }
-    else
-    {
-        Debug.LogWarning("PlayerHealth component not found!");
-    }
-}
 
     public void TriggerInvulnerability()
     {

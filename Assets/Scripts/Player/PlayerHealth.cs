@@ -63,7 +63,7 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("Player died!");
-        
+
         if (playerController != null)
         {
             playerController.PlayDeathAnimation();
