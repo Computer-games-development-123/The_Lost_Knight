@@ -2,57 +2,81 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [Header("Player HP (for UI)")]
-    public float maxHealth = 50f;
-    public float CurrentHealth { get; private set; }
+    [Header("Player HP")]
+    [SerializeField] private float maxHealth = 50f;
+    [SerializeField] private float currentHealth = 50f;
+
+    public float MaxHealth => maxHealth;
+    public float CurrentHealth => currentHealth;
 
     private PlayerController playerController;
 
     private void Awake()
     {
-        // Try to find the PlayerController on the same GameObject
         playerController = GetComponent<PlayerController>();
     }
 
     private void Start()
     {
-        if (GameManager.Instance != null)
-        {
-            maxHealth = GameManager.Instance.maxHP;
-            CurrentHealth = GameManager.Instance.currentHP;
-        }
-        else
-        {
-            CurrentHealth = maxHealth;
-        }
+        // Initialize health to max at start
+        currentHealth = maxHealth;
     }
 
-    private void Update()
-    {
-        // Mirror HP from GameManager each frame so the UI can display it
-        if (GameManager.Instance != null)
-        {
-            maxHealth = GameManager.Instance.maxHP;
-            CurrentHealth = Mathf.Clamp(GameManager.Instance.currentHP, 0f, maxHealth);
-        }
-    }
 
-    // This method exists so old code that calls PlayerHealth.TakeDamage still works.
-    // It simply forwards the damage to PlayerController / GameManager logic.
     public void TakeDamage(int amount)
     {
+        if (playerController != null && playerController.IsInvulnerable)
+        {
+            return; // Respect i-frames from PlayerController
+        }
+
+        currentHealth -= amount;
+        currentHealth = Mathf.Max(currentHealth, 0);
+
+        Debug.Log($"Player took {amount} damage. HP: {currentHealth}/{maxHealth}");
+
+        // Trigger i-frames in PlayerController
         if (playerController != null)
         {
-            playerController.TakeDamage(amount);
+            playerController.TriggerInvulnerability();
+            playerController.PlayHurtAnimation();
         }
-        else if (GameManager.Instance != null)
-        {
-            GameManager.Instance.currentHP -= amount;
 
-            if (GameManager.Instance.currentHP <= 0)
-            {
-                GameManager.Instance.OnPlayerDied();
-            }
+        if (currentHealth <= 0)
+        {
+            Die();
         }
+    }
+
+    public void Heal(float amount)
+    {
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+        Debug.Log($"Healed {amount}. HP: {currentHealth}/{maxHealth}");
+    }
+
+    public void SetMaxHealth(float newMaxHealth)
+    {
+        maxHealth = newMaxHealth;
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
+    }
+
+    private void Die()
+    {
+        Debug.Log("Player died!");
+        
+        if (playerController != null)
+        {
+            playerController.PlayDeathAnimation();
+        }
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnPlayerDied();
+        }
+    }
+
+    public void ResetHealth()
+    {
+        currentHealth = maxHealth;
     }
 }

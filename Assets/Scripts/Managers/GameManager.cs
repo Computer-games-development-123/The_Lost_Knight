@@ -6,8 +6,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [Header("Player Stats")]
-    public float maxHP = 50f;
-    public float currentHP = 50f;
     public int swordDamage = 6;
     public int potions = 5;
     public int coins = 0;
@@ -67,16 +65,16 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    public void UsePotion()
+    public void UsePotion(PlayerHealth playerHealth)
     {
-        if (potions > 0)
+        if (potions > 0 && playerHealth != null)
         {
             float healAmount = 20f;
-            currentHP = Mathf.Min(currentHP + healAmount, maxHP);
+            playerHealth.Heal(healAmount);
             potions--;
-            Debug.Log($"Potion used. HP: {currentHP}/{maxHP}. Potions left: {potions}");
+            Debug.Log($"Potion used. Potions left: {potions}");
         }
-        else
+        else if (potions <= 0)
         {
             Debug.Log("No potions left!");
         }
@@ -97,19 +95,17 @@ public class GameManager : MonoBehaviour
     public void OnPlayerDied()
     {
         Debug.Log("Player died!");
-        // You can add death penalties here
-        coins = Mathf.Max(0, coins - 10); // Lose 10 coins on death
-        currentHP = maxHP; // Reset HP
         
-        // Reload current scene or respawn point
+        // Death penalty
+        coins = Mathf.Max(0, coins - 10);
+        
+        // Reload scene (player health will reset in PlayerHealth.Start)
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void SaveProgress()
     {
         PlayerPrefs.SetInt("Coins", coins);
-        PlayerPrefs.SetFloat("MaxHP", maxHP);
-        PlayerPrefs.SetFloat("CurrentHP", currentHP);
         PlayerPrefs.SetInt("SwordDamage", swordDamage);
         PlayerPrefs.SetInt("Potions", potions);
         PlayerPrefs.SetInt("HasTeleport", hasTeleport ? 1 : 0);
@@ -125,8 +121,6 @@ public class GameManager : MonoBehaviour
     public void LoadProgress()
     {
         coins = PlayerPrefs.GetInt("Coins", 0);
-        maxHP = PlayerPrefs.GetFloat("MaxHP", 50f);
-        currentHP = PlayerPrefs.GetFloat("CurrentHP", 50f);
         swordDamage = PlayerPrefs.GetInt("SwordDamage", 6);
         potions = PlayerPrefs.GetInt("Potions", 5);
         hasTeleport = PlayerPrefs.GetInt("HasTeleport", 0) == 1;

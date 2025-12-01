@@ -20,16 +20,19 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private SpriteRenderer spriteRenderer;
     private bool isGrounded;
-    private float lastAttackTime;
     private bool isInvulnerable;
     private float invulnerabilityTimer;
     private bool facingRight = true;
+    private PlayerHealth playerHealth;
+
+    public bool IsInvulnerable => isInvulnerable;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        playerHealth = GetComponent<PlayerHealth>();
     }
 
     void Update()
@@ -56,7 +59,7 @@ public class PlayerController : MonoBehaviour
         // Use Potion
         if (Input.GetKeyDown(KeyCode.E))
         {
-            GameManager.Instance?.UsePotion();
+            GameManager.Instance?.UsePotion(playerHealth);
         }
 
         // Teleport Ability
@@ -98,45 +101,35 @@ public class PlayerController : MonoBehaviour
     {
         return facingRight ? Vector2.right : Vector2.left;
     }
-
+    
     public void TakeDamage(int damageAmount)
+{
+    if (playerHealth != null)
     {
-        if (isInvulnerable) return;
+        playerHealth.TakeDamage(damageAmount);
+    }
+    else
+    {
+        Debug.LogWarning("PlayerHealth component not found!");
+    }
+}
 
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.currentHP -= damageAmount;
-            isInvulnerable = true;
-            invulnerabilityTimer = iFrameDuration;
-
-            if (anim != null)
-                anim.SetTrigger("Hurt");
-
-            Debug.Log($"Player took {damageAmount} damage. HP: {GameManager.Instance.currentHP}/{GameManager.Instance.maxHP}");
-
-            if (GameManager.Instance.currentHP <= 0)
-            {
-                Die();
-            }
-        }
+    public void TriggerInvulnerability()
+    {
+        isInvulnerable = true;
+        invulnerabilityTimer = iFrameDuration;
     }
 
-    void Die()
+    public void PlayHurtAnimation()
+    {
+        if (anim != null)
+            anim.SetTrigger("Hurt");
+    }
+
+    public void PlayDeathAnimation()
     {
         if (anim != null)
             anim.SetTrigger("Death");
-        
-        Debug.Log("Player died!");
-        
-        if (GameManager.Instance != null)
-        {
-            Invoke("CallGameManagerDeath", 2f);
-        }
-    }
-
-    void CallGameManagerDeath()
-    {
-        GameManager.Instance?.OnPlayerDied();
     }
 
     void Teleport()
@@ -149,8 +142,7 @@ public class PlayerController : MonoBehaviour
         if (hit.collider == null)
         {
             transform.position = newPosition;
-            isInvulnerable = true;
-            invulnerabilityTimer = iFrameDuration;
+            TriggerInvulnerability();
             Debug.Log("Teleported!");
         }
         else
