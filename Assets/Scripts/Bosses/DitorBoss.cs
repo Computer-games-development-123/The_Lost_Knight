@@ -85,10 +85,10 @@ public class DitorBoss : BossBase
         {
             Vector2 direction = (player.position - transform.position).normalized;
             GameObject beam = Instantiate(darkBeamPrefab, transform.position, Quaternion.identity);
-            
+
             // Set beam direction
             beam.transform.right = direction;
-            
+
             Destroy(beam, 2f);
         }
 
@@ -144,4 +144,4 @@ public class DitorBoss : BossBase
         beamCooldown *= 0.7f;
         Debug.Log("Ditor entered Phase 2 - Desperation mode!");
     }
-}   
+}

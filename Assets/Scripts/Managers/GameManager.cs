@@ -95,10 +95,10 @@ public class GameManager : MonoBehaviour
     public void OnPlayerDied()
     {
         Debug.Log("Player died!");
-        
+
         // Death penalty
         coins = Mathf.Max(0, coins - 10);
-        
+
         // Reload scene (player health will reset in PlayerHealth.Start)
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

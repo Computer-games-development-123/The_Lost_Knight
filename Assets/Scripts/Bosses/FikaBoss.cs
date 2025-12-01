@@ -51,7 +51,7 @@ public class FikaBoss : BossBase
         {
             Vector2 direction = (player.position - transform.position).normalized;
             GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-            
+
             Rigidbody2D projRb = projectile.GetComponent<Rigidbody2D>();
             if (projRb != null)
             {

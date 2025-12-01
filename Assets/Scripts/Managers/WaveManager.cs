@@ -34,7 +34,7 @@ public class WaveManager : MonoBehaviour
     {
         if (waveCompleteUI != null)
             waveCompleteUI.SetActive(false);
-        
+
         StartCoroutine(StartNextWave());
     }
 
@@ -64,7 +64,7 @@ public class WaveManager : MonoBehaviour
 
             Transform spawnPoint = currentWave.spawnPoints[Random.Range(0, currentWave.spawnPoints.Length)];
             GameObject enemy = Instantiate(currentWave.enemyPrefab, spawnPoint.position, Quaternion.identity);
-            
+
             // Register this WaveManager with the enemy
             EnemyBase enemyScript = enemy.GetComponent<EnemyBase>();
             if (enemyScript != null)
@@ -88,7 +88,7 @@ public class WaveManager : MonoBehaviour
         if (enemiesAlive <= 0 && !waveInProgress && !bossSpawned)
         {
             currentWaveIndex++;
-            
+
             if (waveCompleteUI != null)
             {
                 waveCompleteUI.SetActive(true);
@@ -112,7 +112,7 @@ public class WaveManager : MonoBehaviour
         {
             bossSpawned = true;
             GameObject boss = Instantiate(bossPrefab, bossSpawnPoint.position, Quaternion.identity);
-            
+
             // Register this WaveManager with the boss
             BossBase bossScript = boss.GetComponent<BossBase>();
             if (bossScript != null)
@@ -138,7 +138,7 @@ public class WaveManager : MonoBehaviour
     IEnumerator LoadNextSceneAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        
+
         if (!string.IsNullOrEmpty(nextSceneName))
         {
             SceneManager.LoadScene(nextSceneName);
