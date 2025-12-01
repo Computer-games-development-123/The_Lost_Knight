@@ -112,61 +112,71 @@ public class StoreController : MonoBehaviour
         }
     }
 
-    public void PurchaseItem(int itemIndex)
+public void PurchaseItem(int itemIndex)
+{
+    if (itemIndex < 0 || itemIndex >= shopItems.Length) return;
+    if (GameManager.Instance == null) return;
+    if (shopItems[itemIndex] == null) return;
+
+    ShopItem item = shopItems[itemIndex];
+
+    // Check if player has enough coins
+    if (GameManager.Instance.coins < item.cost)
     {
-        if (itemIndex < 0 || itemIndex >= shopItems.Length) return;
-        if (GameManager.Instance == null) return;
-        if (shopItems[itemIndex] == null) return;
-
-        ShopItem item = shopItems[itemIndex];
-
-        // Check if player has enough coins
-        if (GameManager.Instance.coins < item.cost)
-        {
-            Debug.Log($"Not enough coins! Need {item.cost}, have {GameManager.Instance.coins}");
-            return;
-        }
-
-        // Deduct coins
-        GameManager.Instance.SpendCoins(item.cost);
-
-        // Apply item effect
-        switch (item.itemType)
-        {
-            case ShopItem.ShopItemType.HPUpgrade:
-                GameManager.Instance.maxHP += 15;
-                GameManager.Instance.currentHP += 15;
-                Debug.Log("Purchased HP Upgrade! +15 Max HP");
-                break;
-
-            case ShopItem.ShopItemType.DamageUpgrade:
-                GameManager.Instance.swordDamage += 2;
-                Debug.Log("Purchased Damage Upgrade! +2 Sword Damage");
-                break;
-
-            case ShopItem.ShopItemType.MagicArmor:
-                GameManager.Instance.maxHP *= 2;
-                GameManager.Instance.currentHP *= 2;
-                Debug.Log("Purchased Magic Armor! HP Doubled!");
-                break;
-
-            case ShopItem.ShopItemType.FlashHelmet:
-                GameManager.Instance.hasTeleport = true;
-                Debug.Log("Purchased Flash Helmet! Teleport ability unlocked!");
-                break;
-
-            case ShopItem.ShopItemType.SwordOfLight:
-                GameManager.Instance.hasWaveOfLight = true;
-                GameManager.Instance.swordDamage *= 2;
-                Debug.Log("Purchased Sword of Light! Damage doubled + Wave of Light unlocked!");
-                break;
-
-            case ShopItem.ShopItemType.Potion:
-                GameManager.Instance.potions++;
-                Debug.Log("Purchased Potion!");
-                break;
-        }
-
-        UpdateCoinsDisplay();
+        Debug.Log($"Not enough coins! Need {item.cost}, have {GameManager.Instance.coins}");
+        return;
     }
+
+    // Deduct coins
+    GameManager.Instance.SpendCoins(item.cost);
+
+    // Find the player's health component
+    PlayerHealth playerHealth = FindFirstObjectByType<PlayerHealth>();
+
+    // Apply item effect
+    switch (item.itemType)
+    {
+        case ShopItem.ShopItemType.HPUpgrade:
+            if (playerHealth != null)
+            {
+                playerHealth.SetMaxHealth(playerHealth.MaxHealth + 15);
+                playerHealth.Heal(15);
+            }
+            Debug.Log("Purchased HP Upgrade! +15 Max HP");
+            break;
+
+        case ShopItem.ShopItemType.DamageUpgrade:
+            GameManager.Instance.swordDamage += 2;
+            Debug.Log("Purchased Damage Upgrade! +2 Sword Damage");
+            break;
+
+        case ShopItem.ShopItemType.MagicArmor:
+            if (playerHealth != null)
+            {
+                float currentMaxHP = playerHealth.MaxHealth;
+                playerHealth.SetMaxHealth(currentMaxHP * 2);
+                playerHealth.Heal(currentMaxHP); // Heal by the amount we just added
+            }
+            Debug.Log("Purchased Magic Armor! HP Doubled!");
+            break;
+
+        case ShopItem.ShopItemType.FlashHelmet:
+            GameManager.Instance.hasTeleport = true;
+            Debug.Log("Purchased Flash Helmet! Teleport ability unlocked!");
+            break;
+
+        case ShopItem.ShopItemType.SwordOfLight:
+            GameManager.Instance.hasWaveOfLight = true;
+            GameManager.Instance.swordDamage *= 2;
+            Debug.Log("Purchased Sword of Light! Damage doubled + Wave of Light unlocked!");
+            break;
+
+        case ShopItem.ShopItemType.Potion:
+            GameManager.Instance.potions++;
+            Debug.Log("Purchased Potion!");
+            break;
+    }
+
+    UpdateCoinsDisplay();
+}
 }

@@ -28,7 +28,7 @@ public class PlayerHealthUI : MonoBehaviour
         if (playerHealth != null && healthSlider != null)
         {
             healthSlider.minValue = 0;
-            healthSlider.maxValue = playerHealth.maxHealth;
+            healthSlider.maxValue = playerHealth.MaxHealth;
             healthSlider.value = playerHealth.CurrentHealth;
         }
     }
@@ -38,13 +38,13 @@ public class PlayerHealthUI : MonoBehaviour
         if (playerHealth == null || healthSlider == null)
             return;
 
-        // עדכון ערך הסליידר
+        // Update slider value
         healthSlider.value = playerHealth.CurrentHealth;
 
-        // יחס חיים בין 0 ל-1
-        float t = (float)playerHealth.CurrentHealth / playerHealth.maxHealth;
+        // Health ratio between 0 and 1
+        float t = (float)playerHealth.CurrentHealth / playerHealth.MaxHealth;
 
-        // בחירת צבע לפי אחוז חיים
+        // Choose color based on health percentage
         if (t > 0.7f)
         {
             fillImage.color = healthyColor;
