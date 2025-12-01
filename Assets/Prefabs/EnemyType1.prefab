@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 2707768562897365544}
   - component: {fileID: 2365221055033065230}
   - component: {fileID: 1929076190006721288}
-  - component: {fileID: 7110608717696294503}
-  - component: {fileID: -311763282869009196}
+  - component: {fileID: 972468021782565931}
   m_Layer: 7
   m_Name: EnemyType1
   m_TagString: Untagged
@@ -167,7 +166,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &7110608717696294503
+--- !u!114 &972468021782565931
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,22 +175,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2158448503102619500}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1ee8ff38714400459b821a4ccd7b452, type: 3}
+  m_Script: {fileID: 11500000, guid: 76959cc1a25b07845b8036c861139c2f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  maxHealth: 3
-  contactDamage: 7
---- !u!114 &-311763282869009196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2158448503102619500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db5ba3c1642c84a48beb2fe7105df721, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  moveSpeed: 1
-  maxChaseDistance: 20
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyBase
+  enemyData: {fileID: 0}
+  fallbackMaxHP: 10
+  fallbackDamage: 5
+  fallbackMoveSpeed: 2
+  fallbackCoinsDropped: 1
+  waveManager: {fileID: 0}

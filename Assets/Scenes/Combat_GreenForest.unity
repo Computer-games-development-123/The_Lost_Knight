@@ -477,22 +477,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
   waves:
-  - enemyPrefab: {fileID: 2158448503102619500, guid: d1fe3705ef0fd044ea6866b9205bb1d0, type: 3}
+  - waveName: 
+    enemyPrefab: {fileID: 2158448503102619500, guid: d1fe3705ef0fd044ea6866b9205bb1d0, type: 3}
     enemyCount: 7
-    spawnInterval: 0.8
-  - enemyPrefab: {fileID: 2158448503102619500, guid: 91aee650a2b91a4498befc1f2365cf5d, type: 3}
+    spawnDelay: 1
+    spawnPoints:
+    - {fileID: 592894093}
+    - {fileID: 1013604362}
+  - waveName: 
+    enemyPrefab: {fileID: 2158448503102619500, guid: 91aee650a2b91a4498befc1f2365cf5d, type: 3}
     enemyCount: 2
-    spawnInterval: 0.8
-  - enemyPrefab: {fileID: 2158448503102619500, guid: 91aee650a2b91a4498befc1f2365cf5d, type: 3}
+    spawnDelay: 1
+    spawnPoints:
+    - {fileID: 592894093}
+    - {fileID: 1013604362}
+  - waveName: 
+    enemyPrefab: {fileID: 2158448503102619500, guid: 91aee650a2b91a4498befc1f2365cf5d, type: 3}
     enemyCount: 4
-    spawnInterval: 0.8
-  - enemyPrefab: {fileID: 2158448503102619500, guid: 91aee650a2b91a4498befc1f2365cf5d, type: 3}
+    spawnDelay: 1
+    spawnPoints:
+    - {fileID: 592894093}
+    - {fileID: 1013604362}
+  - waveName: 
+    enemyPrefab: {fileID: 2158448503102619500, guid: 91aee650a2b91a4498befc1f2365cf5d, type: 3}
     enemyCount: 7
-    spawnInterval: 0.8
+    spawnDelay: 1
+    spawnPoints:
+    - {fileID: 592894093}
+    - {fileID: 1013604362}
   bossPrefab: {fileID: 2158448503102619500, guid: cc60a7216539c7444be674be902befa7, type: 3}
-  delayBeforeBoss: 2
-  spawnManager: {fileID: 955487579}
-  spawnSpread: 0.5
+  bossSpawnPoint: {fileID: 592894093}
+  nextSceneName: ForestHub
+  waveCompleteUI: {fileID: 0}
+  waveText: {fileID: 0}
 --- !u!4 &597638891
 Transform:
   m_ObjectHideFlags: 0
@@ -671,54 +688,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1041981382
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1041981384}
-  - component: {fileID: 1041981385}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1041981384
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041981382}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.81246, y: -0.56362, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1041981385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041981382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94a7157e83de8146bf7793e1076dacb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  hasTalkedToYoji: 0
-  gameWon: 0
-  winSceneName: WinScene
-  deathSceneName: DeathScene
 --- !u!1 &1086281334
 GameObject:
   m_ObjectHideFlags: 0
@@ -1575,11 +1544,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8030209367575715297, guid: 35b9ce2821877a64b8a1a337606a775b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -14
       objectReference: {fileID: 0}
     - target: {fileID: 8030209367575715297, guid: 35b9ce2821877a64b8a1a337606a775b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 8030209367575715297, guid: 35b9ce2821877a64b8a1a337606a775b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1639,7 +1608,6 @@ SceneRoots:
   - {fileID: 1769951535479046163}
   - {fileID: 592894093}
   - {fileID: 1013604362}
-  - {fileID: 1041981384}
   - {fileID: 4200502124875483587}
   - {fileID: 1964148190}
   - {fileID: 1690778392}
