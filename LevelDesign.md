@@ -1,3 +1,5 @@
+<div dir="rtl"
+
 # The Lost Knight – תכנון רמות (Level Design)
 
 מסמך זה מפרט את תכנון הרמות עבור The Lost Knight: מבנה Acts, זירות הקרב, גלי האויבים, בוסים, וזרימת המשחק בין הסצנות.
