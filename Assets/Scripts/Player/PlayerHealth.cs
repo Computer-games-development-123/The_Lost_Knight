@@ -3,7 +3,7 @@ using TMPro;
 public class PlayerHealth : MonoBehaviour
 {
     [Header("Dialogue")]
-    public DialogueData deathDialogue; 
+    public DialogueData deathDialogue;
     [Header("Player HP")]
     [SerializeField] private float maxHealth = 50f;
     [SerializeField] private float currentHealth = 50f;
@@ -62,36 +62,36 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Min(currentHealth, maxHealth);
     }
 
-private void Die()
-{
-    Debug.Log("Player died!");
-
-    if (playerController != null)
+    private void Die()
     {
-        playerController.PlayDeathAnimation();
-    }
+        Debug.Log("Player died!");
 
-    // If we have a death dialogue, show it first, then do OnPlayerDied
-    if (DialogueManager.Instance != null && deathDialogue != null)
-    {
-        DialogueManager.Instance.Play(deathDialogue, () =>
+        if (playerController != null)
         {
+            playerController.PlayDeathAnimation();
+        }
+
+        // If we have a death dialogue, show it first, then do OnPlayerDied
+        if (DialogueManager.Instance != null && deathDialogue != null)
+        {
+            DialogueManager.Instance.Play(deathDialogue, () =>
+            {
             // After the dialogue finishes, apply death logic (coins + reload scene)
+            if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.OnPlayerDied();
+                }
+            });
+        }
+        else
+        {
+            // No dialogue? Just do death logic immediately
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.OnPlayerDied();
             }
-        });
-    }
-    else
-    {
-        // No dialogue? Just do death logic immediately
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.OnPlayerDied();
         }
     }
-}
 
 
     public void ResetHealth()
