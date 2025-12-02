@@ -97,10 +97,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("Player died!");
 
         // Death penalty
-        coins = Mathf.Max(0, coins - 10);
-
-        // TODO: Change Death to always load ForestHub. 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        coins = Mathf.Max(0, coins - 5);
+        SceneManager.LoadScene("ForestHub");
     }
 
     public void SaveProgress()

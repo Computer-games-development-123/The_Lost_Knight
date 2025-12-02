@@ -57,8 +57,20 @@ public class YojiInteraction : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
         playerInRange = true;
+
+        // If the prompt reference was destroyed / lost, just skip
+        if (interactionPrompt == null)
+        {
+            Debug.LogWarning("YojiInteraction: interactionPrompt is missing or was destroyed.");
+            return;
+        }
+
+        if (DialogueManager.Instance == null) return;
+
         if (!DialogueManager.Instance.IsDialogueActive)
-            interactionPrompt?.SetActive(true);
+        {
+            interactionPrompt.SetActive(true);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -66,8 +78,11 @@ public class YojiInteraction : MonoBehaviour
         if (!other.CompareTag("Player")) return;
         playerInRange = false;
 
-        if (interactionPrompt != null)   // Unity null check
-            interactionPrompt.SetActive(false);
+        if (interactionPrompt == null)
+            return;
+
+        interactionPrompt.SetActive(false);
     }
+
 
 }
