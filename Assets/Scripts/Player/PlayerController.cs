@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Screen Clamp")]
     public float edgeBuffer = 0.5f;
-
     private Camera cam;
     private float halfHeight;
     private float halfWidth;
@@ -25,12 +24,10 @@ public class PlayerController : MonoBehaviour
     public float knockbackForce = 7f;
     public float knockbackUpForce = 2f;
     public float knockbackDuration = 0.15f;
-
     private bool isKnockback = false;
 
     [Header("Abilities")]
     public float teleportDistance = 4.5f;
-
     private Rigidbody2D rb;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
@@ -39,7 +36,6 @@ public class PlayerController : MonoBehaviour
     private float invulnerabilityTimer;
     private bool facingRight = true;
     private PlayerHealth playerHealth;
-
     public bool IsInvulnerable => isInvulnerable;
 
     void Start()
@@ -49,7 +45,6 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerHealth = GetComponent<PlayerHealth>();
         cam = Camera.main;
-
     }
 
     void Update()
@@ -57,29 +52,35 @@ public class PlayerController : MonoBehaviour
         // Ground Check
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        // Movement Input
-        float moveInput = isKnockback ? 0f : Input.GetAxisRaw("Horizontal");
-        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+        float moveInput = 0f;
 
-        // Flip Sprite
-        if (moveInput > 0 && !facingRight)
-            Flip();
-        else if (moveInput < 0 && facingRight)
-            Flip();
-
-        // Jump
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        // === ONLY control movement when NOT in knockback ===
+        if (!isKnockback)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            // Movement Input
+            moveInput = Input.GetAxisRaw("Horizontal");
+            rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+
+            // Flip Sprite
+            if (moveInput > 0 && !facingRight)
+                Flip();
+            else if (moveInput < 0 && facingRight)
+                Flip();
+
+            // Jump (blocked during knockback)
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            }
         }
 
-        // Use Potion
+        // Use Potion (allowed during knockback)
         if (Input.GetKeyDown(KeyCode.E))
         {
             GameManager.Instance?.UsePotion(playerHealth);
         }
 
-        // Teleport Ability
+        // Teleport Ability (you can decide if you want to block this during knockback)
         if (Input.GetKeyDown(KeyCode.LeftAlt) && GameManager.Instance != null && GameManager.Instance.hasTeleport)
         {
             Teleport();
@@ -106,10 +107,11 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Animations
+        // Animations – use actual velocity, not input
         if (anim != null)
         {
-            anim.SetFloat("Speed", Mathf.Abs(moveInput));
+            float speed = Mathf.Abs(rb.linearVelocity.x);
+            anim.SetFloat("Speed", speed);
             anim.SetBool("IsGrounded", isGrounded);
         }
     }
@@ -175,7 +177,6 @@ public class PlayerController : MonoBehaviour
         ApplyKnockback(hitSourcePosition);
     }
 
-
     public void TriggerInvulnerability()
     {
         isInvulnerable = true;
@@ -208,8 +209,6 @@ public class PlayerController : MonoBehaviour
 
         isKnockback = false;
     }
-
-
 
     public void PlayHurtAnimation()
     {

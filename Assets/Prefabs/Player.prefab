@@ -230,7 +230,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &7921682461637272343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,12 +245,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 5
   jumpForce: 10
-  groundCheck: {fileID: 1005837734564576171}
-  groundCheckRadius: 0.22
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  facingDir: 1
+  groundCheck: {fileID: 1005837734564576171}
+  groundCheckRadius: 0.22
+  iFrameDuration: 1.5
+  edgeBuffer: 0.5
+  knockbackForce: 7
+  knockbackUpForce: 2
+  knockbackDuration: 0.15
+  teleportDistance: 4.5
 --- !u!114 &999847479295845853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,10 +268,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 915d8101d3192174eb82313d7c3505a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
-  attackPoint: {fileID: 5206823614749790181}
+  swordDamage: 10
   attackRange: 1
-  damage: 1
+  attackCooldown: 0.5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  attackKey: 120
+  waveOfLightPrefab: {fileID: 0}
+  firePoint: {fileID: 0}
+  waveOfLightCooldown: 3
+  anim: {fileID: 0}
+  attackPoint: {fileID: 5206823614749790181}
