@@ -162,6 +162,7 @@ MonoBehaviour:
   yojiDead: 0
   hasSeenFikaCutscene: 0
   hasSeenDitorIntro: 0
+  youDiedDialogue: {fileID: 11400000, guid: f749aff74ce230c418417cce464b7d87, type: 2}
   currentStoreMode: 0
   endingChosen: 0
 --- !u!4 &112517901

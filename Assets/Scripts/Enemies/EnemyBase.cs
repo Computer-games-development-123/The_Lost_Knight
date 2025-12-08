@@ -267,10 +267,12 @@ public class EnemyBase : MonoBehaviour
             PlayerController playerController = other.GetComponent<PlayerController>();
             if (playerController != null)
             {
-                playerController.TakeDamage(Damage);
-                Debug.Log($"{gameObject.name} dealt {Damage} contact damage to Player!");
+                // Pass enemy position so knockback knows the direction
+                playerController.TakeDamage(Damage, transform.position);
+                Debug.Log($"{gameObject.name} dealt {Damage} contact damage to Player (with knockback)!");
                 return;
             }
+
 
             // Fallback to PlayerHealth
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
