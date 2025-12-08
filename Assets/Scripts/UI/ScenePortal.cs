@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ForestGateController : MonoBehaviour
+public class ScenePortal : MonoBehaviour
 {
-    [SerializeField] private string sceneToLoad = "GameScene";
+    [Tooltip("Name of the scene to load when the player uses this portal")]
+    public string targetSceneName = "ForestHub";
+
+    [Header("UI Prompt (optional)")]
     [SerializeField] private GameObject promptText;
+    [SerializeField] private KeyCode interactKey = KeyCode.F;
 
     private bool isPlayerInside = false;
 
@@ -21,10 +25,7 @@ public class ForestGateController : MonoBehaviour
         isPlayerInside = true;
 
         if (promptText != null)
-        {
             promptText.SetActive(true);
-            Debug.Log("[Gate] show prompt");
-        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -34,19 +35,22 @@ public class ForestGateController : MonoBehaviour
         isPlayerInside = false;
 
         if (promptText != null)
-        {
             promptText.SetActive(false);
-            Debug.Log("[Gate] hide prompt");
-        }
     }
 
     private void Update()
     {
         if (!isPlayerInside) return;
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(interactKey))
         {
-            SceneManager.LoadScene(sceneToLoad);
+            if (string.IsNullOrEmpty(targetSceneName))
+            {
+                Debug.LogWarning("[ScenePortal] targetSceneName is empty!");
+                return;
+            }
+
+            SceneManager.LoadScene(targetSceneName);
         }
     }
 }
