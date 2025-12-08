@@ -1,14 +1,20 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GeorgeBoss : BossBase
 {
     [Header("George Specific")]
-    // We no longer rely on this across scenes – GameManager state is the truth
     public bool isFirstEncounter = true;
 
-    [Tooltip("Canvas or panel shown during George's first encounter taunt.")]
+    [Header("George Dialogues")]
+    public DialogueData firstEncounterDialogue;
     public GameObject dialogueCanvas;
+
+    [Header("First Encounter Settings")]
+    public int hitsToTriggerTaunt = 5;
+    private int invulnerableHitCount = 0;
+    private bool firstEncounterSequenceStarted = false;
 
     [Header("Charge Attack")]
     public float chargeSpeed = 8f;
@@ -23,73 +29,95 @@ public class GeorgeBoss : BossBase
 
         if (GameManager.Instance != null)
         {
-            // George is invulnerable until the player gets the special sword upgrade
-            isInvulnerable = !GameManager.Instance.hasSpecialSwordUpgrade;
-        }
-        else
-        {
-            Debug.LogError("GameManager.Instance is null in GeorgeBoss!");
-        }
+            bool hasUpgrade = GameManager.Instance.hasSpecialSwordUpgrade;
 
-        // Only run the first-time cinematic if the player still doesn't have the upgrade
-        if (isInvulnerable)
-        {
-            StartCoroutine(FirstEncounterSequence());
-        }
-        else
-        {
-            // Make sure any first-encounter UI is hidden in real fights
-            if (dialogueCanvas != null)
-                dialogueCanvas.SetActive(false);
-        }
-    }
+            // First encounter (no upgrade yet) -> George is invulnerable
+            isInvulnerable = !hasUpgrade;
 
-    IEnumerator FirstEncounterSequence()
-    {
-        // Small delay so player has time to hit a bit and realize George is invulnerable
-        yield return new WaitForSeconds(5f);
-
-        // Show George's taunt dialogue
-        if (dialogueCanvas != null)
-        {
-            dialogueCanvas.SetActive(true);
-            // Here you can hook a TextMeshPro text and set it to:
-            // "HAHA... You're weak."
-        }
-
-        yield return new WaitForSeconds(2f);
-
-        // Mark that the player has died to George (for Yoji's next dialogue)
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.hasDiedToGeorge = true;
-        }
-
-        // Instant kill player
-        if (player != null)
-        {
-            PlayerController playerController = player.GetComponent<PlayerController>();
-            if (playerController != null)
+            // If it's *not* first encounter, we want spawnDialogue (second intro) to play.
+            if (!hasUpgrade)
             {
-                playerController.TakeDamage(9999); // should trigger your normal death/respawn flow
+                // First encounter: no spawnDialogue yet
+                spawnDialogue = null;
             }
         }
+        else
+        {
+            // When testing this scene directly, assume "first encounter"
+            Debug.LogWarning("GameManager.Instance is null in GeorgeBoss! Assuming first encounter (invulnerable).");
+            isInvulnerable = true;
+            spawnDialogue = null;
+        }
 
-        // Local flag so this specific instance won't run the sequence again
-        isFirstEncounter = false;
+        // Hide any old canvas-based dialogue
+        if (dialogueCanvas != null)
+            dialogueCanvas.SetActive(false);
     }
+
 
     protected override void OnInvulnerableHit()
     {
         base.OnInvulnerableHit();
-        // Play "clang" sound effect / feedback
-        Debug.Log("George is invulnerable! Your attacks have no effect.");
+
+        if (!isInvulnerable) return;
+
+        invulnerableHitCount++;
+        Debug.Log($"George was hit while invulnerable {invulnerableHitCount}/{hitsToTriggerTaunt}");
+
+        if (!firstEncounterSequenceStarted && invulnerableHitCount >= hitsToTriggerTaunt)
+        {
+            firstEncounterSequenceStarted = true;
+            StartCoroutine(FirstEncounterTauntAndKillPlayer());
+        }
     }
+
+    private IEnumerator FirstEncounterTauntAndKillPlayer()
+    {
+        // Stop movement / charge
+        isCharging = false;
+        if (rb != null)
+            rb.linearVelocity = Vector2.zero;
+
+        // Optionally play some animation here, e.g. "Taunt"
+        if (anim != null)
+            anim.SetTrigger("Taunt");
+
+        // Play George's taunt dialogue
+        if (DialogueManager.Instance != null && firstEncounterDialogue != null)
+        {
+            bool done = false;
+            DialogueManager.Instance.Play(firstEncounterDialogue, () => done = true);
+
+            // Wait until the dialogue is finished (unscaled time, DialogueManager handles pause)
+            while (!done)
+                yield return null;
+        }
+
+        // Mark that the player has died to George, so Yoji can react
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.hasDiedToGeorge = true;
+            GameManager.Instance.SaveProgress();
+        }
+
+        // Kill the player using normal health system
+        if (player != null)
+        {
+            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(9999);  // triggers normal death + respawn flow
+            }
+        }
+
+        isFirstEncounter = false;
+    }
+
 
     protected override void BossAI()
     {
         // During the first-encounter cinematic George doesn't fight normally
-        if (isInvulnerable)
+        if (isDead)
             return;
 
         if (player == null)
@@ -136,6 +164,53 @@ public class GeorgeBoss : BossBase
         rb.linearVelocity = Vector2.zero;
         isCharging = false;
     }
+    protected override void Die()
+    {
+        if (isDead) return;
+        isDead = true;
+
+        Debug.Log($"{bossName} defeated!");
+
+        // Stop all movement and attacks
+        isCharging = false;
+        if (rb != null)
+            rb.linearVelocity = Vector2.zero;
+
+        if (anim != null)
+            anim.SetTrigger("Death");
+
+        // Tell wave manager if needed (so waves know boss is dead)
+        if (waveManager != null)
+        {
+            waveManager.OnBossDied(this);
+        }
+
+        // Play death dialogue, then teleport
+        if (DialogueManager.Instance != null && deathDialogue != null)
+        {
+            DialogueManager.Instance.Play(deathDialogue, () =>
+            {
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.act1Cleared = true;  // or another flag you prefer
+                    GameManager.Instance.SaveProgress();
+                }
+
+                SceneManager.LoadScene("GreenForestToRedForestScene");
+            });
+        }
+        else
+        {
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.act1Cleared = true;
+                GameManager.Instance.SaveProgress();
+            }
+
+            SceneManager.LoadScene("GreenForestToRedForestScene");
+        }
+    }
+
 
     protected override void EnterPhase2()
     {

@@ -162,6 +162,7 @@ MonoBehaviour:
   yojiDead: 0
   hasSeenFikaCutscene: 0
   hasSeenDitorIntro: 0
+  youDiedDialogue: {fileID: 11400000, guid: f749aff74ce230c418417cce464b7d87, type: 2}
   currentStoreMode: 0
   endingChosen: 0
 --- !u!4 &112517901
@@ -251,8 +252,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 4
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -312,8 +313,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 520, y: -50}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 450, y: -50}
+  m_SizeDelta: {x: 350, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &164113842
 GameObject:
@@ -722,11 +723,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8030209367575715297, guid: 35b9ce2821877a64b8a1a337606a775b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 8030209367575715297, guid: 35b9ce2821877a64b8a1a337606a775b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 8030209367575715297, guid: 35b9ce2821877a64b8a1a337606a775b, type: 3}
       propertyPath: m_LocalPosition.z

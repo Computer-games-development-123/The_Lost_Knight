@@ -183,9 +183,13 @@ MonoBehaviour:
   damage: 10
   moveSpeed: 3
   isInvulnerable: 0
+  spawnDialogue: {fileID: 11400000, guid: 9c9f387f22f4d2540a0dd8ebe0c7b14f, type: 2}
+  deathDialogue: {fileID: 11400000, guid: ddbd69337f5dc5649ab5e21afd26f261, type: 2}
   waveManager: {fileID: 0}
   player: {fileID: 0}
   isFirstEncounter: 1
+  firstEncounterDialogue: {fileID: 11400000, guid: 31a7612914994de46b91e4dfe453699f, type: 2}
   dialogueCanvas: {fileID: 0}
+  hitsToTriggerTaunt: 5
   chargeSpeed: 8
   chargeCooldown: 3

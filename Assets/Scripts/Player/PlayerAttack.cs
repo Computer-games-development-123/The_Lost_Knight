@@ -75,11 +75,15 @@ public class PlayerAttack : MonoBehaviour
             if (enemyScript != null)
             {
                 enemyScript.TakeDamage(swordDamage);
+                continue;
             }
-            else
+            BossBase bossScript = enemy.GetComponent<BossBase>();
+            if (bossScript != null)
             {
-                Debug.LogWarning($"{enemy.gameObject.name} has NO EnemyBase component!");
+                bossScript.TakeDamage(swordDamage);
+                continue;
             }
+            Debug.LogWarning($"{enemy.name} has NO EnemyBase or BossBase component!");
         }
     }
 

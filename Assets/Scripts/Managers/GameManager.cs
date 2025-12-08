@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class GameManager : MonoBehaviour
     public bool hasSeenFikaCutscene = false;
     public bool hasSeenDitorIntro = false;
 
+    [Header("Death Dialogue")]
+    public DialogueData youDiedDialogue;
+
     [Header("Store State")]
     public StoreMode currentStoreMode = StoreMode.Normal;
 
@@ -40,6 +44,8 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            LoadProgress();
         }
         else
         {
@@ -94,15 +100,26 @@ public class GameManager : MonoBehaviour
 
     public void OnPlayerDied()
     {
+        StartCoroutine(HandleDeathSequence());
+    }
+
+    private IEnumerator HandleDeathSequence()
+    {
         Debug.Log("Player died!");
 
         // Death penalty
-        coins = Mathf.Max(0, coins - 10);
+        coins = Mathf.Max(0, coins - 5);
 
-        // TODO: Change Death to always load ForestHub. 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (youDiedDialogue != null && DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.Play(youDiedDialogue);
+
+            while (DialogueManager.Instance.IsDialogueActive)
+                yield return null;
+        }
+        SceneManager.LoadScene("ForestHub");
     }
-
+    
     public void SaveProgress()
     {
         PlayerPrefs.SetInt("Coins", coins);
@@ -114,11 +131,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("Act2Cleared", act2Cleared ? 1 : 0);
         PlayerPrefs.SetInt("Act3Cleared", act3Cleared ? 1 : 0);
         PlayerPrefs.SetInt("YojiDead", yojiDead ? 1 : 0);
-
-        PlayerPrefs.SetInt(
-            "HasSeenOpeningDialogue",
-            hasSeenOpeningDialogue ? 1 : 0
-        );
+        PlayerPrefs.SetInt("HasSeenOpeningDialogue", hasSeenOpeningDialogue ? 1 : 0);
 
         PlayerPrefs.Save();
         Debug.Log("Progress saved!");
@@ -135,9 +148,7 @@ public class GameManager : MonoBehaviour
         act2Cleared = PlayerPrefs.GetInt("Act2Cleared", 0) == 1;
         act3Cleared = PlayerPrefs.GetInt("Act3Cleared", 0) == 1;
         yojiDead = PlayerPrefs.GetInt("YojiDead", 0) == 1;
-
-        hasSeenOpeningDialogue =
-            PlayerPrefs.GetInt("HasSeenOpeningDialogue", 0) == 1;
+        hasSeenOpeningDialogue = PlayerPrefs.GetInt("HasSeenOpeningDialogue", 0) == 1;
 
         Debug.Log("Progress loaded!");
     }

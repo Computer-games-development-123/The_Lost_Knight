@@ -242,6 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d7ad79d045cc16469e0b859cbd00702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  deathDialogue: {fileID: 0}
   maxHealth: 50
   currentHealth: 50
 --- !u!1 &519420028
@@ -508,7 +509,9 @@ MonoBehaviour:
     - {fileID: 1013604362}
   bossPrefab: {fileID: 2158448503102619500, guid: cc60a7216539c7444be674be902befa7, type: 3}
   bossSpawnPoint: {fileID: 592894093}
-  nextSceneName: ForestHub
+  nextSceneName: GreenForestToRedForestScene
+  beforeWaveDialogue: {fileID: 0}
+  afterWaveDialogue: {fileID: 0}
   waveCompleteUI: {fileID: 0}
   waveText: {fileID: 0}
 --- !u!4 &597638891
