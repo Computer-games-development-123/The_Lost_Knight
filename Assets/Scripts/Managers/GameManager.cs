@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
         }
         SceneManager.LoadScene("ForestHub");
     }
-    
+
     public void SaveProgress()
     {
         PlayerPrefs.SetInt("Coins", coins);

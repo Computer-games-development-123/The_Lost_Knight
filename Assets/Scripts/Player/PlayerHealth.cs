@@ -76,8 +76,8 @@ public class PlayerHealth : MonoBehaviour
         {
             DialogueManager.Instance.Play(deathDialogue, () =>
             {
-            // After the dialogue finishes, apply death logic (coins + reload scene)
-            if (GameManager.Instance != null)
+                // After the dialogue finishes, apply death logic (coins + reload scene)
+                if (GameManager.Instance != null)
                 {
                     GameManager.Instance.OnPlayerDied();
                 }
