@@ -9,7 +9,6 @@ public class SpawnManager : MonoBehaviour
     [Tooltip("Boss Spawn Point")]
     public Transform bossSpawnPoint;
 
-    // מחזיר נקודת ספאון רנדומלית לאויבים רגילים
     public Transform GetRandomSpawnPoint()
     {
         if (enemySpawnPoints == null || enemySpawnPoints.Length == 0)
@@ -22,7 +21,6 @@ public class SpawnManager : MonoBehaviour
         return enemySpawnPoints[index];
     }
 
-    // Spawns a regular enemy at a random spawn point (פונקציה אופציונלית)
     public GameObject SpawnEnemy(GameObject enemyPrefab)
     {
         if (enemyPrefab == null)
@@ -34,7 +32,6 @@ public class SpawnManager : MonoBehaviour
         Transform sp = GetRandomSpawnPoint();
         if (sp == null)
         {
-            // כבר הודענו בלוג ונחזיר null
             return null;
         }
 
@@ -55,7 +52,6 @@ public class SpawnManager : MonoBehaviour
 
         Transform sp = bossSpawnPoint;
 
-        // fallback אם אין נקודת ספאון לבוס
         if (sp == null)
         {
             Debug.LogWarning("SpawnManager: No boss spawn point found! Using enemy spawn point as fallback.");

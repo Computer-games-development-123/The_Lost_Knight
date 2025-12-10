@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
 
     public float MaxHealth => maxHealth;
     public float CurrentHealth => currentHealth;
+    public bool IsAtFullHealth => currentHealth >= maxHealth;
 
     private PlayerController playerController;
 
@@ -20,7 +21,6 @@ public class PlayerHealth : MonoBehaviour
 
     private void Start()
     {
-        // Initialize health to max at start
         currentHealth = maxHealth;
     }
 
@@ -29,7 +29,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (playerController != null && playerController.IsInvulnerable)
         {
-            return; // Respect i-frames from PlayerController
+            return; 
         }
 
         currentHealth -= amount;
@@ -50,10 +50,16 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void Heal(float amount)
+     public void Heal(float amount)
     {
-        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
-        Debug.Log($"Healed {amount}. HP: {currentHealth}/{maxHealth}");
+        if (amount <= 0) return;
+        if (currentHealth <= 0) return; // dead, can't heal
+
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+
+        // TODO: notify health UI if needed
     }
 
     public void SetMaxHealth(float newMaxHealth)

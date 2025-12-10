@@ -17,5 +17,7 @@ MonoBehaviour:
   lines:
   - "So... you\u2019ve met George, huh?"
   - "Yeah, I don\u2019t like him either."
+  - You must beat him in order to escape the forest..
+  - But dont worry, i got what you need.
   - Take this and finish him for good.
   pauseGameDuringDialogue: 1

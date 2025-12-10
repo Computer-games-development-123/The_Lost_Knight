@@ -25,7 +25,6 @@ public class DialogueManager : MonoBehaviour
     private Coroutine _typingRoutine;
     private Action _onComplete;
 
-    // Optional: lookup by ID (if you ever want Play("YOJI_FIRST"))
     private readonly Dictionary<string, DialogueData> _byId =
         new Dictionary<string, DialogueData>();
 

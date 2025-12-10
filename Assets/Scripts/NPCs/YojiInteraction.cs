@@ -13,17 +13,6 @@ public class YojiInteraction : MonoBehaviour
 
     private void Awake()
     {
-        // Try to auto-find the prompt if not assigned in the Inspector
-        if (interactionPrompt == null)
-        {
-            Transform child = transform.Find("InteractionPrompt");
-            if (child != null)
-            {
-                interactionPrompt = child.gameObject;
-            }
-        }
-
-        // Make sure it's hidden at start
         if (interactionPrompt != null)
             interactionPrompt.SetActive(false);
     }
