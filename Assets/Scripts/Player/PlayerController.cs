@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed = 5f;
-    public float jumpForce = 9f;
+    public float jumpForce = 20f;
     public LayerMask groundLayer;
     public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
@@ -36,7 +36,10 @@ public class PlayerController : MonoBehaviour
     private float invulnerabilityTimer;
     private bool facingRight = true;
     private PlayerHealth playerHealth;
+    
     public bool IsInvulnerable => isInvulnerable;
+    public bool IsGrounded => isGrounded;
+
 
     void Start()
     {
@@ -75,7 +78,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Use Potion (allowed during knockback)
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             GameManager.Instance?.UsePotion(playerHealth);
         }

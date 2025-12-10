@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65f41baec2f417341ac1ddde88d7562b, type: 3}
-  m_Name: OpenindDialogue
+  m_Name: BattleStartDialogue
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
-  id: Controls
-  speakerName: Press F to Continue.
+  id: BattleStart
+  speakerName: Press F to continue.
   lines:
-  - Press Arrows to Move.
-  - Press F to Interact.
+  - Press X to Attack, SPACEBAR to Jump.
+  - Your HP is in the TOP-LEFT corner.
+  - Enemies are approaching...
   pauseGameDuringDialogue: 1

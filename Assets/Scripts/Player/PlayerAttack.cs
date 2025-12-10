@@ -15,10 +15,28 @@ public class PlayerAttack : MonoBehaviour
 
     [Header("References")]
     public Animator anim;
-    public Transform attackPoint;
+
+    [Header("Attack Points")]
+    public Transform attackForwardPoint;
+    public Transform attackDownPoint;
+
+    [Header("Pogo Settings")]
+    public float pogoBounceForce = 15f;
+    public bool allowPogoChain = true;    // can chain multiple pogos
+
 
     private float lastAttackTime = 0f;
     private float lastWaveOfLightTime = 0f;
+
+    // cached refs
+    private PlayerController playerController;
+    private Rigidbody2D rb;
+
+    void Awake()
+    {
+        playerController = GetComponent<PlayerController>();
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     void Update()
     {
@@ -28,12 +46,14 @@ public class PlayerAttack : MonoBehaviour
             swordDamage = GameManager.Instance.swordDamage;
         }
 
+        // Normal / downward attack
         if (Input.GetKeyDown(KeyCode.X) && Time.time >= lastAttackTime + attackCooldown)
         {
-            Attack();
+            HandleAttack();
             lastAttackTime = Time.time;
         }
 
+        // Wave of Light
         if (Input.GetKeyDown(KeyCode.C) && Time.time >= lastWaveOfLightTime + waveOfLightCooldown)
         {
             if (GameManager.Instance != null && GameManager.Instance.hasWaveOfLight)
@@ -47,44 +67,113 @@ public class PlayerAttack : MonoBehaviour
             }
         }
 
-
         // Update facing direction
         UpdateFacingDirection();
     }
 
-    void Attack()
+    // Decide which attack to use
+    void HandleAttack()
     {
-        if (attackPoint == null)
+        float verticalInput = Input.GetAxisRaw("Vertical");
+        bool isGrounded = playerController != null && playerController.IsGrounded;
+
+        // In air + pressing DOWN => downward attack
+        if (!isGrounded && verticalInput < -0.5f)
         {
-            Debug.LogError("AttackPoint is NULL!");
+            DownwardAttack();
+        }
+        else
+        {
+            ForwardAttack();
+        }
+    }
+
+    // === FORWARD ATTACK (existing behaviour) ===
+    void ForwardAttack()
+    {
+        if (attackForwardPoint == null)
+        {
+            Debug.LogError("AttackForwardPoint is NULL!");
             return;
         }
 
-        Debug.Log($"Attacking at {attackPoint.position} with range {attackRange}, layer: {enemyLayer.value}");
+        if (anim != null)
+            anim.SetTrigger("Attack");
 
-        // Detect enemies in range
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackForwardPoint.position, attackRange, enemyLayer);
 
-        Debug.Log($"Found {hitEnemies.Length} enemies in range");
+        Debug.Log($"[ForwardAttack] Found {hitEnemies.Length} enemies in range");
 
         foreach (Collider2D enemy in hitEnemies)
         {
-            Debug.Log($"Hit: {enemy.gameObject.name}");
-
-            EnemyBase enemyScript = enemy.GetComponent<EnemyBase>();
-            if (enemyScript != null)
-            {
-                enemyScript.TakeDamage(swordDamage);
-                continue;
-            }
-            BossBase bossScript = enemy.GetComponent<BossBase>();
-            if (bossScript != null)
-            {
-                bossScript.TakeDamage(swordDamage);
-                continue;
-            }
-            Debug.LogWarning($"{enemy.name} has NO EnemyBase or BossBase component!");
+            Debug.Log($"[ForwardAttack] Hit: {enemy.gameObject.name}");
+            DealDamageToEnemy(enemy);
         }
+    }
+
+    // === DOWNWARD ATTACK ===
+    void DownwardAttack()
+    {
+        if (attackDownPoint == null)
+        {
+            Debug.LogError("AttackDownPoint is NULL!");
+            return;
+        }
+
+        if (anim != null)
+            anim.SetTrigger("AttackDown");   // make sure this trigger exists in Animator
+
+        // Hitbox below the player
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(
+            attackDownPoint.position,
+            attackRange,
+            enemyLayer
+        );
+
+        Debug.Log($"[DownwardAttack] Found {hitEnemies.Length} enemies in range");
+
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            Debug.Log($"[DownwardAttack] Hit: {enemy.gameObject.name}");
+            DealDamageToEnemy(enemy);
+        }
+
+        // === POGO LOGIC ===
+        // Only pogo if we actually hit something
+        if (hitEnemies.Length > 0 && rb != null)
+        {
+            // Hard-set vertical speed up (clean bounce)
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, pogoBounceForce);
+
+            // Allow immediate next attack (so you can chain pogos)
+            if (allowPogoChain)
+            {
+                // Pretend the cooldown already passed
+                lastAttackTime = Time.time - attackCooldown;
+            }
+        }
+    }
+
+
+    // Shared damage logic
+    void DealDamageToEnemy(Collider2D enemy)
+    {
+        EnemyBase enemyScript = enemy.GetComponent<EnemyBase>();
+        if (enemyScript != null)
+        {
+            Vector2 knockDir = (enemy.transform.position - transform.position).normalized;
+            enemyScript.TakeDamage(swordDamage, knockDir);
+            return;
+        }
+
+        BossBase bossScript = enemy.GetComponent<BossBase>();
+        if (bossScript != null)
+        {
+            bossScript.TakeDamage(swordDamage);
+            return;
+        }
+
+        Debug.LogWarning($"{enemy.name} has NO EnemyBase or BossBase component!");
     }
 
     void ShootWaveOfLight()
@@ -122,7 +211,6 @@ public class PlayerAttack : MonoBehaviour
 
     void UpdateFacingDirection()
     {
-        // Get horizontal input
         float moveInput = Input.GetAxisRaw("Horizontal");
 
         if (moveInput > 0)
@@ -135,13 +223,15 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    // Visualize attack range in editor
+    // Visualize attack ranges in editor
     void OnDrawGizmosSelected()
     {
-        if (attackPoint == null)
-            return;
-
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+
+        if (attackForwardPoint != null)
+            Gizmos.DrawWireSphere(attackForwardPoint.position, attackRange);
+
+        if (attackDownPoint != null)
+            Gizmos.DrawWireSphere(attackDownPoint.position, attackRange);
     }
 }

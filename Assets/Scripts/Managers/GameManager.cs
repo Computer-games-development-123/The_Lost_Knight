@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     public int potions = 5;
     public int coins = 0;
 
+    [Header("Player References")]
+    [SerializeField] private PlayerHealth playerHealth;
+
     [Header("Abilities")]
     public bool hasTeleport = false;
     public bool hasWaveOfLight = false;
@@ -73,18 +76,27 @@ public class GameManager : MonoBehaviour
 
     public void UsePotion(PlayerHealth playerHealth)
     {
-        if (potions > 0 && playerHealth != null)
-        {
-            float healAmount = 20f;
-            playerHealth.Heal(healAmount);
-            potions--;
-            Debug.Log($"Potion used. Potions left: {potions}");
-        }
-        else if (potions <= 0)
+        if (playerHealth == null) return;
+
+        if (potions <= 0)
         {
             Debug.Log("No potions left!");
+            return;
         }
+
+        if (playerHealth.IsAtFullHealth)
+        {
+            Debug.Log("Already at full health!");
+            return;
+        }
+
+        float healAmount = 10f;
+        playerHealth.Heal(healAmount);
+        potions--;
+
+        Debug.Log($"Potion used. Healed {healAmount}. Potions left: {potions}");
     }
+
 
     public bool HasTalkedTo(string npcName)
     {

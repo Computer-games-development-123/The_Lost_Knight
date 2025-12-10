@@ -13,6 +13,12 @@ public class EnemyBase : MonoBehaviour
     public float fallbackMoveSpeed = 2f;
     public int fallbackCoinsDropped = 1;
 
+    [Header("Knockback Settings")]
+    public float knockbackForce = 8f;
+    public float knockbackDuration = 0.12f;
+
+    private bool isKnocked = false;
+
     [Header("References")]
     public WaveManager waveManager;
 
@@ -73,7 +79,7 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (isDead || player == null) return;
+        if (isDead || player == null || isKnocked) return;
 
         // Execute behavior based on type
         if (enemyData != null)
@@ -187,6 +193,43 @@ public class EnemyBase : MonoBehaviour
         {
             Die();
         }
+    }
+
+    public virtual void TakeDamage(int damage, Vector2 hitDirection)
+    {
+        if (isDead) return;
+
+        currentHP -= damage;
+
+        // Hurt animation
+        if (anim != null)
+            anim.SetTrigger("Hurt");
+
+        StartCoroutine(FlashRed());
+
+        // Apply knockback
+        StartCoroutine(ApplyKnockback(hitDirection));
+
+        if (currentHP <= 0)
+            Die();
+    }
+
+    private System.Collections.IEnumerator ApplyKnockback(Vector2 direction)
+    {
+        isKnocked = true;
+
+        // Reset velocity so it feels responsive
+        rb.linearVelocity = Vector2.zero;
+
+        // Apply knockback impulse
+        rb.AddForce(direction.normalized * knockbackForce, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(knockbackDuration);
+
+        // Stop sliding
+        rb.linearVelocity = Vector2.zero;
+
+        isKnocked = false;
     }
 
     protected System.Collections.IEnumerator FlashRed()
