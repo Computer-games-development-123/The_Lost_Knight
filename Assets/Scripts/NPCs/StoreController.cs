@@ -1,32 +1,71 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
-public class StoreController : MonoBehaviour
+public class ListStoreController : MonoBehaviour
 {
     [Header("Store UI")]
     public GameObject storePanel;
+    public TextMeshProUGUI storeTitleText;
     public TextMeshProUGUI coinsText;
+    public Transform itemListContainer;
+    public GameObject storeItemRowPrefab;
 
-    [Header("Store Items")]
-    public ShopItem[] shopItems;
+    [Header("Store Items Data")]
+    public StoreItemData[] storeItems;
 
-    [Header("Item UI Elements")]
-    public Button[] purchaseButtons;
-    public TextMeshProUGUI[] itemNameTexts;
-    public TextMeshProUGUI[] itemCostTexts;
-    public Image[] itemIcons;
+    [Header("Visual Settings")]
+    public Sprite lockedItemIcon;
+    public Color normalTextColor = Color.white;
+    public Color freeTextColor = new Color(0.5f, 1f, 0.5f);
 
-    private bool storeUnlocked = false;
+    private List<StoreItemRow> itemRows = new List<StoreItemRow>();
     private bool isStoreOpen = false;
+
+    [System.Serializable]
+    public class StoreItemData
+    {
+        public string itemName;
+        [TextArea(1, 3)]
+        public string description;
+        public int costPerUnit;
+        public int maxStock; // -1 for unlimited
+        public Sprite itemIcon;
+        public ShopItem.ShopItemType itemType;
+
+        [HideInInspector] public int currentStock;
+
+        public void Initialize()
+        {
+            currentStock = maxStock;
+        }
+    }
+
+    private class StoreItemRow
+    {
+        public GameObject rowObject;
+        public Image itemIcon;
+        public TextMeshProUGUI itemNameText;
+        public TextMeshProUGUI descriptionText;
+        public TextMeshProUGUI priceText;
+        public TextMeshProUGUI stockText;
+        public Button purchaseButton;
+        public TextMeshProUGUI buttonText;
+        public StoreItemData itemData;
+    }
 
     void Start()
     {
         if (storePanel != null)
             storePanel.SetActive(false);
 
-        // Initialize store items
-        SetupStoreUI();
+        foreach (var item in storeItems)
+        {
+            item.Initialize();
+        }
+
+        BuildStoreUI();
     }
 
     void Update()
@@ -34,8 +73,8 @@ public class StoreController : MonoBehaviour
         if (isStoreOpen)
         {
             UpdateCoinsDisplay();
+            RefreshAllItems();
 
-            // Close with ESC
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 CloseStore();
@@ -43,41 +82,93 @@ public class StoreController : MonoBehaviour
         }
     }
 
-    void SetupStoreUI()
+    void BuildStoreUI()
     {
-        // Setup each item button
-        for (int i = 0; i < purchaseButtons.Length && i < shopItems.Length; i++)
+        foreach (Transform child in itemListContainer)
         {
-            int index = i; // Capture for lambda
+            Destroy(child.gameObject);
+        }
+        itemRows.Clear();
 
-            if (purchaseButtons[i] != null)
+        foreach (var itemData in storeItems)
+        {
+            GameObject rowObj = Instantiate(storeItemRowPrefab, itemListContainer);
+            StoreItemRow row = new StoreItemRow
             {
-                purchaseButtons[i].onClick.AddListener(() => PurchaseItem(index));
+                rowObject = rowObj,
+                itemData = itemData
+            };
+
+            // IMPROVED: Search recursively for components
+            row.itemIcon = FindChildByName<Image>(rowObj.transform, "ItemIcon");
+            
+            // Find all TextMeshPro components and match by name
+            TextMeshProUGUI[] allTexts = rowObj.GetComponentsInChildren<TextMeshProUGUI>(true);
+            foreach (var text in allTexts)
+            {
+                string textName = text.gameObject.name;
+                if (textName == "ItemName") row.itemNameText = text;
+                else if (textName == "Description") row.descriptionText = text;
+                else if (textName == "Price") row.priceText = text;
+                else if (textName == "Stock") row.stockText = text;
+                else if (textName.Contains("ButtonText") || textName.Contains("Text") && text.GetComponentInParent<Button>())
+                    row.buttonText = text;
             }
 
-            // Display item info
-            if (itemNameTexts[i] != null && shopItems[i] != null)
-                itemNameTexts[i].text = shopItems[i].itemName;
+            row.purchaseButton = rowObj.GetComponentInChildren<Button>(true);
+            if (row.buttonText == null && row.purchaseButton != null)
+            {
+                row.buttonText = row.purchaseButton.GetComponentInChildren<TextMeshProUGUI>();
+            }
 
-            if (itemCostTexts[i] != null && shopItems[i] != null)
-                itemCostTexts[i].text = $"{shopItems[i].cost} Coins";
+            // Log what we found for debugging
+            Debug.Log($"Row created for {itemData.itemName}:");
+            Debug.Log($"  Icon: {(row.itemIcon != null ? "✓" : "✗")}");
+            Debug.Log($"  Name: {(row.itemNameText != null ? "✓" : "✗")}");
+            Debug.Log($"  Desc: {(row.descriptionText != null ? "✓" : "✗")}");
+            Debug.Log($"  Price: {(row.priceText != null ? "✓" : "✗")}");
+            Debug.Log($"  Stock: {(row.stockText != null ? "✓" : "✗")}");
+            Debug.Log($"  Button: {(row.purchaseButton != null ? "✓" : "✗")}");
 
-            if (itemIcons[i] != null && shopItems[i] != null && shopItems[i].itemIcon != null)
-                itemIcons[i].sprite = shopItems[i].itemIcon;
+            if (row.purchaseButton != null)
+            {
+                row.purchaseButton.onClick.AddListener(() => PurchaseItem(row));
+            }
+
+            itemRows.Add(row);
         }
+
+        RefreshAllItems();
     }
 
-    public void UnlockStore()
+    // Helper to find child by name recursively
+    private T FindChildByName<T>(Transform parent, string name) where T : Component
     {
-        storeUnlocked = true;
-        Debug.Log("Store has been unlocked!");
+        foreach (Transform child in parent)
+        {
+            if (child.name == name)
+            {
+                T component = child.GetComponent<T>();
+                if (component != null) return component;
+            }
+
+            T result = FindChildByName<T>(child, name);
+            if (result != null) return result;
+        }
+        return null;
     }
 
     public void OpenStore()
     {
-        if (!storeUnlocked)
+        if (StoreStateManager.Instance == null)
         {
-            Debug.Log("Store is locked! Complete first dialogue with Yoji.");
+            Debug.LogError("StoreStateManager not found!");
+            return;
+        }
+
+        if (!StoreStateManager.Instance.IsStoreUnlocked())
+        {
+            Debug.Log("Store is locked!");
             return;
         }
 
@@ -87,8 +178,11 @@ public class StoreController : MonoBehaviour
             storePanel.SetActive(true);
         }
 
-        Time.timeScale = 0f; // Pause game
+        Time.timeScale = 0f;
+        UpdateStoreTitle();
         UpdateCoinsDisplay();
+        RefreshAllItems();
+
         Debug.Log("Store opened!");
     }
 
@@ -100,41 +194,202 @@ public class StoreController : MonoBehaviour
             storePanel.SetActive(false);
         }
 
-        Time.timeScale = 1f; // Resume game
+        Time.timeScale = 1f;
         Debug.Log("Store closed!");
+    }
+
+    void UpdateStoreTitle()
+    {
+        if (storeTitleText != null && StoreStateManager.Instance != null)
+        {
+            storeTitleText.text = StoreStateManager.Instance.GetStateDisplayName();
+        }
     }
 
     void UpdateCoinsDisplay()
     {
         if (coinsText != null && GameManager.Instance != null)
         {
-            coinsText.text = $"Coins: {GameManager.Instance.coins}";
+            if (StoreStateManager.Instance != null && StoreStateManager.Instance.IsStoreFree())
+            {
+                coinsText.text = "Everything is Free - Honor Yoji's Memory";
+                coinsText.color = freeTextColor;
+            }
+            else
+            {
+                coinsText.text = $"Coins: {GameManager.Instance.coins}";
+                coinsText.color = normalTextColor;
+            }
         }
     }
 
-    public void PurchaseItem(int itemIndex)
+    void RefreshAllItems()
     {
-        if (itemIndex < 0 || itemIndex >= shopItems.Length) return;
-        if (GameManager.Instance == null) return;
-        if (shopItems[itemIndex] == null) return;
+        if (StoreStateManager.Instance == null) return;
 
-        ShopItem item = shopItems[itemIndex];
+        bool isFreeStore = StoreStateManager.Instance.IsStoreFree();
+        bool swordRevealed = StoreStateManager.Instance.IsSwordOfLightRevealed();
 
-        // Check if player has enough coins
-        if (GameManager.Instance.coins < item.cost)
+        foreach (var row in itemRows)
         {
-            Debug.Log($"Not enough coins! Need {item.cost}, have {GameManager.Instance.coins}");
+            if (row.itemData == null) continue;
+
+            bool isSwordOfLight = row.itemData.itemType == ShopItem.ShopItemType.SwordOfLight;
+            bool isLocked = isSwordOfLight && !swordRevealed;
+            bool outOfStock = row.itemData.currentStock == 0 && row.itemData.maxStock != -1;
+
+            if (outOfStock)
+            {
+                row.rowObject.SetActive(false);
+                continue;
+            }
+            else
+            {
+                row.rowObject.SetActive(true);
+            }
+
+            // Update icon
+            if (row.itemIcon != null)
+            {
+                if (isLocked && lockedItemIcon != null)
+                {
+                    row.itemIcon.sprite = lockedItemIcon;
+                }
+                else if (row.itemData.itemIcon != null)
+                {
+                    row.itemIcon.sprite = row.itemData.itemIcon;
+                }
+                row.itemIcon.color = Color.white;
+            }
+
+            // Update item name
+            if (row.itemNameText != null)
+            {
+                row.itemNameText.text = isLocked ? "???" : row.itemData.itemName;
+                row.itemNameText.color = isFreeStore ? freeTextColor : normalTextColor;
+            }
+
+            // Update description
+            if (row.descriptionText != null)
+            {
+                row.descriptionText.text = isLocked ? "A mysterious item..." : row.itemData.description;
+            }
+
+            // Update price
+            if (row.priceText != null)
+            {
+                if (isLocked)
+                {
+                    row.priceText.text = "??? Coins";
+                }
+                else if (isFreeStore)
+                {
+                    row.priceText.text = "FREE";
+                    row.priceText.color = freeTextColor;
+                }
+                else
+                {
+                    row.priceText.text = $"{row.itemData.costPerUnit} coins";
+                    row.priceText.color = normalTextColor;
+                }
+            }
+
+            // Update stock
+            if (row.stockText != null)
+            {
+                if (isLocked)
+                {
+                    row.stockText.text = "Stock: ?";
+                }
+                else if (row.itemData.maxStock == -1)
+                {
+                    row.stockText.text = "Stock: ∞";
+                }
+                else
+                {
+                    row.stockText.text = $"New Stock: {row.itemData.currentStock}";
+                }
+            }
+
+            // Update button
+            if (row.purchaseButton != null)
+            {
+                if (isLocked)
+                {
+                    row.purchaseButton.interactable = false;
+                    if (row.buttonText != null)
+                        row.buttonText.text = "LOCKED";
+                }
+                else
+                {
+                    bool canAfford = isFreeStore || (GameManager.Instance != null &&
+                                     GameManager.Instance.coins >= row.itemData.costPerUnit);
+
+                    row.purchaseButton.interactable = canAfford;
+
+                    if (row.buttonText != null)
+                    {
+                        row.buttonText.text = isFreeStore ? "TAKE" : "BUY";
+                    }
+                }
+            }
+        }
+    }
+
+    void PurchaseItem(StoreItemRow row)
+    {
+        if (GameManager.Instance == null || StoreStateManager.Instance == null) return;
+        if (row.itemData == null) return;
+
+        bool isSwordOfLight = row.itemData.itemType == ShopItem.ShopItemType.SwordOfLight;
+        bool swordRevealed = StoreStateManager.Instance.IsSwordOfLightRevealed();
+
+        if (isSwordOfLight && !swordRevealed)
+        {
+            Debug.Log("This item is locked!");
             return;
         }
 
-        // Deduct coins
-        GameManager.Instance.SpendCoins(item.cost);
+        if (row.itemData.maxStock != -1 && row.itemData.currentStock <= 0)
+        {
+            Debug.Log("Out of stock!");
+            return;
+        }
 
-        // Find the player's health component
+        bool isFree = StoreStateManager.Instance.IsStoreFree();
+        int cost = isFree ? 0 : row.itemData.costPerUnit;
+
+        if (!isFree && GameManager.Instance.coins < cost)
+        {
+            Debug.Log($"Not enough coins! Need {cost}, have {GameManager.Instance.coins}");
+            return;
+        }
+
+        if (!isFree)
+        {
+            GameManager.Instance.SpendCoins(cost);
+        }
+
+        ApplyItemEffect(row.itemData.itemType);
+
+        if (row.itemData.maxStock != -1)
+        {
+            row.itemData.currentStock--;
+            Debug.Log($"{row.itemData.itemName} stock remaining: {row.itemData.currentStock}");
+        }
+
+        UpdateCoinsDisplay();
+        RefreshAllItems();
+
+        string action = isFree ? "Taken" : "Purchased";
+        Debug.Log($"{action}: {row.itemData.itemName}!");
+    }
+
+    void ApplyItemEffect(ShopItem.ShopItemType itemType)
+    {
         PlayerHealth playerHealth = FindFirstObjectByType<PlayerHealth>();
 
-        // Apply item effect
-        switch (item.itemType)
+        switch (itemType)
         {
             case ShopItem.ShopItemType.HPUpgrade:
                 if (playerHealth != null)
@@ -142,12 +397,12 @@ public class StoreController : MonoBehaviour
                     playerHealth.SetMaxHealth(playerHealth.MaxHealth + 15);
                     playerHealth.Heal(15);
                 }
-                Debug.Log("Purchased HP Upgrade! +15 Max HP");
+                Debug.Log("HP Upgrade applied! +15 Max HP");
                 break;
 
             case ShopItem.ShopItemType.DamageUpgrade:
                 GameManager.Instance.swordDamage += 2;
-                Debug.Log("Purchased Damage Upgrade! +2 Sword Damage");
+                Debug.Log("Damage Upgrade applied! +2 Sword Damage");
                 break;
 
             case ShopItem.ShopItemType.MagicArmor:
@@ -155,28 +410,26 @@ public class StoreController : MonoBehaviour
                 {
                     float currentMaxHP = playerHealth.MaxHealth;
                     playerHealth.SetMaxHealth(currentMaxHP * 2);
-                    playerHealth.Heal(currentMaxHP); // Heal by the amount we just added
+                    playerHealth.Heal(currentMaxHP);
                 }
-                Debug.Log("Purchased Magic Armor! HP Doubled!");
+                Debug.Log("Magic Armor applied! HP Doubled!");
                 break;
 
             case ShopItem.ShopItemType.FlashHelmet:
                 GameManager.Instance.hasTeleport = true;
-                Debug.Log("Purchased Flash Helmet! Teleport ability unlocked!");
+                Debug.Log("Flash Helmet applied! Teleport unlocked!");
                 break;
 
             case ShopItem.ShopItemType.SwordOfLight:
                 GameManager.Instance.hasWaveOfLight = true;
                 GameManager.Instance.swordDamage *= 2;
-                Debug.Log("Purchased Sword of Light! Damage doubled + Wave of Light unlocked!");
+                Debug.Log("Sword of Light applied! Damage doubled + Wave of Light unlocked!");
                 break;
 
             case ShopItem.ShopItemType.Potion:
-                GameManager.Instance.potions++;
-                Debug.Log("Purchased Potion!");
+                GameManager.Instance.AddPotion(1);
+                Debug.Log("Potion added to inventory!");
                 break;
         }
-
-        UpdateCoinsDisplay();
     }
 }

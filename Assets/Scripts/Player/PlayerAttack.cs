@@ -21,14 +21,14 @@ public class PlayerAttack : MonoBehaviour
     public Transform attackDownPoint;
 
     [Header("Pogo Settings")]
+    public float pogoAttackRange = 2f;  // BIGGER hitbox for pogo
     public float pogoBounceForce = 15f;
-    public bool allowPogoChain = true;    // can chain multiple pogos
-
+    public bool allowPogoChain = true;
+    public float pogoForgivenessWindow = 0.1f; // Can pogo slightly early
 
     private float lastAttackTime = 0f;
     private float lastWaveOfLightTime = 0f;
 
-    // cached refs
     private PlayerController playerController;
     private Rigidbody2D rb;
 
@@ -40,7 +40,6 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        // Get damage from GameManager
         if (GameManager.Instance != null)
         {
             swordDamage = GameManager.Instance.swordDamage;
@@ -67,11 +66,9 @@ public class PlayerAttack : MonoBehaviour
             }
         }
 
-        // Update facing direction
         UpdateFacingDirection();
     }
 
-    // Decide which attack to use
     void HandleAttack()
     {
         float verticalInput = Input.GetAxisRaw("Vertical");
@@ -88,7 +85,6 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    // === FORWARD ATTACK (existing behaviour) ===
     void ForwardAttack()
     {
         if (attackForwardPoint == null)
@@ -102,7 +98,7 @@ public class PlayerAttack : MonoBehaviour
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackForwardPoint.position, attackRange, enemyLayer);
 
-        Debug.Log($"[ForwardAttack] Found {hitEnemies.Length} enemies in range");
+        Debug.Log($"[ForwardAttack] Found {hitEnemies.Length} enemies");
 
         foreach (Collider2D enemy in hitEnemies)
         {
@@ -111,7 +107,6 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    // === DOWNWARD ATTACK ===
     void DownwardAttack()
     {
         if (attackDownPoint == null)
@@ -121,41 +116,44 @@ public class PlayerAttack : MonoBehaviour
         }
 
         if (anim != null)
-            anim.SetTrigger("AttackDown");   // make sure this trigger exists in Animator
+            anim.SetTrigger("AttackDown");
 
-        // Hitbox below the player
+        // BIGGER hitbox for pogo (easier to hit)
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(
             attackDownPoint.position,
-            attackRange,
+            pogoAttackRange,  // Use the bigger range
             enemyLayer
         );
 
-        Debug.Log($"[DownwardAttack] Found {hitEnemies.Length} enemies in range");
+        Debug.Log($"[DownwardAttack/Pogo] Found {hitEnemies.Length} enemies in range {pogoAttackRange}");
 
         foreach (Collider2D enemy in hitEnemies)
         {
-            Debug.Log($"[DownwardAttack] Hit: {enemy.gameObject.name}");
+            Debug.Log($"[DownwardAttack/Pogo] Hit: {enemy.gameObject.name}");
             DealDamageToEnemy(enemy);
         }
 
-        // === POGO LOGIC ===
-        // Only pogo if we actually hit something
+        // POGO LOGIC - Only if we hit something
         if (hitEnemies.Length > 0 && rb != null)
         {
-            // Hard-set vertical speed up (clean bounce)
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, pogoBounceForce);
-
-            // Allow immediate next attack (so you can chain pogos)
-            if (allowPogoChain)
-            {
-                // Pretend the cooldown already passed
-                lastAttackTime = Time.time - attackCooldown;
-            }
+            PerformPogo();
         }
     }
 
+    void PerformPogo()
+    {
+        // Hard-set vertical speed up (clean bounce)
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, pogoBounceForce);
 
-    // Shared damage logic
+        Debug.Log($"🦘 POGO! Bouncing with force {pogoBounceForce}");
+
+        // Allow immediate next attack (chain pogos)
+        if (allowPogoChain)
+        {
+            lastAttackTime = Time.time - attackCooldown;
+        }
+    }
+
     void DealDamageToEnemy(Collider2D enemy)
     {
         EnemyBase enemyScript = enemy.GetComponent<EnemyBase>();
@@ -184,25 +182,21 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
 
-        // Play special attack animation
         if (anim != null)
         {
             anim.SetTrigger("WaveOfLight");
         }
 
-        // Instantiate projectile
         GameObject wave = Instantiate(waveOfLightPrefab, firePoint.position, Quaternion.identity);
 
-        // Set projectile direction based on facing direction
         WaveOfLightProjectile projectile = wave.GetComponent<WaveOfLightProjectile>();
         if (projectile != null)
         {
             projectile.direction = new Vector2(Mathf.Sign(transform.localScale.x), 0f);
 
-            // Set damage from GameManager
             if (GameManager.Instance != null)
             {
-                projectile.damage = GameManager.Instance.swordDamage * 5; // Wave does 5x sword damage
+                projectile.damage = GameManager.Instance.swordDamage * 5;
             }
         }
 
@@ -223,15 +217,16 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    // Visualize attack ranges in editor
     void OnDrawGizmosSelected()
     {
+        // Forward attack (red)
         Gizmos.color = Color.red;
-
         if (attackForwardPoint != null)
             Gizmos.DrawWireSphere(attackForwardPoint.position, attackRange);
 
+        // Pogo attack (green - BIGGER)
+        Gizmos.color = Color.green;
         if (attackDownPoint != null)
-            Gizmos.DrawWireSphere(attackDownPoint.position, attackRange);
+            Gizmos.DrawWireSphere(attackDownPoint.position, pogoAttackRange);
     }
 }

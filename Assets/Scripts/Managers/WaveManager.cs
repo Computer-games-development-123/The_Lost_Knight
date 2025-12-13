@@ -21,6 +21,9 @@ public class WaveManager : MonoBehaviour
     public Transform bossSpawnPoint;
     public string nextSceneName = "ForestHub"; // Scene to load after boss
 
+    [Header("Portal Spawner")]
+    public PostBossPortalSpawner portalSpawner; // NEW: Assign PortalSpawner here
+
     [Header("Dialogues")]
     public DialogueData beforeWaveDialogue;
     public DialogueData afterWaveDialogue;
@@ -83,7 +86,6 @@ public class WaveManager : MonoBehaviour
         waveInProgress = false;
     }
 
-    // FIXED METHOD - Called by EnemyBase when enemy dies
     public void OnEnemyDied(EnemyBase enemy)
     {
         enemiesAlive--;
@@ -115,13 +117,21 @@ public class WaveManager : MonoBehaviour
         if (bossPrefab != null && bossSpawnPoint != null)
         {
             bossSpawned = true;
-            GameObject boss = Instantiate(bossPrefab, bossSpawnPoint.position, Quaternion.identity);
+            GameObject bossObj = Instantiate(bossPrefab, bossSpawnPoint.position, Quaternion.identity);
 
             // Register this WaveManager with the boss
-            BossBase bossScript = boss.GetComponent<BossBase>();
+            BossBase bossScript = bossObj.GetComponent<BossBase>();
             if (bossScript != null)
             {
                 bossScript.waveManager = this;
+            }
+
+            // NEW: If this is George, assign the portal spawner
+            GeorgeBoss georgeScript = bossObj.GetComponent<GeorgeBoss>();
+            if (georgeScript != null && portalSpawner != null)
+            {
+                georgeScript.portalSpawner = portalSpawner;
+                Debug.Log("✅ Portal spawner assigned to George!");
             }
 
             Debug.Log("Boss spawned!");
@@ -132,24 +142,11 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    // FIXED METHOD - Called by BossBase when boss dies
     public void OnBossDied(BossBase boss)
     {
-        Debug.Log("Boss defeated! Loading next scene...");
-        StartCoroutine(LoadNextSceneAfterDelay(3f));
-    }
-
-    IEnumerator LoadNextSceneAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        if (!string.IsNullOrEmpty(nextSceneName))
-        {
-            SceneManager.LoadScene(nextSceneName);
-        }
-        else
-        {
-            Debug.LogWarning("Next scene name not set!");
-        }
+        Debug.Log("Boss defeated!");
+        
+        // NOTE: George now handles scene transition via portal, not WaveManager
+        // For other bosses, you might still want direct scene load
     }
 }

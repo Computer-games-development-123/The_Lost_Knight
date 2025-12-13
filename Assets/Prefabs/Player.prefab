@@ -257,6 +257,7 @@ MonoBehaviour:
   knockbackUpForce: 2
   knockbackDuration: 0.15
   teleportDistance: 4.5
+  healAmountPerPotion: 10
 --- !u!114 &954635166038857454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d7ad79d045cc16469e0b859cbd00702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  deathDialogue: {fileID: 0}
+  deathDialogue: {fileID: 11400000, guid: f749aff74ce230c418417cce464b7d87, type: 2}
   maxHealth: 50
   currentHealth: 50
 --- !u!1 &4843048615526819683

@@ -271,8 +271,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScenePortal
   targetSceneName: ForestHub
-  promptText: {fileID: 1670264108}
   interactKey: 102
+  interactionPrompt: {fileID: 1670264108}
+  promptText: Press F to Enter
+  fadeWaitTime: 1.2
+  portalAnimator: {fileID: 0}
+  portalParticles: {fileID: 0}
+  showDebugLogs: 0
 --- !u!1 &221557011
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,7 +891,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.31, y: -1.16}
+  m_AnchoredPosition: {x: -0.31, y: 2}
   m_SizeDelta: {x: 34, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1700590874
@@ -1106,6 +1111,8 @@ MonoBehaviour:
   fallbackDamage: 5
   fallbackMoveSpeed: 2
   fallbackCoinsDropped: 1
+  knockbackForce: 8
+  knockbackDuration: 0.12
   waveManager: {fileID: 0}
   hitsToTriggerDialogue: 3
   hitsNeededToUnlockPortal: 3

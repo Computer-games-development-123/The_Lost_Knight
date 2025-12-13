@@ -18,8 +18,8 @@ public class TutorialDummyEnemy : EnemyBase
     {
         base.Start();
 
-        // Dummy never really dies
-        currentHP = MaxHP;
+        // Dummy never really dies - set very high HP
+        currentHP = 99999;
 
         // Make sure portal starts hidden
         if (portalToEnable != null)
@@ -34,7 +34,18 @@ public class TutorialDummyEnemy : EnemyBase
         // (do NOT call base.Update())
     }
 
+    // Override BOTH damage methods to handle hits properly
     public override void TakeDamage(int damage)
+    {
+        HandleHit();
+    }
+
+    public override void TakeDamage(int damage, Vector2 hitDirection)
+    {
+        HandleHit();
+    }
+
+    private void HandleHit()
     {
         if (isDead) return;
 
@@ -73,7 +84,14 @@ public class TutorialDummyEnemy : EnemyBase
             }
         }
 
-        // No HP reduction, no death for the dummy
+        // No HP reduction, no death for the dummy - just reset to keep it alive
+        currentHP = 99999;
+    }
+
+    protected override void Die()
+    {
+        // Tutorial dummy never dies - override to prevent death
+        // Do nothing here
     }
 
     protected override void OnDrawGizmosSelected()

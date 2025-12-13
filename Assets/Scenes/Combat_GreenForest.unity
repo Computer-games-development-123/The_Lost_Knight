@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 23108444}
   - component: {fileID: 23108443}
   m_Layer: 0
-  m_Name: BattleStart
+  m_Name: BattleStartDialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -534,7 +534,8 @@ MonoBehaviour:
     - {fileID: 1013604362}
   bossPrefab: {fileID: 2158448503102619500, guid: cc60a7216539c7444be674be902befa7, type: 3}
   bossSpawnPoint: {fileID: 592894093}
-  nextSceneName: GreenForestToRedForestScene
+  nextSceneName: GreenToRed
+  portalSpawner: {fileID: 1980449546}
   beforeWaveDialogue: {fileID: 0}
   afterWaveDialogue: {fileID: 0}
   waveCompleteUI: {fileID: 0}
@@ -1588,6 +1589,56 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3669aeec8876961479680512a19589f8, type: 3}
+--- !u!1 &1980449545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1980449547}
+  - component: {fileID: 1980449546}
+  m_Layer: 0
+  m_Name: PortalSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1980449546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980449545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 742b817b14f626044ad361d2fbdaad35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PostBossPortalSpawner
+  portalPrefab: {fileID: 186082830944520402, guid: 740e614629141314c901296fed8390e7, type: 3}
+  portalSpawnPosition: {x: 13, y: -6, z: 0}
+  targetSceneName: GreenToRed
+  customPromptText: TEST
+  spawnEffect: {fileID: 0}
+  spawnEffectDuration: 1
+--- !u!4 &1980449547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980449545}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13, y: -6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1769951535479046163
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1736,3 +1787,4 @@ SceneRoots:
   - {fileID: 1730696967}
   - {fileID: 23108444}
   - {fileID: 1572580879}
+  - {fileID: 1980449547}

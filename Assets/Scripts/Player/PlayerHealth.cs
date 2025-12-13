@@ -1,9 +1,11 @@
 using UnityEngine;
 using TMPro;
+
 public class PlayerHealth : MonoBehaviour
 {
     [Header("Dialogue")]
     public DialogueData deathDialogue;
+    
     [Header("Player HP")]
     [SerializeField] private float maxHealth = 50f;
     [SerializeField] private float currentHealth = 50f;
@@ -24,11 +26,21 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-
     public void TakeDamage(int amount)
     {
+        // BYPASS invulnerability for scripted deaths (George's instant kill)
+        if (amount >= 9000)
+        {
+            Debug.Log($"⚠️ SCRIPTED DEATH: Taking {amount} damage (bypassing invulnerability)");
+            currentHealth = 0;
+            Die();
+            return;
+        }
+
+        // Normal damage - respect invulnerability
         if (playerController != null && playerController.IsInvulnerable)
         {
+            Debug.Log("Player is invulnerable - damage blocked");
             return; 
         }
 
@@ -50,16 +62,14 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-     public void Heal(float amount)
+    public void Heal(float amount)
     {
         if (amount <= 0) return;
-        if (currentHealth <= 0) return; // dead, can't heal
+        if (currentHealth <= 0) return;
 
         currentHealth += amount;
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
-
-        // TODO: notify health UI if needed
     }
 
     public void SetMaxHealth(float newMaxHealth)
@@ -77,12 +87,10 @@ public class PlayerHealth : MonoBehaviour
             playerController.PlayDeathAnimation();
         }
 
-        // If we have a death dialogue, show it first, then do OnPlayerDied
         if (DialogueManager.Instance != null && deathDialogue != null)
         {
             DialogueManager.Instance.Play(deathDialogue, () =>
             {
-                // After the dialogue finishes, apply death logic (coins + reload scene)
                 if (GameManager.Instance != null)
                 {
                     GameManager.Instance.OnPlayerDied();
@@ -91,14 +99,12 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
-            // No dialogue? Just do death logic immediately
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.OnPlayerDied();
             }
         }
     }
-
 
     public void ResetHealth()
     {
