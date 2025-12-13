@@ -36,7 +36,10 @@ public class PlayerController : MonoBehaviour
     private float invulnerabilityTimer;
     private bool facingRight = true;
     private PlayerHealth playerHealth;
-    
+
+    [Header("Potions")]
+    [SerializeField] private float healAmountPerPotion = 10f;
+
     public bool IsInvulnerable => isInvulnerable;
     public bool IsGrounded => isGrounded;
 
@@ -80,8 +83,30 @@ public class PlayerController : MonoBehaviour
         // Use Potion (allowed during knockback)
         if (Input.GetKeyDown(KeyCode.H))
         {
-            GameManager.Instance?.UsePotion(playerHealth);
+            if (GameManager.Instance != null && playerHealth != null)
+            {
+                // Only heal if we actually have potions
+                if (GameManager.Instance.HasPotions())
+                {
+                    // Optional: don’t waste potions at full HP
+                    if (!playerHealth.IsAtFullHealth)
+                    {
+                        GameManager.Instance.UsePotion();              // consume 1 potion
+                        playerHealth.Heal(healAmountPerPotion);        // restore HP
+                        Debug.Log("Used a potion to heal the player.");
+                    }
+                    else
+                    {
+                        Debug.Log("HP already full, not using a potion.");
+                    }
+                }
+                else
+                {
+                    Debug.Log("No potions left!");
+                }
+            }
         }
+
 
         // Teleport Ability (you can decide if you want to block this during knockback)
         if (Input.GetKeyDown(KeyCode.LeftAlt) && GameManager.Instance != null && GameManager.Instance.hasTeleport)
