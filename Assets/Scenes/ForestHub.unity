@@ -953,7 +953,7 @@ RectTransform:
   m_GameObject: {fileID: 232062826}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 81350450}
@@ -962,8 +962,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 30, y: 70}
-  m_SizeDelta: {x: 0, y: 80}
+  m_AnchoredPosition: {x: 0, y: -30}
+  m_SizeDelta: {x: 80, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &232062828
 MonoBehaviour:
@@ -978,7 +978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ScrollRect
   m_Content: {fileID: 1377163018}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1
@@ -987,7 +987,7 @@ MonoBehaviour:
   m_ScrollSensitivity: 1
   m_Viewport: {fileID: 81350450}
   m_HorizontalScrollbar: {fileID: 0}
-  m_VerticalScrollbar: {fileID: 1724585697}
+  m_VerticalScrollbar: {fileID: 0}
   m_HorizontalScrollbarVisibility: 2
   m_VerticalScrollbarVisibility: 2
   m_HorizontalScrollbarSpacing: -3
@@ -1148,8 +1148,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -35}
-  m_SizeDelta: {x: 400, y: 50}
+  m_AnchoredPosition: {x: 0, y: 220}
+  m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &409169604
 MonoBehaviour:
@@ -1180,8 +1180,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294928896
-  m_fontColor: {r: 0, g: 0.41568628, b: 1, a: 1}
+    rgba: 4278255360
+  m_fontColor: {r: 0, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1198,8 +1198,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42
-  m_fontSizeBase: 42
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1283,7 +1283,7 @@ RectTransform:
   m_Father: {fileID: 354653429}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1359,8 +1359,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -20, y: -40}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -825, y: 200}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &450331698
 MonoBehaviour:
@@ -1409,8 +1409,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1644,7 +1644,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &601734939
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1684,34 +1684,6 @@ MonoBehaviour:
   itemListContainer: {fileID: 1377163018}
   storeItemRowPrefab: {fileID: 1703703511770862608, guid: 875d38ab3c3d932498d88cdf3243bcf3, type: 3}
   storeItems:
-  - itemName: HP Upgrade
-    description: Increases max HP by 15
-    costPerUnit: 50
-    maxStock: 5
-    itemIcon: {fileID: 0}
-    itemType: 0
-    currentStock: 0
-  - itemName: Damage Upgrade
-    description: Increases sword damage by 2
-    costPerUnit: 75
-    maxStock: 5
-    itemIcon: {fileID: 0}
-    itemType: 1
-    currentStock: 0
-  - itemName: Magic Armor
-    description: Doubles your maximum HP
-    costPerUnit: 200
-    maxStock: 1
-    itemIcon: {fileID: 0}
-    itemType: 2
-    currentStock: 0
-  - itemName: Flash Helmet
-    description: Unlocks Teleport (ALT)
-    costPerUnit: 150
-    maxStock: 1
-    itemIcon: {fileID: 0}
-    itemType: 3
-    currentStock: 0
   - itemName: Sword of Light
     description: Doubles damage + Wave of Light (C)
     costPerUnit: 500
@@ -1719,16 +1691,47 @@ MonoBehaviour:
     itemIcon: {fileID: 0}
     itemType: 4
     currentStock: 0
+  - itemName: Flash Helmet
+    description: Unlocks Teleport (ALT)
+    costPerUnit: 200
+    maxStock: 1
+    itemIcon: {fileID: 0}
+    itemType: 3
+    currentStock: 0
+  - itemName: Magic Armor
+    description: Doubles your maximum HP
+    costPerUnit: 80
+    maxStock: 1
+    itemIcon: {fileID: 0}
+    itemType: 2
+    currentStock: 0
+  - itemName: Damage Upgrade
+    description: Increases sword damage by 2
+    costPerUnit: 20
+    maxStock: 5
+    itemIcon: {fileID: 0}
+    itemType: 1
+    currentStock: 0
+  - itemName: HP Upgrade
+    description: Increases max HP by 15
+    costPerUnit: 20
+    maxStock: 5
+    itemIcon: {fileID: 0}
+    itemType: 0
+    currentStock: 0
   - itemName: Health Potion
     description: Restores 20 HP
-    costPerUnit: 30
-    maxStock: -1
+    costPerUnit: 5
+    maxStock: 999
     itemIcon: {fileID: 0}
     itemType: 5
     currentStock: 0
   lockedItemIcon: {fileID: 0}
   normalTextColor: {r: 1, g: 1, b: 1, a: 1}
   freeTextColor: {r: 0.5, g: 1, b: 0.5, a: 1}
+  coinsTextColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  selectedRowColor: {r: 0, g: 0.5019608, b: 0.5019608, a: 1}
+  normalRowColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
 --- !u!1 &633834699
 GameObject:
   m_ObjectHideFlags: 0
@@ -1986,7 +1989,7 @@ RectTransform:
   m_GameObject: {fileID: 732801019}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 601734939}
@@ -2009,7 +2012,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+  m_Color: {r: 0.039215688, g: 0.27058825, b: 0.07450981, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2186,7 +2189,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -30, y: -30}
+  m_AnchoredPosition: {x: 130, y: 200}
   m_SizeDelta: {x: 80, y: 40}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &802383658
@@ -2745,7 +2748,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 30}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1377163019
 MonoBehaviour:
@@ -3669,7 +3672,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2493757146867247359, guid: 740e614629141314c901296fed8390e7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 2493757146867247359, guid: 740e614629141314c901296fed8390e7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3716,6 +3719,10 @@ PrefabInstance:
       value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 7212110410457073153, guid: 740e614629141314c901296fed8390e7, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212110410457073153, guid: 740e614629141314c901296fed8390e7, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0.5
       objectReference: {fileID: 0}
@@ -3725,7 +3732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8460128985304967711, guid: 740e614629141314c901296fed8390e7, type: 3}
       propertyPath: m_text
-      value: Enter Tutorial
+      value: Enter Tutorial (F)
       objectReference: {fileID: 0}
     - target: {fileID: 8830654210783181775, guid: 740e614629141314c901296fed8390e7, type: 3}
       propertyPath: targetSceneName
@@ -3754,7 +3761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3150013891710868763, guid: 4c1a599d16ac3f94cb5133faccc867e3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: 3150013891710868763, guid: 4c1a599d16ac3f94cb5133faccc867e3, type: 3}
       propertyPath: m_LocalPosition.y
