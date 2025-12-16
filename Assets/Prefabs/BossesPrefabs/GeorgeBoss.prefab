@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2707768562897365544}
   - component: {fileID: 2365221055033065230}
   - component: {fileID: 1929076190006721288}
-  - component: {fileID: 392439706295979908}
+  - component: {fileID: 8338276679858517085}
   m_Layer: 7
-  m_Name: EnemyType2
+  m_Name: GeorgeBoss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.59616, y: -0.33878, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -166,7 +166,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &392439706295979908
+--- !u!114 &8338276679858517085
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,12 +175,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 2158448503102619500}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76959cc1a25b07845b8036c861139c2f, type: 3}
+  m_Script: {fileID: 11500000, guid: 761f0147ac0b80446b27cde986af086f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyBase
-  enemyData: {fileID: 0}
-  fallbackMaxHP: 10
-  fallbackDamage: 5
-  fallbackMoveSpeed: 2
-  fallbackCoinsDropped: 1
+  m_EditorClassIdentifier: Assembly-CSharp::GeorgeBoss
+  bossName: Boss
+  maxHP: 120
+  damage: 10
+  moveSpeed: 4
+  isInvulnerable: 0
+  spawnDialogue: {fileID: 11400000, guid: 9c9f387f22f4d2540a0dd8ebe0c7b14f, type: 2}
+  deathDialogue: {fileID: 11400000, guid: ddbd69337f5dc5649ab5e21afd26f261, type: 2}
   waveManager: {fileID: 0}
+  player: {fileID: 0}
+  isFirstEncounter: 1
+  firstEncounterDialogue: {fileID: 11400000, guid: 31a7612914994de46b91e4dfe453699f, type: 2}
+  dialogueCanvas: {fileID: 0}
+  hitsToTriggerTaunt: 5
+  chargeSpeed: 8
+  chargeCooldown: 3
+  portalSpawner: {fileID: 0}

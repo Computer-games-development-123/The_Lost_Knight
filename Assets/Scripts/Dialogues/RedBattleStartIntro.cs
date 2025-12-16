@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BattleStartIntro : MonoBehaviour
+public class RedBattleStartIntro : MonoBehaviour
 {
     public DialogueData BattleStartDialogue;
     private void Start()

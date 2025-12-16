@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 915d8101d3192174eb82313d7c3505a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
-  swordDamage: 10
+  swordDamage: 8
   attackRange: 1
   attackCooldown: 0.5
   enemyLayer:
@@ -278,10 +278,11 @@ MonoBehaviour:
     m_Bits: 128
   waveOfLightPrefab: {fileID: 0}
   firePoint: {fileID: 0}
-  waveOfLightCooldown: 3
+  waveOfLightCooldown: 5
   anim: {fileID: 0}
   attackForwardPoint: {fileID: 8200679448536089582}
   attackDownPoint: {fileID: 863016794878425041}
+  pogoAttackRange: 2
   pogoBounceForce: 15
   allowPogoChain: 1
 --- !u!114 &8858325743146684195

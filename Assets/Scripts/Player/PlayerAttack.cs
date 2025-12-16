@@ -3,7 +3,8 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     [Header("Attack Settings")]
-    public int swordDamage = 10;
+    [Tooltip("This value is overridden by GameManager - edit damage there!")]
+    public int swordDamage = 8; // Will be overridden by GameManager
     public float attackRange = 1.5f;
     public float attackCooldown = 0.5f;
     public LayerMask enemyLayer;
@@ -11,7 +12,7 @@ public class PlayerAttack : MonoBehaviour
     [Header("Wave of Light Settings")]
     public GameObject waveOfLightPrefab;
     public Transform firePoint;
-    public float waveOfLightCooldown = 3f;
+    public float waveOfLightCooldown = 5f;
 
     [Header("References")]
     public Animator anim;
@@ -21,10 +22,9 @@ public class PlayerAttack : MonoBehaviour
     public Transform attackDownPoint;
 
     [Header("Pogo Settings")]
-    public float pogoAttackRange = 2f;  // BIGGER hitbox for pogo
+    public float pogoAttackRange = 2f;
     public float pogoBounceForce = 15f;
     public bool allowPogoChain = true;
-    public float pogoForgivenessWindow = 0.1f; // Can pogo slightly early
 
     private float lastAttackTime = 0f;
     private float lastWaveOfLightTime = 0f;
@@ -36,14 +36,21 @@ public class PlayerAttack : MonoBehaviour
     {
         playerController = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
+
+        // Immediately sync with GameManager on Awake
+        SyncDamageFromGameManager();
+    }
+    void Start()
+    {
+        // Sync again on Start to be safe
+        SyncDamageFromGameManager();
+        Debug.Log($"PlayerAttack started with damage: {swordDamage}");
     }
 
     void Update()
     {
-        if (GameManager.Instance != null)
-        {
-            swordDamage = GameManager.Instance.swordDamage;
-        }
+        // Keep synced with GameManager every frame
+        SyncDamageFromGameManager();
 
         // Normal / downward attack
         if (Input.GetKeyDown(KeyCode.X) && Time.time >= lastAttackTime + attackCooldown)
@@ -60,13 +67,17 @@ public class PlayerAttack : MonoBehaviour
                 ShootWaveOfLight();
                 lastWaveOfLightTime = Time.time;
             }
-            else
-            {
-                Debug.Log("Wave of Light not unlocked yet!");
-            }
         }
 
         UpdateFacingDirection();
+    }
+
+    void SyncDamageFromGameManager()
+    {
+        if (GameManager.Instance != null)
+        {
+            swordDamage = GameManager.Instance.swordDamage;
+        }
     }
 
     void HandleAttack()
@@ -74,7 +85,6 @@ public class PlayerAttack : MonoBehaviour
         float verticalInput = Input.GetAxisRaw("Vertical");
         bool isGrounded = playerController != null && playerController.IsGrounded;
 
-        // In air + pressing DOWN => downward attack
         if (!isGrounded && verticalInput < -0.5f)
         {
             DownwardAttack();
@@ -98,11 +108,8 @@ public class PlayerAttack : MonoBehaviour
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackForwardPoint.position, attackRange, enemyLayer);
 
-        Debug.Log($"[ForwardAttack] Found {hitEnemies.Length} enemies");
-
         foreach (Collider2D enemy in hitEnemies)
         {
-            Debug.Log($"[ForwardAttack] Hit: {enemy.gameObject.name}");
             DealDamageToEnemy(enemy);
         }
     }
@@ -118,22 +125,18 @@ public class PlayerAttack : MonoBehaviour
         if (anim != null)
             anim.SetTrigger("AttackDown");
 
-        // BIGGER hitbox for pogo (easier to hit)
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(
             attackDownPoint.position,
-            pogoAttackRange,  // Use the bigger range
+            pogoAttackRange,
             enemyLayer
         );
 
-        Debug.Log($"[DownwardAttack/Pogo] Found {hitEnemies.Length} enemies in range {pogoAttackRange}");
-
         foreach (Collider2D enemy in hitEnemies)
         {
-            Debug.Log($"[DownwardAttack/Pogo] Hit: {enemy.gameObject.name}");
             DealDamageToEnemy(enemy);
         }
 
-        // POGO LOGIC - Only if we hit something
+        // POGO LOGIC
         if (hitEnemies.Length > 0 && rb != null)
         {
             PerformPogo();
@@ -142,10 +145,7 @@ public class PlayerAttack : MonoBehaviour
 
     void PerformPogo()
     {
-        // Hard-set vertical speed up (clean bounce)
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, pogoBounceForce);
-
-        Debug.Log($"🦘 POGO! Bouncing with force {pogoBounceForce}");
 
         // Allow immediate next attack (chain pogos)
         if (allowPogoChain)
@@ -199,8 +199,6 @@ public class PlayerAttack : MonoBehaviour
                 projectile.damage = GameManager.Instance.swordDamage * 5;
             }
         }
-
-        Debug.Log("Wave of Light fired!");
     }
 
     void UpdateFacingDirection()

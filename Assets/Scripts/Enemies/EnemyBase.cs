@@ -16,8 +16,20 @@ public class EnemyBase : MonoBehaviour
     [Header("Knockback Settings")]
     public float knockbackForce = 8f;
     public float knockbackDuration = 0.12f;
-
     private bool isKnocked = false;
+
+    [Header("Jumper Settings")]
+    public float jumperJumpForce = 15f;
+    public float jumperJumpCooldown = 1.5f;
+    private float lastJumpTime = 0f;
+
+    [Header("Ranged Attack Settings (for Ranged type)")]
+    public GameObject projectilePrefab;
+    public Transform projectileSpawnPoint; // Optional: Spawn point for projectiles
+    public float attackRange = 8f;
+    public float attackCooldown = 2f;
+    public float projectileSpeed = 8f;
+    private float lastAttackTime = 0f;
 
     [Header("References")]
     public WaveManager waveManager;
@@ -36,6 +48,13 @@ public class EnemyBase : MonoBehaviour
     public int Damage => enemyData != null ? enemyData.damage : fallbackDamage;
     public float MoveSpeed => enemyData != null ? enemyData.moveSpeed : fallbackMoveSpeed;
     public int CoinsDropped => enemyData != null ? enemyData.coinsDropped : fallbackCoinsDropped;
+
+    // Ground check for jumper
+    protected bool IsGrounded => Physics2D.OverlapCircle(
+        transform.position + Vector3.down * 0.5f, 
+        0.1f, 
+        LayerMask.GetMask("Ground")
+    );
 
     protected virtual void Awake()
     {
@@ -139,23 +158,117 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void JumperBehavior()
     {
-        // Base movement
+        // Base movement toward player
         WalkerBehavior();
 
-        // TODO: Add jump logic
-        // Example: Jump when close to player
+        // Jump when conditions are met
+        if (player != null && IsGrounded)
+        {
+            float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+            
+            bool canJump = distanceToPlayer < 5f 
+                        && Time.time >= lastJumpTime + jumperJumpCooldown 
+                        && Random.value > 0.90f;
+            
+            if (canJump)
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumperJumpForce);
+                lastJumpTime = Time.time;
+                Debug.Log($"{gameObject.name} jumped!");
+            }
+        }
     }
 
     protected virtual void RangedBehavior()
     {
-        // TODO: Implement ranged attack
-        // Stay at distance and shoot
+        if (player == null) return;
+
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+        
+        float optimalMinRange = 5f;
+        float optimalMaxRange = 7f;
+
+        if (distanceToPlayer < optimalMinRange)
+        {
+            Vector2 direction = (transform.position - player.position).normalized;
+            rb.linearVelocity = new Vector2(direction.x * MoveSpeed * 1.2f, rb.linearVelocity.y);
+            UpdateFacing(direction.x);
+        }
+        else if (distanceToPlayer > optimalMaxRange)
+        {
+            Vector2 direction = (player.position - transform.position).normalized;
+            rb.linearVelocity = new Vector2(direction.x * MoveSpeed * 0.8f, rb.linearVelocity.y);
+            UpdateFacing(direction.x);
+        }
+        else
+        {
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+        }
+
+        if (Time.time >= lastAttackTime + attackCooldown && distanceToPlayer <= attackRange)
+        {
+            ShootProjectile();
+            lastAttackTime = Time.time;
+        }
+    }
+
+    protected virtual void ShootProjectile()
+    {
+        if (projectilePrefab == null || player == null) return;
+
+        // Determine spawn position (above enemy to avoid ground collision)
+        Vector3 spawnPos;
+        if (projectileSpawnPoint != null)
+        {
+            spawnPos = projectileSpawnPoint.position;
+        }
+        else
+        {
+            // Spawn 0.5 units above enemy's center
+            spawnPos = transform.position + Vector3.up * 0.5f;
+        }
+
+        // Calculate direction to player
+        Vector2 direction = (player.position - spawnPos).normalized;
+        
+        // Spawn projectile
+        GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
+        
+        // Try to set projectile layer (avoid hitting shooter)
+        int projectileLayer = LayerMask.NameToLayer("EnemyProjectile");
+        if (projectileLayer != -1)
+        {
+            projectile.layer = projectileLayer;
+        }
+        
+        // Set velocity
+        Rigidbody2D projRb = projectile.GetComponent<Rigidbody2D>();
+        if (projRb != null)
+        {
+            projRb.linearVelocity = direction * projectileSpeed;
+        }
+
+        // Set damage
+        EnemyProjectile projScript = projectile.GetComponent<EnemyProjectile>();
+        if (projScript != null)
+        {
+            projScript.damage = Damage;
+        }
+
+        Debug.Log($"{gameObject.name} shot projectile from {spawnPos} toward player!");
+
+        // Auto-destroy after 5 seconds
+        Destroy(projectile, 5f);
     }
 
     protected virtual void EliteBehavior()
     {
-        // Elite enemies are stronger walkers
-        WalkerBehavior();
+        if (player == null) return;
+
+        Vector2 direction = (player.position - transform.position).normalized;
+        rb.linearVelocity = new Vector2(direction.x * MoveSpeed * 1.2f, rb.linearVelocity.y);
+
+        UpdateFacing(direction.x);
     }
 
     protected void UpdateFacing(float directionX)
@@ -180,13 +293,11 @@ public class EnemyBase : MonoBehaviour
 
         Debug.Log($"{gameObject.name} took {damage} damage. HP: {currentHP}/{MaxHP}");
 
-        // Play hurt animation
         if (anim != null)
         {
             anim.SetTrigger("Hurt");
         }
 
-        // Visual feedback - flash red
         StartCoroutine(FlashRed());
 
         if (currentHP <= 0)
@@ -201,13 +312,10 @@ public class EnemyBase : MonoBehaviour
 
         currentHP -= damage;
 
-        // Hurt animation
         if (anim != null)
             anim.SetTrigger("Hurt");
 
         StartCoroutine(FlashRed());
-
-        // Apply knockback
         StartCoroutine(ApplyKnockback(hitDirection));
 
         if (currentHP <= 0)
@@ -217,18 +325,12 @@ public class EnemyBase : MonoBehaviour
     private System.Collections.IEnumerator ApplyKnockback(Vector2 direction)
     {
         isKnocked = true;
-
-        // Reset velocity so it feels responsive
         rb.linearVelocity = Vector2.zero;
-
-        // Apply knockback impulse
         rb.AddForce(direction.normalized * knockbackForce, ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(knockbackDuration);
 
-        // Stop sliding
         rb.linearVelocity = Vector2.zero;
-
         isKnocked = false;
     }
 
@@ -249,34 +351,28 @@ public class EnemyBase : MonoBehaviour
         isDead = true;
         Debug.Log($"{gameObject.name} died!");
 
-        // Stop movement
         rb.linearVelocity = Vector2.zero;
 
-        // Disable collider to prevent further interactions
         if (col != null)
         {
             col.enabled = false;
         }
 
-        // Play death animation
         if (anim != null)
         {
             anim.SetTrigger("Death");
         }
 
-        // Drop coins
         if (GameManager.Instance != null)
         {
             GameManager.Instance.AddCoins(CoinsDropped);
         }
 
-        // Notify WaveManager
         if (waveManager != null)
         {
             waveManager.OnEnemyDied(this);
         }
 
-        // Destroy after delay (for death animation)
         Destroy(gameObject, 1f);
     }
 
@@ -287,12 +383,6 @@ public class EnemyBase : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         DealContactDamage(collision.gameObject);
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        // Optional: Deal damage while staying in contact
-        // DealContactDamage(collision.gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -306,27 +396,21 @@ public class EnemyBase : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            // Try PlayerController first
             PlayerController playerController = other.GetComponent<PlayerController>();
             if (playerController != null)
             {
-                // Pass enemy position so knockback knows the direction
                 playerController.TakeDamage(Damage, transform.position);
-                Debug.Log($"{gameObject.name} dealt {Damage} contact damage to Player (with knockback)!");
+                Debug.Log($"{gameObject.name} dealt {Damage} contact damage to Player!");
                 return;
             }
 
-
-            // Fallback to PlayerHealth
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(Damage);
-                Debug.Log($"{gameObject.name} dealt {Damage} contact damage to Player (via PlayerHealth)!");
+                Debug.Log($"{gameObject.name} dealt {Damage} contact damage to Player!");
                 return;
             }
-
-            Debug.LogWarning($"{gameObject.name}: Player has no damage-receiving component!");
         }
     }
 
@@ -336,9 +420,32 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void OnDrawGizmosSelected()
     {
-        // Visualize enemy detection range (optional)
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, 5f);
+        if (enemyData != null && enemyData.behaviorType == EnemyData.EnemyBehaviorType.Ranged)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, attackRange);
+            
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, 5f);
+            Gizmos.DrawWireSphere(transform.position, 7f);
+            
+            // Show projectile spawn point
+            if (projectileSpawnPoint != null)
+            {
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawSphere(projectileSpawnPoint.position, 0.2f);
+            }
+            else
+            {
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawSphere(transform.position + Vector3.up * 0.5f, 0.2f);
+            }
+        }
+        else
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, 5f);
+        }
     }
 
     #endregion

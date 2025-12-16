@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 23108444}
   - component: {fileID: 23108443}
   m_Layer: 0
-  m_Name: BattleStartDialogue
+  m_Name: GreenBattleStartDialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -512,8 +512,8 @@ MonoBehaviour:
     - {fileID: 592894093}
     - {fileID: 1013604362}
   - waveName: 
-    enemyPrefab: {fileID: 2158448503102619500, guid: 91aee650a2b91a4498befc1f2365cf5d, type: 3}
-    enemyCount: 2
+    enemyPrefab: {fileID: 2158448503102619500, guid: d1fe3705ef0fd044ea6866b9205bb1d0, type: 3}
+    enemyCount: 10
     spawnDelay: 1
     spawnPoints:
     - {fileID: 592894093}
@@ -533,11 +533,12 @@ MonoBehaviour:
     - {fileID: 592894093}
     - {fileID: 1013604362}
   bossPrefab: {fileID: 2158448503102619500, guid: cc60a7216539c7444be674be902befa7, type: 3}
-  bossSpawnPoint: {fileID: 592894093}
+  bossSpawnPoint: {fileID: 1013604362}
   nextSceneName: GreenToRed
   portalSpawner: {fileID: 1980449546}
   beforeWaveDialogue: {fileID: 0}
   afterWaveDialogue: {fileID: 0}
+  bossAlreadyDefeatedDialogue: {fileID: 0}
   waveCompleteUI: {fileID: 0}
   waveText: {fileID: 0}
 --- !u!4 &597638891
@@ -1417,7 +1418,7 @@ GameObject:
   - component: {fileID: 1980449547}
   - component: {fileID: 1980449546}
   m_Layer: 0
-  m_Name: PortalSpawner
+  m_Name: PostBossPortalSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1438,7 +1439,7 @@ MonoBehaviour:
   portalPrefab: {fileID: 186082830944520402, guid: 740e614629141314c901296fed8390e7, type: 3}
   portalSpawnPosition: {x: 13, y: -6, z: 0}
   targetSceneName: GreenToRed
-  customPromptText: TEST
+  customPromptText: Press F To Enter
   spawnEffect: {fileID: 0}
   spawnEffectDuration: 1
 --- !u!4 &1980449547
@@ -1604,6 +1605,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 619394802}
+  - {fileID: 1572580879}
   - {fileID: 1769951535479046163}
   - {fileID: 592894093}
   - {fileID: 1013604362}
@@ -1616,5 +1618,4 @@ SceneRoots:
   - {fileID: 1705378663}
   - {fileID: 1730696967}
   - {fileID: 23108444}
-  - {fileID: 1572580879}
   - {fileID: 1980449547}

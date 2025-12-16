@@ -22,9 +22,6 @@ public class GeorgeBoss : BossBase
     private float lastChargeTime;
     private bool isCharging = false;
 
-    [Header("Portal Spawning")]
-    public PostBossPortalSpawner portalSpawner; // Assign in Inspector
-
     protected override void OnBossStart()
     {
         base.OnBossStart();
@@ -149,7 +146,7 @@ public class GeorgeBoss : BossBase
         if (isDead) return;
         isDead = true;
 
-        Debug.Log($"{bossName} defeated!");
+        Debug.Log($"💀 {bossName} defeated!");
 
         isCharging = false;
         if (rb != null)
@@ -163,47 +160,50 @@ public class GeorgeBoss : BossBase
             waveManager.OnBossDied(this);
         }
 
-        // Play death dialogue, then SPAWN PORTAL (not load scene!)
+        // Play death dialogue, then spawn portal
         if (DialogueManager.Instance != null && deathDialogue != null)
         {
-            DialogueManager.Instance.Play(deathDialogue, () =>
-            {
-                if (GameManager.Instance != null)
-                {
-                    GameManager.Instance.OnGeorgeDefeated();
-                    GameManager.Instance.SaveProgress();
-                }
-
-                // SPAWN THE PORTAL instead of loading scene
-                if (portalSpawner != null)
-                {
-                    portalSpawner.SpawnPortal();
-                }
-                else
-                {
-                    Debug.LogError("Portal spawner not assigned! Falling back to direct scene load.");
-                    SceneManager.LoadScene("GreenToRed");
-                }
-            });
+            Debug.Log($"Playing {bossName} death dialogue...");
+            DialogueManager.Instance.Play(deathDialogue, OnDeathDialogueComplete);
         }
         else
         {
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.OnGeorgeDefeated();
-                GameManager.Instance.SaveProgress();
-            }
-
-            // No dialogue, spawn portal immediately
-            if (portalSpawner != null)
-            {
-                portalSpawner.SpawnPortal();
-            }
-            else
-            {
-                SceneManager.LoadScene("GreenToRed");
-            }
+            Debug.LogWarning($"⚠️ No death dialogue for {bossName}! Proceeding to post-death...");
+            OnDeathDialogueComplete();
         }
+    }
+
+    private void OnDeathDialogueComplete()
+    {
+        Debug.Log($"Death dialogue complete for {bossName}. Handling post-death...");
+
+        // Update GameManager
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnGeorgeDefeated();
+            GameManager.Instance.SaveProgress();
+            Debug.Log("✅ Act 1 marked as cleared!");
+        }
+        else
+        {
+            Debug.LogError("❌ GameManager not found! Cannot mark Act 1 as cleared!");
+        }
+
+        // Find and spawn portal (same as Fika)
+        PostBossPortalSpawner portalSpawner = FindFirstObjectByType<PostBossPortalSpawner>();
+        if (portalSpawner != null)
+        {
+            Debug.Log("Found PostBossPortalSpawner, spawning portal...");
+            portalSpawner.SpawnPortal();
+        }
+        else
+        {
+            Debug.LogError("❌ PostBossPortalSpawner not found in scene! Loading scene as fallback...");
+            SceneManager.LoadScene("GreenToRed");
+        }
+
+        // Destroy George after delay
+        Destroy(gameObject, 2f);
     }
 
     protected override void EnterPhase2()
@@ -211,5 +211,7 @@ public class GeorgeBoss : BossBase
         base.EnterPhase2();
         chargeCooldown *= 0.7f;
         chargeSpeed *= 1.2f;
+        
+        Debug.Log($"{bossName} entered Phase 2!");
     }
 }
