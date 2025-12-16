@@ -20,7 +20,7 @@ public class ListStoreController : MonoBehaviour
     public Color normalTextColor = Color.white;
     public Color freeTextColor = new Color(0.5f, 1f, 0.5f);
     public Color coinsTextColor = Color.yellow;
-    public Color selectedRowColor = new Color(1f, 1f, 0.5f, 0.3f); // Highlight color
+    public Color selectedRowColor = new Color(0.2f, 0.6f, 0.2f, 0.5f); // Dark green
     public Color normalRowColor = new Color(0.3f, 0.3f, 0.3f, 1f);
 
     private List<StoreItemRow> itemRows = new List<StoreItemRow>();
@@ -34,7 +34,7 @@ public class ListStoreController : MonoBehaviour
         [TextArea(1, 3)]
         public string description;
         public int costPerUnit;
-        public int maxStock; // -1 for unlimited
+        public int maxStock;
         public Sprite itemIcon;
         public ShopItem.ShopItemType itemType;
 
@@ -90,7 +90,6 @@ public class ListStoreController : MonoBehaviour
 
     void HandleKeyboardInput()
     {
-        // Get visible (non-out-of-stock) rows
         List<StoreItemRow> visibleRows = new List<StoreItemRow>();
         foreach (var row in itemRows)
         {
@@ -100,7 +99,6 @@ public class ListStoreController : MonoBehaviour
 
         if (visibleRows.Count == 0) return;
 
-        // Navigate with arrow keys
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             selectedIndex++;
@@ -116,7 +114,6 @@ public class ListStoreController : MonoBehaviour
             UpdateSelection();
         }
 
-        // Purchase with Enter
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             if (selectedIndex >= 0 && selectedIndex < visibleRows.Count)
@@ -126,14 +123,9 @@ public class ListStoreController : MonoBehaviour
                 {
                     PurchaseItem(selectedRow.itemData);
                 }
-                else
-                {
-                    Debug.Log("Cannot purchase this item!");
-                }
             }
         }
 
-        // Close with ESC
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             CloseStore();
@@ -163,14 +155,12 @@ public class ListStoreController : MonoBehaviour
         if (itemListContainer == null || storeItemRowPrefab == null || storeItems == null)
             return;
 
-        // Clear existing rows
         foreach (Transform child in itemListContainer)
         {
             Destroy(child.gameObject);
         }
         itemRows.Clear();
 
-        // Create a row for each item
         int rowIndex = 0;
         foreach (var itemData in storeItems)
         {
@@ -184,10 +174,7 @@ public class ListStoreController : MonoBehaviour
                 rowIndex = rowIndex
             };
 
-            // Find background image (for highlighting)
             row.backgroundImage = rowObj.GetComponent<Image>();
-
-            // Find components
             row.itemIcon = FindChildByName<Image>(rowObj.transform, "ItemIcon");
             
             TextMeshProUGUI[] allTexts = rowObj.GetComponentsInChildren<TextMeshProUGUI>(true);
@@ -211,7 +198,6 @@ public class ListStoreController : MonoBehaviour
             itemRows.Add(row);
             rowIndex++;
             
-            // Force immediate update
             UpdateRowDisplay(row);
         }
 
@@ -322,7 +308,6 @@ public class ListStoreController : MonoBehaviour
             row.rowObject.SetActive(true);
         }
 
-        // Update icon
         if (row.itemIcon != null)
         {
             if (isLocked && lockedItemIcon != null)
@@ -333,20 +318,17 @@ public class ListStoreController : MonoBehaviour
             row.itemIcon.color = Color.white;
         }
 
-        // Update item name
         if (row.itemNameText != null)
         {
             row.itemNameText.text = isLocked ? "???" : row.itemData.itemName;
             row.itemNameText.color = isFreeStore ? freeTextColor : normalTextColor;
         }
 
-        // Update description
         if (row.descriptionText != null)
         {
             row.descriptionText.text = isLocked ? "A mysterious item..." : row.itemData.description;
         }
 
-        // Update price
         if (row.priceText != null)
         {
             if (isLocked)
@@ -365,7 +347,6 @@ public class ListStoreController : MonoBehaviour
             }
         }
 
-        // Update stock
         if (row.stockText != null)
         {
             if (isLocked)
@@ -382,7 +363,6 @@ public class ListStoreController : MonoBehaviour
             }
         }
 
-        // Update button - TRULY FIXED
         if (row.purchaseButton != null)
         {
             if (isLocked)
@@ -393,13 +373,11 @@ public class ListStoreController : MonoBehaviour
             }
             else
             {
-                // Proper affordability check
                 int itemCost = isFreeStore ? 0 : row.itemData.costPerUnit;
                 int playerCoins = (GameManager.Instance != null) ? GameManager.Instance.coins : 0;
                 
                 bool canAfford = (playerCoins >= itemCost) || isFreeStore;
 
-                // Button is interactable if player can afford
                 row.purchaseButton.interactable = canAfford;
 
                 if (row.buttonText != null)
@@ -451,6 +429,13 @@ public class ListStoreController : MonoBehaviour
             itemData.currentStock--;
         }
 
+        // 💾 SAVE PROGRESS AFTER PURCHASE!
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SaveProgress();
+            Debug.Log("💾 Progress saved after purchase!");
+        }
+
         UpdateCoinsDisplay();
         RefreshAllItems();
 
@@ -464,23 +449,33 @@ public class ListStoreController : MonoBehaviour
         switch (itemType)
         {
             case ShopItem.ShopItemType.HPUpgrade:
+                // Increase max HP in GameManager (persists!)
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.IncreaseMaxHealth(15);
+                }
+                // Heal player
                 if (playerHealth != null)
                 {
-                    playerHealth.SetMaxHealth(playerHealth.MaxHealth + 15);
                     playerHealth.Heal(15);
                 }
                 break;
 
             case ShopItem.ShopItemType.DamageUpgrade:
-                GameManager.Instance.swordDamage += 2;
+                GameManager.Instance.IncreaseDamage(2);
+                Debug.Log($"Damage increased! New damage: {GameManager.Instance.swordDamage}");
                 break;
 
             case ShopItem.ShopItemType.MagicArmor:
+                // Double max HP in GameManager (persists!)
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.MultiplyMaxHealth(2);
+                }
+                // Heal player to new max
                 if (playerHealth != null)
                 {
-                    float currentMaxHP = playerHealth.MaxHealth;
-                    playerHealth.SetMaxHealth(currentMaxHP * 2);
-                    playerHealth.Heal(currentMaxHP);
+                    playerHealth.Heal(playerHealth.MaxHealth);
                 }
                 break;
 

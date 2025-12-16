@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Player Stats")]
     public int coins = 0;
-    public int swordDamage = 6;
+    public int swordDamage = 8; // BASE DAMAGE SET TO 8
+    public float maxHealth = 100f; // BASE MAX HP
     public int potions = 5;
     public bool hasTeleport = false;
     public bool hasWaveOfLight = false;
@@ -37,11 +38,21 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log("GameManager initialized");
+            Debug.Log("GameManager initialized - Base sword damage: 8");
         }
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        // Load saved progress when game starts
+        if (PlayerPrefs.HasKey("SwordDamage"))
+        {
+            LoadProgress();
+            Debug.Log($"📂 Loaded progress - Sword Damage: {swordDamage}");
         }
     }
 
@@ -67,7 +78,6 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Potions
-    // Overload to support both with and without amount parameter
     public void UsePotion()
     {
         UsePotion(1);
@@ -101,8 +111,6 @@ public class GameManager : MonoBehaviour
             generalFlags.Add(flagName, value);
 
         Debug.Log($"Flag set: {flagName} = {value}");
-
-        // Update store state when relevant flags change
         UpdateStoreState();
     }
 
@@ -124,7 +132,6 @@ public class GameManager : MonoBehaviour
         return npcTalkFlags.ContainsKey(npcName) && npcTalkFlags[npcName];
     }
 
-    // Dialogue-specific flags
     public bool HasSeenDialogue(string dialogueName)
     {
         return dialogueFlags.ContainsKey(dialogueName) && dialogueFlags[dialogueName];
@@ -140,7 +147,6 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Dialogue seen: {dialogueName}");
     }
 
-    // For compatibility with ForestHubIntro.cs
     public bool hasSeenOpeningDialogue
     {
         get { return HasSeenDialogue("OpeningDialogue"); }
@@ -161,7 +167,7 @@ public class GameManager : MonoBehaviour
         act2Cleared = true;
         SetFlag("Act2Cleared", true);
         Debug.Log("Act 2 completed - Fika defeated!");
-        UpdateStoreState(); // Unlock Sword of Light
+        UpdateStoreState();
     }
 
     public void OnPhilipDefeated()
@@ -184,21 +190,10 @@ public class GameManager : MonoBehaviour
         Debug.Log("Player died to George - Special upgrade available");
     }
 
-    // Generic player death handler (for compatibility)
     public void OnPlayerDied()
     {
         Debug.Log("Player died - respawning in ForestHub");
-        
-        // Reset player health (will be handled by scene reload, but good to track)
-        // Optional: Deduct coins on death (uncomment if you want this)
-        // int coinsLost = Mathf.RoundToInt(coins * 0.1f); // Lose 10% of coins
-        // coins -= coinsLost;
-        // Debug.Log($"Lost {coinsLost} coins on death");
-        
-        // Save progress before respawning
         SaveProgress();
-        
-        // Reload ForestHub scene
         UnityEngine.SceneManagement.SceneManager.LoadScene("ForestHub");
     }
     #endregion
@@ -218,6 +213,7 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("Coins", coins);
         PlayerPrefs.SetInt("SwordDamage", swordDamage);
+        PlayerPrefs.SetFloat("MaxHealth", maxHealth); // SAVE MAX HP
         PlayerPrefs.SetInt("Potions", potions);
         PlayerPrefs.SetInt("HasTeleport", hasTeleport ? 1 : 0);
         PlayerPrefs.SetInt("HasWaveOfLight", hasWaveOfLight ? 1 : 0);
@@ -227,8 +223,6 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("Act2Cleared", act2Cleared ? 1 : 0);
         PlayerPrefs.SetInt("Act3Cleared", act3Cleared ? 1 : 0);
         PlayerPrefs.SetInt("YojiDead", yojiDead ? 1 : 0);
-        
-        // Save dialogue flags
         PlayerPrefs.SetInt("HasSeenOpeningDialogue", hasSeenOpeningDialogue ? 1 : 0);
         
         PlayerPrefs.Save();
@@ -238,7 +232,8 @@ public class GameManager : MonoBehaviour
     public void LoadProgress()
     {
         coins = PlayerPrefs.GetInt("Coins", 0);
-        swordDamage = PlayerPrefs.GetInt("SwordDamage", 6);
+        swordDamage = PlayerPrefs.GetInt("SwordDamage", 8); // LOAD WITH BASE 8
+        maxHealth = PlayerPrefs.GetFloat("MaxHealth", 100f); // LOAD MAX HP
         potions = PlayerPrefs.GetInt("Potions", 5);
         hasTeleport = PlayerPrefs.GetInt("HasTeleport", 0) == 1;
         hasWaveOfLight = PlayerPrefs.GetInt("HasWaveOfLight", 0) == 1;
@@ -248,13 +243,9 @@ public class GameManager : MonoBehaviour
         act2Cleared = PlayerPrefs.GetInt("Act2Cleared", 0) == 1;
         act3Cleared = PlayerPrefs.GetInt("Act3Cleared", 0) == 1;
         yojiDead = PlayerPrefs.GetInt("YojiDead", 0) == 1;
-        
-        // Load dialogue flags
         hasSeenOpeningDialogue = PlayerPrefs.GetInt("HasSeenOpeningDialogue", 0) == 1;
         
-        Debug.Log("Game progress loaded!");
-        
-        // Update store state based on loaded data
+        Debug.Log($"Game progress loaded! MaxHP: {maxHealth}, Damage: {swordDamage}");
         UpdateStoreState();
     }
 
@@ -262,9 +253,10 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         
-        // Reset to defaults
+        // RESET TO BASE VALUES
         coins = 0;
-        swordDamage = 6;
+        swordDamage = 8;
+        maxHealth = 100f; // RESET MAX HP
         potions = 5;
         hasTeleport = false;
         hasWaveOfLight = false;
@@ -279,7 +271,7 @@ public class GameManager : MonoBehaviour
         dialogueFlags.Clear();
         generalFlags.Clear();
         
-        Debug.Log("Game progress reset!");
+        Debug.Log("Game progress reset to defaults (Base damage: 8, Max HP: 100)");
     }
     #endregion
 
@@ -294,6 +286,32 @@ public class GameManager : MonoBehaviour
     {
         swordDamage += amount;
         Debug.Log($"Sword damage increased by {amount}. New damage: {swordDamage}");
+    }
+
+    public void IncreaseMaxHealth(float amount)
+    {
+        maxHealth += amount;
+        Debug.Log($"Max health increased by {amount}. New max health: {maxHealth}");
+        
+        // Also update player's current max HP
+        PlayerHealth playerHealth = FindFirstObjectByType<PlayerHealth>();
+        if (playerHealth != null)
+        {
+            playerHealth.SetMaxHealth(maxHealth);
+        }
+    }
+
+    public void MultiplyMaxHealth(float multiplier)
+    {
+        maxHealth *= multiplier;
+        Debug.Log($"Max health multiplied by {multiplier}. New max health: {maxHealth}");
+        
+        // Also update player's current max HP
+        PlayerHealth playerHealth = FindFirstObjectByType<PlayerHealth>();
+        if (playerHealth != null)
+        {
+            playerHealth.SetMaxHealth(maxHealth);
+        }
     }
     #endregion
 }
