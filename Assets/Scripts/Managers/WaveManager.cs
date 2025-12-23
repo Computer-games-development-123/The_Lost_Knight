@@ -19,10 +19,7 @@ public class WaveManager : MonoBehaviour
     public List<Wave> waves = new List<Wave>();
     public GameObject bossPrefab;
     public Transform bossSpawnPoint;
-    public string nextSceneName = "ForestHub";
-
-    [Header("Portal Spawner")]
-    public PostBossPortalSpawner portalSpawner;
+    public GameFlag flagAfterWin;
 
     [Header("Dialogues")]
     public DialogueData beforeWaveDialogue;
@@ -54,9 +51,9 @@ public class WaveManager : MonoBehaviour
             // All waves complete
             allWavesComplete = true;
             Debug.Log("✅ All waves complete!");
-            
+
             yield return new WaitForSeconds(2f);
-            
+
             // NOW check if boss should spawn or skip
             SpawnBoss();
             yield break;
@@ -137,44 +134,44 @@ public class WaveManager : MonoBehaviour
             HandleBossAlreadyDefeated();
             return;
         }
-        
+
         // Boss not defeated yet - spawn normally
         Debug.Log("Boss not defeated yet - spawning boss for fight");
-        
+
         // Check if this scene has a cutscene manager (Fika/Mona fight)
-        FikaBossCutsceneManager cutsceneManager = FindFirstObjectByType<FikaBossCutsceneManager>();
-        
-        if (cutsceneManager != null)
+        // FikaBossCutsceneManager cutsceneManager = FindFirstObjectByType<FikaBossCutsceneManager>();
+
+        // if (cutsceneManager != null)
+        // {
+        //     // Trigger cutscene (Fika fight)
+        //     cutsceneManager.TriggerBossCutscene();
+        //     bossSpawned = true;
+        //     Debug.Log("Boss cutscene triggered!");
+        // }
+        // else
+        // {
+        //     // Normal boss spawn (George or Philip)
+        if (bossPrefab != null && bossSpawnPoint != null)
         {
-            // Trigger cutscene (Fika fight)
-            cutsceneManager.TriggerBossCutscene();
             bossSpawned = true;
-            Debug.Log("Boss cutscene triggered!");
+            GameObject bossObj = Instantiate(bossPrefab, bossSpawnPoint.position, Quaternion.identity);
+
+            BossBase bossScript = bossObj.GetComponent<BossBase>();
+            if (bossScript != null)
+            {
+                bossScript.waveManager = this;
+            }
+
+            // NO BOSS-SPECIFIC CODE!
+            // All bosses find their own portal spawner in Die() method
+
+            Debug.Log($"Boss spawned: {bossPrefab.name}");
         }
         else
         {
-            // Normal boss spawn (George or Philip)
-            if (bossPrefab != null && bossSpawnPoint != null)
-            {
-                bossSpawned = true;
-                GameObject bossObj = Instantiate(bossPrefab, bossSpawnPoint.position, Quaternion.identity);
-
-                BossBase bossScript = bossObj.GetComponent<BossBase>();
-                if (bossScript != null)
-                {
-                    bossScript.waveManager = this;
-                }
-
-                // NO BOSS-SPECIFIC CODE!
-                // All bosses find their own portal spawner in Die() method
-                
-                Debug.Log($"Boss spawned: {bossPrefab.name}");
-            }
-            else
-            {
-                Debug.LogWarning("⚠️ Boss prefab or spawn point not assigned!");
-            }
+            Debug.LogWarning("⚠️ Boss prefab or spawn point not assigned!");
         }
+        // }
     }
 
     private bool IsBossAlreadyDefeated()
@@ -239,33 +236,23 @@ public class WaveManager : MonoBehaviour
     private void SpawnPortalForClearedArea()
     {
         // Spawn the portal so player can continue forward
-        if (portalSpawner != null)
-        {
-            portalSpawner.SpawnPortal();
-            Debug.Log("✅ Portal spawned for already-cleared area");
-        }
-        else
-        {
-            Debug.LogWarning("⚠️ No portal spawner - player might be stuck!");
-            
-            // Fallback: Load next scene directly after delay
-            StartCoroutine(LoadNextSceneAfterDelay(3f));
-        }
-    }
+        // if (portalSpawner != null)
+        // {
+        //     portalSpawner.SpawnPortal();
+        //     Debug.Log("✅ Portal spawned for already-cleared area");
+        // }
+        // else
+        // {
+        //     Debug.LogWarning("⚠️ No portal spawner - player might be stuck!");
 
-    private IEnumerator LoadNextSceneAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        
-        if (!string.IsNullOrEmpty(nextSceneName))
-        {
-            Debug.Log($"Loading {nextSceneName} as fallback...");
-            SceneManager.LoadScene(nextSceneName);
-        }
+        //     // Fallback: Load next scene directly after delay
+        //     StartCoroutine(LoadNextSceneAfterDelay(3f));
+        // }
     }
 
     public void OnBossDied(BossBase boss)
     {
+        GameManager.Instance.SetFlag(flagAfterWin, true);
         Debug.Log($"{boss.bossName} defeated!");
         // Boss handles its own death, portal spawning, etc.
     }
