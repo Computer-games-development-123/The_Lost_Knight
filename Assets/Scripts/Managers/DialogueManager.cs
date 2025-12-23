@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialogueUI;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private TextMeshProUGUI speakerText;
+    [SerializeField] private Image portraitImage;
 
     [Header("Input & Effects")]
     [SerializeField] private KeyCode advanceKey = KeyCode.F;
@@ -25,8 +27,8 @@ public class DialogueManager : MonoBehaviour
     private Coroutine _typingRoutine;
     private Action _onComplete;
 
-    private readonly Dictionary<string, DialogueData> _byId =
-        new Dictionary<string, DialogueData>();
+    private readonly Dictionary<GameFlag, DialogueData> _byFlag =
+        new Dictionary<GameFlag, DialogueData>();
 
     public bool IsDialogueActive => _isActive;
 
@@ -39,6 +41,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         Instance = this;
+        transform.SetParent(null);
         DontDestroyOnLoad(gameObject);
 
         LoadAllDialoguesFromResources();
@@ -100,30 +103,15 @@ public class DialogueManager : MonoBehaviour
 
         if (dialogueUI != null)
             dialogueUI.SetActive(true);
-
+        if (portraitImage != null)
+        {
+            portraitImage.sprite = data.portrait;
+            portraitImage.enabled = (data.portrait != null);
+        }
         ShowCurrentLine();
 
         if (_currentData.pauseGameDuringDialogue)
             Time.timeScale = 0f;
-    }
-
-    // Optional string-based version
-    public void Play(string id, Action onComplete = null)
-    {
-        if (string.IsNullOrEmpty(id))
-        {
-            onComplete?.Invoke();
-            return;
-        }
-
-        if (!_byId.TryGetValue(id, out var data))
-        {
-            Debug.LogWarning($"DialogueManager: No DialogueData for id '{id}'");
-            onComplete?.Invoke();
-            return;
-        }
-
-        Play(data, onComplete);
     }
 
     // =============================
@@ -236,6 +224,7 @@ public class DialogueManager : MonoBehaviour
             Time.timeScale = 1f;
 
         var cb = _onComplete;
+        GameManager.Instance.SetFlag(_currentData.flag, true);
         _onComplete = null;
         _currentData = null;
 
@@ -244,25 +233,29 @@ public class DialogueManager : MonoBehaviour
 
         if (speakerText != null)
             speakerText.text = string.Empty;
-
+        if (portraitImage != null)
+        {
+            portraitImage.sprite = null;
+            portraitImage.enabled = false;
+        }
         cb?.Invoke();
     }
 
     private void LoadAllDialoguesFromResources()
     {
-        _byId.Clear();
+        _byFlag.Clear();
         DialogueData[] all = Resources.LoadAll<DialogueData>("");
 
         foreach (var d in all)
         {
-            if (d == null || string.IsNullOrEmpty(d.id)) continue;
-            if (_byId.ContainsKey(d.id))
+            if (d == null) continue;
+            if (_byFlag.ContainsKey(d.flag))
             {
-                Debug.LogWarning($"DialogueManager: duplicate id '{d.id}'");
+                Debug.LogWarning($"DialogueManager: duplicate id '{d.flag}'");
                 continue;
             }
 
-            _byId.Add(d.id, d);
+            _byFlag.Add(d.flag, d);
         }
     }
 }

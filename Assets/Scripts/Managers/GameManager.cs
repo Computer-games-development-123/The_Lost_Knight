@@ -1,171 +1,257 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [Header("Player Stats")]
-    public int coins = 0;
-    public int swordDamage = 8; // BASE DAMAGE SET TO 8
-    public float maxHealth = 100f; // BASE MAX HP
-    public int potions = 5;
-    public bool hasTeleport = false;
-    public bool hasWaveOfLight = false;
+    [Header("Config (defaults)")]
+    [SerializeField] private PlayerData playerConfig;
 
-    [Header("Progression Flags")]
-    public bool hasSpecialSwordUpgrade = false;
+    [Header("Player (runtime ref - scene dependent)")]
+    [SerializeField] private CharacterContext ctx;
+
+    [Header("Intro Dialogue")]
+    [SerializeField] private DialogueData introDialogue;
+
+    [Header("Progression Flags (legacy bools)")]
     public bool hasDiedToGeorge = false;
     public bool yojiDead = false;
 
-    [Header("Act Completion")]
+    [Header("Act Completion (legacy bools)")]
     public bool act1Cleared = false;
     public bool act2Cleared = false;
     public bool act3Cleared = false;
 
-    [Header("NPC Interactions")]
-    private Dictionary<string, bool> npcTalkFlags = new Dictionary<string, bool>();
+    // ✅ Enum->bool flags cache (session)
+    private readonly Dictionary<GameFlag, bool> flags = new Dictionary<GameFlag, bool>();
 
-    [Header("Dialogue Flags")]
-    private Dictionary<string, bool> dialogueFlags = new Dictionary<string, bool>();
+    // ---------- Spawn / Travel ----------
+    private string pendingSpawnId;
+    private bool hasPendingSpawn;
 
-    private Dictionary<string, bool> generalFlags = new Dictionary<string, bool>();
+    // ---------- Session init guard ----------
+    private bool initializedThisSession = false;
+
+    // ---------- Helpers ----------
+    private PlayerStats Stats => (ctx != null) ? ctx.PS : null;
+
+    // ---------- PlayerPrefs Keys ----------
+    private const string K_COINS = "Coins";
+    private const string K_SWORD_DAMAGE = "SwordDamage";
+    private const string K_POTIONS = "Potions";
+
+    private const string K_HAS_TELEPORT = "HasTeleport";
+    private const string K_HAS_WAVE = "HasWaveOfLight";
+    private const string K_HAS_SPECIAL_SWORD = "HasSpecialSwordUpgrade";
+
+    // legacy keys (you still use these bools in Save/Load)
+    private const string K_HAS_DIED_TO_GEORGE = "HasDiedToGeorge";
+    private const string K_ACT1 = "Act1Cleared";
+    private const string K_ACT2 = "Act2Cleared";
+    private const string K_ACT3 = "Act3Cleared";
+    private const string K_YOJI_DEAD = "YojiDead";
+
+    // legacy "opening dialogue" key (optional import/back-compat)
+    private const string K_OPENING_DIALOGUE = "HasSeenOpeningDialogue";
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            Debug.Log("GameManager initialized - Base sword damage: 8");
-        }
-        else
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
+
+        Instance = this;
+        transform.SetParent(null);
+        DontDestroyOnLoad(gameObject);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        Debug.Log("GameManager initialized");
     }
 
-    private void Start()
+    // ✅ Start as coroutine: wait 1 frame so DialogueManager exists
+    private IEnumerator Start()
     {
-        // Load saved progress when game starts
-        if (PlayerPrefs.HasKey("SwordDamage"))
+        yield return null;
+
+        // Ensure we are initialized (in case OnSceneLoaded didn't run yet on first scene)
+        if (!initializedThisSession)
         {
-            LoadProgress();
-            Debug.Log($"📂 Loaded progress - Sword Damage: {swordDamage}");
+            BindPlayerInScene();
+
+            if (HasAnySave())
+                LoadProgress();
+            else
+                ApplyDefaultsFromConfig();
+
+            initializedThisSession = true;
         }
+
     }
 
-    #region Currency
-    public void AddCoins(int amount)
+    private void OnDestroy()
     {
-        coins += amount;
-        Debug.Log($"Coins added: {amount}. Total: {coins}");
+        if (Instance == this)
+            SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    public void SpendCoins(int amount)
+    // ----- Public API for portals -----
+    public void TravelTo(string sceneName, string spawnIdInNextScene)
     {
-        if (coins >= amount)
+        pendingSpawnId = spawnIdInNextScene;
+        hasPendingSpawn = true;
+        SceneManager.LoadScene(sceneName);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        BindPlayerInScene();
+
+        if (!initializedThisSession)
         {
-            coins -= amount;
-            Debug.Log($"Coins spent: {amount}. Remaining: {coins}");
+            if (HasAnySave())
+                LoadProgress();
+            else
+                ApplyDefaultsFromConfig();
+
+            initializedThisSession = true;
         }
-        else
+
+        TryApplyPendingSpawn();
+
+        if (SceneFadeManager.Instance != null)
+            SceneFadeManager.Instance.FadeIn();
+    }
+
+    private bool HasAnySave()
+    {
+        return PlayerPrefs.HasKey(K_SWORD_DAMAGE) || PlayerPrefs.HasKey(K_COINS) || PlayerPrefs.HasKey(K_POTIONS);
+    }
+
+    private void BindPlayerInScene()
+    {
+        if (ctx != null && ctx.gameObject != null)
+            return;
+
+        var playerGO = GameObject.FindGameObjectWithTag("Player");
+        if (playerGO == null)
         {
-            Debug.LogWarning($"Not enough coins! Have {coins}, need {amount}");
+            ctx = null;
+            Debug.LogWarning("GameManager: No Player found in this scene (tag=Player).");
+            return;
         }
-    }
-    #endregion
 
-    #region Potions
-    public void UsePotion()
-    {
-        UsePotion(1);
+        ctx = playerGO.GetComponent<CharacterContext>();
+        if (ctx == null)
+            Debug.LogError("GameManager: Player found but missing CharacterContext!", playerGO);
     }
 
-    public void UsePotion(int amount)
+    private void TryApplyPendingSpawn()
     {
-        if (potions > 0)
+        if (!hasPendingSpawn || ctx == null) return;
+
+        var spawns = FindObjectsByType<SpawnPoint>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+        bool found = false;
+        for (int i = 0; i < spawns.Length; i++)
         {
-            potions -= amount;
-            Debug.Log($"Potion used. Remaining: {potions}");
+            if (spawns[i].id == pendingSpawnId)
+            {
+                ctx.transform.position = spawns[i].transform.position;
+                found = true;
+                break;
+            }
         }
-        else
+
+        if (!found)
+            Debug.LogWarning($"GameManager: SpawnPoint id '{pendingSpawnId}' not found in scene '{SceneManager.GetActiveScene().name}'.");
+
+        hasPendingSpawn = false;
+        pendingSpawnId = null;
+    }
+
+    // ---------- Defaults ----------
+    private void ApplyDefaultsFromConfig()
+    {
+        if (playerConfig == null)
         {
-            Debug.LogWarning("No potions available!");
+            Debug.LogError("GameManager: playerConfig is not assigned!", this);
+            return;
         }
+
+        if (Stats != null)
+        {
+            Stats.coins = playerConfig.baseStartingCoins;
+            Stats.potions = playerConfig.baseStartingPotions;
+            Stats.damage = playerConfig.baseDamage;
+        }
+
+        if (ctx != null && ctx.AB != null)
+        {
+            ctx.AB.hasTeleport = false;
+            ctx.AB.hasFireSword = false;
+            ctx.AB.hasUpgradedSword = false;
+        }
+
+        hasDiedToGeorge = false;
+        yojiDead = false;
+        act1Cleared = false;
+        act2Cleared = false;
+        act3Cleared = false;
+
+        flags.Clear();
+
+        Debug.Log($"Defaults applied from PlayerConfig: damage={Stats?.damage}, coins={Stats?.coins}, potions={Stats?.potions}");
     }
 
-    public bool HasPotions()
+    // =========================================================
+    // ✅ Flags System (Enum -> bool) persisted in PlayerPrefs
+    // =========================================================
+
+    private static string FlagKey(GameFlag flag) => "FLAG_" + flag.ToString();
+
+    public void SetFlag(GameFlag flag, bool value)
     {
-        return potions > 0;
-    }
-    #endregion
+        flags[flag] = value;
 
-    #region Flags System
-    public void SetFlag(string flagName, bool value)
+        PlayerPrefs.SetInt(FlagKey(flag), value ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
+    // ✅ THIS was the big bug: now it loads from PlayerPrefs when not cached
+    public bool GetFlag(GameFlag flag)
     {
-        if (generalFlags.ContainsKey(flagName))
-            generalFlags[flagName] = value;
-        else
-            generalFlags.Add(flagName, value);
+        if (flags.TryGetValue(flag, out bool value))
+            return value;
 
-        Debug.Log($"Flag set: {flagName} = {value}");
-        UpdateStoreState();
+        bool saved = PlayerPrefs.GetInt(FlagKey(flag), 0) == 1;
+        flags[flag] = saved; // cache
+        return saved;
     }
 
-    public bool GetFlag(string flagName)
+    public void SetDialogueSeen(GameFlag flag)
     {
-        if (generalFlags.ContainsKey(flagName))
-            return generalFlags[flagName];
-        return false;
+        SetFlag(flag, true);
     }
 
-    public void SetYojiTalked()
-    {
-        npcTalkFlags["Yoji"] = true;
-        Debug.Log("Yoji talk flag set");
-    }
-
-    public bool HasTalkedTo(string npcName)
-    {
-        return npcTalkFlags.ContainsKey(npcName) && npcTalkFlags[npcName];
-    }
-
-    public bool HasSeenDialogue(string dialogueName)
-    {
-        return dialogueFlags.ContainsKey(dialogueName) && dialogueFlags[dialogueName];
-    }
-
-    public void SetDialogueSeen(string dialogueName)
-    {
-        if (dialogueFlags.ContainsKey(dialogueName))
-            dialogueFlags[dialogueName] = true;
-        else
-            dialogueFlags.Add(dialogueName, true);
-        
-        Debug.Log($"Dialogue seen: {dialogueName}");
-    }
-
-    public bool hasSeenOpeningDialogue
-    {
-        get { return HasSeenDialogue("OpeningDialogue"); }
-        set { if (value) SetDialogueSeen("OpeningDialogue"); }
-    }
-    #endregion
-
-    #region Progression Events
+    // ---------- Progression Events ----------
     public void OnGeorgeDefeated()
     {
         act1Cleared = true;
-        SetFlag("Act1Cleared", true);
+        SetFlag(GameFlag.Act1Cleared, true);
         Debug.Log("Act 1 completed - George defeated!");
     }
 
     public void OnFikaDefeated()
     {
         act2Cleared = true;
-        SetFlag("Act2Cleared", true);
+        SetFlag(GameFlag.Act2Cleared, true);
         Debug.Log("Act 2 completed - Fika defeated!");
         UpdateStoreState();
     }
@@ -173,7 +259,7 @@ public class GameManager : MonoBehaviour
     public void OnPhilipDefeated()
     {
         act3Cleared = true;
-        SetFlag("Act3Cleared", true);
+        SetFlag(GameFlag.Act3Cleared, true);
         Debug.Log("Act 3 completed - Philip defeated!");
     }
 
@@ -192,126 +278,88 @@ public class GameManager : MonoBehaviour
 
     public void OnPlayerDied()
     {
-        Debug.Log("Player died - respawning in ForestHub");
+        Debug.Log("Player died - respawning in Forest_Hub");
         SaveProgress();
-        UnityEngine.SceneManagement.SceneManager.LoadScene("ForestHub");
+        SceneManager.LoadScene("Forest_Hub");
     }
-    #endregion
 
-    #region Store State Management
+    // ---------- Store State ----------
     private void UpdateStoreState()
     {
-        if (StoreStateManager.Instance != null)
-        {
-            StoreStateManager.Instance.UpdateStoreStateFromGameManager();
-        }
+        // Hook for StoreStateManager if you add one later
     }
-    #endregion
 
-    #region Save/Load System
+    // ---------- Save / Load ----------
     public void SaveProgress()
     {
-        PlayerPrefs.SetInt("Coins", coins);
-        PlayerPrefs.SetInt("SwordDamage", swordDamage);
-        PlayerPrefs.SetFloat("MaxHealth", maxHealth); // SAVE MAX HP
-        PlayerPrefs.SetInt("Potions", potions);
-        PlayerPrefs.SetInt("HasTeleport", hasTeleport ? 1 : 0);
-        PlayerPrefs.SetInt("HasWaveOfLight", hasWaveOfLight ? 1 : 0);
-        PlayerPrefs.SetInt("HasSpecialSwordUpgrade", hasSpecialSwordUpgrade ? 1 : 0);
-        PlayerPrefs.SetInt("HasDiedToGeorge", hasDiedToGeorge ? 1 : 0);
-        PlayerPrefs.SetInt("Act1Cleared", act1Cleared ? 1 : 0);
-        PlayerPrefs.SetInt("Act2Cleared", act2Cleared ? 1 : 0);
-        PlayerPrefs.SetInt("Act3Cleared", act3Cleared ? 1 : 0);
-        PlayerPrefs.SetInt("YojiDead", yojiDead ? 1 : 0);
-        PlayerPrefs.SetInt("HasSeenOpeningDialogue", hasSeenOpeningDialogue ? 1 : 0);
-        
+        if (Stats == null)
+        {
+            Debug.LogWarning("SaveProgress skipped: PlayerStats not available.");
+            return;
+        }
+
+        PlayerPrefs.SetInt(K_COINS, Stats.coins);
+        PlayerPrefs.SetInt(K_SWORD_DAMAGE, Stats.damage);
+        PlayerPrefs.SetInt(K_POTIONS, Stats.potions);
+
+        if (ctx != null && ctx.AB != null)
+        {
+            PlayerPrefs.SetInt(K_HAS_TELEPORT, ctx.AB.hasTeleport ? 1 : 0);
+            PlayerPrefs.SetInt(K_HAS_WAVE, ctx.AB.hasFireSword ? 1 : 0);
+            PlayerPrefs.SetInt(K_HAS_SPECIAL_SWORD, ctx.AB.hasUpgradedSword ? 1 : 0);
+        }
+
         PlayerPrefs.Save();
         Debug.Log("Game progress saved!");
     }
 
     public void LoadProgress()
     {
-        coins = PlayerPrefs.GetInt("Coins", 0);
-        swordDamage = PlayerPrefs.GetInt("SwordDamage", 8); // LOAD WITH BASE 8
-        maxHealth = PlayerPrefs.GetFloat("MaxHealth", 100f); // LOAD MAX HP
-        potions = PlayerPrefs.GetInt("Potions", 5);
-        hasTeleport = PlayerPrefs.GetInt("HasTeleport", 0) == 1;
-        hasWaveOfLight = PlayerPrefs.GetInt("HasWaveOfLight", 0) == 1;
-        hasSpecialSwordUpgrade = PlayerPrefs.GetInt("HasSpecialSwordUpgrade", 0) == 1;
-        hasDiedToGeorge = PlayerPrefs.GetInt("HasDiedToGeorge", 0) == 1;
-        act1Cleared = PlayerPrefs.GetInt("Act1Cleared", 0) == 1;
-        act2Cleared = PlayerPrefs.GetInt("Act2Cleared", 0) == 1;
-        act3Cleared = PlayerPrefs.GetInt("Act3Cleared", 0) == 1;
-        yojiDead = PlayerPrefs.GetInt("YojiDead", 0) == 1;
-        hasSeenOpeningDialogue = PlayerPrefs.GetInt("HasSeenOpeningDialogue", 0) == 1;
-        
-        Debug.Log($"Game progress loaded! MaxHP: {maxHealth}, Damage: {swordDamage}");
+        if (Stats == null)
+        {
+            Debug.LogWarning("LoadProgress skipped: PlayerStats not available.");
+            return;
+        }
+
+        int defaultCoins = playerConfig != null ? playerConfig.baseStartingCoins : 0;
+        int defaultDamage = playerConfig != null ? playerConfig.baseDamage : 10;
+        int defaultPotions = playerConfig != null ? playerConfig.baseStartingPotions : 5;
+
+        Stats.coins = PlayerPrefs.GetInt(K_COINS, defaultCoins);
+        Stats.damage = PlayerPrefs.GetInt(K_SWORD_DAMAGE, defaultDamage);
+        Stats.potions = PlayerPrefs.GetInt(K_POTIONS, defaultPotions);
+
+        if (ctx != null && ctx.AB != null)
+        {
+            ctx.AB.hasTeleport = PlayerPrefs.GetInt(K_HAS_TELEPORT, 0) == 1;
+            ctx.AB.hasFireSword = PlayerPrefs.GetInt(K_HAS_WAVE, 0) == 1;
+            ctx.AB.hasUpgradedSword = PlayerPrefs.GetInt(K_HAS_SPECIAL_SWORD, 0) == 1;
+        }
+
+        hasDiedToGeorge = PlayerPrefs.GetInt(K_HAS_DIED_TO_GEORGE, 0) == 1;
+        act1Cleared = PlayerPrefs.GetInt(K_ACT1, 0) == 1;
+        act2Cleared = PlayerPrefs.GetInt(K_ACT2, 0) == 1;
+        act3Cleared = PlayerPrefs.GetInt(K_ACT3, 0) == 1;
+        yojiDead = PlayerPrefs.GetInt(K_YOJI_DEAD, 0) == 1;
+
+        SetFlag(GameFlag.Act1Cleared, act1Cleared);
+        SetFlag(GameFlag.Act2Cleared, act2Cleared);
+        SetFlag(GameFlag.Act3Cleared, act3Cleared);
+
+        if (PlayerPrefs.GetInt(K_OPENING_DIALOGUE, 0) == 1)
+            SetFlag(GameFlag.OpeningDialogueSeen, true);
+
+        _ = GetFlag(GameFlag.OpeningDialogueSeen);
+
+        Debug.Log($"Game progress loaded! Damage: {Stats.damage}, Coins: {Stats.coins}, Potions: {Stats.potions}");
         UpdateStoreState();
     }
 
     public void ResetProgress()
     {
         PlayerPrefs.DeleteAll();
-        
-        // RESET TO BASE VALUES
-        coins = 0;
-        swordDamage = 8;
-        maxHealth = 100f; // RESET MAX HP
-        potions = 5;
-        hasTeleport = false;
-        hasWaveOfLight = false;
-        hasSpecialSwordUpgrade = false;
-        hasDiedToGeorge = false;
-        act1Cleared = false;
-        act2Cleared = false;
-        act3Cleared = false;
-        yojiDead = false;
-        
-        npcTalkFlags.Clear();
-        dialogueFlags.Clear();
-        generalFlags.Clear();
-        
-        Debug.Log("Game progress reset to defaults (Base damage: 8, Max HP: 100)");
+        ApplyDefaultsFromConfig();
+        initializedThisSession = true;
+        Debug.Log("Game progress reset to defaults (from PlayerConfig).");
     }
-    #endregion
-
-    #region Utility Methods
-    public void AddPotion(int amount = 1)
-    {
-        potions += amount;
-        Debug.Log($"Potions added: {amount}. Total: {potions}");
-    }
-
-    public void IncreaseDamage(int amount)
-    {
-        swordDamage += amount;
-        Debug.Log($"Sword damage increased by {amount}. New damage: {swordDamage}");
-    }
-
-    public void IncreaseMaxHealth(float amount)
-    {
-        maxHealth += amount;
-        Debug.Log($"Max health increased by {amount}. New max health: {maxHealth}");
-        
-        // Also update player's current max HP
-        PlayerHealth playerHealth = FindFirstObjectByType<PlayerHealth>();
-        if (playerHealth != null)
-        {
-            playerHealth.SetMaxHealth(maxHealth);
-        }
-    }
-
-    public void MultiplyMaxHealth(float multiplier)
-    {
-        maxHealth *= multiplier;
-        Debug.Log($"Max health multiplied by {multiplier}. New max health: {maxHealth}");
-        
-        // Also update player's current max HP
-        PlayerHealth playerHealth = FindFirstObjectByType<PlayerHealth>();
-        if (playerHealth != null)
-        {
-            playerHealth.SetMaxHealth(maxHealth);
-        }
-    }
-    #endregion
 }

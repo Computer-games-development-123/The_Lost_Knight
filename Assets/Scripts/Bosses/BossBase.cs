@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class BossBase : MonoBehaviour
@@ -8,7 +9,10 @@ public class BossBase : MonoBehaviour
     public int maxHP = 100;
     public int damage = 10;
     public float moveSpeed = 3f;
-    public bool isInvulnerable = false; // For first encounter mechanics
+    public bool isInvulnerable = false;
+
+    [Header("Health Bar Asset")]
+    [SerializeField] private Image healthFill;
 
     [Header("Dialogues")]
     public DialogueData spawnDialogue;
@@ -55,6 +59,16 @@ public class BossBase : MonoBehaviour
         if (currentHP <= maxHP / 2 && !isPhase2)
         {
             EnterPhase2();
+        }
+        Refresh();
+    }
+
+    private void Refresh()
+    {
+        if (healthFill != null)
+        {
+            float maxHp = Mathf.Max(1f, maxHP);
+            healthFill.fillAmount = currentHP / maxHp;
         }
     }
 
@@ -125,7 +139,7 @@ public class BossBase : MonoBehaviour
 
         Debug.Log($"{bossName} defeated!");
 
-        // Notify WaveManager - FIXED: Passing 'this' as parameter
+        // Notify WaveManager
         if (waveManager != null)
         {
             waveManager.OnBossDied(this);
@@ -140,11 +154,17 @@ public class BossBase : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
-            {
-                playerHealth.TakeDamage(damage);
-            }
+            DealDamageToPlayer(collision.gameObject);
+        }
+    }
+
+    // Helper method to deal damage to player - can be called from collision or attacks
+    protected void DealDamageToPlayer(GameObject playerObject)
+    {
+        CharacterStats playerHealth = playerObject.GetComponent<CharacterStats>();
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(damage, transform.position);
         }
     }
 }

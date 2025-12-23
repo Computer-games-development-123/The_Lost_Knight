@@ -3,17 +3,21 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Ground
+  - Portal
+  - Enemy
+  - Yoji
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - Ground
   - Enemy
-  - 'EnemyProjectile '
+  - Player
+  - 
   - 
   - 
   - 
@@ -40,6 +44,33 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Sky
+    uniqueID: 2121706057
+    locked: 0
+  - name: Layer 1
+    uniqueID: 1977097939
+    locked: 0
+  - name: Layer 2
+    uniqueID: 2837714241
+    locked: 0
+  - name: Layer 3
+    uniqueID: 2790880333
+    locked: 0
+  - name: Layer 4
+    uniqueID: 2067576073
+    locked: 0
+  - name: Layer 5
+    uniqueID: 8255623
+    locked: 0
+  - name: Layer 6
+    uniqueID: 3276173355
+    locked: 0
+  - name: Layer 7
+    uniqueID: 2386833859
+    locked: 0
+  - name: Layer 8
+    uniqueID: 1367186215
     locked: 0
   m_RenderingLayers:
   - Default
