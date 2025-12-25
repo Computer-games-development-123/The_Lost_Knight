@@ -3,19 +3,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DialogueData", menuName = "Scriptable Objects/DialogueData")]
 public class DialogueData : ScriptableObject
 {
-    [Header("ID (flag)")]
-    public GameFlag flag;                       // e.g. "YOJI_FIRST", "BOSS1_SPAWN"
-
+    [Header("ID")]
+    public string id; // ✅ For BUNCH 2's DialogueManager
+    public GameFlag flag = GameFlag.None; // ✅ For BUNCH 1's dialogue triggers
+    
     [Header("Speaker")]
-    public string speakerName;              // e.g. "Yoji", "George", "Narrator"
-
+    public string speakerName;
+    
     [Header("Lines")]
     [TextArea(2, 5)]
-    public string[] lines;                  // Each element is one step in the dialogue
-
-    [Header("Character image")]
+    public string[] lines;
+    
+    [Header("Character image (optional)")]
     public Sprite portrait;
-
+    
     [Header("Settings")]
     public bool pauseGameDuringDialogue = true;
 }

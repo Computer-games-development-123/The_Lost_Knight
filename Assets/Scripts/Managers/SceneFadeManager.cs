@@ -20,7 +20,7 @@ public class SceneFadeManager : MonoBehaviour
 
     private Canvas fadeCanvas;
     private Image fadeImage;
-    //private bool isFading = false;
+    private bool isFading = false;
 
     private void Awake()
     {
@@ -28,9 +28,8 @@ public class SceneFadeManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            transform.SetParent(null);
             DontDestroyOnLoad(gameObject);
-
+            
             if (showDebugLogs)
                 Debug.Log("SceneFadeManager: Initialized");
         }
@@ -41,7 +40,7 @@ public class SceneFadeManager : MonoBehaviour
         }
 
         SetupFadeUI();
-
+        
         // Subscribe to scene loaded event
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -57,20 +56,20 @@ public class SceneFadeManager : MonoBehaviour
         // Create canvas
         GameObject canvasObj = new GameObject("FadeCanvas");
         canvasObj.transform.SetParent(transform);
-
+        
         fadeCanvas = canvasObj.AddComponent<Canvas>();
         fadeCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
         fadeCanvas.sortingOrder = 9999; // Always on top
-
+        
         canvasObj.AddComponent<GraphicRaycaster>();
-
+        
         // Create full-screen black image
         GameObject imageObj = new GameObject("FadeImage");
         imageObj.transform.SetParent(fadeCanvas.transform);
-
+        
         fadeImage = imageObj.AddComponent<Image>();
         fadeImage.color = new Color(fadeColor.r, fadeColor.g, fadeColor.b, 1f); // Start BLACK
-
+        
         // Stretch to fill screen
         RectTransform rect = fadeImage.GetComponent<RectTransform>();
         rect.anchorMin = Vector2.zero;
@@ -92,7 +91,7 @@ public class SceneFadeManager : MonoBehaviour
     {
         if (showDebugLogs)
             Debug.Log("Starting initial fade in...");
-
+        
         FadeIn();
     }
 
@@ -101,7 +100,7 @@ public class SceneFadeManager : MonoBehaviour
     {
         if (showDebugLogs)
             Debug.Log($"Scene loaded: {scene.name} - Starting fade in");
-
+        
         // Fade in whenever a new scene loads
         StopAllCoroutines();
         StartCoroutine(FadeRoutine(1f, 0f)); // Always fade from black to clear
@@ -114,7 +113,7 @@ public class SceneFadeManager : MonoBehaviour
     {
         if (showDebugLogs)
             Debug.Log("Fading OUT (to black)");
-
+        
         StopAllCoroutines();
         StartCoroutine(FadeRoutine(fadeImage.color.a, 1f));
     }
@@ -126,14 +125,14 @@ public class SceneFadeManager : MonoBehaviour
     {
         if (showDebugLogs)
             Debug.Log("Fading IN (to clear)");
-
+        
         StopAllCoroutines();
         StartCoroutine(FadeRoutine(fadeImage.color.a, 0f));
     }
 
     private IEnumerator FadeRoutine(float startAlpha, float targetAlpha)
     {
-        //isFading = true;
+        isFading = true;
         float elapsed = 0f;
 
         while (elapsed < fadeDuration)
@@ -145,7 +144,7 @@ public class SceneFadeManager : MonoBehaviour
         }
 
         SetAlpha(targetAlpha);
-        //isFading = false;
+        isFading = false;
 
         if (showDebugLogs)
             Debug.Log($"Fade complete - Alpha: {targetAlpha}");
@@ -165,13 +164,13 @@ public class SceneFadeManager : MonoBehaviour
     {
         StopAllCoroutines();
         SetAlpha(1f);
-        //isFading = false;
+        isFading = false;
     }
 
     public void SetFadeInImmediate()
     {
         StopAllCoroutines();
         SetAlpha(0f);
-        //isFading = false;
+        isFading = false;
     }
 }

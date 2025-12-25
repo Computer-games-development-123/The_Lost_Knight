@@ -2,6 +2,10 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+/// <summary>
+/// HUD Controller - Displays player stats in UI
+/// NO PlayerState - reads directly from components
+/// </summary>
 public class HUDController : MonoBehaviour
 {
     [Header("Texts")]
@@ -12,7 +16,8 @@ public class HUDController : MonoBehaviour
     [Header("Health Bar Asset")]
     [SerializeField] private Image healthFill; // Image type = Filled
 
-    private PlayerStats ps;
+    private PlayerInventory playerInventory;
+    private PlayerHealth playerHealth;
 
     private void Start()
     {
@@ -22,7 +27,7 @@ public class HUDController : MonoBehaviour
 
     private void Update()
     {
-        if (ps == null)
+        if (playerInventory == null || playerHealth == null)
         {
             TryBindPlayer();
             return;
@@ -33,29 +38,46 @@ public class HUDController : MonoBehaviour
 
     private void TryBindPlayer()
     {
+        // Find Player GameObject
         var player = GameObject.FindGameObjectWithTag("Player");
-        if (player == null) return;
-
-        ps = player.GetComponent<PlayerStats>();
+        if (player != null)
+        {
+            playerInventory = player.GetComponent<PlayerInventory>();
+            playerHealth = player.GetComponent<PlayerHealth>();
+        }
+        
+        if (playerInventory == null)
+        {
+            Debug.LogWarning("HUDController: PlayerInventory component not found on Player!");
+        }
+        
+        if (playerHealth == null)
+        {
+            Debug.LogWarning("HUDController: PlayerHealth component not found on Player!");
+        }
     }
 
     private void Refresh()
     {
-        if (ps == null) return;
+        if (playerInventory == null || playerHealth == null) return;
 
+        // Coins (from PlayerInventory)
         if (coinsText != null)
-            coinsText.text = $"{ps.coins}";
+            coinsText.text = $"{playerInventory.coins}";
 
+        // Potions (from PlayerInventory)
         if (potionsText != null)
-            potionsText.text = $"{ps.potions}/{ps.MaxPotions}";
+            potionsText.text = $"{playerInventory.potions}";
 
+        // Health bar (from PlayerHealth)
         if (healthFill != null)
         {
-            float maxHp = Mathf.Max(1f, ps.MaxHP);
-            healthFill.fillAmount = ps.currentHP / maxHp;
+            float maxHp = Mathf.Max(1f, playerHealth.MaxHealth);
+            healthFill.fillAmount = playerHealth.CurrentHealth / maxHp;
         }
 
+        // HP text (from PlayerHealth)
         if (hpText != null)
-            hpText.text = $"{ps.currentHP}/{ps.MaxHP}";
+            hpText.text = $"{playerHealth.CurrentHealth:F0}/{playerHealth.MaxHealth:F0}";
     }
 }

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6db8b1222c5259345876881bb6d99e5a, type: 3}
   m_Name: WalkerData
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  baseMaxHP: 20
-  moveSpeed: 2
-  baseDamage: 5
-  attackRange: 0
-  attackCooldown: 0
-  enemyName: 
+  enemyName: Walker
   behaviorType: 0
+  maxHP: 5
+  damage: 2
+  moveSpeed: 2
   coinsDropped: 1
+  enemySprite: {fileID: 0}
+  animatorController: {fileID: 0}

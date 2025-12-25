@@ -2,7 +2,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-[RequireComponent(typeof(CharacterContext))]
 public class EnemyBase : MonoBehaviour
 {
     [Header("Enemy Settings")]
@@ -13,6 +12,11 @@ public class EnemyBase : MonoBehaviour
     public int fallbackDamage = 5;
     public float fallbackMoveSpeed = 2f;
     public int fallbackCoinsDropped = 1;
+
+    [Header("Knockback Settings")]
+    public float knockbackForce = 8f;
+    public float knockbackDuration = 0.12f;
+    private bool isKnocked = false;
 
     [Header("Jumper Settings")]
     public float jumperJumpForce = 15f;
@@ -30,15 +34,18 @@ public class EnemyBase : MonoBehaviour
     [Header("References")]
     public WaveManager waveManager;
 
-    [Header("Runtime")]
-    public CharacterContext ctx;
-    public Transform player;
-    protected Collider2D col;
+    // Runtime variables
+    protected int currentHP;
+    protected Rigidbody2D rb;
+    protected Animator anim;
+    protected Transform player;
     protected bool isDead = false;
+    protected SpriteRenderer spriteRenderer;
+    protected Collider2D col;
 
-    // Stats from data / fallback
-    public int MaxHP => enemyData != null ? enemyData.baseMaxHP : fallbackMaxHP;
-    public int Damage => enemyData != null ? enemyData.baseDamage : fallbackDamage;
+    // Properties for easy access
+    public int MaxHP => enemyData != null ? enemyData.maxHP : fallbackMaxHP;
+    public int Damage => enemyData != null ? enemyData.damage : fallbackDamage;
     public float MoveSpeed => enemyData != null ? enemyData.moveSpeed : fallbackMoveSpeed;
     public int CoinsDropped => enemyData != null ? enemyData.coinsDropped : fallbackCoinsDropped;
 
@@ -49,62 +56,73 @@ public class EnemyBase : MonoBehaviour
         LayerMask.GetMask("Ground")
     );
 
-    protected void Awake()
+    protected virtual void Awake()
     {
-        ctx = GetComponent<CharacterContext>();
+        rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
+    }
 
-        if (ctx == null || ctx.CS == null)
+    protected virtual void Start()
+    {
+        currentHP = MaxHP;
+
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
         {
-            ctx.CS = GetComponent<CharacterStats>();
+            player = playerObj.transform;
+        }
+        else
+        {
+            Debug.LogWarning($"{gameObject.name}: Could not find Player!");
         }
 
-        ApplyDataToCharacterStats();
+        if (enemyData != null)
+        {
+            if (enemyData.enemySprite != null && spriteRenderer != null)
+            {
+                spriteRenderer.sprite = enemyData.enemySprite;
+            }
+            if (enemyData.animatorController != null && anim != null)
+            {
+                anim.runtimeAnimatorController = enemyData.animatorController;
+            }
+        }
 
-        ctx.CS.OnDied += HandleDied;
-    }
-
-    protected virtual void OnDestroy()
-    {
-        if (ctx != null && ctx.CS != null)
-            ctx.CS.OnDied -= HandleDied;
-    }
-
-    protected void Start()
-    {
-        if (ctx == null || ctx.CS == null) ctx = GetComponent<CharacterContext>();
-        // Find player
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null) player = playerObj.transform;
-        else Debug.LogWarning($"{name}: Could not find Player!");
-
-        Debug.Log($"{name} spawned with {ctx.CS.currentHP} HP");
-    }
-
-    private void ApplyDataToCharacterStats()
-    {
-        // CharacterStats already has data field, but EnemyData is separate.
-        // We override runtime fields here so it's consistent.
-        ctx.CS.currentHP = MaxHP;
-        ctx.CS.damage = Damage;
+        Debug.Log($"{gameObject.name} spawned with {currentHP} HP");
     }
 
     protected virtual void Update()
     {
-        if (player == null) Debug.LogWarning($"{name}: player is null");
-        //if (isDead) Debug.LogWarning($"{name}: isDead true");
-
-        if (isDead || player == null) return;
-
-        if (ctx != null && ctx.KB != null && ctx.KB.isKnockback)
-            return;
+        if (isDead || player == null || isKnocked) return;
 
         if (enemyData != null)
+        {
             ExecuteBehavior(enemyData.behaviorType);
+        }
         else
+        {
             WalkerBehavior();
+        }
+
+        UpdateAnimations();
     }
 
+    private void UpdateAnimations()
+    {
+        if (anim == null) return;
+
+        float speed = Mathf.Abs(rb.linearVelocity.x);
+        anim.SetFloat("Speed", speed);
+        anim.SetBool("IsMoving", speed > 0.1f);
+
+        if (enemyData != null && enemyData.behaviorType == EnemyData.EnemyBehaviorType.Jumper)
+        {
+            anim.SetBool("IsGrounded", IsGrounded);
+        }
+    }
+    
     #region Behaviors
 
     protected virtual void ExecuteBehavior(EnemyData.EnemyBehaviorType behaviorType)
@@ -131,16 +149,21 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void WalkerBehavior()
     {
+        if (player == null) return;
+
         Vector2 direction = (player.position - transform.position).normalized;
-        if (ctx.RB.bodyType == RigidbodyType2D.Dynamic)
-            ctx.RB.linearVelocity = new Vector2(direction.x * MoveSpeed, ctx.RB.linearVelocity.y);
+        rb.linearVelocity = new Vector2(direction.x * MoveSpeed, rb.linearVelocity.y);
+
         UpdateFacing(direction.x);
     }
 
     protected virtual void FastWalkerBehavior()
     {
+        if (player == null) return;
+
         Vector2 direction = (player.position - transform.position).normalized;
-        ctx.RB.linearVelocity = new Vector2(direction.x * MoveSpeed * 1.5f, ctx.RB.linearVelocity.y);
+        rb.linearVelocity = new Vector2(direction.x * MoveSpeed * 1.5f, rb.linearVelocity.y);
+
         UpdateFacing(direction.x);
     }
 
@@ -148,24 +171,27 @@ public class EnemyBase : MonoBehaviour
     {
         WalkerBehavior();
 
-        if (IsGrounded)
+        if (player != null && IsGrounded)
         {
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
             bool canJump = distanceToPlayer < 5f
-                           && Time.time >= lastJumpTime + jumperJumpCooldown
-                           && Random.value > 0.90f;
+                        && Time.time >= lastJumpTime + jumperJumpCooldown
+                        && Random.value > 0.90f;
 
             if (canJump)
             {
-                ctx.RB.linearVelocity = new Vector2(ctx.RB.linearVelocity.x, jumperJumpForce);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumperJumpForce);
                 lastJumpTime = Time.time;
+                Debug.Log($"{gameObject.name} jumped!");
             }
         }
     }
 
     protected virtual void RangedBehavior()
     {
+        if (player == null) return;
+
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
         float optimalMinRange = 5f;
@@ -174,18 +200,18 @@ public class EnemyBase : MonoBehaviour
         if (distanceToPlayer < optimalMinRange)
         {
             Vector2 direction = (transform.position - player.position).normalized;
-            ctx.RB.linearVelocity = new Vector2(direction.x * MoveSpeed * 1.2f, ctx.RB.linearVelocity.y);
+            rb.linearVelocity = new Vector2(direction.x * MoveSpeed * 1.2f, rb.linearVelocity.y);
             UpdateFacing(direction.x);
         }
         else if (distanceToPlayer > optimalMaxRange)
         {
             Vector2 direction = (player.position - transform.position).normalized;
-            ctx.RB.linearVelocity = new Vector2(direction.x * MoveSpeed * 0.8f, ctx.RB.linearVelocity.y);
+            rb.linearVelocity = new Vector2(direction.x * MoveSpeed * 0.8f, rb.linearVelocity.y);
             UpdateFacing(direction.x);
         }
         else
         {
-            ctx.RB.linearVelocity = new Vector2(0, ctx.RB.linearVelocity.y);
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
         }
 
         if (Time.time >= lastAttackTime + attackCooldown && distanceToPlayer <= attackRange)
@@ -199,65 +225,165 @@ public class EnemyBase : MonoBehaviour
     {
         if (projectilePrefab == null || player == null) return;
 
-        Vector3 spawnPos = projectileSpawnPoint != null
-            ? projectileSpawnPoint.position
-            : transform.position + Vector3.up * 0.5f;
+        Vector3 spawnPos;
+        if (projectileSpawnPoint != null)
+        {
+            spawnPos = projectileSpawnPoint.position;
+        }
+        else
+        {
+            spawnPos = transform.position + Vector3.up * 0.5f;
+        }
 
         Vector2 direction = (player.position - spawnPos).normalized;
 
         GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
 
+        int projectileLayer = LayerMask.NameToLayer("EnemyProjectile");
+        if (projectileLayer != -1)
+        {
+            projectile.layer = projectileLayer;
+        }
+
         Rigidbody2D projRb = projectile.GetComponent<Rigidbody2D>();
         if (projRb != null)
+        {
             projRb.linearVelocity = direction * projectileSpeed;
+        }
 
         EnemyProjectile projScript = projectile.GetComponent<EnemyProjectile>();
         if (projScript != null)
+        {
             projScript.damage = Damage;
+        }
+
+        Debug.Log($"{gameObject.name} shot projectile from {spawnPos} toward player!");
 
         Destroy(projectile, 5f);
     }
 
     protected virtual void EliteBehavior()
     {
+        if (player == null) return;
+
         Vector2 direction = (player.position - transform.position).normalized;
-        ctx.RB.linearVelocity = new Vector2(direction.x * MoveSpeed * 1.2f, ctx.RB.linearVelocity.y);
+        rb.linearVelocity = new Vector2(direction.x * MoveSpeed * 1.2f, rb.linearVelocity.y);
+
         UpdateFacing(direction.x);
     }
 
     protected void UpdateFacing(float directionX)
     {
-        if (ctx == null) return;
+        if (spriteRenderer == null) return;
 
-        if (directionX > 0) ctx.SetFacing(true);
-        else if (directionX < 0) ctx.SetFacing(false);
+        if (directionX > 0)
+            spriteRenderer.flipX = false;
+        else if (directionX < 0)
+            spriteRenderer.flipX = true;
     }
 
     #endregion
 
-    #region Death handling (from CharacterStats)
+    #region Damage System
 
-    private void HandleDied(CharacterStats stats)
+    public virtual void TakeDamage(int damage)
     {
         if (isDead) return;
+
+        currentHP -= damage;
+
+        Debug.Log($"{gameObject.name} took {damage} damage. HP: {currentHP}/{MaxHP}");
+
+        if (anim != null)
+        {
+            anim.SetTrigger("Hurt");
+        }
+
+        StartCoroutine(FlashRed());
+
+        if (currentHP <= 0)
+        {
+            Die();
+        }
+    }
+
+    public virtual void TakeDamage(int damage, Vector2 hitDirection)
+    {
+        if (isDead) return;
+
+        currentHP -= damage;
+
+        if (anim != null)
+            anim.SetTrigger("Hurt");
+
+        StartCoroutine(FlashRed());
+        StartCoroutine(ApplyKnockback(hitDirection));
+
+        if (currentHP <= 0)
+            Die();
+    }
+
+    private System.Collections.IEnumerator ApplyKnockback(Vector2 direction)
+    {
+        isKnocked = true;
+        rb.linearVelocity = Vector2.zero;
+        rb.AddForce(direction.normalized * knockbackForce, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(knockbackDuration);
+
+        rb.linearVelocity = Vector2.zero;
+        isKnocked = false;
+    }
+
+    protected System.Collections.IEnumerator FlashRed()
+    {
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+            spriteRenderer.color = Color.white;
+        }
+    }
+
+    protected virtual void Die()
+    {
+        if (isDead) return;
+
         isDead = true;
+        Debug.Log($"{gameObject.name} died!");
 
-        Debug.Log($"{name} died.");
+        rb.linearVelocity = Vector2.zero;
 
-        // Stop movement
-        if (ctx != null && ctx.RB != null)
-            ctx.RB.linearVelocity = Vector2.zero;
-
-        // Disable collider
         if (col != null)
+        {
             col.enabled = false;
+        }
 
-        // Report to waves
+        if (anim != null)
+        {
+            anim.SetTrigger("Death");
+        }
+
+        // Drop coins - give to player's inventory
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            PlayerInventory inventory = playerObj.GetComponent<PlayerInventory>();
+            if (inventory != null)
+            {
+                inventory.AddCoins(CoinsDropped);
+            }
+            else
+            {
+                Debug.LogWarning($"{gameObject.name}: Player has no PlayerInventory component!");
+            }
+        }
+
         if (waveManager != null)
+        {
             waveManager.OnEnemyDied(this);
-        PlayerStats playerStats = player.GetComponent<PlayerStats>();
-        playerStats.EarnCoins(enemyData.coinsDropped);
-        // Destroy after animation time (adjust as needed)
+        }
+
         Destroy(gameObject, 1f);
     }
 
@@ -265,8 +391,15 @@ public class EnemyBase : MonoBehaviour
 
     #region Collision - Player Damage
 
-    private void OnCollisionEnter2D(Collision2D collision) => DealContactDamage(collision.gameObject);
-    private void OnTriggerEnter2D(Collider2D collision) => DealContactDamage(collision.gameObject);
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        DealContactDamage(collision.gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        DealContactDamage(collision.gameObject);
+    }
 
     private void DealContactDamage(GameObject other)
     {
@@ -274,9 +407,54 @@ public class EnemyBase : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            PlayerStats ps = other.GetComponent<PlayerStats>();
-            if (ps != null)
-                ps.TakeDamage(Damage, transform.position);
+            PlayerController playerController = other.GetComponent<PlayerController>();
+            if (playerController != null)
+            {
+                playerController.TakeDamage(Damage, transform.position);
+                Debug.Log($"{gameObject.name} dealt {Damage} contact damage to Player!");
+                return;
+            }
+
+            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(Damage);
+                Debug.Log($"{gameObject.name} dealt {Damage} contact damage to Player!");
+                return;
+            }
+        }
+    }
+
+    #endregion
+
+    #region Debug
+
+    protected virtual void OnDrawGizmosSelected()
+    {
+        if (enemyData != null && enemyData.behaviorType == EnemyData.EnemyBehaviorType.Ranged)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, attackRange);
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, 5f);
+            Gizmos.DrawWireSphere(transform.position, 7f);
+
+            if (projectileSpawnPoint != null)
+            {
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawSphere(projectileSpawnPoint.position, 0.2f);
+            }
+            else
+            {
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawSphere(transform.position + Vector3.up * 0.5f, 0.2f);
+            }
+        }
+        else
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, 5f);
         }
     }
 

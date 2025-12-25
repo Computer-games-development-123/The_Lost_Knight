@@ -11,11 +11,6 @@ public enum GameFlag
     TutorialPortalUnlocked,
     ForestHubGateOpened,
 
-    // --- Acts ---
-    Act1Cleared,
-    Act2Cleared,
-    Act3Cleared,
-
     // --- Boss / Events ---
     EnterTutorial,
     TutorialCompleted,
@@ -25,5 +20,10 @@ public enum GameFlag
     FikaDefeated,
     PhillipDefeated,
     DitorDefeated,
-    YojiDead
+    YojiDead,
+    
+    // --- Act Progression ---
+    Act1Cleared,
+    Act2Cleared,
+    Act3Cleared
 }
