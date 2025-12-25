@@ -12,15 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e15b7d6bf76c6a5458415970d0c796b2, type: 3}
   m_Name: Yoji_PostGeorge
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  id: 
   flag: 0
   speakerName: Yoji, Store Owner
   lines:
-  - "So... you\u2019ve met George, huh?"
-  - "Yeah, I don\u2019t like him either."
-  - You must beat him in order to escape the forest..
-  - But dont worry, i got what you need.
-  - Take this and finish him for good.
-  - Yoji has given you a free weapon upgrade.
-  - The Store is now open.
+  - "So you've met Geroge eh?\t"
+  - Yeah, i dont like him either.
+  - take this and finish him for good.
+  - Yoji has given you a free weapon upgrade
+  - the store in now open.
   portrait: {fileID: 0}
   pauseGameDuringDialogue: 1
