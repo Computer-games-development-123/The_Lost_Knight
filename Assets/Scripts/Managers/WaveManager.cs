@@ -19,7 +19,12 @@ public class WaveManager : MonoBehaviour
     public List<Wave> waves = new List<Wave>();
     public GameObject bossPrefab;
     public Transform bossSpawnPoint;
-    public GameFlag flagAfterWin;
+
+    [Header("Portals (Direct References)")]
+    [Tooltip("Portal back to hub - leave empty to find by name")]
+    public string portalBackToHubName = "Forest_Hub_Portal";
+    [Tooltip("Portal to next area - leave empty to find by name")]
+    public string portalToNextAreaName = "GreenToRed_Portal";
 
     [Header("Dialogues")]
     public DialogueData beforeWaveDialogue;
@@ -30,31 +35,53 @@ public class WaveManager : MonoBehaviour
     public GameObject waveCompleteUI;
     public TMPro.TextMeshProUGUI waveText;
 
+    [Header("Debug")]
+    public bool showDebugLogs = true;
+
     private int currentWaveIndex = 0;
     private int enemiesAlive = 0;
     private bool waveInProgress = false;
     private bool bossSpawned = false;
     private bool allWavesComplete = false;
+    
+    private HashSet<EnemyBase> spawnedEnemies = new HashSet<EnemyBase>();
 
     void Start()
     {
+        ResetWaveManager();
+        
         if (waveCompleteUI != null)
             waveCompleteUI.SetActive(false);
 
         StartCoroutine(StartNextWave());
     }
 
+    void OnDestroy()
+    {
+        spawnedEnemies.Clear();
+    }
+
+    private void ResetWaveManager()
+    {
+        currentWaveIndex = 0;
+        enemiesAlive = 0;
+        waveInProgress = false;
+        bossSpawned = false;
+        allWavesComplete = false;
+        spawnedEnemies.Clear();
+        
+        if (showDebugLogs) Debug.Log("🔄 WaveManager reset");
+    }
+
     IEnumerator StartNextWave()
     {
         if (currentWaveIndex >= waves.Count)
         {
-            // All waves complete
             allWavesComplete = true;
-            Debug.Log("✅ All waves complete!");
-
+            if (showDebugLogs) Debug.Log("✅ All waves complete!");
+            
             yield return new WaitForSeconds(2f);
-
-            // NOW check if boss should spawn or skip
+            
             SpawnBoss();
             yield break;
         }
@@ -65,23 +92,24 @@ public class WaveManager : MonoBehaviour
         if (waveText != null)
             waveText.text = $"Wave {currentWaveIndex + 1}: {currentWave.waveName}";
 
-        Debug.Log($"Starting Wave {currentWaveIndex + 1}: {currentWave.waveName}");
+        if (showDebugLogs) Debug.Log($"🌊 Wave {currentWaveIndex + 1}: {currentWave.waveName}");
 
         for (int i = 0; i < currentWave.enemyCount; i++)
         {
             if (currentWave.spawnPoints.Length == 0)
             {
-                Debug.LogError("No spawn points assigned for wave!");
+                Debug.LogError("❌ No spawn points!");
                 yield break;
             }
 
             Transform spawnPoint = currentWave.spawnPoints[Random.Range(0, currentWave.spawnPoints.Length)];
-            GameObject enemy = Instantiate(currentWave.enemyPrefab, spawnPoint.position, Quaternion.identity);
+            GameObject enemyObj = Instantiate(currentWave.enemyPrefab, spawnPoint.position, Quaternion.identity);
 
-            EnemyBase enemyScript = enemy.GetComponent<EnemyBase>();
+            EnemyBase enemyScript = enemyObj.GetComponent<EnemyBase>();
             if (enemyScript != null)
             {
                 enemyScript.waveManager = this;
+                spawnedEnemies.Add(enemyScript);
             }
 
             enemiesAlive++;
@@ -89,13 +117,43 @@ public class WaveManager : MonoBehaviour
         }
 
         waveInProgress = false;
-        Debug.Log($"Wave {currentWaveIndex + 1} spawned. Enemies alive: {enemiesAlive}");
+        
+        if (enemiesAlive <= 0)
+        {
+            if (showDebugLogs) Debug.Log($"⚠️ Wave {currentWaveIndex + 1} completed during spawn");
+            currentWaveIndex++;
+            
+            if (waveCompleteUI != null)
+            {
+                waveCompleteUI.SetActive(true);
+                StartCoroutine(HideWaveCompleteUI());
+            }
+            
+            StartCoroutine(StartNextWave());
+            yield break;
+        }
+        
+        if (showDebugLogs) Debug.Log($"Wave {currentWaveIndex + 1} spawned. Enemies: {enemiesAlive}");
     }
 
     public void OnEnemyDied(EnemyBase enemy)
     {
+        if (!spawnedEnemies.Contains(enemy))
+        {
+            if (showDebugLogs) Debug.LogWarning("⚠️ Unknown enemy - ignoring");
+            return;
+        }
+
+        spawnedEnemies.Remove(enemy);
         enemiesAlive--;
-        Debug.Log($"Enemy died. Remaining: {enemiesAlive}");
+        
+        if (showDebugLogs) Debug.Log($"💀 Enemy died. Remaining: {enemiesAlive}");
+
+        if (enemiesAlive < 0)
+        {
+            Debug.LogError($"❌ Enemy counter negative!");
+            enemiesAlive = 0;
+        }
 
         if (enemiesAlive <= 0 && !waveInProgress && !bossSpawned)
         {
@@ -120,58 +178,48 @@ public class WaveManager : MonoBehaviour
 
     void SpawnBoss()
     {
-        // IMPORTANT: Only check if boss defeated AFTER all waves complete
         if (!allWavesComplete)
         {
-            Debug.LogWarning("⚠️ SpawnBoss called but waves not complete yet!");
+            Debug.LogWarning("⚠️ SpawnBoss called but waves not complete!");
             return;
         }
 
-        // Check if boss was already defeated
+        // Check if boss already defeated
         if (IsBossAlreadyDefeated())
         {
-            Debug.Log("Boss already defeated - spawning portal");
-            HandleBossAlreadyDefeated();
+            if (showDebugLogs) Debug.Log("✅ Boss already defeated - spawning portals");
+            SpawnPortals();
             return;
         }
-
-        // Boss not defeated yet - spawn normally
-        Debug.Log("Boss not defeated yet - spawning boss for fight");
-
-        // Check if this scene has a cutscene manager (Fika/Mona fight)
-        // FikaBossCutsceneManager cutsceneManager = FindFirstObjectByType<FikaBossCutsceneManager>();
-
-        // if (cutsceneManager != null)
-        // {
-        //     // Trigger cutscene (Fika fight)
-        //     cutsceneManager.TriggerBossCutscene();
-        //     bossSpawned = true;
-        //     Debug.Log("Boss cutscene triggered!");
-        // }
-        // else
-        // {
-        //     // Normal boss spawn (George or Philip)
-        if (bossPrefab != null && bossSpawnPoint != null)
+        
+        // Boss not defeated - spawn boss
+        if (showDebugLogs) Debug.Log("Boss not defeated - spawning boss");
+        
+        // Check for cutscene (Fika)
+        FikaBossCutsceneManager cutsceneManager = FindFirstObjectByType<FikaBossCutsceneManager>();
+        
+        if (cutsceneManager != null)
         {
+            cutsceneManager.TriggerBossCutscene();
             bossSpawned = true;
-            GameObject bossObj = Instantiate(bossPrefab, bossSpawnPoint.position, Quaternion.identity);
-
-            BossBase bossScript = bossObj.GetComponent<BossBase>();
-            if (bossScript != null)
-            {
-                bossScript.waveManager = this;
-            }
-
-            // NO BOSS-SPECIFIC CODE!
-            // All bosses find their own portal spawner in Die() method
-
-            Debug.Log($"Boss spawned: {bossPrefab.name}");
         }
         else
         {
-            Debug.LogWarning("⚠️ Boss prefab or spawn point not assigned!");
+            // Normal boss spawn
+            if (bossPrefab != null && bossSpawnPoint != null)
+            {
+                bossSpawned = true;
+                GameObject bossObj = Instantiate(bossPrefab, bossSpawnPoint.position, Quaternion.identity);
+
+                BossBase bossScript = bossObj.GetComponent<BossBase>();
+                if (bossScript != null)
+                {
+                    bossScript.waveManager = this;
+                }
+
+                if (showDebugLogs) Debug.Log($"✅ Boss spawned: {bossPrefab.name}");
+            }
         }
-        // }
     }
 
     private bool IsBossAlreadyDefeated()
@@ -181,79 +229,92 @@ public class WaveManager : MonoBehaviour
 
         string bossName = bossPrefab.name.ToLower();
 
-        // Check George
         if (bossName.Contains("george"))
         {
-            if (GameManager.Instance.act1Cleared)
-            {
-                Debug.Log("⚠️ George already defeated (Act 1 cleared)");
-                return true;
-            }
+            return GameManager.Instance.GetFlag(GameFlag.GeorgeDefeated);
         }
 
-        // Check Fika
         if (bossName.Contains("fika"))
         {
-            if (GameManager.Instance.act2Cleared)
-            {
-                Debug.Log("⚠️ Fika already defeated (Act 2 cleared)");
-                return true;
-            }
+            return GameManager.Instance.GetFlag(GameFlag.FikaDefeated);
         }
 
-        // Check Philip
         if (bossName.Contains("philip"))
         {
-            if (GameManager.Instance.act3Cleared)
-            {
-                Debug.Log("⚠️ Philip already defeated (Act 3 cleared)");
-                return true;
-            }
+            return GameManager.Instance.GetFlag(GameFlag.PhillipDefeated);
         }
 
         return false;
     }
 
-    private void HandleBossAlreadyDefeated()
+    /// <summary>
+    /// Spawns portals directly - called when boss already defeated
+    /// </summary>
+    private void SpawnPortals()
     {
-        Debug.Log("Boss already defeated - handling appropriately");
+        if (showDebugLogs) Debug.Log("🌀 Spawning portals for cleared area...");
 
-        // Option 1: Show dialogue (if assigned)
-        if (DialogueManager.Instance != null && bossAlreadyDefeatedDialogue != null)
+        GameObject portalBack = FindObjectInHierarchy(portalBackToHubName);
+        GameObject portalNext = FindObjectInHierarchy(portalToNextAreaName);
+
+        if (portalBack != null)
         {
-            DialogueManager.Instance.Play(bossAlreadyDefeatedDialogue, () =>
-            {
-                SpawnPortalForClearedArea();
-            });
+            portalBack.SetActive(true);
+            if (showDebugLogs) Debug.Log($"✅ Portal activated: {portalBackToHubName}");
         }
-        else
+        else if (!string.IsNullOrEmpty(portalBackToHubName))
         {
-            // Option 2: Just spawn portal immediately
-            SpawnPortalForClearedArea();
+            Debug.LogWarning($"⚠️ Portal not found: {portalBackToHubName}");
+        }
+
+        if (portalNext != null)
+        {
+            portalNext.SetActive(true);
+            if (showDebugLogs) Debug.Log($"✅ Portal activated: {portalToNextAreaName}");
+        }
+        else if (!string.IsNullOrEmpty(portalToNextAreaName))
+        {
+            Debug.LogWarning($"⚠️ Portal not found: {portalToNextAreaName}");
         }
     }
 
-    private void SpawnPortalForClearedArea()
+    /// <summary>
+    /// Finds GameObject anywhere in hierarchy
+    /// </summary>
+    private GameObject FindObjectInHierarchy(string objectName)
     {
-        // Spawn the portal so player can continue forward
-        // if (portalSpawner != null)
-        // {
-        //     portalSpawner.SpawnPortal();
-        //     Debug.Log("✅ Portal spawned for already-cleared area");
-        // }
-        // else
-        // {
-        //     Debug.LogWarning("⚠️ No portal spawner - player might be stuck!");
+        if (string.IsNullOrEmpty(objectName)) return null;
 
-        //     // Fallback: Load next scene directly after delay
-        //     StartCoroutine(LoadNextSceneAfterDelay(3f));
-        // }
+        GameObject obj = GameObject.Find(objectName);
+        if (obj != null) return obj;
+
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject go in allObjects)
+        {
+            if (go.hideFlags == HideFlags.None && go.scene.isLoaded)
+            {
+                if (go.name == objectName)
+                {
+                    return go;
+                }
+            }
+        }
+
+        return null;
     }
 
     public void OnBossDied(BossBase boss)
     {
-        GameManager.Instance.SetFlag(flagAfterWin, true);
-        Debug.Log($"{boss.bossName} defeated!");
-        // Boss handles its own death, portal spawning, etc.
+        if (showDebugLogs) Debug.Log($"{boss.bossName} defeated!");
+    }
+
+    [ContextMenu("Debug Wave State")]
+    private void DebugWaveState()
+    {
+        Debug.Log($"=== WAVE MANAGER DEBUG ===");
+        Debug.Log($"Current Wave: {currentWaveIndex + 1}/{waves.Count}");
+        Debug.Log($"Enemies Alive: {enemiesAlive}");
+        Debug.Log($"Boss Spawned: {bossSpawned}");
+        Debug.Log($"========================");
     }
 }

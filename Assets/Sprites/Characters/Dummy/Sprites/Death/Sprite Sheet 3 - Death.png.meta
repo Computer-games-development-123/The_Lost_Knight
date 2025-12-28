@@ -1,5 +1,13 @@
 fileFormatVersion: 2
 guid: 87814c18c0885324882b60a9340ca7ca
+AssetOrigin:
+  serializedVersion: 1
+  productId: 323464
+  packageName: Straw Training Dummy - Pixel Art
+  packageVersion: 1.0
+  assetPath: Assets/War/Straw Training Dummy - Pixel Art/Sprites/Death/Sprite Sheet
+    3 - Death.png
+  uploadId: 764380
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -161,6 +169,19 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -558,11 +579,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 323464
-  packageName: Straw Training Dummy - Pixel Art
-  packageVersion: 1.0
-  assetPath: Assets/War/Straw Training Dummy - Pixel Art/Sprites/Death/Sprite Sheet
-    3 - Death.png
-  uploadId: 764380

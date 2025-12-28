@@ -12,13 +12,10 @@ GameObject:
   - component: {fileID: 1152351005224758378}
   - component: {fileID: 4278612183363409662}
   - component: {fileID: 8780919851282773113}
-  - component: {fileID: 7405316599082941750}
   - component: {fileID: 2315376524190939055}
-  - component: {fileID: 3200290653405585938}
   - component: {fileID: 1748609232503493373}
   - component: {fileID: 8891676062246508424}
-  - component: {fileID: 433704810419142461}
-  - component: {fileID: 9041338541582692848}
+  - component: {fileID: 2562608003308250898}
   m_Layer: 6
   m_Name: Walker
   m_TagString: Enemy
@@ -163,22 +160,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &7405316599082941750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7219932414428029039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa1ab8ea6ee226c469394939d193daf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  data: {fileID: 11400000, guid: 0cc75135b9032f7419cd9dc897daca68, type: 2}
-  ctx: {fileID: 2315376524190939055}
-  currentHP: 0
-  damage: 0
 --- !u!114 &2315376524190939055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,34 +173,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterContext
   attackPoint: {fileID: 0}
-  attackX: 0.2
---- !u!114 &3200290653405585938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7219932414428029039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5e8a74d98ece1e4faaafc91343a3822, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyBase
-  enemyData: {fileID: 11400000, guid: 0cc75135b9032f7419cd9dc897daca68, type: 2}
-  fallbackMaxHP: 10
-  fallbackDamage: 5
-  fallbackMoveSpeed: 2
-  fallbackCoinsDropped: 1
-  jumperJumpForce: 15
-  jumperJumpCooldown: 1.5
-  projectilePrefab: {fileID: 0}
-  projectileSpawnPoint: {fileID: 0}
-  attackRange: 8
-  attackCooldown: 2
-  projectileSpeed: 8
-  waveManager: {fileID: 0}
-  ctx: {fileID: 0}
-  player: {fileID: 0}
 --- !u!95 &1748609232503493373
 Animator:
   serializedVersion: 7
@@ -255,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimatorDriver
   anim: {fileID: 0}
---- !u!114 &433704810419142461
+--- !u!114 &2562608003308250898
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -264,30 +217,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 7219932414428029039}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efe732958a8e43445b72080972f1ecac, type: 3}
+  m_Script: {fileID: 11500000, guid: 76959cc1a25b07845b8036c861139c2f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Knockback
-  knockbackX: 3
-  knockbackY: 3
-  knockbackDuration: 0.5
-  zeroGravityDuringKB: 0
---- !u!114 &9041338541582692848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7219932414428029039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 537536ff6c0265249b7b777151f33352, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DamageDealer
-  targetLayers:
-    serializedVersion: 2
-    m_Bits: 128
-  hitPoint: {fileID: 0}
-  dealDamageOnTouch: 1
-  touchDamage: 1
-  touchCooldown: 0.5
-  hitBroadcaster: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyBase
+  enemyData: {fileID: 11400000, guid: 0cc75135b9032f7419cd9dc897daca68, type: 2}
+  fallbackMaxHP: 10
+  fallbackDamage: 5
+  fallbackMoveSpeed: 2
+  fallbackCoinsDropped: 1
+  knockbackForce: 8
+  knockbackDuration: 0.12
+  jumperJumpForce: 15
+  jumperJumpCooldown: 1.5
+  projectilePrefab: {fileID: 0}
+  projectileSpawnPoint: {fileID: 0}
+  attackRange: 8
+  attackCooldown: 2
+  projectileSpeed: 8
+  waveManager: {fileID: 0}
