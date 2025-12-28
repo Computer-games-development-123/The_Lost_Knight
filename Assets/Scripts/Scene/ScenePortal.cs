@@ -10,7 +10,7 @@ using TMPro;
 public class ScenePortal : MonoBehaviour
 {
     [Header("Portal Settings")]
-    public string targetSceneName = "GreenToRed";
+    public string targetSceneName = " ";
     
     [Header("Interaction")]
     [SerializeField] private KeyCode interactKey = KeyCode.F;

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class SceneIntro : MonoBehaviour
+public class ForestHubIntro : MonoBehaviour
 {
     public DialogueData openingDialogue;
 

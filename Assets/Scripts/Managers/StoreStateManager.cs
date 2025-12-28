@@ -2,7 +2,6 @@ using UnityEngine;
 
 /// <summary>
 /// Store State Manager - Tracks store progression states
-/// FIXED: Uses GameFlag enum (NOT strings!)
 /// </summary>
 public class StoreStateManager : MonoBehaviour
 {
@@ -25,7 +24,7 @@ public class StoreStateManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log("✅ StoreStateManager: Initialized and persisting across scenes");
+            Debug.Log("✅ StoreStateManager initialized");
         }
         else
         {
@@ -33,7 +32,6 @@ public class StoreStateManager : MonoBehaviour
             return;
         }
 
-        // Initialize state based on GameManager flags
         UpdateStoreStateFromGameManager();
     }
 
@@ -41,17 +39,16 @@ public class StoreStateManager : MonoBehaviour
     {
         if (GameManager.Instance == null) return;
 
-        // Determine state based on progression
+        // Determine state based on boss defeats
         if (GameManager.Instance.yojiDead)
         {
             currentState = StoreState.PostPhilip;
         }
-        // ✅ FIXED: Use GameFlag enum instead of string!
-        else if (GameManager.Instance.GetFlag(GameFlag.Act2Cleared))
+        else if (GameManager.Instance.GetFlag(GameFlag.FikaDefeated))
         {
             currentState = StoreState.PostFika;
         }
-        else if (GameManager.Instance.hasSpecialSwordUpgrade)
+        else if (GameManager.Instance.GetFlag(GameFlag.GeorgeDefeated))
         {
             currentState = StoreState.PostGeorge;
         }
@@ -60,13 +57,13 @@ public class StoreStateManager : MonoBehaviour
             currentState = StoreState.Locked;
         }
 
-        Debug.Log($"🏪 Store state updated to: {currentState}");
+        Debug.Log($"🏪 Store state: {currentState}");
     }
 
     public void SetStoreState(StoreState newState)
     {
         currentState = newState;
-        Debug.Log($"🏪 Store state manually set to: {currentState}");
+        Debug.Log($"🏪 Store state set to: {currentState}");
     }
 
     public bool IsStoreUnlocked()

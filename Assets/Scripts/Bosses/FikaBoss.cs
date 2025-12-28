@@ -15,6 +15,10 @@ public class FikaBoss : BossBase
     public float dashCooldown = 3f;
     private float lastDashTime = 0f;
 
+    [Header("Portals (Direct References)")]
+    public string portalBackToHubName = "Forest_Hub_Portal";
+    public string portalToNextAreaName = "BlueBattle_Portal"; // Or whatever's next
+
     protected override void OnBossStart()
     {
         base.OnBossStart();
@@ -32,12 +36,10 @@ public class FikaBoss : BossBase
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-        // Ranged attack - shoot when at medium distance
         if (Time.time >= lastProjectileTime + projectileCooldown && distanceToPlayer > 4f && distanceToPlayer < 10f)
         {
             ShootProjectile();
         }
-        // Dash attack - only when close AND cooldown is ready
         else if (distanceToPlayer < 6f && Time.time >= lastDashTime + dashCooldown && Random.value > 0.95f)
         {
             StartCoroutine(DashAttack());
@@ -157,54 +159,69 @@ public class FikaBoss : BossBase
         if (anim != null)
             anim.SetTrigger("Death");
 
-        // Notify WaveManager
         if (waveManager != null)
         {
             waveManager.OnBossDied(this);
         }
 
-        // Play death dialogue, then handle post-death
         if (DialogueManager.Instance != null && deathDialogue != null)
         {
-            Debug.Log($"Playing {bossName} death dialogue...");
             DialogueManager.Instance.Play(deathDialogue, OnDeathDialogueComplete);
         }
         else
         {
-            Debug.LogWarning($"⚠️ No death dialogue for {bossName}! Proceeding to post-death...");
             OnDeathDialogueComplete();
         }
     }
 
     private void OnDeathDialogueComplete()
     {
-        Debug.Log($"Death dialogue complete for {bossName}. Handling post-death...");
+        Debug.Log($"✅ Fika defeated - spawning portals...");
 
-        // Update GameManager - Fika defeated = Act 2 complete
+        // ✅ Update GameManager - NO MORE ACT FLAGS!
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.act2Cleared = true;
-            GameManager.Instance.SaveProgress();
-            Debug.Log("✅ Act 2 marked as cleared!");
-        }
-        else
-        {
-            Debug.LogError("❌ GameManager not found! Cannot mark Act 2 as cleared!");
+            GameManager.Instance.OnFikaDefeated();
         }
 
-        // Find and spawn portal
-        PostBossPortalSpawner portalSpawner = FindFirstObjectByType<PostBossPortalSpawner>();
-        if (portalSpawner != null)
+        // ✅ Spawn portals directly (same as George)
+        GameObject portalBack = FindObjectInHierarchy(portalBackToHubName);
+        GameObject portalNext = FindObjectInHierarchy(portalToNextAreaName);
+
+        if (portalBack != null)
         {
-            Debug.Log("Found PostBossPortalSpawner, spawning portal...");
-            portalSpawner.SpawnPortal();
-        }
-        else
-        {
-            Debug.LogError("PostBossPortalSpawner not found in scene! Portal cannot spawn!");
+            portalBack.SetActive(true);
+            Debug.Log($"🌀 Portal spawned: {portalBackToHubName}");
         }
 
-        // Destroy Fika after delay
+        if (portalNext != null)
+        {
+            portalNext.SetActive(true);
+            Debug.Log($"🌀 Portal spawned: {portalToNextAreaName}");
+        }
+
         Destroy(gameObject, 2f);
+    }
+
+    private GameObject FindObjectInHierarchy(string objectName)
+    {
+        if (string.IsNullOrEmpty(objectName)) return null;
+
+        GameObject obj = GameObject.Find(objectName);
+        if (obj != null) return obj;
+
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject go in allObjects)
+        {
+            if (go.hideFlags == HideFlags.None && go.scene.isLoaded)
+            {
+                if (go.name == objectName)
+                {
+                    return go;
+                }
+            }
+        }
+
+        return null;
     }
 }

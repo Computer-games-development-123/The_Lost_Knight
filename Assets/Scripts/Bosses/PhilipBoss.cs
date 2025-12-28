@@ -10,6 +10,10 @@ public class PhilipBoss : BossBase
     private float lastSlamTime;
     private bool isSlaming = false;
 
+    [Header("Portals (Direct References)")]
+    public string portalBackToHubName = "Forest_Hub_Portal";
+    public string portalToNextAreaName = "FinalArea_Portal"; // Or end game portal
+
     protected override void OnBossStart()
     {
         base.OnBossStart();
@@ -26,14 +30,12 @@ public class PhilipBoss : BossBase
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-        // Ground slam attack
         if (Time.time >= lastSlamTime + slamCooldown && distanceToPlayer < 5f)
         {
             StartCoroutine(GroundSlam());
         }
         else
         {
-            // Slow advance
             base.BossAI();
         }
     }
@@ -65,7 +67,11 @@ public class PhilipBoss : BossBase
         // Damage player if nearby
         if (player != null && Vector2.Distance(transform.position, player.position) < 4f)
         {
-            player.GetComponent<PlayerController>()?.TakeDamage(slamDamage);
+            PlayerHealth ph = player.GetComponent<PlayerHealth>();
+            if (ph != null)
+            {
+                ph.TakeDamage(slamDamage);
+            }
         }
 
         if (anim != null)
@@ -81,5 +87,86 @@ public class PhilipBoss : BossBase
         base.EnterPhase2();
         slamCooldown *= 0.7f;
         slamDamage = Mathf.RoundToInt(slamDamage * 1.5f);
+    }
+
+    protected override void Die()
+    {
+        if (isDead) return;
+        isDead = true;
+
+        Debug.Log($"💀 {bossName} defeated!");
+
+        isSlaming = false;
+
+        if (rb != null)
+            rb.linearVelocity = Vector2.zero;
+
+        if (anim != null)
+            anim.SetTrigger("Death");
+
+        if (waveManager != null)
+        {
+            waveManager.OnBossDied(this);
+        }
+
+        if (DialogueManager.Instance != null && deathDialogue != null)
+        {
+            DialogueManager.Instance.Play(deathDialogue, OnDeathDialogueComplete);
+        }
+        else
+        {
+            OnDeathDialogueComplete();
+        }
+    }
+
+    private void OnDeathDialogueComplete()
+    {
+        Debug.Log($"✅ Philip defeated - spawning portals...");
+
+        // ✅ Update GameManager
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnPhilipDefeated();
+        }
+
+        // ✅ Spawn portals
+        GameObject portalBack = FindObjectInHierarchy(portalBackToHubName);
+        GameObject portalNext = FindObjectInHierarchy(portalToNextAreaName);
+
+        if (portalBack != null)
+        {
+            portalBack.SetActive(true);
+            Debug.Log($"🌀 Portal spawned: {portalBackToHubName}");
+        }
+
+        if (portalNext != null)
+        {
+            portalNext.SetActive(true);
+            Debug.Log($"🌀 Portal spawned: {portalToNextAreaName}");
+        }
+
+        Destroy(gameObject, 2f);
+    }
+
+    private GameObject FindObjectInHierarchy(string objectName)
+    {
+        if (string.IsNullOrEmpty(objectName)) return null;
+
+        GameObject obj = GameObject.Find(objectName);
+        if (obj != null) return obj;
+
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject go in allObjects)
+        {
+            if (go.hideFlags == HideFlags.None && go.scene.isLoaded)
+            {
+                if (go.name == objectName)
+                {
+                    return go;
+                }
+            }
+        }
+
+        return null;
     }
 }

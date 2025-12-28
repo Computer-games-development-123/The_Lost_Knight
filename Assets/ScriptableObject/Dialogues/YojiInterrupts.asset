@@ -9,13 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e15b7d6bf76c6a5458415970d0c796b2, type: 3}
+  m_Script: {fileID: 11500000, guid: 10218a061c572484faf9e08ab7ff6a87, type: 3}
   m_Name: YojiInterrupts
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  id: 
   flag: 0
   speakerName: Yoji, Store Owner
   lines:
-  - Wait! I'll handle Mona.
-  - You focus on Fika, brave knight.
+  - WAIT!,
+  - I will handle Mona.
+  - Dont Hold Back, Charge Fika!.
   portrait: {fileID: 0}
   pauseGameDuringDialogue: 1

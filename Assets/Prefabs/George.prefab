@@ -209,21 +209,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 761f0147ac0b80446b27cde986af086f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GeorgeBoss
-  bossName: Boss
+  bossName: George
   maxHP: 100
   damage: 10
   moveSpeed: 3
   isInvulnerable: 0
-  spawnDialogue: {fileID: 11400000, guid: 59fb30a6b5d913a49a3bc3d58e38f17c, type: 2}
-  deathDialogue: {fileID: 11400000, guid: 90614a83b99b61346932cf0a3c136a96, type: 2}
+  spawnDialogue: {fileID: 11400000, guid: a32fdae27b777f64caf222d639f708a5, type: 2}
+  deathDialogue: {fileID: 11400000, guid: 0d2bc21d3a11b5d499b9d06f7f697b87, type: 2}
   waveManager: {fileID: 0}
   player: {fileID: 0}
-  isFirstEncounter: 1
   firstEncounterDialogue: {fileID: 11400000, guid: 046c65efe49bd924385266f16426cc5d, type: 2}
   dialogueCanvas: {fileID: 0}
   hitsToTriggerTaunt: 5
-  chargeSpeed: 8
-  chargeCooldown: 3
+  attackCooldown: 4
+  closeRangeThreshold: 2
+  attackPoint: {fileID: 0}
+  attackRange: 1
+  flySpeed: 6
+  flyHeight: 3
+  flyDuration: 1
+  walkSpeed: 3
+  minX: -8
+  maxX: 8
+  minY: -4
+  maxY: 4
+  groundCheck: {fileID: 0}
+  groundCheckRadius: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &-5225463524748817341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,8 +251,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossBase
   bossName: George
-  maxHP: 40
-  damage: 7
+  maxHP: 100
+  damage: 10
   moveSpeed: 3
   isInvulnerable: 0
   spawnDialogue: {fileID: 0}

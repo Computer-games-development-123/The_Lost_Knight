@@ -26,6 +26,10 @@ public class TutorialDummyEnemy : EnemyBase
         {
             portalToEnable.SetActive(false);
         }
+        else
+        {
+            Debug.LogWarning("⚠️ TutorialDummyEnemy: portalToEnable is not assigned! Please drag the Forest_Hub_Portal GameObject to this field in Inspector!");
+        }
     }
 
     protected override void Update()
@@ -61,31 +65,61 @@ public class TutorialDummyEnemy : EnemyBase
         // Flash red briefly
         StartCoroutine(FlashRed());
 
-        // 1) Dialogue after N hits
+        // 1) Dialogue after N hits - WITH CALLBACK TO UNLOCK PORTAL
         if (!dialoguePlayed && currentHits >= hitsToTriggerDialogue)
         {
+            dialoguePlayed = true;    // Mark as played
+
             if (DialogueManager.Instance != null && afterHitsDialogue != null)
             {
-                DialogueManager.Instance.Play(afterHitsDialogue);
+                // ✅ FIX: Pass callback to unlock portal AFTER dialogue finishes
+                DialogueManager.Instance.Play(afterHitsDialogue, OnDialogueComplete);
             }
-
-            dialoguePlayed = true;    // only once
-        }
-
-        // 2) Unlock portal after enough hits
-        if (!portalUnlocked && currentHits >= hitsNeededToUnlockPortal)
-        {
-            portalUnlocked = true;
-
-            if (portalToEnable != null)
+            else
             {
-                portalToEnable.SetActive(true);
-                Debug.Log("Tutorial: portal back to ForestHub unlocked.");
+                // No dialogue? Just unlock portal immediately
+                UnlockPortal();
             }
         }
 
         // No HP reduction, no death for the dummy - just reset to keep it alive
         currentHP = 99999;
+    }
+
+    /// <summary>
+    /// Called when the tutorial completion dialogue finishes
+    /// </summary>
+    private void OnDialogueComplete()
+    {
+        UnlockPortal();
+    }
+
+    /// <summary>
+    /// Unlocks the portal back to Forest Hub
+    /// </summary>
+    private void UnlockPortal()
+    {
+        if (portalUnlocked) return; // Already unlocked
+        
+        portalUnlocked = true;
+
+        // Set the flag
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SetFlag(GameFlag.TutorialPortalUnlocked, true);
+            GameManager.Instance.SaveProgress();
+        }
+
+        // Activate the portal GameObject
+        if (portalToEnable != null)
+        {
+            portalToEnable.SetActive(true);
+            Debug.Log("✅ Tutorial: portal back to ForestHub spawned!");
+        }
+        else
+        {
+            Debug.LogError("❌ portalToEnable is NOT ASSIGNED! Drag the Forest_Hub_Portal to TutorialDummyEnemy in Inspector!");
+        }
     }
 
     protected override void Die()

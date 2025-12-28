@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 5019103269634199412}
   - component: {fileID: 4003226436323456006}
   - component: {fileID: 524193434095801508}
+  - component: {fileID: 8192387872576722755}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -270,6 +271,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8556d5378696112429276233665b9937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Abilities
+  hasTeleport: 0
+  hasWaveOfLight: 0
+  hasUpgradedSword: 0
   teleportDistance: 4.5
   groundLayer:
     serializedVersion: 2
@@ -321,7 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d7ad79d045cc16469e0b859cbd00702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  deathDialogue: {fileID: 0}
+  deathDialogue: {fileID: 11400000, guid: dbd50dc40e0148049ba0748c2c3a3493, type: 2}
   maxHealth: 50
   currentHealth: 50
 --- !u!114 &524193434095801508
@@ -350,6 +354,20 @@ MonoBehaviour:
   firePoint: {fileID: 0}
   waveOfLightCooldown: 5
   attackPoint: {fileID: 6633376722634027389}
+--- !u!114 &8192387872576722755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4376152552779809795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57a4146fdb8eba847b03fa1b496a6aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
+  coins: 0
+  potions: 5
 --- !u!1 &4695522883229318128
 GameObject:
   m_ObjectHideFlags: 0

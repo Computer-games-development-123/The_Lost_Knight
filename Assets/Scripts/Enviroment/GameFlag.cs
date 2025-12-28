@@ -6,6 +6,7 @@ public enum GameFlag
     OpeningDialogueSeen,
     YojiFirstDialogueCompleted,
     YojiAfterGeorge,
+    GreenBattleIntroSeen,
 
     // --- Portals / Gates ---
     TutorialPortalUnlocked,
@@ -20,10 +21,5 @@ public enum GameFlag
     FikaDefeated,
     PhillipDefeated,
     DitorDefeated,
-    YojiDead,
-    
-    // --- Act Progression ---
-    Act1Cleared,
-    Act2Cleared,
-    Act3Cleared
+    YojiDead
 }
