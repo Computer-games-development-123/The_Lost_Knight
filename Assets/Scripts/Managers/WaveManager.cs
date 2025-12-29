@@ -43,13 +43,13 @@ public class WaveManager : MonoBehaviour
     private bool waveInProgress = false;
     private bool bossSpawned = false;
     private bool allWavesComplete = false;
-    
+
     private HashSet<EnemyBase> spawnedEnemies = new HashSet<EnemyBase>();
 
     void Start()
     {
         ResetWaveManager();
-        
+
         if (waveCompleteUI != null)
             waveCompleteUI.SetActive(false);
 
@@ -69,7 +69,7 @@ public class WaveManager : MonoBehaviour
         bossSpawned = false;
         allWavesComplete = false;
         spawnedEnemies.Clear();
-        
+
         if (showDebugLogs) Debug.Log("🔄 WaveManager reset");
     }
 
@@ -79,9 +79,9 @@ public class WaveManager : MonoBehaviour
         {
             allWavesComplete = true;
             if (showDebugLogs) Debug.Log("✅ All waves complete!");
-            
+
             yield return new WaitForSeconds(2f);
-            
+
             SpawnBoss();
             yield break;
         }
@@ -117,22 +117,22 @@ public class WaveManager : MonoBehaviour
         }
 
         waveInProgress = false;
-        
+
         if (enemiesAlive <= 0)
         {
             if (showDebugLogs) Debug.Log($"⚠️ Wave {currentWaveIndex + 1} completed during spawn");
             currentWaveIndex++;
-            
+
             if (waveCompleteUI != null)
             {
                 waveCompleteUI.SetActive(true);
                 StartCoroutine(HideWaveCompleteUI());
             }
-            
+
             StartCoroutine(StartNextWave());
             yield break;
         }
-        
+
         if (showDebugLogs) Debug.Log($"Wave {currentWaveIndex + 1} spawned. Enemies: {enemiesAlive}");
     }
 
@@ -146,7 +146,7 @@ public class WaveManager : MonoBehaviour
 
         spawnedEnemies.Remove(enemy);
         enemiesAlive--;
-        
+
         if (showDebugLogs) Debug.Log($"💀 Enemy died. Remaining: {enemiesAlive}");
 
         if (enemiesAlive < 0)
@@ -191,13 +191,13 @@ public class WaveManager : MonoBehaviour
             SpawnPortals();
             return;
         }
-        
+
         // Boss not defeated - spawn boss
         if (showDebugLogs) Debug.Log("Boss not defeated - spawning boss");
-        
+
         // Check for cutscene (Fika)
         FikaBossCutsceneManager cutsceneManager = FindFirstObjectByType<FikaBossCutsceneManager>();
-        
+
         if (cutsceneManager != null)
         {
             cutsceneManager.TriggerBossCutscene();

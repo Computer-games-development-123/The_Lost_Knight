@@ -10,15 +10,15 @@ public class PostBossPortalSpawner : MonoBehaviour
     [SerializeField] private GameObject portalPrefab;
     [SerializeField] private Vector3 portalSpawnPosition = new Vector3(10f, 0f, 0f);
     [SerializeField] private string targetSceneName = "GreenToRed";
-    
+
     [Header("Prompt Customization")]
     [Tooltip("Custom text for this portal, e.g. 'Press F to Continue' - leave empty for default")]
     [SerializeField] private string customPromptText = "";
-    
+
     [Header("Visual Effects (Optional)")]
     [SerializeField] private GameObject spawnEffect;
     [SerializeField] private float spawnEffectDuration = 1f;
-    
+
     private GameObject spawnedPortal;
     private bool portalSpawned = false;
 
@@ -42,13 +42,13 @@ public class PostBossPortalSpawner : MonoBehaviour
         if (portalPrefab != null)
         {
             spawnedPortal = Instantiate(portalPrefab, portalSpawnPosition, Quaternion.identity);
-            
+
             // Configure the portal
             ScenePortal portalScript = spawnedPortal.GetComponent<ScenePortal>();
             if (portalScript != null)
             {
                 portalScript.targetSceneName = targetSceneName;
-                
+
                 // Set custom prompt text if provided
                 if (!string.IsNullOrEmpty(customPromptText))
                 {
@@ -56,7 +56,7 @@ public class PostBossPortalSpawner : MonoBehaviour
                     Debug.Log($"Portal prompt set to: {customPromptText}");
                 }
             }
-            
+
             portalSpawned = true;
             Debug.Log($"Portal spawned at {portalSpawnPosition} → Target: {targetSceneName}");
         }

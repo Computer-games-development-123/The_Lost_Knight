@@ -14,7 +14,7 @@ public class PlayerInventory : MonoBehaviour
     private void Awake()
     {
         playerHealth = GetComponent<PlayerHealth>();
-        
+
         // Load inventory when player spawns
         LoadInventory();
     }
@@ -100,7 +100,7 @@ public class PlayerInventory : MonoBehaviour
     {
         coins = PlayerPrefs.GetInt("PlayerCoins", 0); // Default: 0 coins
         potions = PlayerPrefs.GetInt("PlayerPotions", 5); // Default: 5 potions
-        
+
         Debug.Log($"📂 Inventory loaded: {coins} coins, {potions} potions");
     }
 

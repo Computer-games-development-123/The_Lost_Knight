@@ -22,10 +22,10 @@ public class AnimatorDriver : MonoBehaviour
         // Speed animation
         float speed = Mathf.Abs(ctx.RB.linearVelocity.x);
         anim.SetFloat("Speed", speed);
-        
+
         // Vertical velocity
         anim.SetFloat("YVelocity", ctx.RB.linearVelocity.y);
-        
+
         // Grounded state
         anim.SetBool("Grounded", movement.IsGrounded);
     }

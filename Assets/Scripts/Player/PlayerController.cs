@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-                
+
                 if (animDriver != null)
                     animDriver.Jump();
             }

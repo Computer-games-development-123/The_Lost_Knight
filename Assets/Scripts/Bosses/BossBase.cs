@@ -180,7 +180,7 @@ public class BossBase : MonoBehaviour
         GameObject canvas = GameObject.Find("BossHealthCanvas");
         if (canvas == null)
             canvas = GameObject.Find("BossHealthBar");
-        
+
         if (canvas != null)
         {
             healthBarCanvas = canvas;
@@ -213,7 +213,7 @@ public class BossBase : MonoBehaviour
 
             if (healthBarFill == null)
                 Debug.LogWarning("⚠️ Could not find health bar Fill image!");
-            
+
             if (bossNameText == null)
                 Debug.LogWarning("⚠️ Could not find boss name text!");
         }

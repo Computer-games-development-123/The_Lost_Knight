@@ -100,7 +100,7 @@ public class TutorialDummyEnemy : EnemyBase
     private void UnlockPortal()
     {
         if (portalUnlocked) return; // Already unlocked
-        
+
         portalUnlocked = true;
 
         // Set the flag

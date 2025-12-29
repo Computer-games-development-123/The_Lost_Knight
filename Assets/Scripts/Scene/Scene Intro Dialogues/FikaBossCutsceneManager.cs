@@ -16,20 +16,20 @@ public class FikaBossCutsceneManager : MonoBehaviour
     public GameObject fikaBossPrefab;
     public GameObject monaBossPrefab;
     public GameObject yojiPrefab; // Or use existing Yoji if available
-    
+
     [Header("Spawn Positions")]
     public Transform fikaSpawnPoint;
     public Transform monaSpawnPoint;
     public Transform yojiSpawnPoint;
-    
+
     [Header("Dialogues")]
     public DialogueData fikaMonaAppearDialogue;
     public DialogueData yojiInterruptsDialogue;
     public DialogueData fikaChallengeDialogue;
-    
+
     [Header("Movement")]
     public float yojiMoveSpeed = 5f;
-    
+
     private GameObject fikaInstance;
     private GameObject monaInstance;
     private GameObject yojiInstance;
@@ -39,7 +39,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
     {
         if (cutsceneTriggered) return;
         cutsceneTriggered = true;
-        
+
         StartCoroutine(BossCutsceneSequence());
     }
 
@@ -56,7 +56,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
         // 1. Spawn Fika and Mona
         fikaInstance = Instantiate(fikaBossPrefab, fikaSpawnPoint.position, Quaternion.identity);
         monaInstance = Instantiate(monaBossPrefab, monaSpawnPoint.position, Quaternion.identity);
-        
+
         // Disable Fika's AI temporarily
         FikaBoss fikaScript = fikaInstance.GetComponent<FikaBoss>();
         if (fikaScript != null) fikaScript.enabled = false;
@@ -68,7 +68,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
         {
             bool dialogueDone = false;
             DialogueManager.Instance.Play(fikaMonaAppearDialogue, () => dialogueDone = true);
-            
+
             while (!dialogueDone)
                 yield return null;
         }
@@ -77,7 +77,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
 
         // 3. Yoji pops in
         yojiInstance = Instantiate(yojiPrefab, yojiSpawnPoint.position, Quaternion.identity);
-        
+
         yield return new WaitForSeconds(0.5f);
 
         // 4. Yoji dialogue
@@ -85,7 +85,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
         {
             bool dialogueDone = false;
             DialogueManager.Instance.Play(yojiInterruptsDialogue, () => dialogueDone = true);
-            
+
             while (!dialogueDone)
                 yield return null;
         }
@@ -106,7 +106,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
         {
             bool dialogueDone = false;
             DialogueManager.Instance.Play(fikaChallengeDialogue, () => dialogueDone = true);
-            
+
             while (!dialogueDone)
                 yield return null;
         }
@@ -129,7 +129,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
         if (yojiInstance == null || monaInstance == null) yield break;
 
         Vector3 targetPos = monaInstance.transform.position;
-        
+
         while (Vector3.Distance(yojiInstance.transform.position, targetPos) > 0.1f)
         {
             yojiInstance.transform.position = Vector3.MoveTowards(
@@ -137,7 +137,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
                 targetPos,
                 yojiMoveSpeed * Time.deltaTime
             );
-            
+
             yield return null;
         }
     }

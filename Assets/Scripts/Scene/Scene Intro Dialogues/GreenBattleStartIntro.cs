@@ -52,7 +52,7 @@ public class GreenBattleStartIntro : MonoBehaviour
         if (DialogueManager.Instance != null && BattleStartDialogue != null)
         {
             Debug.Log("🎬 Playing Green Battle intro dialogue");
-            
+
             // Play dialogue and mark as seen when complete
             DialogueManager.Instance.Play(BattleStartDialogue, OnDialogueComplete);
         }

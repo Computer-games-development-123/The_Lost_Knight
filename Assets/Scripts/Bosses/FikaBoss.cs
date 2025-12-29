@@ -10,7 +10,7 @@ public class FikaBoss : BossBase
     public float projectileCooldown = 2.5f;
     private float lastProjectileTime;
     private bool isDashing = false;
-    
+
     [Header("Dash Settings")]
     public float dashCooldown = 3f;
     private float lastDashTime = 0f;
@@ -26,7 +26,7 @@ public class FikaBoss : BossBase
         maxHP = 120;
         currentHP = maxHP;
         moveSpeed = 3f;
-        
+
         Debug.Log($"✅ {bossName} initialized: HP={currentHP}, Damage={damage}");
     }
 
@@ -58,7 +58,7 @@ public class FikaBoss : BossBase
         {
             Vector3 spawnPos = transform.position + Vector3.up * 0.5f;
             Vector2 direction = (player.position - spawnPos).normalized;
-            
+
             GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
 
             int projectileLayer = LayerMask.NameToLayer("EnemyProjectile");
@@ -72,7 +72,7 @@ public class FikaBoss : BossBase
             {
                 projRb.linearVelocity = direction * 7f;
             }
-            
+
             EnemyProjectile projScript = projectile.GetComponent<EnemyProjectile>();
             if (projScript != null)
             {
@@ -88,7 +88,7 @@ public class FikaBoss : BossBase
         if (player == null) return;
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-        
+
         if (distanceToPlayer < 3f)
         {
             Vector2 awayDirection = (transform.position - player.position).normalized;
@@ -106,7 +106,7 @@ public class FikaBoss : BossBase
             Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
             rb.linearVelocity = direction * moveSpeed * 0.7f;
         }
-        
+
         if (rb.linearVelocity.x > 0)
             spriteRenderer.flipX = false;
         else if (rb.linearVelocity.x < 0)
@@ -120,7 +120,7 @@ public class FikaBoss : BossBase
 
         if (anim != null)
             anim.SetTrigger("DashWindup");
-        
+
         rb.linearVelocity = Vector2.zero;
         yield return new WaitForSeconds(0.3f);
 
@@ -134,18 +134,18 @@ public class FikaBoss : BossBase
 
         rb.linearVelocity = Vector2.zero;
         yield return new WaitForSeconds(0.3f);
-        
+
         isDashing = false;
     }
 
     protected override void EnterPhase2()
     {
         base.EnterPhase2();
-        
+
         projectileCooldown *= 0.7f;
         dashSpeed *= 1.2f;
         dashCooldown *= 0.8f;
-        
+
         Debug.Log($"{bossName} entered Phase 2!");
     }
 

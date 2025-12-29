@@ -37,7 +37,7 @@ public class YojiStoreHandler : MonoBehaviour
 
         // Method 1: Try FindFirstObjectByType (searches all scenes including DontDestroyOnLoad)
         storeController = FindFirstObjectByType<ListStoreController>(FindObjectsInactive.Include);
-        
+
         // Method 2: If that fails, search by GameObject name
         if (storeController == null)
         {

@@ -13,7 +13,7 @@ public class GeorgeBoss : BossBase
     [Header("Portal Names (will be found automatically)")]
     [Tooltip("Name of portal back to hub")]
     public string portalBackToHubName = "Forest_Hub_Portal";
-    
+
     [Tooltip("Name of portal to next area")]
     public string portalToNextAreaName = "GreenToRed_Portal";
 
@@ -58,14 +58,14 @@ public class GeorgeBoss : BossBase
     protected override void Start()
     {
         base.Start();
-        
+
         Debug.Log("========== GEORGE START ==========");
         Debug.Log($"Looking for portal 1: '{portalBackToHubName}'");
         Debug.Log($"Looking for portal 2: '{portalToNextAreaName}'");
-        
+
         // Auto-find portals by name
         FindPortals();
-        
+
         // Hide portals at start
         if (portalBackToHub != null)
         {
@@ -78,7 +78,7 @@ public class GeorgeBoss : BossBase
             Debug.LogError($"❌ FAILED to find portal named '{portalBackToHubName}' in scene!");
             Debug.LogError("Please check: 1) Portal exists in scene, 2) Name matches exactly (case-sensitive), 3) Portal is not disabled");
         }
-        
+
         if (portalToNextArea != null)
         {
             bool wasActive = portalToNextArea.activeSelf;
@@ -90,7 +90,7 @@ public class GeorgeBoss : BossBase
             Debug.LogError($"❌ FAILED to find portal named '{portalToNextAreaName}' in scene!");
             Debug.LogError("Please check: 1) Portal exists in scene, 2) Name matches exactly (case-sensitive), 3) Portal is not disabled");
         }
-        
+
         Debug.Log("========== GEORGE START COMPLETE ==========");
     }
 
@@ -99,11 +99,11 @@ public class GeorgeBoss : BossBase
         Debug.Log($"🔍 Searching for portal: '{portalBackToHubName}'...");
         portalBackToHub = FindObjectInHierarchy(portalBackToHubName);
         Debug.Log($"   Result: {(portalBackToHub != null ? "FOUND" : "NOT FOUND")}");
-        
+
         Debug.Log($"🔍 Searching for portal: '{portalToNextAreaName}'...");
         portalToNextArea = FindObjectInHierarchy(portalToNextAreaName);
         Debug.Log($"   Result: {(portalToNextArea != null ? "FOUND" : "NOT FOUND")}");
-        
+
         // List all GameObjects in scene for debugging
         Debug.Log("📋 All GameObjects in scene:");
         GameObject[] allObjects = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
@@ -207,7 +207,7 @@ public class GeorgeBoss : BossBase
     {
         isAttacking = false;
         isFlying = false;
-        
+
         if (rb != null)
             rb.linearVelocity = Vector2.zero;
 
@@ -456,14 +456,14 @@ public class GeorgeBoss : BossBase
 
         Debug.Log("========== PORTAL SPAWN SEQUENCE COMPLETE ==========");
         Debug.Log("🗑️ Destroying George in 2 seconds...");
-        
+
         Destroy(gameObject, 2f);
     }
 
     protected override void EnterPhase2()
     {
         base.EnterPhase2();
-        
+
         attackCooldown *= 0.75f;
         walkSpeed *= 1.3f;
         flySpeed *= 1.2f;

@@ -12,7 +12,7 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
 {
     [Header("Attack Settings")]
     [Tooltip("Synced from PlayerState automatically")]
-    public int swordDamage = 8; 
+    public int swordDamage = 8;
     public float attackRange = 1.5f;
     public float attackCooldown = 0.5f;
     public LayerMask enemyLayer;
@@ -56,14 +56,14 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
     void Start()
     {
         abilities = GetComponent<Abilities>();
-        
+
         // Register with HitConfirmBroadcaster if available
         if (hitBroadcaster == null)
             hitBroadcaster = GetComponentInChildren<HitConfirmBroadcaster>();
-        
+
         if (hitBroadcaster == null)
             hitBroadcaster = GetComponentInParent<HitConfirmBroadcaster>();
-        
+
         if (hitBroadcaster != null && enableComboSystem)
         {
             hitBroadcaster.Register(this);
@@ -74,7 +74,7 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
             Debug.LogWarning("⚠️ HitConfirmBroadcaster not found - Combo system disabled!");
             enableComboSystem = false;
         }
-        
+
         Debug.Log($"PlayerAttack started with damage: {swordDamage}");
     }
 
@@ -124,7 +124,7 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
     }
 
     #region Combo System
-    
+
     private void RegisterComboAttack()
     {
         if (comboStep == 0)
@@ -134,9 +134,9 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
             comboTimer = comboWindow;
             hitConfirmedThisStep = false;
             isAttacking = true;
-            
+
             Attack();
-            
+
             if (animDriver != null)
             {
                 animDriver.anim.SetInteger("ComboStep", comboStep);
@@ -150,19 +150,19 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
                 Debug.Log("⚠️ Combo blocked - previous hit missed!");
                 return;
             }
-            
+
             hitConfirmedThisStep = false;
             comboStep = Mathf.Clamp(comboStep + 1, 1, maxComboSteps);
             comboTimer = comboWindow;
             isAttacking = true;
-            
+
             Attack();
-            
+
             if (animDriver != null)
             {
                 animDriver.anim.SetInteger("ComboStep", comboStep);
             }
-            
+
             Debug.Log($"🎯 Combo step {comboStep}!");
         }
     }
@@ -173,12 +173,12 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
         comboTimer = 0f;
         hitConfirmedThisStep = false;
         isAttacking = false;
-        
+
         if (animDriver != null)
         {
             animDriver.anim.SetInteger("ComboStep", 0);
         }
-        
+
         Debug.Log("🔄 Combo reset");
     }
 
@@ -186,7 +186,7 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
     public void OnHitConfirmed(GameObject target)
     {
         if (!isAttacking || !enableComboSystem) return;
-        
+
         hitConfirmedThisStep = true;
         Debug.Log($"✅ Hit confirmed on {target.name} - combo can continue!");
     }
@@ -223,13 +223,13 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
         {
             Vector2 knockDir = (enemy.transform.position - transform.position).normalized;
             enemyScript.TakeDamage(swordDamage, knockDir);
-            
+
             // Notify hit confirmation system
             if (hitBroadcaster != null && enableComboSystem)
             {
                 hitBroadcaster.NotifyHit(enemy.gameObject);
             }
-            
+
             Debug.Log($"⚔️ Hit {enemy.name} for {swordDamage} damage!");
             return;
         }
@@ -238,13 +238,13 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
         if (bossScript != null)
         {
             bossScript.TakeDamage(swordDamage);
-            
+
             // Notify hit confirmation system
             if (hitBroadcaster != null && enableComboSystem)
             {
                 hitBroadcaster.NotifyHit(enemy.gameObject);
             }
-            
+
             Debug.Log($"⚔️ Hit boss {enemy.name} for {swordDamage} damage!");
             return;
         }
@@ -282,7 +282,7 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
     }
 
     #region Upgrade Methods (Called by StoreController)
-    
+
     /// <summary>
     /// Increase sword damage by a fixed amount
     /// Called by StoreController when purchasing damage upgrade
@@ -302,7 +302,7 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
         swordDamage *= multiplier;
         Debug.Log($"⚔️ Damage multiplied by {multiplier}. New damage: {swordDamage}");
     }
-    
+
     #endregion
 
     void OnDrawGizmosSelected()

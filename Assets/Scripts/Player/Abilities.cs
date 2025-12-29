@@ -15,7 +15,7 @@ public class Abilities : MonoBehaviour
     [Header("Teleport Settings")]
     public float teleportDistance = 4.5f;
     public LayerMask groundLayer;
-    
+
     private PlayerController controller;
     private Invulnerability invulnerability;
 
@@ -31,7 +31,7 @@ public class Abilities : MonoBehaviour
         hasUpgradedSword = PlayerPrefs.GetInt("PlayerHasUpgradedSword", 0) == 1;
         hasTeleport = PlayerPrefs.GetInt("PlayerHasTeleport", 0) == 1;
         hasWaveOfLight = PlayerPrefs.GetInt("PlayerHasWaveOfLight", 0) == 1;
-        
+
         if (hasUpgradedSword)
             Debug.Log("✅ Abilities Start: Loaded hasUpgradedSword = true from save");
     }
@@ -59,22 +59,22 @@ public class Abilities : MonoBehaviour
             Debug.LogWarning("⚠️ PlayerController not found!");
             return;
         }
-        
+
         Vector2 dir = controller.facingDir();
         Vector2 newPos = (Vector2)transform.position + dir * teleportDistance;
-        
+
         RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, teleportDistance, groundLayer);
-        
+
         if (hit.collider == null)
         {
             transform.position = newPos;
-            
+
             // ✅ FIXED: Use Invulnerability component instead of PlayerController
             if (invulnerability != null)
             {
                 invulnerability.Trigger();
             }
-            
+
             Debug.Log("✨ Teleported!");
         }
         else
@@ -84,7 +84,7 @@ public class Abilities : MonoBehaviour
     }
 
     #region Unlock Methods (Called by StoreController)
-    
+
     /// <summary>
     /// Unlock teleport ability
     /// Called by StoreController when purchasing Flash Helmet
@@ -112,13 +112,13 @@ public class Abilities : MonoBehaviour
     public void UpgradeSword()
     {
         hasUpgradedSword = true;
-        
+
         // ✅ Save immediately so it persists across scene loads!
         PlayerPrefs.SetInt("PlayerHasUpgradedSword", 1);
         PlayerPrefs.Save();
-        
+
         Debug.Log("⚔️ Sword upgraded by Yoji! Can now damage George!");
     }
-    
+
     #endregion
 }

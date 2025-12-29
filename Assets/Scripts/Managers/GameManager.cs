@@ -38,14 +38,14 @@ public class GameManager : MonoBehaviour
     }
 
     #region Flag System (UNIFIED)
-    
+
     public void SetFlag(GameFlag flag, bool value)
     {
         flags[flag] = value;
-        
+
         // Sync legacy public bools
         SyncPublicFlags();
-        
+
         if (showDebugLogs) Debug.Log($"🚩 Flag set: {flag} = {value}");
     }
 
@@ -62,11 +62,11 @@ public class GameManager : MonoBehaviour
         hasDiedToGeorge = GetFlag(GameFlag.GeorgeFirstEncounter);
         yojiDead = GetFlag(GameFlag.YojiDead);
     }
-    
+
     #endregion
 
     #region Backwards Compatibility - hasSpecialSwordUpgrade
-    
+
     public bool hasSpecialSwordUpgrade
     {
         get
@@ -83,17 +83,17 @@ public class GameManager : MonoBehaviour
             return false;
         }
     }
-    
+
     public bool hasSeenOpeningDialogue
     {
         get => GetFlag(GameFlag.OpeningDialogueSeen);
         set => SetFlag(GameFlag.OpeningDialogueSeen, value);
     }
-    
+
     #endregion
 
     #region Progression Events
-    
+
     public void OnGeorgeDefeated()
     {
         SetFlag(GameFlag.GeorgeDefeated, true);
@@ -139,11 +139,11 @@ public class GameManager : MonoBehaviour
         SaveProgress();
         UnityEngine.SceneManagement.SceneManager.LoadScene("Forest_Hub");
     }
-    
+
     #endregion
 
     #region Store State Management
-    
+
     private void UpdateStoreState()
     {
         if (StoreStateManager.Instance != null)
@@ -151,18 +151,18 @@ public class GameManager : MonoBehaviour
             StoreStateManager.Instance.UpdateStoreStateFromGameManager();
         }
     }
-    
+
     #endregion
 
     #region Save/Load System
-    
+
     public void SaveProgress()
     {
         if (showDebugLogs) Debug.Log("💾 Saving game progress...");
-        
+
         SaveFlags();
         PlayerPrefs.Save();
-        
+
         if (showDebugLogs) Debug.Log("✅ Game progress saved!");
     }
 
@@ -177,9 +177,9 @@ public class GameManager : MonoBehaviour
     public void LoadProgress()
     {
         if (showDebugLogs) Debug.Log("📂 Loading game progress...");
-        
+
         LoadFlags();
-        
+
         if (showDebugLogs) Debug.Log("✅ Game progress loaded!");
     }
 
@@ -188,23 +188,23 @@ public class GameManager : MonoBehaviour
         foreach (GameFlag flag in System.Enum.GetValues(typeof(GameFlag)))
         {
             if (flag == GameFlag.None) continue;
-            
+
             int saved = PlayerPrefs.GetInt("FLAG_" + flag.ToString(), 0);
             flags[flag] = (saved == 1);
         }
-        
+
         SyncPublicFlags();
     }
 
     public void ResetProgress()
     {
         if (showDebugLogs) Debug.Log("🔄 Resetting all progress...");
-        
+
         PlayerPrefs.DeleteAll();
         flags.Clear();
-        
+
         if (showDebugLogs) Debug.Log("✅ Game progress reset!");
     }
-    
+
     #endregion
 }

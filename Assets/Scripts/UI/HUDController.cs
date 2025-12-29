@@ -45,12 +45,12 @@ public class HUDController : MonoBehaviour
             playerInventory = player.GetComponent<PlayerInventory>();
             playerHealth = player.GetComponent<PlayerHealth>();
         }
-        
+
         if (playerInventory == null)
         {
             Debug.LogWarning("HUDController: PlayerInventory component not found on Player!");
         }
-        
+
         if (playerHealth == null)
         {
             Debug.LogWarning("HUDController: PlayerHealth component not found on Player!");

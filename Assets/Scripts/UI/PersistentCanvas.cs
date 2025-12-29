@@ -10,7 +10,7 @@ public class PersistentCanvas : MonoBehaviour
     [Tooltip("Unique ID for this canvas. Used to prevent duplicates.")]
     public string canvasID = "StoreCanvas";
 
-    private static System.Collections.Generic.HashSet<string> existingCanvases = 
+    private static System.Collections.Generic.HashSet<string> existingCanvases =
         new System.Collections.Generic.HashSet<string>();
 
     private void Awake()
