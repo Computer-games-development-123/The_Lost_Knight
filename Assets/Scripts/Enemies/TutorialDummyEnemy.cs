@@ -107,7 +107,6 @@ public class TutorialDummyEnemy : EnemyBase
         if (GameManager.Instance != null)
         {
             GameManager.Instance.SetFlag(GameFlag.TutorialPortalUnlocked, true);
-            GameManager.Instance.SaveProgress();
         }
 
         // Activate the portal GameObject

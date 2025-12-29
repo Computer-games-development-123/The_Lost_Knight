@@ -2206,11 +2206,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f94a7157e83de8146bf7793e1076dacb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  showDebugLogs: 1
   hasDiedToGeorge: 0
   yojiDead: 0
-  act1Cleared: 0
-  act2Cleared: 0
-  act3Cleared: 0
 --- !u!1 &1128978500
 GameObject:
   m_ObjectHideFlags: 0
@@ -2978,6 +2976,50 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1557989291
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1557989293}
+  - component: {fileID: 1557989292}
+  m_Layer: 0
+  m_Name: ForestHubBootstrapper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1557989292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557989291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b88fa4ed1c4d3f4c9c4c29ca3314e02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+--- !u!4 &1557989293
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557989291}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 939.1386, y: 488.78934, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1633458635
 GameObject:
   m_ObjectHideFlags: 0
@@ -4476,10 +4518,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4003226436323456006, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
-      propertyPath: deathDialogue
-      value: 
-      objectReference: {fileID: 11400000, guid: dbd50dc40e0148049ba0748c2c3a3493, type: 2}
     - target: {fileID: 4376152552779809795, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
       propertyPath: m_Name
       value: Player
@@ -4523,10 +4561,6 @@ PrefabInstance:
     - target: {fileID: 6415566011707803852, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7407948971773479402, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
-      propertyPath: m_GravityScale
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4650,3 +4684,4 @@ SceneRoots:
   - {fileID: 1733824341}
   - {fileID: 4007629750977778869}
   - {fileID: 1094946179}
+  - {fileID: 1557989293}

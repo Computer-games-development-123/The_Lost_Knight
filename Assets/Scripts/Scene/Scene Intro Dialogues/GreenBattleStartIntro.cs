@@ -64,7 +64,6 @@ public class GreenBattleStartIntro : MonoBehaviour
         if (GameManager.Instance != null && !playEveryTime)
         {
             GameManager.Instance.SetFlag(dialogueSeenFlag, true);
-            GameManager.Instance.SaveProgress();
             Debug.Log($"✅ Green Battle intro marked as seen (Flag: {dialogueSeenFlag})");
         }
     }

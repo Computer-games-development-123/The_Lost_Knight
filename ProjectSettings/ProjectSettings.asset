@@ -718,11 +718,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: fa117445-db20-4496-bf75-fe879f7535d5
+  cloudProjectId: 3845fcfb-d10e-4199-af91-c26a1abf6e3b
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: The_Lost_Knight_1
-  organizationId: itzhak173
+  projectName: The_Lost_Knight 2025-12-29_10-02-40
+  organizationId: thelostknight-team
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

@@ -20,7 +20,7 @@ public class SceneFadeManager : MonoBehaviour
 
     private Canvas fadeCanvas;
     private Image fadeImage;
-    private bool isFading = false;
+    //private bool isFading = false;
 
     private void Awake()
     {
@@ -132,7 +132,7 @@ public class SceneFadeManager : MonoBehaviour
 
     private IEnumerator FadeRoutine(float startAlpha, float targetAlpha)
     {
-        isFading = true;
+        //isFading = true;
         float elapsed = 0f;
 
         while (elapsed < fadeDuration)
@@ -144,7 +144,7 @@ public class SceneFadeManager : MonoBehaviour
         }
 
         SetAlpha(targetAlpha);
-        isFading = false;
+        //isFading = false;
 
         if (showDebugLogs)
             Debug.Log($"Fade complete - Alpha: {targetAlpha}");
@@ -164,13 +164,13 @@ public class SceneFadeManager : MonoBehaviour
     {
         StopAllCoroutines();
         SetAlpha(1f);
-        isFading = false;
+        //isFading = false;
     }
 
     public void SetFadeInImmediate()
     {
         StopAllCoroutines();
         SetAlpha(0f);
-        isFading = false;
+        //isFading = false;
     }
 }

@@ -24,7 +24,7 @@ public class ForestHubIntro : MonoBehaviour
 
         // Mark as seen and save
         GameManager.Instance.hasSeenOpeningDialogue = true;
-        GameManager.Instance.SaveProgress();
+        GameManager.Instance.SetFlag(GameFlag.OpeningDialogueSeen, true);
 
         if (DialogueManager.Instance != null && openingDialogue != null)
         {
