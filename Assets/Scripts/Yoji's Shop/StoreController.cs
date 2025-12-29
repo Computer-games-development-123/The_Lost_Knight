@@ -299,10 +299,10 @@ public class ListStoreController : MonoBehaviour
         if (row == null || row.itemData == null) return;
 
         bool isFreeStore = StoreStateManager.Instance != null && StoreStateManager.Instance.IsStoreFree();
-        bool swordRevealed = StoreStateManager.Instance != null && StoreStateManager.Instance.IsSwordOfLightRevealed();
+        bool swordRevealed = StoreStateManager.Instance != null && StoreStateManager.Instance.IsSwordOfFireRevealed();
 
-        bool isSwordOfLight = row.itemData.itemType == ShopItem.ShopItemType.SwordOfLight;
-        bool isLocked = isSwordOfLight && !swordRevealed;
+        bool isSwordOfFire = row.itemData.itemType == ShopItem.ShopItemType.SwordOfFire;
+        bool isLocked = isSwordOfFire && !swordRevealed;
         bool outOfStock = row.itemData.currentStock == 0 && row.itemData.maxStock != -1;
 
         if (outOfStock)
@@ -427,10 +427,10 @@ public class ListStoreController : MonoBehaviour
             return;
         }
 
-        bool isSwordOfLight = itemData.itemType == ShopItem.ShopItemType.SwordOfLight;
-        bool swordRevealed = StoreStateManager.Instance.IsSwordOfLightRevealed();
+        bool isSwordOfFire = itemData.itemType == ShopItem.ShopItemType.SwordOfFire;
+        bool swordRevealed = StoreStateManager.Instance.IsSwordOfFireRevealed();
 
-        if (isSwordOfLight && !swordRevealed)
+        if (isSwordOfFire && !swordRevealed)
         {
             Debug.Log("This item is locked!");
             return;
@@ -519,10 +519,10 @@ public class ListStoreController : MonoBehaviour
                 }
                 break;
 
-            case ShopItem.ShopItemType.SwordOfLight:
+            case ShopItem.ShopItemType.SwordOfFire:
                 if (abilities != null && playerAttack != null)
                 {
-                    abilities.UnlockWaveOfLight();
+                    abilities.UnlockWaveOfFire();
                     playerAttack.MultiplyDamage(2);
                 }
                 break;

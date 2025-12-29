@@ -2,8 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// George Boss - AUTO-FIND VERSION
-/// Automatically finds portals by name - no Inspector assignment needed!
+/// George Boss - FIXED ANIMATIONS VERSION
+/// Matches animator parameters: Punch, Hurt, Die, IsDead, Speed, IsGrounded, IsMoving
 /// </summary>
 public class GeorgeBoss : BossBase
 {
@@ -11,10 +11,7 @@ public class GeorgeBoss : BossBase
     public DialogueData firstEncounterDialogue;
 
     [Header("Portal Names (will be found automatically)")]
-    [Tooltip("Name of portal back to hub")]
     public string portalBackToHubName = "Forest_Hub_Portal";
-    
-    [Tooltip("Name of portal to next area")]
     public string portalToNextAreaName = "GreenToRed_Portal";
 
     private GameObject portalBackToHub;
@@ -59,77 +56,35 @@ public class GeorgeBoss : BossBase
     {
         base.Start();
         
-        Debug.Log("========== GEORGE START ==========");
-        Debug.Log($"Looking for portal 1: '{portalBackToHubName}'");
-        Debug.Log($"Looking for portal 2: '{portalToNextAreaName}'");
-        
-        // Auto-find portals by name
         FindPortals();
         
-        // Hide portals at start
         if (portalBackToHub != null)
         {
-            bool wasActive = portalBackToHub.activeSelf;
             portalBackToHub.SetActive(false);
-            Debug.Log($"✅ FOUND portal '{portalBackToHubName}' (was {(wasActive ? "active" : "inactive")}, now hidden)");
-        }
-        else
-        {
-            Debug.LogError($"❌ FAILED to find portal named '{portalBackToHubName}' in scene!");
-            Debug.LogError("Please check: 1) Portal exists in scene, 2) Name matches exactly (case-sensitive), 3) Portal is not disabled");
+            Debug.Log($"✅ Portal hidden: {portalBackToHubName}");
         }
         
         if (portalToNextArea != null)
         {
-            bool wasActive = portalToNextArea.activeSelf;
             portalToNextArea.SetActive(false);
-            Debug.Log($"✅ FOUND portal '{portalToNextAreaName}' (was {(wasActive ? "active" : "inactive")}, now hidden)");
+            Debug.Log($"✅ Portal hidden: {portalToNextAreaName}");
         }
-        else
-        {
-            Debug.LogError($"❌ FAILED to find portal named '{portalToNextAreaName}' in scene!");
-            Debug.LogError("Please check: 1) Portal exists in scene, 2) Name matches exactly (case-sensitive), 3) Portal is not disabled");
-        }
-        
-        Debug.Log("========== GEORGE START COMPLETE ==========");
     }
 
     private void FindPortals()
     {
-        Debug.Log($"🔍 Searching for portal: '{portalBackToHubName}'...");
         portalBackToHub = FindObjectInHierarchy(portalBackToHubName);
-        Debug.Log($"   Result: {(portalBackToHub != null ? "FOUND" : "NOT FOUND")}");
-        
-        Debug.Log($"🔍 Searching for portal: '{portalToNextAreaName}'...");
         portalToNextArea = FindObjectInHierarchy(portalToNextAreaName);
-        Debug.Log($"   Result: {(portalToNextArea != null ? "FOUND" : "NOT FOUND")}");
-        
-        // List all GameObjects in scene for debugging
-        Debug.Log("📋 All GameObjects in scene:");
-        GameObject[] allObjects = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
-        foreach (GameObject obj in allObjects)
-        {
-            if (obj.name.Contains("Portal") || obj.name.Contains("portal"))
-            {
-                Debug.Log($"   - Found object with 'Portal' in name: '{obj.name}' (active: {obj.activeInHierarchy})");
-            }
-        }
     }
 
-    /// <summary>
-    /// Finds a GameObject by name anywhere in the hierarchy (including children)
-    /// </summary>
     private GameObject FindObjectInHierarchy(string objectName)
     {
-        // First try normal Find (for root objects)
         GameObject obj = GameObject.Find(objectName);
         if (obj != null) return obj;
 
-        // If not found, search through ALL GameObjects (including inactive children)
         GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
         foreach (GameObject go in allObjects)
         {
-            // Make sure it's a scene object, not a prefab or asset
             if (go.hideFlags == HideFlags.None && go.scene.isLoaded)
             {
                 if (go.name == objectName)
@@ -144,11 +99,19 @@ public class GeorgeBoss : BossBase
 
     protected override void Update()
     {
+        // Ground detection
         if (groundCheck != null)
         {
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+            
+            // ✅ FIX: Update animator with ground state
+            if (anim != null)
+            {
+                anim.SetBool("IsGrounded", isGrounded);
+            }
         }
 
+        // Boundary enforcement
         Vector3 pos = transform.position;
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
@@ -211,8 +174,12 @@ public class GeorgeBoss : BossBase
         if (rb != null)
             rb.linearVelocity = Vector2.zero;
 
+        // ✅ FIX: Use "Tentacle" instead of "Taunt" (matches your animator)
         if (anim != null)
-            anim.SetTrigger("Taunt");
+        {
+            anim.SetTrigger("Tentacle");
+            anim.SetFloat("Speed", 0);
+        }
 
         if (DialogueManager.Instance != null && firstEncounterDialogue != null)
         {
@@ -226,6 +193,7 @@ public class GeorgeBoss : BossBase
         if (GameManager.Instance != null)
         {
             GameManager.Instance.hasDiedToGeorge = true;
+            GameManager.Instance.OnPlayerDiedToGeorge();
             GameManager.Instance.SaveProgress();
         }
 
@@ -267,8 +235,10 @@ public class GeorgeBoss : BossBase
             rb.linearVelocity = new Vector2(moveDirection * walkSpeed, rb.linearVelocity.y);
         }
 
+        // ✅ FIX: Set both Speed and IsMoving
         if (anim != null)
         {
+            anim.SetFloat("Speed", Mathf.Abs(walkSpeed)); // Speed > 0 triggers walk
             anim.SetBool("IsMoving", true);
         }
 
@@ -286,8 +256,12 @@ public class GeorgeBoss : BossBase
         if (rb != null)
             rb.linearVelocity = Vector2.zero;
 
+        // ✅ FIX: Stop walking animation
         if (anim != null)
+        {
+            anim.SetFloat("Speed", 0);
             anim.SetBool("IsMoving", false);
+        }
 
         yield return StartCoroutine(CloseRangeAttack());
         yield return new WaitForSeconds(1f);
@@ -327,9 +301,11 @@ public class GeorgeBoss : BossBase
     {
         isFlying = true;
 
+        // ✅ FIX: Set flying animation state
         if (anim != null)
         {
             anim.SetBool("IsGrounded", false);
+            anim.SetFloat("Speed", flySpeed); // Speed > 0 for fly animation
             anim.SetBool("IsMoving", true);
         }
 
@@ -340,6 +316,7 @@ public class GeorgeBoss : BossBase
         float startX = transform.position.x;
         float distance = Mathf.Abs(targetX - startX);
 
+        // Fly up
         float timer = 0f;
         while (timer < 0.5f)
         {
@@ -349,6 +326,7 @@ public class GeorgeBoss : BossBase
             yield return null;
         }
 
+        // Fly horizontal
         while (Mathf.Abs(transform.position.x - startX) < distance &&
                transform.position.x > minX && transform.position.x < maxX)
         {
@@ -357,6 +335,7 @@ public class GeorgeBoss : BossBase
             yield return null;
         }
 
+        // Descend
         float descentTimer = 0f;
         while (!isGrounded && descentTimer < 3f)
         {
@@ -369,9 +348,11 @@ public class GeorgeBoss : BossBase
         if (rb != null)
             rb.linearVelocity = Vector2.zero;
 
+        // ✅ FIX: Land and stop moving
         if (anim != null)
         {
             anim.SetBool("IsGrounded", true);
+            anim.SetFloat("Speed", 0);
             anim.SetBool("IsMoving", false);
         }
 
@@ -389,8 +370,13 @@ public class GeorgeBoss : BossBase
         if (rb != null)
             rb.linearVelocity = Vector2.zero;
 
+        // ✅ FIX: Use "Die" trigger (not "Death")
         if (anim != null)
-            anim.SetTrigger("Death");
+        {
+            anim.SetTrigger("Die");
+            anim.SetBool("IsDead", true);
+            anim.SetFloat("Speed", 0);
+        }
 
         if (waveManager != null)
         {
@@ -409,54 +395,26 @@ public class GeorgeBoss : BossBase
 
     private void OnDeathDialogueComplete()
     {
-        Debug.Log("========== GEORGE DEATH DIALOGUE COMPLETE ==========");
-        Debug.Log("✅ Starting portal spawn sequence...");
+        Debug.Log("✅ George defeated - spawning portals");
 
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnGeorgeDefeated();
             GameManager.Instance.SaveProgress();
-            Debug.Log("✅ GameManager updated - Act 1 cleared");
-        }
-        else
-        {
-            Debug.LogError("❌ GameManager is null!");
         }
 
-        // Spawn both portals
-        Debug.Log($"🌀 Attempting to spawn portal 1: '{portalBackToHubName}'");
         if (portalBackToHub != null)
         {
-            Debug.Log($"   Portal object exists: {portalBackToHub.name}");
-            Debug.Log($"   Portal was active: {portalBackToHub.activeSelf}");
             portalBackToHub.SetActive(true);
-            Debug.Log($"   Portal is now active: {portalBackToHub.activeSelf}");
-            Debug.Log($"✅ SUCCESS: Portal '{portalBackToHubName}' spawned!");
-        }
-        else
-        {
-            Debug.LogError($"❌ FAILED: Portal '{portalBackToHubName}' is NULL - cannot spawn!");
-            Debug.LogError("This means GameObject.Find() didn't find it at Start()");
+            Debug.Log($"🌀 Portal spawned: {portalBackToHubName}");
         }
 
-        Debug.Log($"🌀 Attempting to spawn portal 2: '{portalToNextAreaName}'");
         if (portalToNextArea != null)
         {
-            Debug.Log($"   Portal object exists: {portalToNextArea.name}");
-            Debug.Log($"   Portal was active: {portalToNextArea.activeSelf}");
             portalToNextArea.SetActive(true);
-            Debug.Log($"   Portal is now active: {portalToNextArea.activeSelf}");
-            Debug.Log($"✅ SUCCESS: Portal '{portalToNextAreaName}' spawned!");
-        }
-        else
-        {
-            Debug.LogError($"❌ FAILED: Portal '{portalToNextAreaName}' is NULL - cannot spawn!");
-            Debug.LogError("This means GameObject.Find() didn't find it at Start()");
+            Debug.Log($"🌀 Portal spawned: {portalToNextAreaName}");
         }
 
-        Debug.Log("========== PORTAL SPAWN SEQUENCE COMPLETE ==========");
-        Debug.Log("🗑️ Destroying George in 2 seconds...");
-        
         Destroy(gameObject, 2f);
     }
 
