@@ -10,7 +10,7 @@ public class Abilities : MonoBehaviour
     [Header("Ability Unlocks")]
     public bool hasTeleport = false;
     public bool hasWaveOfFire = false;
-    public bool hasUpgradedSword = false; 
+    public bool hasUpgradedSword = false;
 
     [Header("Teleport Settings")]
     public float teleportDistance = 4.5f;
@@ -31,7 +31,7 @@ public class Abilities : MonoBehaviour
         hasUpgradedSword = GameManager.Instance.GetFlag(GameFlag.hasUpgradedSword);
         hasTeleport = GameManager.Instance.GetFlag(GameFlag.hasTeleport);
         hasWaveOfFire = GameManager.Instance.GetFlag(GameFlag.hasWaveOfFire);
-        
+
         if (hasUpgradedSword)
             Debug.Log("✅ Abilities Start: Loaded hasUpgradedSword = true from save");
     }

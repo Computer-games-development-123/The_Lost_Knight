@@ -121,13 +121,13 @@ public class GameManager : MonoBehaviour
     public void OnPlayerDied()
     {
         if (showDebugLogs) Debug.Log("💀 Player died - respawning in ForestHub");
-        
+
         // ✅ FIX: Reset music system when player dies
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.ForceStopBossMusic();
         }
-        
+
         SaveProgress();
         UnityEngine.SceneManagement.SceneManager.LoadScene("Forest_Hub");
     }

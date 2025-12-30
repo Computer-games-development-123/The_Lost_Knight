@@ -64,7 +64,7 @@ public class AudioManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            
+
             if (musicSource == null)
             {
                 GameObject musicObj = new GameObject("MusicSource");

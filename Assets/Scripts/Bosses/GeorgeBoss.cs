@@ -57,9 +57,9 @@ public class GeorgeBoss : BossBase
     protected override void Start()
     {
         base.Start();
-        
+
         FindPortals();
-        
+
         if (portalBackToHub != null)
         {
             portalBackToHub.SetActive(false);
@@ -105,7 +105,7 @@ public class GeorgeBoss : BossBase
         if (groundCheck != null)
         {
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-            
+
             // ✅ FIX: Update animator with ground state
             if (anim != null)
             {
