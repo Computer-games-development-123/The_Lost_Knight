@@ -28,14 +28,11 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
     private Animator anim;
-    private bool isGrounded;
+    public bool isGrounded;
     private bool facingRight = true;
     private PlayerHealth playerHealth;
     private PlayerInventory playerInventory;
     private Invulnerability invulnerability;
-    private AnimatorDriver animDriver;
-
-    public bool IsGrounded => isGrounded;
 
     void Start()
     {
@@ -44,7 +41,6 @@ public class PlayerController : MonoBehaviour
         playerHealth = GetComponent<PlayerHealth>();
         playerInventory = GetComponent<PlayerInventory>();
         invulnerability = GetComponent<Invulnerability>();
-        animDriver = GetComponent<AnimatorDriver>();
     }
 
     void Update()
@@ -70,8 +66,8 @@ public class PlayerController : MonoBehaviour
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
 
-                if (animDriver != null)
-                    animDriver.Jump();
+                if (anim != null)
+                    anim.SetTrigger("Jump");
             }
         }
 
@@ -128,9 +124,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Play hurt animation
-        if (animDriver != null)
-            animDriver.Hurt();
-        else if (anim != null)
+        if (anim != null)
             anim.SetTrigger("Hurt");
     }
 
@@ -168,17 +162,13 @@ public class PlayerController : MonoBehaviour
 
     public void PlayHurtAnimation()
     {
-        if (animDriver != null)
-            animDriver.Hurt();
-        else if (anim != null)
+        if (anim != null)
             anim.SetTrigger("Hurt");
     }
 
     public void PlayDeathAnimation()
     {
-        if (animDriver != null)
-            animDriver.Death();
-        else if (anim != null)
+        if (anim != null)
             anim.SetTrigger("Death");
     }
 

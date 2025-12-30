@@ -1873,6 +1873,8 @@ MonoBehaviour:
   dialogueUI: {fileID: 588307271}
   dialogueText: {fileID: 1635181851}
   speakerText: {fileID: 269710367}
+  portraitImage: {fileID: 779854042}
+  hidePortraitIfMissing: 1
   advanceKey: 102
   useTypewriter: 1
   charactersPerSecond: 40
@@ -2394,7 +2396,7 @@ RectTransform:
   m_GameObject: {fileID: 779854040}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.8169754, y: 2.729683, z: 2.3084}
+  m_LocalScale: {x: 3.8169754, y: 2.8661668, z: 2.3084}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 588307272}
@@ -3082,8 +3084,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   showDebugLogs: 1
-  hasDiedToGeorge: 0
-  yojiDead: 0
 --- !u!1 &1110409655
 GameObject:
   m_ObjectHideFlags: 0
@@ -4081,50 +4081,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1557989291
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1557989293}
-  - component: {fileID: 1557989292}
-  m_Layer: 0
-  m_Name: ForestHubBootstrapper
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1557989292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1557989291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b88fa4ed1c4d3f4c9c4c29ca3314e02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
---- !u!4 &1557989293
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1557989291}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 939.1386, y: 488.78934, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1633458635
 GameObject:
   m_ObjectHideFlags: 0
@@ -4573,7 +4529,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f3d453154eb5a14cac7978d649d315c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ForestHubIntro
-  openingDialogue: {fileID: 11400000, guid: e89ae4a013d4fcb4abc1cdfb55630a0b, type: 2}
+  dialogues:
+  - {fileID: 11400000, guid: 6efb75435bc54074585be1807d47c962, type: 2}
+  - {fileID: 11400000, guid: e89ae4a013d4fcb4abc1cdfb55630a0b, type: 2}
 --- !u!1 &1715231296
 GameObject:
   m_ObjectHideFlags: 0

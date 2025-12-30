@@ -769,7 +769,7 @@ GameObject:
   - component: {fileID: 751109658}
   m_Layer: 5
   m_Name: BossHealthCanvas
-  m_TagString: Untagged
+  m_TagString: BossHealthCanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1141,7 +1141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3169781297976943977, guid: c83ad20490692a5498e2a578c9e84b98, type: 3}
       propertyPath: m_PresetInfoIsWorld
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6614201085466893110, guid: c83ad20490692a5498e2a578c9e84b98, type: 3}
       propertyPath: m_Pivot.x
@@ -1684,14 +1684,14 @@ MonoBehaviour:
   waves:
   - waveName: 
     enemyPrefab: {fileID: 7219932414428029039, guid: 6aa477707d7db3d42a4040bcf35655b5, type: 3}
-    enemyCount: 2
-    spawnDelay: 1
+    enemyCount: 4
+    spawnDelay: 2
     spawnPoints:
     - {fileID: 1444554979}
   - waveName: 
     enemyPrefab: {fileID: 7219932414428029039, guid: 6aa477707d7db3d42a4040bcf35655b5, type: 3}
-    enemyCount: 3
-    spawnDelay: 1
+    enemyCount: 6
+    spawnDelay: 1.5
     spawnPoints:
     - {fileID: 1444554979}
   bossPrefab: {fileID: 3005292868502567045, guid: 72f9b21c9c93b244b802980a02942dfa, type: 3}
