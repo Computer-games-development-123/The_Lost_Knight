@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WaveOfLightProjectile : MonoBehaviour
+public class WaveOfFireProjectile : MonoBehaviour
 {
     [Header("Projectile Settings")]
     public float speed = 10f;

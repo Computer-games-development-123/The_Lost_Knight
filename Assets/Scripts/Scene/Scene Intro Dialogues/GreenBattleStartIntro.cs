@@ -52,7 +52,7 @@ public class GreenBattleStartIntro : MonoBehaviour
         if (DialogueManager.Instance != null && BattleStartDialogue != null)
         {
             Debug.Log("🎬 Playing Green Battle intro dialogue");
-            
+
             // Play dialogue and mark as seen when complete
             DialogueManager.Instance.Play(BattleStartDialogue, OnDialogueComplete);
         }
@@ -64,7 +64,6 @@ public class GreenBattleStartIntro : MonoBehaviour
         if (GameManager.Instance != null && !playEveryTime)
         {
             GameManager.Instance.SetFlag(dialogueSeenFlag, true);
-            GameManager.Instance.SaveProgress();
             Debug.Log($"✅ Green Battle intro marked as seen (Flag: {dialogueSeenFlag})");
         }
     }

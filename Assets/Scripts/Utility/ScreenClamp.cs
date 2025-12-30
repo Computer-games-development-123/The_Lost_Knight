@@ -8,7 +8,7 @@ public class ScreenClamp : MonoBehaviour
 {
     public float edgeBuffer = 0.5f;
     private Camera cam;
-    
+
     private void RefreshCamera() => cam = Camera.main;
 
     private void LateUpdate()

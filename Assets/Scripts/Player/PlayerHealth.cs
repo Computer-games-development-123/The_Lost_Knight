@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour
 {
     [Header("Dialogue")]
     public DialogueData deathDialogue;
-    
+
     [Header("Player HP (Runtime Only)")]
     [SerializeField] private float maxHealth = 50f;  // Synced from PlayerState on Start
     [SerializeField] private float currentHealth = 50f;  // Runtime only, NOT saved
@@ -48,7 +48,7 @@ public class PlayerHealth : MonoBehaviour
         if (invulnerability != null && invulnerability.IsInvulnerable)
         {
             Debug.Log("Player is invulnerable - damage blocked");
-            return; 
+            return;
         }
 
         currentHealth -= amount;
@@ -82,7 +82,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth += amount;
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
-        
+
         Debug.Log($"💚 Healed {amount} HP. Current: {currentHealth}/{maxHealth}");
     }
 
@@ -93,7 +93,7 @@ public class PlayerHealth : MonoBehaviour
     {
         maxHealth = newMaxHealth;
         currentHealth = Mathf.Min(currentHealth, maxHealth);
-        
+
         Debug.Log($"💚 Max health updated to {maxHealth}");
     }
 
@@ -131,7 +131,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
     #region Upgrade Methods (Called by StoreController)
-    
+
     /// <summary>
     /// Increase max health by a fixed amount
     /// Called by StoreController when purchasing HP upgrade
@@ -151,6 +151,6 @@ public class PlayerHealth : MonoBehaviour
         maxHealth *= multiplier;
         Debug.Log($"❤️ Max health multiplied by {multiplier}. New max: {maxHealth}");
     }
-    
+
     #endregion
 }

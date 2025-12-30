@@ -9,14 +9,16 @@ public enum GameFlag
     GreenBattleIntroSeen,
 
     // --- Portals / Gates ---
-    TutorialPortalUnlocked,
     ForestHubGateOpened,
 
+    // -- Upgrades --
+    hasTeleport,
+    hasUpgradedSword,
+    hasWaveOfFire,
+
     // --- Boss / Events ---
-    EnterTutorial,
     TutorialCompleted,
     GeorgeFirstEncounter,
-    GeorgeSecondEncounter,
     GeorgeDefeated,
     FikaDefeated,
     PhillipDefeated,

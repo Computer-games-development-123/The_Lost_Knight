@@ -1,21 +1,21 @@
 using UnityEngine;
 
 /// <summary>
-/// Handles player abilities: Teleport and Wave of Light
-/// Owns the ability unlock flags (hasTeleport, hasWaveOfLight)
+/// Handles player abilities: Teleport and Wave of Fire
+/// Owns the ability unlock flags (hasTeleport, hasWaveOfFire)
 /// </summary>
 [RequireComponent(typeof(PlayerController))]
 public class Abilities : MonoBehaviour
 {
     [Header("Ability Unlocks")]
     public bool hasTeleport = false;
-    public bool hasWaveOfLight = false;
-    public bool hasUpgradedSword = false; // ✅ NEW: Yoji's sword upgrade flag
+    public bool hasWaveOfFire = false;
+    public bool hasUpgradedSword = false;
 
     [Header("Teleport Settings")]
     public float teleportDistance = 4.5f;
     public LayerMask groundLayer;
-    
+
     private PlayerController controller;
     private Invulnerability invulnerability;
 
@@ -28,10 +28,10 @@ public class Abilities : MonoBehaviour
     private void Start()
     {
         // ✅ Load upgrades from save as backup (in case LoadProgress ran before Player spawned)
-        hasUpgradedSword = PlayerPrefs.GetInt("PlayerHasUpgradedSword", 0) == 1;
-        hasTeleport = PlayerPrefs.GetInt("PlayerHasTeleport", 0) == 1;
-        hasWaveOfLight = PlayerPrefs.GetInt("PlayerHasWaveOfLight", 0) == 1;
-        
+        hasUpgradedSword = GameManager.Instance.GetFlag(GameFlag.hasUpgradedSword);
+        hasTeleport = GameManager.Instance.GetFlag(GameFlag.hasTeleport);
+        hasWaveOfFire = GameManager.Instance.GetFlag(GameFlag.hasWaveOfFire);
+
         if (hasUpgradedSword)
             Debug.Log("✅ Abilities Start: Loaded hasUpgradedSword = true from save");
     }
@@ -59,22 +59,22 @@ public class Abilities : MonoBehaviour
             Debug.LogWarning("⚠️ PlayerController not found!");
             return;
         }
-        
+
         Vector2 dir = controller.facingDir();
         Vector2 newPos = (Vector2)transform.position + dir * teleportDistance;
-        
+
         RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, teleportDistance, groundLayer);
-        
+
         if (hit.collider == null)
         {
             transform.position = newPos;
-            
+
             // ✅ FIXED: Use Invulnerability component instead of PlayerController
             if (invulnerability != null)
             {
                 invulnerability.Trigger();
             }
-            
+
             Debug.Log("✨ Teleported!");
         }
         else
@@ -84,7 +84,7 @@ public class Abilities : MonoBehaviour
     }
 
     #region Unlock Methods (Called by StoreController)
-    
+
     /// <summary>
     /// Unlock teleport ability
     /// Called by StoreController when purchasing Flash Helmet
@@ -92,17 +92,25 @@ public class Abilities : MonoBehaviour
     public void UnlockTeleport()
     {
         hasTeleport = true;
+
+        GameManager.Instance.SetFlag(GameFlag.hasTeleport, true);
+        GameManager.Instance.SaveProgress();
+
         Debug.Log("✨ Teleport ability unlocked!");
     }
 
     /// <summary>
-    /// Unlock Wave of Light ability
-    /// Called by StoreController when purchasing Sword of Light
+    /// Unlock Wave of Fire ability
+    /// Called by StoreController when purchasing Sword of Fire
     /// </summary>
-    public void UnlockWaveOfLight()
+    public void UnlockWaveOfFire()
     {
-        hasWaveOfLight = true;
-        Debug.Log("✨ Wave of Light ability unlocked!");
+        hasWaveOfFire = true;
+
+        GameManager.Instance.SetFlag(GameFlag.hasWaveOfFire, true);
+        GameManager.Instance.SaveProgress();
+
+        Debug.Log("✨ Wave of Fire ability unlocked!");
     }
 
     /// <summary>
@@ -112,13 +120,12 @@ public class Abilities : MonoBehaviour
     public void UpgradeSword()
     {
         hasUpgradedSword = true;
-        
-        // ✅ Save immediately so it persists across scene loads!
-        PlayerPrefs.SetInt("PlayerHasUpgradedSword", 1);
-        PlayerPrefs.Save();
-        
+
+        GameManager.Instance.SetFlag(GameFlag.hasUpgradedSword, true);
+        GameManager.Instance.SaveProgress();
+
         Debug.Log("⚔️ Sword upgraded by Yoji! Can now damage George!");
     }
-    
+
     #endregion
 }

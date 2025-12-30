@@ -11,7 +11,7 @@ public class StoreStateManager : MonoBehaviour
     {
         Locked,           // Before first George death
         PostGeorge,       // After George death, basic items available
-        PostFika,         // After Fika, Sword of Light visible
+        PostFika,         // After Fika, Sword of Fire visible
         PostPhilip        // After Philip (Yoji dead), everything free
     }
 
@@ -40,7 +40,7 @@ public class StoreStateManager : MonoBehaviour
         if (GameManager.Instance == null) return;
 
         // Determine state based on boss defeats
-        if (GameManager.Instance.yojiDead)
+        if (GameManager.Instance.GetFlag(GameFlag.YojiDead))
         {
             currentState = StoreState.PostPhilip;
         }
@@ -71,7 +71,7 @@ public class StoreStateManager : MonoBehaviour
         return currentState != StoreState.Locked;
     }
 
-    public bool IsSwordOfLightRevealed()
+    public bool IsSwordOfFireRevealed()
     {
         return currentState == StoreState.PostFika || currentState == StoreState.PostPhilip;
     }

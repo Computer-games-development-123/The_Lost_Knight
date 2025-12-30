@@ -37,7 +37,7 @@ public class YojiStoreHandler : MonoBehaviour
 
         // Method 1: Try FindFirstObjectByType (searches all scenes including DontDestroyOnLoad)
         storeController = FindFirstObjectByType<ListStoreController>(FindObjectsInactive.Include);
-        
+
         // Method 2: If that fails, search by GameObject name
         if (storeController == null)
         {
@@ -120,7 +120,7 @@ public class YojiStoreHandler : MonoBehaviour
                 if (!GM.GetFlag(GameFlag.YojiFirstDialogueCompleted)) return false;
 
                 // Post-George dialogue pending
-                if (GM.hasDiedToGeorge && !GM.hasSpecialSwordUpgrade) return false;
+                if (GM.GetFlag(GameFlag.GeorgeFirstEncounter) && !GM.GetFlag(GameFlag.hasUpgradedSword)) return false;
             }
         }
 

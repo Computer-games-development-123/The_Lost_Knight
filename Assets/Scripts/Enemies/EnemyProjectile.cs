@@ -9,7 +9,7 @@ public class EnemyProjectile : MonoBehaviour
     [Header("Projectile Settings")]
     public int damage = 5;
     public float lifetime = 5f; // Auto-destroy after this time
-    
+
     [Header("Visual")]
     public bool rotateTowardsDirection = true;
     public float rotationSpeed = 360f;
@@ -18,7 +18,7 @@ public class EnemyProjectile : MonoBehaviour
     {
         // Auto-destroy after lifetime expires
         Destroy(gameObject, lifetime);
-        
+
         // Optional: Rotate sprite to face movement direction
         if (rotateTowardsDirection)
         {

@@ -7,17 +7,17 @@ public class CharacterContext : MonoBehaviour
     public Rigidbody2D RB { get; private set; }
     public Animator Anim { get; private set; }
     public SpriteRenderer SR { get; private set; }
-    
+
     // BUNCH 2 Components
     public PlayerController PC { get; private set; }
     public PlayerHealth PH { get; private set; }
     public PlayerAttack PA { get; private set; }
-    
+
     // BUNCH 1 Components (optional)
     public Abilities AB { get; private set; }
     public Invulnerability Inv { get; private set; }
     public Knockback KB { get; private set; }
-    
+
     [SerializeField] private Transform attackPoint;
     public bool FacingRight { get; private set; } = true;
 
@@ -27,12 +27,12 @@ public class CharacterContext : MonoBehaviour
         RB = GetComponent<Rigidbody2D>();
         Anim = GetComponent<Animator>();
         SR = GetComponent<SpriteRenderer>();
-        
+
         // BUNCH 2
         PC = GetComponent<PlayerController>();
         PH = GetComponent<PlayerHealth>();
         PA = GetComponent<PlayerAttack>();
-        
+
         // BUNCH 1 (optional)
         AB = GetComponent<Abilities>();
         Inv = GetComponent<Invulnerability>();
@@ -43,7 +43,7 @@ public class CharacterContext : MonoBehaviour
     {
         if (FacingRight == facingRight) return;
         FacingRight = facingRight;
-        
+
         // BUNCH 2 uses scale flipping
         Vector3 scale = transform.localScale;
         scale.x = facingRight ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);

@@ -22,10 +22,10 @@ public class AnimatorDriver : MonoBehaviour
         // Speed animation
         float speed = Mathf.Abs(ctx.RB.linearVelocity.x);
         anim.SetFloat("Speed", speed);
-        
+
         // Vertical velocity
         anim.SetFloat("YVelocity", ctx.RB.linearVelocity.y);
-        
+
         // Grounded state
         anim.SetBool("Grounded", movement.IsGrounded);
     }
@@ -36,5 +36,5 @@ public class AnimatorDriver : MonoBehaviour
     public void Jump() => anim.SetTrigger("Jump");
     public void Hurt() => anim.SetTrigger("Hurt");
     public void Death() => anim.SetTrigger("Death");
-    public void WaveOfLight() => anim.SetTrigger("WaveOfLight");
+    public void WaveOfFire() => anim.SetTrigger("WaveOfFire");
 }

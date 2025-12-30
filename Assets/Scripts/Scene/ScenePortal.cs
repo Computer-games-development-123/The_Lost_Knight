@@ -11,26 +11,26 @@ public class ScenePortal : MonoBehaviour
 {
     [Header("Portal Settings")]
     public string targetSceneName = " ";
-    
+
     [Header("Interaction")]
     [SerializeField] private KeyCode interactKey = KeyCode.F;
     [SerializeField] private GameObject interactionPrompt;
-    
+
     [Header("Prompt Customization")]
     [Tooltip("Text shown to player, e.g. 'Press F to Enter Tutorial' or 'Continue'")]
     public string promptText = "Press F to Enter";
     private TextMeshProUGUI promptTextComponent;
-    
+
     [Header("Timing")]
     [SerializeField] private float fadeWaitTime = 1.2f;
-    
+
     [Header("Visuals (Optional)")]
     [SerializeField] private Animator portalAnimator;
     [SerializeField] private ParticleSystem portalParticles;
-    
+
     [Header("Debug")]
     public bool showDebugLogs = false;
-    
+
     private bool playerInRange = false;
     private bool isTransitioning = false;
 
@@ -39,11 +39,11 @@ public class ScenePortal : MonoBehaviour
         if (interactionPrompt != null)
         {
             interactionPrompt.SetActive(false);
-            
+
             // Find the TextMeshPro component in the prompt
             promptTextComponent = interactionPrompt.GetComponentInChildren<TextMeshProUGUI>();
         }
-        
+
         UpdatePromptText();
     }
 
@@ -79,7 +79,7 @@ public class ScenePortal : MonoBehaviour
 
         if (showDebugLogs)
             Debug.Log($"🌀 Entering portal to {targetSceneName}");
-        
+
         isTransitioning = true;
 
         // Hide prompt
@@ -102,17 +102,17 @@ public class ScenePortal : MonoBehaviour
         if (SceneFadeManager.Instance != null)
         {
             SceneFadeManager.Instance.FadeOut();
-            
+
             if (showDebugLogs)
                 Debug.Log($"⏳ Waiting {fadeWaitTime} seconds for fade...");
-            
+
             yield return new WaitForSecondsRealtime(fadeWaitTime);
         }
         else
         {
             if (showDebugLogs)
                 Debug.LogWarning("⚠️ SceneFadeManager not found! Loading scene without fade.");
-            
+
             yield return new WaitForSecondsRealtime(0.5f);
         }
 
@@ -121,7 +121,7 @@ public class ScenePortal : MonoBehaviour
         {
             if (showDebugLogs)
                 Debug.Log($"📂 Loading scene: {targetSceneName}");
-            
+
             SceneManager.LoadScene(targetSceneName);
         }
         else
@@ -141,7 +141,7 @@ public class ScenePortal : MonoBehaviour
             interactionPrompt.SetActive(true);
             UpdatePromptText();
         }
-        
+
         if (showDebugLogs)
             Debug.Log($"👤 Player entered portal range: {gameObject.name}");
     }
@@ -154,7 +154,7 @@ public class ScenePortal : MonoBehaviour
 
         if (interactionPrompt != null)
             interactionPrompt.SetActive(false);
-        
+
         if (showDebugLogs)
             Debug.Log($"👤 Player left portal range: {gameObject.name}");
     }

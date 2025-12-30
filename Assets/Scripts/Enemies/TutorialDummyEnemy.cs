@@ -100,14 +100,13 @@ public class TutorialDummyEnemy : EnemyBase
     private void UnlockPortal()
     {
         if (portalUnlocked) return; // Already unlocked
-        
+
         portalUnlocked = true;
 
         // Set the flag
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.SetFlag(GameFlag.TutorialPortalUnlocked, true);
-            GameManager.Instance.SaveProgress();
+            GameManager.Instance.SetFlag(GameFlag.TutorialCompleted, true);
         }
 
         // Activate the portal GameObject

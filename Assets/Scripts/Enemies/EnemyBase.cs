@@ -122,7 +122,7 @@ public class EnemyBase : MonoBehaviour
             anim.SetBool("IsGrounded", IsGrounded);
         }
     }
-    
+
     #region Behaviors
 
     protected virtual void ExecuteBehavior(EnemyData.EnemyBehaviorType behaviorType)
