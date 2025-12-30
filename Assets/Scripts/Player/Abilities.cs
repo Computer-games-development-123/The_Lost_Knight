@@ -92,6 +92,10 @@ public class Abilities : MonoBehaviour
     public void UnlockTeleport()
     {
         hasTeleport = true;
+
+        GameManager.Instance.SetFlag(GameFlag.hasTeleport, true);
+        GameManager.Instance.SaveProgress();
+
         Debug.Log("✨ Teleport ability unlocked!");
     }
 
@@ -102,6 +106,10 @@ public class Abilities : MonoBehaviour
     public void UnlockWaveOfFire()
     {
         hasWaveOfFire = true;
+
+        GameManager.Instance.SetFlag(GameFlag.hasWaveOfFire, true);
+        GameManager.Instance.SaveProgress();
+
         Debug.Log("✨ Wave of Fire ability unlocked!");
     }
 
@@ -113,9 +121,8 @@ public class Abilities : MonoBehaviour
     {
         hasUpgradedSword = true;
 
-        // ✅ Save immediately so it persists across scene loads!
-        PlayerPrefs.SetInt("PlayerHasUpgradedSword", 1);
-        PlayerPrefs.Save();
+        GameManager.Instance.SetFlag(GameFlag.hasUpgradedSword, true);
+        GameManager.Instance.SaveProgress();
 
         Debug.Log("⚔️ Sword upgraded by Yoji! Can now damage George!");
     }
