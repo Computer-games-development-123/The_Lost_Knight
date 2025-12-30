@@ -1,4 +1,8 @@
 using UnityEngine;
+using System.Threading.Tasks;
+using Unity.Services.Core;
+using Unity.Services.Authentication;
+using Unity.Services.CloudSave.Models;
 
 /// <summary>
 /// Player Inventory - Manages coins and potions with save/load
@@ -10,14 +14,15 @@ public class PlayerInventory : MonoBehaviour
     public int potions = 5;
 
     private PlayerHealth playerHealth;
-
-    private void Awake()
+    private static bool cloudReady = false;
+    private async void Awake()
     {
         playerHealth = GetComponent<PlayerHealth>();
 
-        // Load inventory when player spawns
-        LoadInventory();
+        await EnsureCloudReady();
+        await LoadInventoryCloud();
     }
+
 
     #region Coins
 
@@ -89,28 +94,64 @@ public class PlayerInventory : MonoBehaviour
 
     #region Save/Load
 
-    private void SaveInventory()
+    private async Task EnsureCloudReady()
     {
-        PlayerPrefs.SetInt("PlayerCoins", coins);
-        PlayerPrefs.SetInt("PlayerPotions", potions);
-        PlayerPrefs.Save();
+        if (cloudReady) return;
+
+        await UnityServices.InitializeAsync();
+
+        if (!AuthenticationService.Instance.IsSignedIn)
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+
+        cloudReady = true;
+    }
+    private async void SaveInventory()
+    {
+        try
+        {
+            await EnsureCloudReady();
+            await DatabaseManager.SaveData(
+                ("PlayerCoins", coins),
+                ("PlayerPotions", potions)
+            );
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("❌ Cloud SaveInventory failed: " + e);
+
+        }
     }
 
-    private void LoadInventory()
-    {
-        coins = PlayerPrefs.GetInt("PlayerCoins", 0); // Default: 0 coins
-        potions = PlayerPrefs.GetInt("PlayerPotions", 5); // Default: 5 potions
 
-        Debug.Log($"📂 Inventory loaded: {coins} coins, {potions} potions");
-    }
-
-    /// <summary>
-    /// Call this to manually save inventory
-    /// </summary>
-    public void Save()
+    private async Task  LoadInventoryCloud()
     {
-        SaveInventory();
+        try
+        {
+            var data = await DatabaseManager.LoadData("PlayerCoins", "PlayerPotions");
+
+            if (data.TryGetValue("PlayerCoins", out Item coinsItem))
+                coins = coinsItem.Value.GetAs<int>();
+            else
+                coins = 0;
+
+            if (data.TryGetValue("PlayerPotions", out Item potionsItem))
+                potions = potionsItem.Value.GetAs<int>();
+            else
+                potions = 5;
+
+            Debug.Log($"☁️ Inventory loaded (Cloud): {coins} coins, {potions} potions");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("❌ Cloud LoadInventory failed: " + e);
+
+            Debug.Log($"📂 Inventory loaded (Local fallback): {coins} coins, {potions} potions");
+        }
     }
+    // public void Save()
+    // {
+    //     SaveInventory();
+    // }
 
     #endregion
 }

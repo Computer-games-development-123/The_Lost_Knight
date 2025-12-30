@@ -1,19 +1,25 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Unity.Services.Core;
+using Unity.Services.Authentication;
+using Unity.Services.CloudSave.Models;
 
 /// <summary>
-/// GameManager - Manages game progression and flags
+/// GameManager - Manages game progression and flags (Cloud Save ONLY)
 /// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    private static bool cloudReady = false;
+    public bool IsProgressLoaded { get; private set; } = false;
 
     [Header("Debug")]
     public bool showDebugLogs = true;
 
-    [Header("Progression Flags (Legacy - for backwards compatibility)")]
-    public bool hasDiedToGeorge = false;
-    public bool yojiDead = false;
+    // [Header("Progression Flags (Legacy - for backwards compatibility)")]
+    // public bool hasDiedToGeorge = false;
+    // public bool yojiDead = false;
 
     [Header("Unified Flag System")]
     private Dictionary<GameFlag, bool> flags = new Dictionary<GameFlag, bool>();
@@ -24,6 +30,10 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            InitDefaultFlags();
+            //SyncPublicFlags();
+
             if (showDebugLogs) Debug.Log("✅ GameManager initialized");
         }
         else
@@ -32,63 +42,43 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    private async void Start()
     {
-        LoadProgress();
+        await LoadProgress();
     }
 
-    #region Flag System (UNIFIED)
+    #region Flag System
 
     public void SetFlag(GameFlag flag, bool value)
     {
         flags[flag] = value;
+        //SyncPublicFlags();
 
-        // Sync legacy public bools
-        SyncPublicFlags();
-
-        if (showDebugLogs) Debug.Log($"🚩 Flag set: {flag} = {value}");
+        if (showDebugLogs)
+            Debug.Log($"🚩 Flag set: {flag} = {value}");
     }
 
     public bool GetFlag(GameFlag flag)
     {
-        if (flags.TryGetValue(flag, out bool value))
-            return value;
-        return false;
+        return flags.TryGetValue(flag, out bool value) && value;
     }
 
-    private void SyncPublicFlags()
+    private void InitDefaultFlags()
     {
-        // Sync only the legacy flags we still use
-        hasDiedToGeorge = GetFlag(GameFlag.GeorgeFirstEncounter);
-        yojiDead = GetFlag(GameFlag.YojiDead);
-    }
-
-    #endregion
-
-    #region Backwards Compatibility - hasSpecialSwordUpgrade
-
-    public bool hasSpecialSwordUpgrade
-    {
-        get
+        foreach (GameFlag flag in System.Enum.GetValues(typeof(GameFlag)))
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-                Abilities abilities = player.GetComponent<Abilities>();
-                if (abilities != null)
-                {
-                    return abilities.hasUpgradedSword;
-                }
-            }
-            return false;
+            if (flag == GameFlag.None) continue;
+
+            if (!flags.ContainsKey(flag))
+                flags[flag] = false;
         }
     }
 
-    public bool hasSeenOpeningDialogue
-    {
-        get => GetFlag(GameFlag.OpeningDialogueSeen);
-        set => SetFlag(GameFlag.OpeningDialogueSeen, value);
-    }
+    // private void SyncPublicFlags()
+    // {
+    //     hasDiedToGeorge = GetFlag(GameFlag.GeorgeFirstEncounter);
+    //     yojiDead = GetFlag(GameFlag.YojiDead);
+    // }
 
     #endregion
 
@@ -97,7 +87,6 @@ public class GameManager : MonoBehaviour
     public void OnGeorgeDefeated()
     {
         SetFlag(GameFlag.GeorgeDefeated, true);
-        if (showDebugLogs) Debug.Log("🎉 George defeated!");
         UpdateStoreState();
         SaveProgress();
     }
@@ -105,7 +94,6 @@ public class GameManager : MonoBehaviour
     public void OnFikaDefeated()
     {
         SetFlag(GameFlag.FikaDefeated, true);
-        if (showDebugLogs) Debug.Log("🎉 Fika defeated!");
         UpdateStoreState();
         SaveProgress();
     }
@@ -113,7 +101,6 @@ public class GameManager : MonoBehaviour
     public void OnPhilipDefeated()
     {
         SetFlag(GameFlag.PhillipDefeated, true);
-        if (showDebugLogs) Debug.Log("🎉 Philip defeated!");
         UpdateStoreState();
         SaveProgress();
     }
@@ -121,7 +108,6 @@ public class GameManager : MonoBehaviour
     public void OnYojiDeath()
     {
         SetFlag(GameFlag.YojiDead, true);
-        if (showDebugLogs) Debug.Log("💀 Yoji has died - Store is now free");
         UpdateStoreState();
         SaveProgress();
     }
@@ -129,81 +115,113 @@ public class GameManager : MonoBehaviour
     public void OnPlayerDiedToGeorge()
     {
         SetFlag(GameFlag.GeorgeFirstEncounter, true);
-        if (showDebugLogs) Debug.Log("⚔️ Player died to George - Special upgrade available");
         SaveProgress();
     }
 
     public void OnPlayerDied()
     {
-        if (showDebugLogs) Debug.Log("💀 Player died - respawning in ForestHub");
         SaveProgress();
         UnityEngine.SceneManagement.SceneManager.LoadScene("Forest_Hub");
     }
 
     #endregion
 
-    #region Store State Management
+    #region Store
 
     private void UpdateStoreState()
     {
         if (StoreStateManager.Instance != null)
-        {
             StoreStateManager.Instance.UpdateStoreStateFromGameManager();
-        }
     }
 
     #endregion
 
-    #region Save/Load System
+    #region Cloud Save
 
-    public void SaveProgress()
+    private async Task EnsureCloudReady()
     {
-        if (showDebugLogs) Debug.Log("💾 Saving game progress...");
+        if (cloudReady) return;
 
-        SaveFlags();
-        PlayerPrefs.Save();
+        await UnityServices.InitializeAsync();
 
-        if (showDebugLogs) Debug.Log("✅ Game progress saved!");
-    }
+        if (!AuthenticationService.Instance.IsSignedIn)
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
-    private void SaveFlags()
-    {
-        foreach (var kvp in flags)
+        cloudReady = true;
+
+        if (showDebugLogs)
         {
-            PlayerPrefs.SetInt("FLAG_" + kvp.Key.ToString(), kvp.Value ? 1 : 0);
+            Debug.Log("☁️ Cloud ready");
+            Debug.Log("🆔 PlayerID = " + AuthenticationService.Instance.PlayerId);
         }
     }
 
-    public void LoadProgress()
+    public async void SaveProgress()
     {
-        if (showDebugLogs) Debug.Log("📂 Loading game progress...");
-
-        LoadFlags();
-
-        if (showDebugLogs) Debug.Log("✅ Game progress loaded!");
-    }
-
-    private void LoadFlags()
-    {
-        foreach (GameFlag flag in System.Enum.GetValues(typeof(GameFlag)))
+        try
         {
-            if (flag == GameFlag.None) continue;
+            await EnsureCloudReady();
 
-            int saved = PlayerPrefs.GetInt("FLAG_" + flag.ToString(), 0);
-            flags[flag] = (saved == 1);
+            InitDefaultFlags();
+
+            List<(string key, object value)> list = new List<(string, object)>();
+            foreach (var kvp in flags)
+            {
+                list.Add(($"FLAG_{kvp.Key}", kvp.Value ? 1 : 0));
+            }
+
+            await DatabaseManager.SaveData(list.ToArray());
+
+            if (showDebugLogs)
+                Debug.Log("✅ Cloud save (flags) completed");
         }
-
-        SyncPublicFlags();
+        catch (System.Exception e)
+        {
+            Debug.LogError("❌ Cloud save failed: " + e);
+        }
     }
 
-    public void ResetProgress()
+    public async Task LoadProgress()
     {
-        if (showDebugLogs) Debug.Log("🔄 Resetting all progress...");
+        try
+        {
+            await EnsureCloudReady();
 
-        PlayerPrefs.DeleteAll();
-        flags.Clear();
+            List<string> keys = new List<string>();
+            foreach (GameFlag flag in System.Enum.GetValues(typeof(GameFlag)))
+            {
+                if (flag == GameFlag.None) continue;
+                keys.Add($"FLAG_{flag}");
+            }
 
-        if (showDebugLogs) Debug.Log("✅ Game progress reset!");
+            Dictionary<string, Item> cloudData =
+                await DatabaseManager.LoadData(keys.ToArray());
+
+            flags.Clear();
+            InitDefaultFlags();
+
+            foreach (GameFlag flag in System.Enum.GetValues(typeof(GameFlag)))
+            {
+                if (flag == GameFlag.None) continue;
+
+                string key = $"FLAG_{flag}";
+                if (cloudData.TryGetValue(key, out Item item))
+                {
+                    flags[flag] = item.Value.GetAs<int>() == 1;
+                }
+            }
+
+            //SyncPublicFlags();
+            IsProgressLoaded = true;
+
+            if (showDebugLogs)
+                Debug.Log($"✅ Cloud load completed. Flags loaded: {cloudData.Count}");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("❌ Cloud load failed: " + e);
+            IsProgressLoaded = true;
+        }
     }
 
     #endregion

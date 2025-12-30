@@ -12,23 +12,18 @@ public class ForestHubIntro : MonoBehaviour
 
     private IEnumerator PlayIntro()
     {
-        // wait 1 frame so DialogueManager & GameManager are initialized
-        yield return null;
+        yield return new WaitUntil(() =>
+            GameManager.Instance != null && GameManager.Instance.IsProgressLoaded
+        );
 
-        if (GameManager.Instance == null)
+        if (GameManager.Instance.GetFlag(GameFlag.OpeningDialogueSeen))
             yield break;
 
-        // Already seen? Do nothing.
-        if (GameManager.Instance.hasSeenOpeningDialogue)
-            yield break;
-
-        // Mark as seen and save
-        GameManager.Instance.hasSeenOpeningDialogue = true;
         GameManager.Instance.SetFlag(GameFlag.OpeningDialogueSeen, true);
+        GameManager.Instance.SaveProgress();
 
         if (DialogueManager.Instance != null && openingDialogue != null)
-        {
             DialogueManager.Instance.Play(openingDialogue);
-        }
     }
+
 }

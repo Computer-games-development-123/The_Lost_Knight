@@ -79,7 +79,7 @@ public class YojiDialogueHandler : MonoBehaviour
             return true;
 
         // After dying to George, before getting upgrade
-        if (GM.hasDiedToGeorge && !GM.hasSpecialSwordUpgrade)
+        if (GM.GetFlag(GameFlag.GeorgeFirstEncounter) && !GM.GetFlag(GameFlag.hasUpgradedSword))
             return true;
 
         return false;
@@ -113,7 +113,7 @@ public class YojiDialogueHandler : MonoBehaviour
         }
 
         // CASE 2: After dying to George, give special sword upgrade
-        if (GM.hasDiedToGeorge && !GM.hasSpecialSwordUpgrade)
+        if (GM.GetFlag(GameFlag.GeorgeFirstEncounter) && !GM.GetFlag(GameFlag.hasUpgradedSword))
         {
             if (postGeorgeDialogue != null)
             {

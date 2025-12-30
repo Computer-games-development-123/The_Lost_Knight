@@ -120,7 +120,7 @@ public class YojiStoreHandler : MonoBehaviour
                 if (!GM.GetFlag(GameFlag.YojiFirstDialogueCompleted)) return false;
 
                 // Post-George dialogue pending
-                if (GM.hasDiedToGeorge && !GM.hasSpecialSwordUpgrade) return false;
+                if (GM.GetFlag(GameFlag.GeorgeFirstEncounter) && !GM.GetFlag(GameFlag.hasUpgradedSword)) return false;
             }
         }
 

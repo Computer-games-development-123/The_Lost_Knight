@@ -162,24 +162,23 @@ public class GeorgeBoss : BossBase
         base.OnBossStart();
         bossName = "George";
 
+        bool hasUpgrade = false;
+
         if (GameManager.Instance != null)
         {
-            bool hasUpgrade = GameManager.Instance.hasSpecialSwordUpgrade;
-            isInvulnerable = !hasUpgrade;
-
-            if (!hasUpgrade)
-            {
-                spawnDialogue = null;
-            }
+            hasUpgrade = GameManager.Instance.GetFlag(GameFlag.hasUpgradedSword);
         }
-        else
+
+        isInvulnerable = !hasUpgrade;
+
+        if (!hasUpgrade)
         {
-            isInvulnerable = true;
             spawnDialogue = null;
         }
 
         ResetInvulnerableHitCount();
     }
+
 
     private void ResetInvulnerableHitCount()
     {
@@ -225,7 +224,7 @@ public class GeorgeBoss : BossBase
 
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.hasDiedToGeorge = true;
+            GameManager.Instance.SetFlag(GameFlag.GeorgeFirstEncounter, true);
             GameManager.Instance.SaveProgress();
         }
 

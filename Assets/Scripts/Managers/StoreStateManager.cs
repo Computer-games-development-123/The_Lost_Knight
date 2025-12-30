@@ -40,7 +40,7 @@ public class StoreStateManager : MonoBehaviour
         if (GameManager.Instance == null) return;
 
         // Determine state based on boss defeats
-        if (GameManager.Instance.yojiDead)
+        if (GameManager.Instance.GetFlag(GameFlag.YojiDead))
         {
             currentState = StoreState.PostPhilip;
         }
