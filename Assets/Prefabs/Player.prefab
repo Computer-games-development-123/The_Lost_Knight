@@ -19,7 +19,6 @@ GameObject:
   - component: {fileID: 998392704380348123}
   - component: {fileID: 4905180846096170032}
   - component: {fileID: 8580638515262600451}
-  - component: {fileID: -6201109628588610363}
   - component: {fileID: 5019103269634199412}
   - component: {fileID: 4003226436323456006}
   - component: {fileID: 524193434095801508}
@@ -272,24 +271,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Abilities
   hasTeleport: 0
-  hasWaveOfLight: 0
+  hasWaveOfFire: 0
   hasUpgradedSword: 0
   teleportDistance: 4.5
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
---- !u!114 &-6201109628588610363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4376152552779809795}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26c663d83eca1f347a685b86a182d5eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitConfirmBroadcaster
 --- !u!114 &5019103269634199412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,17 +329,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
   swordDamage: 8
   attackRange: 0.5
-  attackCooldown: 0.5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  attackCooldown: 0.5
   enableComboSystem: 1
   comboWindow: 0.35
   maxComboSteps: 3
-  hitBroadcaster: {fileID: 0}
-  waveOfLightPrefab: {fileID: 0}
+  waveOfFirePrefab: {fileID: 0}
   firePoint: {fileID: 0}
-  waveOfLightCooldown: 5
+  waveOfFireCooldown: 5
   attackPoint: {fileID: 6633376722634027389}
 --- !u!114 &8192387872576722755
 MonoBehaviour:
