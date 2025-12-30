@@ -1,12 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Player Attack - SIMPLIFIED VERSION
-/// ✅ NO HitConfirmBroadcaster needed
-/// ✅ Detects hits directly when attacking
-/// ✅ 0.35s attack cooldown (prevents spam)
-/// ✅ Miss resets to Attack 1
-/// </summary>
 [RequireComponent(typeof(PlayerController))]
 public class PlayerAttack : MonoBehaviour
 {
@@ -15,20 +8,22 @@ public class PlayerAttack : MonoBehaviour
     public float attackRange = 1.5f;
     public LayerMask enemyLayer;
 
-    [Header("Attack Timing")]
-    [Tooltip("Time between attacks - prevents spam (0.35s = ~3 attacks/second)")]
-    public float attackCooldown = 0.35f;
+    [Header("Input")]
+    [SerializeField] private KeyCode attackKey = KeyCode.X;
 
-    [Header("Combo System")]
+    [Header("Combo (old logic, no listeners)")]
     [SerializeField] private bool enableComboSystem = true;
-    [Tooltip("Time window to input next attack after hitting")]
-    [SerializeField] private float comboWindow = 0.8f;
+    [SerializeField] private float comboWindow = 0.35f;
     [SerializeField] private int maxComboSteps = 3;
 
-    private int comboStep = 0;
-    private float comboTimer = 0f;
-    private bool hitSomethingThisAttack = false; // ✅ Simple flag instead of broadcaster
-    private float lastAttackTime = -999f;
+    [Header("Animator Params (your animator)")]
+    [SerializeField] private string attackTriggerName = "Attack";         // Trigger
+    [SerializeField] private string jumpAttackTriggerName = "JumpAttack"; // Trigger
+    [SerializeField] private string comboIntName = "Combo";               // int
+
+    // [Header("Movement During Attack (optional)")]
+    // [SerializeField] private bool lockMovementDuringAttack = false;
+    // [SerializeField, Range(0f, 1f)] private float attackMoveMultiplier = 0.2f;
 
     [Header("Wave of Fire")]
     public GameObject waveOfFirePrefab;
@@ -38,59 +33,43 @@ public class PlayerAttack : MonoBehaviour
     [Header("Attack Point")]
     public Transform attackPoint;
 
+    // Runtime (same as old)
+    private int comboStep = 0;
+    private float comboTimer = 0f;
+    private bool hitConfirmedThisStep = false;
+    private bool isAttacking = false;
+
     private float lastWaveOfFireTime = 0f;
 
-    private Rigidbody2D rb;
     private Animator anim;
-    private AnimatorDriver animDriver;
     private Abilities abilities;
+
+    // Optional: if you have PlayerMovement, we'll use grounded + movement control like before
+    private PlayerController movement;
+    private bool grounded => (movement != null) ? movement.isGrounded : true;
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        animDriver = GetComponent<AnimatorDriver>();
-    }
-
-    void Start()
-    {
         abilities = GetComponent<Abilities>();
-        Debug.Log($"PlayerAttack started - Damage: {swordDamage}, Cooldown: {attackCooldown}s");
+        movement = GetComponent<PlayerController>(); // optional
     }
 
     void Update()
     {
-        // Combo timer countdown
+        if (Input.GetKeyDown(attackKey))
+        {
+            if (enableComboSystem) RegisterAttackInput();
+            else StartAttackAnim(1);
+        }
+
         if (enableComboSystem && comboStep > 0)
         {
             comboTimer -= Time.deltaTime;
             if (comboTimer <= 0f)
-            {
                 ResetCombo();
-            }
         }
 
-        // Attack (X key)
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            // Check cooldown first
-            if (Time.time < lastAttackTime + attackCooldown)
-            {
-                Debug.Log($"⏱️ Attack on cooldown! Wait {(lastAttackTime + attackCooldown - Time.time):F2}s");
-                return;
-            }
-
-            if (enableComboSystem)
-            {
-                TryComboAttack();
-            }
-            else
-            {
-                PerformAttack();
-            }
-        }
-
-        // Wave of Fire (C key)
         if (Input.GetKeyDown(KeyCode.C) && Time.time >= lastWaveOfFireTime + waveOfFireCooldown)
         {
             if (abilities != null && abilities.hasWaveOfFire)
@@ -101,131 +80,138 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    #region Combo System
-
-    private void TryComboAttack()
+    // =========================
+    // Combo logic (ported 1:1)
+    // =========================
+    private void RegisterAttackInput()
     {
+        if (anim == null) return;
+
         if (comboStep == 0)
         {
-            // Start new combo (Attack 1)
             comboStep = 1;
             comboTimer = comboWindow;
+            hitConfirmedThisStep = false;
 
-            PerformAttack();
-
-            Debug.Log("🎯 Combo started - Attack 1/3");
-        }
-        else if (comboStep > 0 && comboStep < maxComboSteps)
-        {
-            // ✅ Check if previous attack hit something
-            if (!hitSomethingThisAttack)
-            {
-                // MISSED! Reset to attack 1
-                Debug.Log("❌ Combo broken - missed target! Restarting combo...");
-                ResetCombo();
-
-                // Start new combo
-                comboStep = 1;
-                comboTimer = comboWindow;
-
-                PerformAttack();
-
-                Debug.Log("🎯 Combo restarted - Attack 1/3");
-                return;
-            }
-
-            // HIT! Continue combo
-            comboStep++;
-            comboTimer = comboWindow;
-
-            PerformAttack();
-
-            Debug.Log($"🎯 Combo continued - Attack {comboStep}/3");
-
-            if (comboStep >= maxComboSteps)
-            {
-                Debug.Log("✨ COMBO COMPLETE!");
-            }
-        }
-        else if (comboStep >= maxComboSteps)
-        {
-            // Combo finished - start new one
-            Debug.Log("🔄 Combo finished - starting new combo");
-            ResetCombo();
-            TryComboAttack();
-        }
-    }
-
-    private void PerformAttack()
-    {
-        lastAttackTime = Time.time;
-        hitSomethingThisAttack = false; // ✅ Reset hit flag
-
-        if (attackPoint == null)
-        {
-            Debug.LogError("AttackPoint is NULL!");
+            StartAttackAnim(comboStep);
             return;
         }
 
-        // Trigger the correct animation based on combo step
-        if (anim != null)
+        if (comboTimer > 0f)
         {
-            if (comboStep == 1)
-            {
-                anim.SetTrigger("Attack");
-                Debug.Log("🎬 Playing Attack 1 animation");
-            }
-            else if (comboStep == 2)
-            {
-                anim.SetTrigger("Attack2");
-                Debug.Log("🎬 Playing Attack 2 animation");
-            }
-            else if (comboStep == 3)
-            {
-                anim.SetTrigger("Attack3");
-                Debug.Log("🎬 Playing Attack 3 animation");
-            }
+            // must confirm hit from previous step
+            if (!hitConfirmedThisStep)
+                return;
+
+            hitConfirmedThisStep = false;
+
+            comboStep = Mathf.Clamp(comboStep + 1, 1, maxComboSteps);
+            comboTimer = comboWindow;
+
+            StartAttackAnim(comboStep);
         }
-        else if (animDriver != null)
+    }
+
+    private void StartAttackAnim(int step)
+    {
+        isAttacking = true;
+
+        // Optional movement logic (like old script)
+        // if (movement != null)
+        // {
+        //     if (lockMovementDuringAttack)
+        //         movement.MovementLocked = true;
+        //     else
+        //         movement.MovementMultiplier = attackMoveMultiplier;
+        // }
+
+        // Update combo int first
+        anim.SetInteger(comboIntName, step);
+
+        // Choose ground vs air trigger
+        if (!grounded)
         {
-            animDriver.Attack();
-        }
-
-        // ✅ Deal damage and check if we hit something
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
-
-        if (hitEnemies.Length > 0)
-        {
-            foreach (Collider2D enemy in hitEnemies)
-            {
-                DealDamageToEnemy(enemy);
-            }
-
-            // ✅ We hit something! Set the flag
-            hitSomethingThisAttack = true;
-            Debug.Log($"✅ Hit {hitEnemies.Length} target(s) - combo can continue!");
+            // Air attack
+            anim.SetTrigger(jumpAttackTriggerName);
         }
         else
         {
-            Debug.Log("💨 Attack missed - no enemies in range");
+            // Ground attack
+            anim.SetTrigger(attackTriggerName);
         }
     }
 
     private void ResetCombo()
     {
-        if (comboStep > 0)
-        {
-            Debug.Log("🔄 Combo reset");
-        }
-
         comboStep = 0;
         comboTimer = 0f;
-        hitSomethingThisAttack = false;
+        hitConfirmedThisStep = false;
+        isAttacking = false;
+
+        if (anim != null)
+            anim.SetInteger(comboIntName, 0);
+
+        // if (movement != null)
+        // {
+        //     movement.MovementLocked = false;
+        //     movement.MovementMultiplier = 1f;
+        // }
+
+        Debug.Log("🔄 Combo reset");
     }
 
-    #endregion
+    // =========================
+    // HIT CONFIRM (no listeners)
+    // =========================
+    // Put an Animation Event on each attack clip at the HIT frame:
+    // - Ground: Attack_01/02/03
+    // - Air: JumpAttack clip(s)
+    public void DealDamage()
+    {
+        if (!isAttacking) return;
 
-    void DealDamageToEnemy(Collider2D enemy)
+        if (attackPoint == null)
+        {
+            Debug.LogError("DealDamage called but AttackPoint is NULL!");
+            return;
+        }
+
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+
+        if (hitEnemies.Length > 0)
+        {
+            foreach (Collider2D enemy in hitEnemies)
+                DealDamageToEnemy(enemy);
+
+            // This replaces OnHitConfirmed()
+            hitConfirmedThisStep = true;
+
+            Debug.Log($"✅ DealDamage hit {hitEnemies.Length} target(s) - combo can continue!");
+        }
+        else
+        {
+            Debug.Log("💨 DealDamage missed - no enemies in range");
+        }
+    }
+
+    // Put Animation Event at the END of each attack clip (ground and air)
+    public void OnAttackEnd()
+    {
+        // if (movement != null)
+        // {
+        //     movement.MovementLocked = false;
+        //     movement.MovementMultiplier = 1f;
+        // }
+
+        isAttacking = false;
+
+        if (comboTimer <= 0f)
+            ResetCombo();
+
+        Debug.Log("📢 OnAttackEnd animation event called");
+    }
+
+    private void DealDamageToEnemy(Collider2D enemy)
     {
         EnemyBase enemyScript = enemy.GetComponent<EnemyBase>();
         if (enemyScript != null)
@@ -247,6 +233,9 @@ public class PlayerAttack : MonoBehaviour
         Debug.LogWarning($"{enemy.name} has NO EnemyBase or BossBase component!");
     }
 
+    // =========================
+    // Wave of Fire (kept)
+    // =========================
     void ShootWaveOfFire()
     {
         if (waveOfFirePrefab == null || firePoint == null)
@@ -255,9 +244,7 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
 
-        if (animDriver != null)
-            animDriver.WaveOfFire();
-        else if (anim != null)
+        if (anim != null)
             anim.SetTrigger("WaveOfFire");
 
         GameObject wave = Instantiate(waveOfFirePrefab, firePoint.position, Quaternion.identity);
@@ -272,8 +259,9 @@ public class PlayerAttack : MonoBehaviour
         Debug.Log($"✨ Wave of Fire fired! Damage: {swordDamage * 5}");
     }
 
-    #region Upgrade Methods
-
+    // =========================
+    // Upgrade Methods (kept)
+    // =========================
     public void IncreaseDamage(int amount)
     {
         swordDamage += amount;
@@ -285,23 +273,6 @@ public class PlayerAttack : MonoBehaviour
         swordDamage *= multiplier;
         Debug.Log($"⚔️ Damage multiplied by {multiplier}. New damage: {swordDamage}");
     }
-
-    #endregion
-
-    #region Animation Event Receivers
-
-    // Called by animation events
-    public void DealDamage()
-    {
-        Debug.Log("📢 DealDamage animation event called");
-    }
-
-    public void OnAttackEnd()
-    {
-        Debug.Log("📢 OnAttackEnd animation event called");
-    }
-
-    #endregion
 
     void OnDrawGizmosSelected()
     {
