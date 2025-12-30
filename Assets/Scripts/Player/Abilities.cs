@@ -1,16 +1,16 @@
 using UnityEngine;
 
 /// <summary>
-/// Handles player abilities: Teleport and Wave of Light
-/// Owns the ability unlock flags (hasTeleport, hasWaveOfLight)
+/// Handles player abilities: Teleport and Wave of Fire
+/// Owns the ability unlock flags (hasTeleport, hasWaveOfFire)
 /// </summary>
 [RequireComponent(typeof(PlayerController))]
 public class Abilities : MonoBehaviour
 {
     [Header("Ability Unlocks")]
     public bool hasTeleport = false;
-    public bool hasWaveOfLight = false;
-    public bool hasUpgradedSword = false; // ✅ NEW: Yoji's sword upgrade flag
+    public bool hasWaveOfFire = false;
+    public bool hasUpgradedSword = false; 
 
     [Header("Teleport Settings")]
     public float teleportDistance = 4.5f;
@@ -28,10 +28,10 @@ public class Abilities : MonoBehaviour
     private void Start()
     {
         // ✅ Load upgrades from save as backup (in case LoadProgress ran before Player spawned)
-        hasUpgradedSword = PlayerPrefs.GetInt("PlayerHasUpgradedSword", 0) == 1;
-        hasTeleport = PlayerPrefs.GetInt("PlayerHasTeleport", 0) == 1;
-        hasWaveOfLight = PlayerPrefs.GetInt("PlayerHasWaveOfLight", 0) == 1;
-
+        hasUpgradedSword = GameManager.Instance.GetFlag(GameFlag.hasUpgradedSword);
+        hasTeleport = GameManager.Instance.GetFlag(GameFlag.hasTeleport);
+        hasWaveOfFire = GameManager.Instance.GetFlag(GameFlag.hasWaveOfFire);
+        
         if (hasUpgradedSword)
             Debug.Log("✅ Abilities Start: Loaded hasUpgradedSword = true from save");
     }
@@ -96,13 +96,13 @@ public class Abilities : MonoBehaviour
     }
 
     /// <summary>
-    /// Unlock Wave of Light ability
-    /// Called by StoreController when purchasing Sword of Light
+    /// Unlock Wave of Fire ability
+    /// Called by StoreController when purchasing Sword of Fire
     /// </summary>
-    public void UnlockWaveOfLight()
+    public void UnlockWaveOfFire()
     {
-        hasWaveOfLight = true;
-        Debug.Log("✨ Wave of Light ability unlocked!");
+        hasWaveOfFire = true;
+        Debug.Log("✨ Wave of Fire ability unlocked!");
     }
 
     /// <summary>

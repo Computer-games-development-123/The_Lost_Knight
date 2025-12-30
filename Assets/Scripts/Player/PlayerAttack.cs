@@ -28,16 +28,16 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
     [Header("Hit Confirmation")]
     [SerializeField] private HitConfirmBroadcaster hitBroadcaster;
 
-    [Header("Wave of Light")]
-    public GameObject waveOfLightPrefab;
+    [Header("Wave of Fire")]
+    public GameObject waveOfFirePrefab;
     public Transform firePoint;
-    public float waveOfLightCooldown = 5f;
+    public float waveOfFireCooldown = 5f;
 
     [Header("Attack Point")]
     public Transform attackPoint;
 
     private float lastAttackTime = 0f;
-    private float lastWaveOfLightTime = 0f;
+    private float lastWaveOfFireTime = 0f;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -112,13 +112,13 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
             }
         }
 
-        // Wave of Light (C key)
-        if (Input.GetKeyDown(KeyCode.C) && Time.time >= lastWaveOfLightTime + waveOfLightCooldown)
+        // Wave of Fire (C key)
+        if (Input.GetKeyDown(KeyCode.C) && Time.time >= lastWaveOfFireTime + waveOfFireCooldown)
         {
-            if (abilities != null && abilities.hasWaveOfLight)
+            if (abilities != null && abilities.hasWaveOfFire)
             {
-                ShootWaveOfLight();
-                lastWaveOfLightTime = Time.time;
+                ShootWaveOfFire();
+                lastWaveOfFireTime = Time.time;
             }
         }
     }
@@ -252,24 +252,24 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
         Debug.LogWarning($"{enemy.name} has NO EnemyBase or BossBase component!");
     }
 
-    void ShootWaveOfLight()
+    void ShootWaveOfFire()
     {
-        if (waveOfLightPrefab == null || firePoint == null)
+        if (waveOfFirePrefab == null || firePoint == null)
         {
-            Debug.LogError("Wave of Light prefab or fire point not assigned!");
+            Debug.LogError("Wave of Fire prefab or fire point not assigned!");
             return;
         }
 
         // Trigger animation
         if (animDriver != null)
-            animDriver.WaveOfLight();
+            animDriver.WaveOfFire();
         else if (anim != null)
-            anim.SetTrigger("WaveOfLight");
+            anim.SetTrigger("WaveOfFire");
 
         // Spawn projectile
-        GameObject wave = Instantiate(waveOfLightPrefab, firePoint.position, Quaternion.identity);
+        GameObject wave = Instantiate(waveOfFirePrefab, firePoint.position, Quaternion.identity);
 
-        WaveOfLightProjectile projectile = wave.GetComponent<WaveOfLightProjectile>();
+        WaveOfFireProjectile projectile = wave.GetComponent<WaveOfFireProjectile>();
         if (projectile != null)
         {
             projectile.direction = new Vector2(Mathf.Sign(transform.localScale.x), 0f);
@@ -278,7 +278,7 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
             projectile.damage = swordDamage * 5;
         }
 
-        Debug.Log($"✨ Wave of Light fired! Damage: {swordDamage * 5}");
+        Debug.Log($"✨ Wave of Fire fired! Damage: {swordDamage * 5}");
     }
 
     #region Upgrade Methods (Called by StoreController)
@@ -295,7 +295,7 @@ public class PlayerAttack : MonoBehaviour, IHitConfirmListener
 
     /// <summary>
     /// Multiply sword damage
-    /// Called by StoreController when purchasing Sword of Light
+    /// Called by StoreController when purchasing Sword of Fire
     /// </summary>
     public void MultiplyDamage(int multiplier)
     {

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8596503936536553495}
   - component: {fileID: 9206115084279224614}
   - component: {fileID: -5225463524748817341}
+  - component: {fileID: 6400573088821524354}
   m_Layer: 6
   m_Name: George
   m_TagString: Enemy
@@ -219,25 +220,24 @@ MonoBehaviour:
   waveManager: {fileID: 0}
   player: {fileID: 0}
   firstEncounterDialogue: {fileID: 11400000, guid: 046c65efe49bd924385266f16426cc5d, type: 2}
-  dialogueCanvas: {fileID: 0}
+  portalBackToHubName: Forest_Hub_Portal
+  portalToNextAreaName: GreenToRed_Portal
   hitsToTriggerTaunt: 5
   attackCooldown: 4
   closeRangeThreshold: 2
-  attackPoint: {fileID: 0}
+  attackPoint: {fileID: 2797142204784070127}
   attackRange: 1
   flySpeed: 6
-  flyHeight: 3
-  flyDuration: 1
   walkSpeed: 3
   minX: -8
   maxX: 8
   minY: -4
   maxY: 4
-  groundCheck: {fileID: 0}
+  groundCheck: {fileID: 1649431039439730435}
   groundCheckRadius: 0.2
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
 --- !u!114 &-5225463524748817341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +259,21 @@ MonoBehaviour:
   deathDialogue: {fileID: 0}
   waveManager: {fileID: 0}
   player: {fileID: 0}
+--- !u!114 &6400573088821524354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3005292868502567045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6405e01b2c38833498cb86ab0dc6e213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossMusicController
+  bossType: 0
+  customBossMusic: {fileID: 0}
+  playRoarOnSpawn: 1
 --- !u!1 &4878562210053445059
 GameObject:
   m_ObjectHideFlags: 0

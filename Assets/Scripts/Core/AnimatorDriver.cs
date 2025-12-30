@@ -36,5 +36,5 @@ public class AnimatorDriver : MonoBehaviour
     public void Jump() => anim.SetTrigger("Jump");
     public void Hurt() => anim.SetTrigger("Hurt");
     public void Death() => anim.SetTrigger("Death");
-    public void WaveOfLight() => anim.SetTrigger("WaveOfLight");
+    public void WaveOfFire() => anim.SetTrigger("WaveOfFire");
 }

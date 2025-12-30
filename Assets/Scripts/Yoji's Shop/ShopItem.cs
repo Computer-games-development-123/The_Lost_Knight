@@ -21,7 +21,7 @@ public class ShopItem
         DamageUpgrade,
         MagicArmor,
         FlashHelmet,
-        SwordOfLight,
+        SwordOfFire,
         Potion
     }
 }
