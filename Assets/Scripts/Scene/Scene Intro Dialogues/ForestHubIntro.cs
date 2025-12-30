@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class ForestHubIntro : MonoBehaviour
 {
-    public DialogueData openingDialogue;
+    [Header("Dialogues in order")]
+    public DialogueData[] dialogues;
 
     private void Start()
     {
@@ -22,8 +23,23 @@ public class ForestHubIntro : MonoBehaviour
         GameManager.Instance.SetFlag(GameFlag.OpeningDialogueSeen, true);
         GameManager.Instance.SaveProgress();
 
-        if (DialogueManager.Instance != null && openingDialogue != null)
-            DialogueManager.Instance.Play(openingDialogue);
+        if (DialogueManager.Instance == null || dialogues == null || dialogues.Length == 0)
+            yield break;
+
+        PlaySequence(0);
     }
 
+    private void PlaySequence(int index)
+    {
+        while (index < dialogues.Length && dialogues[index] == null)
+            index++;
+
+        if (index >= dialogues.Length)
+            return;
+
+        DialogueManager.Instance.Play(dialogues[index], () =>
+        {
+            PlaySequence(index + 1);
+        });
+    }
 }

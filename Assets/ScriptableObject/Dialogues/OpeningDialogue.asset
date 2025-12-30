@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
   flag: 1
-  speakerName: Welcome!
+  speakerName: Welcome
   lines:
   - Press Arrows To move.
   - Press F to interact.

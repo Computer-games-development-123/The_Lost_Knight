@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialogueUI;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private TextMeshProUGUI speakerText;
+
+    [Header("Portrait (optional)")]
+    [SerializeField] private Image portraitImage;        // UI Image
+    [SerializeField] private bool hidePortraitIfMissing = true;
 
     [Header("Input & Effects")]
     [SerializeField] private KeyCode advanceKey = KeyCode.F;
@@ -48,6 +53,8 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialogueUI != null)
             dialogueUI.SetActive(false);
+
+        ApplyPortrait(null);
     }
 
     private void OnDestroy()
@@ -64,7 +71,6 @@ public class DialogueManager : MonoBehaviour
         {
             if (_isTyping)
             {
-                // Skip typewriter: show full line immediately
                 FinishTypingInstantly();
             }
             else
@@ -101,29 +107,13 @@ public class DialogueManager : MonoBehaviour
         if (dialogueUI != null)
             dialogueUI.SetActive(true);
 
+        // NEW: show portrait (one per dialogue)
+        ApplyPortrait(_currentData.portrait);
+
         ShowCurrentLine();
 
         if (_currentData.pauseGameDuringDialogue)
             Time.timeScale = 0f;
-    }
-
-    // Optional string-based version
-    public void Play(string id, Action onComplete = null)
-    {
-        if (string.IsNullOrEmpty(id))
-        {
-            onComplete?.Invoke();
-            return;
-        }
-
-        if (!_byId.TryGetValue(id, out var data))
-        {
-            Debug.LogWarning($"DialogueManager: No DialogueData for id '{id}'");
-            onComplete?.Invoke();
-            return;
-        }
-
-        Play(data, onComplete);
     }
 
     // =============================
@@ -245,7 +235,26 @@ public class DialogueManager : MonoBehaviour
         if (speakerText != null)
             speakerText.text = string.Empty;
 
+        // NEW: clear portrait
+        ApplyPortrait(null);
+
         cb?.Invoke();
+    }
+
+    private void ApplyPortrait(Sprite sprite)
+    {
+        if (portraitImage == null) return;
+
+        if (sprite == null)
+        {
+            portraitImage.sprite = null;
+            if (hidePortraitIfMissing)
+                portraitImage.gameObject.SetActive(false);
+            return;
+        }
+
+        portraitImage.sprite = sprite;
+        portraitImage.gameObject.SetActive(true);
     }
 
     private void LoadAllDialoguesFromResources()

@@ -115,7 +115,6 @@ public class YojiStoreHandler : MonoBehaviour
             // Check if there's pending dialogue
             if (GM != null)
             {
-                // ✅ FIXED: Use GetFlag() instead of HasTalkedTo()
                 // First time talking
                 if (!GM.GetFlag(GameFlag.YojiFirstDialogueCompleted)) return false;
 

@@ -43,8 +43,6 @@ public class PlayerAttack : MonoBehaviour
 
     private Animator anim;
     private Abilities abilities;
-
-    // Optional: if you have PlayerMovement, we'll use grounded + movement control like before
     private PlayerController movement;
     private bool grounded => (movement != null) ? movement.isGrounded : true;
 
@@ -81,7 +79,7 @@ public class PlayerAttack : MonoBehaviour
     }
 
     // =========================
-    // Combo logic (ported 1:1)
+    // Combo logic
     // =========================
     private void RegisterAttackInput()
     {
@@ -116,7 +114,6 @@ public class PlayerAttack : MonoBehaviour
     {
         isAttacking = true;
 
-        // Optional movement logic (like old script)
         // if (movement != null)
         // {
         //     if (lockMovementDuringAttack)
@@ -160,12 +157,6 @@ public class PlayerAttack : MonoBehaviour
         Debug.Log("🔄 Combo reset");
     }
 
-    // =========================
-    // HIT CONFIRM (no listeners)
-    // =========================
-    // Put an Animation Event on each attack clip at the HIT frame:
-    // - Ground: Attack_01/02/03
-    // - Air: JumpAttack clip(s)
     public void DealDamage()
     {
         if (!isAttacking) return;
@@ -183,7 +174,6 @@ public class PlayerAttack : MonoBehaviour
             foreach (Collider2D enemy in hitEnemies)
                 DealDamageToEnemy(enemy);
 
-            // This replaces OnHitConfirmed()
             hitConfirmedThisStep = true;
 
             Debug.Log($"✅ DealDamage hit {hitEnemies.Length} target(s) - combo can continue!");
@@ -194,7 +184,6 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    // Put Animation Event at the END of each attack clip (ground and air)
     public void OnAttackEnd()
     {
         // if (movement != null)
@@ -234,7 +223,7 @@ public class PlayerAttack : MonoBehaviour
     }
 
     // =========================
-    // Wave of Fire (kept)
+    // Wave of Fire
     // =========================
     void ShootWaveOfFire()
     {
@@ -260,7 +249,7 @@ public class PlayerAttack : MonoBehaviour
     }
 
     // =========================
-    // Upgrade Methods (kept)
+    // Upgrade Methods
     // =========================
     public void IncreaseDamage(int amount)
     {
