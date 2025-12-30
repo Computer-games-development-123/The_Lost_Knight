@@ -1207,6 +1207,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320616719}
   m_CullTransparentMesh: 1
+--- !u!1 &322129008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 322129010}
+  - component: {fileID: 322129009}
+  m_Layer: 0
+  m_Name: StoreStateManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &322129009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322129008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f13bb50b11b446047be6cc4831a66903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StoreStateManager
+  currentState: 0
+--- !u!4 &322129010
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322129008}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.39383, y: -0.28327, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &409852012
 GameObject:
   m_ObjectHideFlags: 0
@@ -2396,14 +2441,14 @@ RectTransform:
   m_GameObject: {fileID: 779854040}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.8169754, y: 2.8661668, z: 2.3084}
+  m_LocalScale: {x: 3.6146908, y: 2.9745438, z: 2.3084}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 588307272}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -482, y: -20}
+  m_AnchoredPosition: {x: -485.6, y: -28}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &779854042
@@ -6285,3 +6330,4 @@ SceneRoots:
   - {fileID: 1094946179}
   - {fileID: 1425836767}
   - {fileID: 566535976}
+  - {fileID: 322129010}

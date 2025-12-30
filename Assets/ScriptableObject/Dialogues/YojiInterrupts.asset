@@ -19,5 +19,5 @@ MonoBehaviour:
   - WAIT!,
   - I will handle Mona.
   - Dont Hold Back, Charge Fika!.
-  portrait: {fileID: 0}
+  portrait: {fileID: -5898556967480879587, guid: 308c2cc3ccc747546b66362cd154ddbb, type: 3}
   pauseGameDuringDialogue: 1

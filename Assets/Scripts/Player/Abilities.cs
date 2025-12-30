@@ -18,11 +18,13 @@ public class Abilities : MonoBehaviour
 
     private PlayerController controller;
     private Invulnerability invulnerability;
+    private FormSwitcher FS;
 
     private void Awake()
     {
         controller = GetComponent<PlayerController>();
         invulnerability = GetComponent<Invulnerability>();
+        FS = GetComponent<FormSwitcher>();
     }
 
     private void Start()
@@ -120,7 +122,7 @@ public class Abilities : MonoBehaviour
     public void UpgradeSword()
     {
         hasUpgradedSword = true;
-
+        FS.StartTransformation();
         GameManager.Instance.SetFlag(GameFlag.hasUpgradedSword, true);
         GameManager.Instance.SaveProgress();
 
