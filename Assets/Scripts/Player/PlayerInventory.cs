@@ -123,7 +123,7 @@ public class PlayerInventory : MonoBehaviour
     }
 
 
-    private async Task  LoadInventoryCloud()
+    private async Task LoadInventoryCloud()
     {
         try
         {
