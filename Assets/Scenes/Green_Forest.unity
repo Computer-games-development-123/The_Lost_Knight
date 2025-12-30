@@ -1331,7 +1331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GreenBattleStartIntro
   BattleStartDialogue: {fileID: 11400000, guid: e563dda5b15df18438986c8c71d48c7c, type: 2}
-  dialogueSeenFlag: 9
+  dialogueSeenFlag: 0
   playEveryTime: 0
 --- !u!1001 &1061293523
 PrefabInstance:

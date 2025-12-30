@@ -18,5 +18,5 @@ MonoBehaviour:
   lines:
   - Press Arrows To move.
   - Press F to interact.
-  portrait: {fileID: 0}
+  portrait: {fileID: -1033766676993296678, guid: 1d89e91bf9e89aa4f99ded252d1d5552, type: 3}
   pauseGameDuringDialogue: 1

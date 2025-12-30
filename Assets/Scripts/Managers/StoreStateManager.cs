@@ -35,6 +35,11 @@ public class StoreStateManager : MonoBehaviour
         UpdateStoreStateFromGameManager();
     }
 
+    private void Start()
+    {
+        GameManagerReadyHelper.RunWhenReady(this, UpdateStoreStateFromGameManager);
+    }
+
     public void UpdateStoreStateFromGameManager()
     {
         if (GameManager.Instance == null) return;

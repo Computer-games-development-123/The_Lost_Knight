@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     private static bool cloudReady = false;
     public bool IsProgressLoaded { get; private set; } = false;
+    public event System.Action ProgressLoaded;
 
     [Header("Debug")]
     public bool showDebugLogs = true;
@@ -115,6 +116,7 @@ public class GameManager : MonoBehaviour
     public void OnPlayerDiedToGeorge()
     {
         SetFlag(GameFlag.GeorgeFirstEncounter, true);
+        UpdateStoreState();
         SaveProgress();
     }
 
@@ -219,18 +221,28 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            //SyncPublicFlags();
             IsProgressLoaded = true;
 
             if (showDebugLogs)
                 Debug.Log($"✅ Cloud load completed. Flags loaded: {cloudData.Count}");
+
+            // ✅ apply things that depend on flags right now
+            UpdateStoreState();
+
+            // ✅ notify others
+            ProgressLoaded?.Invoke();
         }
         catch (System.Exception e)
         {
             Debug.LogError("❌ Cloud load failed: " + e);
+
             IsProgressLoaded = true;
+
+            UpdateStoreState();
+            ProgressLoaded?.Invoke();
         }
     }
+
 
     #endregion
 }

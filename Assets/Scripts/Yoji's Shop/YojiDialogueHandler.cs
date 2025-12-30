@@ -30,17 +30,10 @@ public class YojiDialogueHandler : MonoBehaviour
 
     private void Start()
     {
-        // Check if player already talked to Yoji (from save file)
-        if (GM != null && GM.GetFlag(GameFlag.YojiFirstDialogueCompleted))
-        {
-            // Portal should already be open
-            if (greenForestPortal != null)
-            {
-                greenForestPortal.SetActive(true);
-                Debug.Log("✅ Player already talked to Yoji - portal active");
-            }
-        }
+        GameManagerReadyHelper.RunWhenReady(this, ApplySavedState);
     }
+
+
 
     private void Update()
     {
@@ -133,14 +126,12 @@ public class YojiDialogueHandler : MonoBehaviour
     /// </summary>
     private void OnOpeningDialogueComplete()
     {
-        // ✅ FIXED: Set flag directly (NOT through GameManager.SetYojiTalked()!)
         if (GM != null)
         {
             GM.SetFlag(GameFlag.YojiFirstDialogueCompleted, true);
             GM.SetFlag(GameFlag.OpeningDialogueSeen, true);
         }
 
-        // ✅ ACTIVATE THE GREEN FOREST PORTAL DIRECTLY
         if (greenForestPortal != null)
         {
             greenForestPortal.SetActive(true);
@@ -229,4 +220,21 @@ public class YojiDialogueHandler : MonoBehaviour
         if (interactionPrompt != null)
             interactionPrompt.SetActive(false);
     }
+
+    private void ApplySavedState()
+    {
+        if (GM == null || !GM.IsProgressLoaded) return;
+
+        if (GM.GetFlag(GameFlag.YojiFirstDialogueCompleted))
+        {
+            if (greenForestPortal != null)
+                greenForestPortal.SetActive(true);
+
+            if (interactionPrompt != null)
+                interactionPrompt.SetActive(false);
+
+            Debug.Log("✅ Saved state applied: Yoji talked -> portal active");
+        }
+    }
+
 }

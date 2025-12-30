@@ -21,5 +21,5 @@ MonoBehaviour:
   - Take this and finish him for good.
   - Yoji has given you a free weapon upgrade
   - The store in now open.
-  portrait: {fileID: 0}
+  portrait: {fileID: -5898556967480879587, guid: 308c2cc3ccc747546b66362cd154ddbb, type: 3}
   pauseGameDuringDialogue: 1

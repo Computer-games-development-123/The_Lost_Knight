@@ -31,6 +31,24 @@ public class YojiStoreHandler : MonoBehaviour
         FindStoreController();
     }
 
+    private void Start()
+    {
+        GameManagerReadyHelper.RunWhenReady(this, RefreshStorePrompt);
+    }
+
+    private void RefreshStorePrompt()
+    {
+        if (!playerInRange) return;
+
+        bool show = ShouldShowStorePrompt() && (DM == null || !DM.IsDialogueActive);
+        if (storePrompt != null)
+        {
+            storePrompt.SetActive(show);
+            if (show) UpdateStorePromptText();
+        }
+    }
+
+
     private void FindStoreController()
     {
         if (storeController != null) return; // Already found
