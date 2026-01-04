@@ -2392,7 +2392,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Go To Battle
+  m_text: Go To Battle (F)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2846,9 +2846,9 @@ MonoBehaviour:
   philipMusic: {fileID: 8300000, guid: 8737e7804b3fe9e4c88d9e29ce63418c, type: 3}
   ditorMusic: {fileID: 8300000, guid: 0374f2c4802b579468aef90046f15a30, type: 3}
   yojiDeathMusic: {fileID: 8300000, guid: b920d2ecc6e8dec42b9557d9b7eecc54, type: 3}
-  playerJump: {fileID: 0}
-  playerAttack: {fileID: 0}
-  playerTakeDamage: {fileID: 0}
+  playerJump: {fileID: 8300000, guid: eb2c701948b82b14da31b0e9af9d3a28, type: 3}
+  playerAttack: {fileID: 8300000, guid: c86a0850a69f7c74fa3c60a8edb539ba, type: 3}
+  playerTakeDamage: {fileID: 8300000, guid: 0a177132a619e5945ad81de7957fb67e, type: 3}
   playerDeath: {fileID: 8300000, guid: 3f12287b838540c4cb4bf0de1fce6726, type: 3}
   playerHeal: {fileID: 0}
   enemyHit: {fileID: 0}
@@ -2857,7 +2857,7 @@ MonoBehaviour:
   bossDeath: {fileID: 0}
   bossRoar: {fileID: 0}
   coinPickup: {fileID: 0}
-  itemPurchase: {fileID: 0}
+  itemPurchase: {fileID: 8300000, guid: f6aafe9df26439348a2f029f6f8048ac, type: 3}
   portalOpen: {fileID: 0}
   dialogueAdvance: {fileID: 0}
   musicVolume: 0.7

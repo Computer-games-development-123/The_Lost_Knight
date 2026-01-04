@@ -4,70 +4,73 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     [Header("Attack Settings")]
-    public int swordDamage = 5;
-    public float attackRange = 1.5f;
+    public int baseSwordDamage = 8;
+    [HideInInspector] public int swordDamage = 8;  // Runtime damage (can be upgraded)
+    
+    [Header("Attack Timing")]
+    [Tooltip("Minimum time between attacks (0.33s = 3 attacks per second)")]
+    public float attackCooldown = 0.33f;
+    
+    [Header("Attack 1 & 2 (Close Range)")]
+    public float normalAttackRange = 1.5f;
+    public Transform attackPoint;
+    
+    [Header("Attack 3 (Dash Attack)")]
+    public float dashAttackRange = 2.5f;
+    public float dashDistance = 1.5f;
+    public float dashSpeed = 15f;
+    public float dashKnockbackMultiplier = 1.5f;
+    
+    [Header("General")]
     public LayerMask enemyLayer;
-
-    [Header("Input")]
     [SerializeField] private KeyCode attackKey = KeyCode.X;
 
-    [Header("Combo (old logic, no listeners)")]
-    [SerializeField] private bool enableComboSystem = true;
-    [SerializeField] private float comboWindow = 0.35f;
-    [SerializeField] private int maxComboSteps = 3;
-
-    [Header("Animator Params (your animator)")]
-    [SerializeField] private string attackTriggerName = "Attack";         // Trigger
-    [SerializeField] private string jumpAttackTriggerName = "JumpAttack"; // Trigger
-    [SerializeField] private string comboIntName = "Combo";               // int
-
-    // [Header("Movement During Attack (optional)")]
-    // [SerializeField] private bool lockMovementDuringAttack = false;
-    // [SerializeField, Range(0f, 1f)] private float attackMoveMultiplier = 0.2f;
+    [Header("Animator Params")]
+    [SerializeField] private string attackTriggerName = "Attack";
+    [SerializeField] private string attackIndexIntName = "AttackIndex";
 
     [Header("Wave of Fire")]
     public GameObject waveOfFirePrefab;
     public Transform firePoint;
     public float waveOfFireCooldown = 5f;
 
-    [Header("Attack Point")]
-    public Transform attackPoint;
-
-    // Runtime (same as old)
-    private int comboStep = 0;
-    private float comboTimer = 0f;
-    private bool hitConfirmedThisStep = false;
+    // Runtime - Attack State
+    private int currentAttackIndex = 0;  // 0, 1, or 2 (for attacks 1, 2, 3)
     private bool isAttacking = false;
-
+    private bool isDashing = false;
+    private float lastAttackTime = -999f;  // Time when last attack was started
+    private bool canAttack = true;  // Simple flag to allow attacks
+    
+    // Runtime - Wave of Fire
     private float lastWaveOfFireTime = 0f;
 
+    // Components
     private Animator anim;
     private Abilities abilities;
     private PlayerController movement;
+    private Rigidbody2D rb;
     private bool grounded => (movement != null) ? movement.isGrounded : true;
 
     void Awake()
     {
         anim = GetComponent<Animator>();
         abilities = GetComponent<Abilities>();
-        movement = GetComponent<PlayerController>(); // optional
+        movement = GetComponent<PlayerController>();
+        rb = GetComponent<Rigidbody2D>();
+        
+        // Load saved damage from GameManager
+        LoadDamageFromSave();
     }
 
     void Update()
     {
+        // Basic attack with cooldown
         if (Input.GetKeyDown(attackKey))
         {
-            if (enableComboSystem) RegisterAttackInput();
-            else StartAttackAnim(1);
+            TryPerformAttack();
         }
 
-        if (enableComboSystem && comboStep > 0)
-        {
-            comboTimer -= Time.deltaTime;
-            if (comboTimer <= 0f)
-                ResetCombo();
-        }
-
+        // Wave of Fire
         if (Input.GetKeyDown(KeyCode.C) && Time.time >= lastWaveOfFireTime + waveOfFireCooldown)
         {
             if (abilities != null && abilities.hasWaveOfFire)
@@ -78,85 +81,117 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    // =========================
-    // Combo logic
-    // =========================
-    private void RegisterAttackInput()
+    /// <summary>
+    /// Try to perform attack - only succeeds if cooldown has passed
+    /// </summary>
+    private void TryPerformAttack()
     {
-        if (anim == null) return;
-
-        if (comboStep == 0)
+        // Check if enough time has passed since last attack
+        float timeSinceLastAttack = Time.time - lastAttackTime;
+        
+        if (timeSinceLastAttack < attackCooldown)
         {
-            comboStep = 1;
-            comboTimer = comboWindow;
-            hitConfirmedThisStep = false;
-
-            StartAttackAnim(comboStep);
+            // Still on cooldown - ignore input
+            Debug.Log($"⏱️ Attack on cooldown. Wait {(attackCooldown - timeSinceLastAttack):F2}s more. Time since last: {timeSinceLastAttack:F2}s");
             return;
         }
 
-        if (comboTimer > 0f)
+        // Additional check - make sure we can attack
+        if (!canAttack)
         {
-            // must confirm hit from previous step
-            if (!hitConfirmedThisStep)
-                return;
-
-            hitConfirmedThisStep = false;
-
-            comboStep = Mathf.Clamp(comboStep + 1, 1, maxComboSteps);
-            comboTimer = comboWindow;
-
-            StartAttackAnim(comboStep);
+            Debug.Log("🚫 Cannot attack - canAttack is false");
+            return;
         }
+
+        Debug.Log($"✅ COOLDOWN PASSED! Time since last attack: {timeSinceLastAttack:F2}s (needed {attackCooldown:F2}s)");
+
+        // Cooldown passed - perform attack
+        PerformAttack();
     }
 
-    private void StartAttackAnim(int step)
+    /// <summary>
+    /// Execute the current attack in the combo sequence
+    /// </summary>
+    private void PerformAttack()
     {
+        // Mark that we're attacking
         isAttacking = true;
+        canAttack = false;  // Temporarily disable attacks
+        lastAttackTime = Time.time;
 
-        // if (movement != null)
-        // {
-        //     if (lockMovementDuringAttack)
-        //         movement.MovementLocked = true;
-        //     else
-        //         movement.MovementMultiplier = attackMoveMultiplier;
-        // }
+        // Set the attack index for animator (1, 2, or 3)
+        int animatorIndex = currentAttackIndex + 1;
+        anim.SetInteger(attackIndexIntName, animatorIndex);
 
-        // Update combo int first
-        anim.SetInteger(comboIntName, step);
-
-        // Choose ground vs air trigger
+        // Trigger appropriate attack animation
         if (!grounded)
         {
-            // Air attack
-            anim.SetTrigger(jumpAttackTriggerName);
+            anim.SetTrigger("JumpAttack");
         }
         else
         {
-            // Ground attack
             anim.SetTrigger(attackTriggerName);
+        }
+
+        // If this is attack 3 (dash attack), perform dash
+        if (currentAttackIndex == 2)
+        {
+            StartDashAttack();
+        }
+
+        Debug.Log($"⚔️ Performing Attack {animatorIndex}, current time: {Time.time:F2}");
+
+        // Cycle to next attack for the next input (0 → 1 → 2 → 0...)
+        currentAttackIndex = (currentAttackIndex + 1) % 3;
+
+        // Auto-reset attack state after cooldown (backup in case animation event doesn't fire)
+        Invoke(nameof(ResetAttackState), attackCooldown);
+    }
+
+    /// <summary>
+    /// Reset attack state - called either by animation event or as backup timer
+    /// </summary>
+    private void ResetAttackState()
+    {
+        isAttacking = false;
+        canAttack = true;
+        Debug.Log($"🔓 Attack state reset at {Time.time:F2}");
+    }
+
+    /// <summary>
+    /// Dash forward for attack 3
+    /// </summary>
+    private void StartDashAttack()
+    {
+        if (movement == null || rb == null) return;
+
+        isDashing = true;
+        
+        // Dash in facing direction
+        Vector2 dashDirection = movement.facingDir();
+        rb.linearVelocity = new Vector2(dashDirection.x * dashSpeed, rb.linearVelocity.y);
+
+        // Stop dash after short time
+        float dashDuration = dashDistance / dashSpeed;
+        Invoke(nameof(StopDash), dashDuration);
+    }
+
+    private void StopDash()
+    {
+        isDashing = false;
+        if (rb != null)
+        {
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
         }
     }
 
-    private void ResetCombo()
-    {
-        comboStep = 0;
-        comboTimer = 0f;
-        hitConfirmedThisStep = false;
-        isAttacking = false;
+    // ==========================================
+    // Animation Events (called by Unity Animator)
+    // ==========================================
 
-        if (anim != null)
-            anim.SetInteger(comboIntName, 0);
-
-        // if (movement != null)
-        // {
-        //     movement.MovementLocked = false;
-        //     movement.MovementMultiplier = 1f;
-        // }
-
-        Debug.Log("🔄 Combo reset");
-    }
-
+    /// <summary>
+    /// Called by Animation Event - deals damage at the right frame
+    /// </summary>
     public void DealDamage()
     {
         if (!isAttacking) return;
@@ -167,45 +202,66 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
 
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+        // Determine which attack was just performed
+        // currentAttackIndex has already moved forward, so we check the previous one
+        int performedAttackIndex = (currentAttackIndex - 1 + 3) % 3;
+        
+        // Attack 3 (index 2) uses longer range
+        float range = (performedAttackIndex == 2) ? dashAttackRange : normalAttackRange;
+        
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, range, enemyLayer);
 
         if (hitEnemies.Length > 0)
         {
             foreach (Collider2D enemy in hitEnemies)
-                DealDamageToEnemy(enemy);
+            {
+                // Apply extra knockback if it's the dash attack (attack 3)
+                bool isDashAttack = (performedAttackIndex == 2);
+                DealDamageToEnemy(enemy, isDashAttack);
+            }
 
-            hitConfirmedThisStep = true;
-
-            Debug.Log($"✅ DealDamage hit {hitEnemies.Length} target(s) - combo can continue!");
+            Debug.Log($"✅ Hit {hitEnemies.Length} target(s) with Attack {performedAttackIndex + 1} for {swordDamage} damage!");
         }
         else
         {
-            Debug.Log("💨 DealDamage missed - no enemies in range");
+            Debug.Log($"💨 Attack {performedAttackIndex + 1} missed - no enemies in range");
         }
     }
 
+    /// <summary>
+    /// Called by Animation Event - marks end of attack animation
+    /// </summary>
     public void OnAttackEnd()
     {
-        // if (movement != null)
-        // {
-        //     movement.MovementLocked = false;
-        //     movement.MovementMultiplier = 1f;
-        // }
+        // Cancel the backup reset timer since animation event fired properly
+        CancelInvoke(nameof(ResetAttackState));
+        
+        ResetAttackState();
+        
+        if (isDashing)
+        {
+            StopDash();
+        }
 
-        isAttacking = false;
-
-        if (comboTimer <= 0f)
-            ResetCombo();
-
-        Debug.Log("📢 OnAttackEnd animation event called");
+        Debug.Log("🔵 Attack animation ended (called by animation event)");
     }
 
-    private void DealDamageToEnemy(Collider2D enemy)
+    /// <summary>
+    /// Deal damage to a specific enemy
+    /// </summary>
+    private void DealDamageToEnemy(Collider2D enemy, bool extraKnockback)
     {
         EnemyBase enemyScript = enemy.GetComponent<EnemyBase>();
         if (enemyScript != null)
         {
             Vector2 knockDir = (enemy.transform.position - transform.position).normalized;
+            
+            // Apply extra knockback for dash attack
+            if (extraKnockback)
+            {
+                knockDir *= dashKnockbackMultiplier;
+            }
+            
             enemyScript.TakeDamage(swordDamage, knockDir);
             Debug.Log($"⚔️ Hit {enemy.name} for {swordDamage} damage!");
             return;
@@ -249,24 +305,71 @@ public class PlayerAttack : MonoBehaviour
     }
 
     // =========================
-    // Upgrade Methods
+    // Damage Persistence System
     // =========================
+    
+    /// <summary>
+    /// Load damage from save when script starts
+    /// </summary>
+    private void LoadDamageFromSave()
+    {
+        if (GameManager.Instance == null) return;
+
+        // Check if sword has been upgraded
+        bool hasUpgrade = GameManager.Instance.GetFlag(GameFlag.hasUpgradedSword);
+        
+        if (hasUpgrade)
+        {
+            swordDamage = 10;  // Upgraded damage
+            Debug.Log("⚔️ Loaded upgraded sword damage, damage forced - set to: 10");
+        }
+        else
+        {
+            swordDamage = baseSwordDamage;  // Base damage (8)
+            Debug.Log($"⚔️ Loaded base sword damage: {baseSwordDamage}");
+        }
+    }
+
+    /// <summary>
+    /// Increase damage by amount (used by upgrades)
+    /// </summary>
     public void IncreaseDamage(int amount)
     {
         swordDamage += amount;
+        
+        // Save to GameManager flag
+        if (swordDamage > baseSwordDamage)
+        {
+            GameManager.Instance.SetFlag(GameFlag.hasUpgradedSword, true);
+            GameManager.Instance.SaveProgress();
+        }
+        
         Debug.Log($"⚔️ Damage increased by {amount}. New damage: {swordDamage}");
     }
 
+    /// <summary>
+    /// Multiply damage (used by shop upgrades)
+    /// </summary>
     public void MultiplyDamage(int multiplier)
     {
         swordDamage *= multiplier;
         Debug.Log($"⚔️ Damage multiplied by {multiplier}. New damage: {swordDamage}");
     }
 
+    // =========================
+    // Debug Visualization
+    // =========================
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
         if (attackPoint != null)
-            Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        {
+            // Draw normal attack range
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(attackPoint.position, normalAttackRange);
+            
+            // Draw dash attack range
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(attackPoint.position, dashAttackRange);
+        }
     }
 }

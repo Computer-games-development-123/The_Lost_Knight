@@ -14,19 +14,22 @@ public class Abilities : MonoBehaviour
 
     [Header("Teleport Settings")]
     public float teleportDistance = 4.5f;
+    public float teleportCooldown = 1f;  // ✅ NEW: Cooldown between teleports
     public LayerMask groundLayer;
 
     [Header("Upgraded Sword Settings")]
-    public int upgradeSwordValue = 5;
+    public int upgradeSwordValue = 2;  // ✅ Changed from 5 to 2 (8 base + 2 = 10)
+    
     private PlayerController controller;
-    private Invulnerability invulnerability;
     private PlayerAttack PA;
     private FormSwitcher FS;
+    
+    // ✅ NEW: Track last teleport time for cooldown
+    private float lastTeleportTime = -999f;
 
     private void Awake()
     {
         controller = GetComponent<PlayerController>();
-        invulnerability = GetComponent<Invulnerability>();
         PA = GetComponent<PlayerAttack>();
         FS = GetComponent<FormSwitcher>();
     }
@@ -66,6 +69,14 @@ public class Abilities : MonoBehaviour
             return;
         }
 
+        // ✅ NEW: Check cooldown
+        if (Time.time < lastTeleportTime + teleportCooldown)
+        {
+            float remainingCooldown = (lastTeleportTime + teleportCooldown) - Time.time;
+            Debug.Log($"⏳ Teleport on cooldown! Wait {remainingCooldown:F1}s");
+            return;
+        }
+
         Vector2 dir = controller.facingDir();
         Vector2 newPos = (Vector2)transform.position + dir * teleportDistance;
 
@@ -75,11 +86,11 @@ public class Abilities : MonoBehaviour
         {
             transform.position = newPos;
 
-            // ✅ FIXED: Use Invulnerability component instead of PlayerController
-            if (invulnerability != null)
-            {
-                invulnerability.Trigger();
-            }
+            // ✅ FIXED: Removed invulnerability trigger - player is NOT invulnerable after teleporting
+            // Previously: invulnerability.Trigger();
+            
+            // ✅ NEW: Update last teleport time
+            lastTeleportTime = Time.time;
 
             Debug.Log("✨ Teleported!");
         }

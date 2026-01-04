@@ -19,5 +19,6 @@ MonoBehaviour:
   - How did you get here?
   - I thought we killed everyone.
   - Doesn't matter now...
+  - Face My Warth!.
   portrait: {fileID: 973467727502728177, guid: 2b6046b114c58584a9d1ee5726db8f06, type: 3}
   pauseGameDuringDialogue: 1
