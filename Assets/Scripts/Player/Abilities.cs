@@ -16,13 +16,19 @@ public class Abilities : MonoBehaviour
     public float teleportDistance = 4.5f;
     public LayerMask groundLayer;
 
+    [Header("Upgraded Sword Settings")]
+    public int upgradeSwordValue = 5;
     private PlayerController controller;
     private Invulnerability invulnerability;
+    private PlayerAttack PA;
+    private FormSwitcher FS;
 
     private void Awake()
     {
         controller = GetComponent<PlayerController>();
         invulnerability = GetComponent<Invulnerability>();
+        PA = GetComponent<PlayerAttack>();
+        FS = GetComponent<FormSwitcher>();
     }
 
     private void Start()
@@ -120,7 +126,8 @@ public class Abilities : MonoBehaviour
     public void UpgradeSword()
     {
         hasUpgradedSword = true;
-
+        FS.StartTransformation();
+        PA.IncreaseDamage(upgradeSwordValue);
         GameManager.Instance.SetFlag(GameFlag.hasUpgradedSword, true);
         GameManager.Instance.SaveProgress();
 

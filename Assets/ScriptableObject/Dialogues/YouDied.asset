@@ -17,5 +17,5 @@ MonoBehaviour:
   speakerName: Dont Give Up!
   lines:
   - You Died..
-  portrait: {fileID: 0}
+  portrait: {fileID: -2739807658926110822, guid: 1a7e8b6707c17e84b9ee9d8ae64f6ffd, type: 3}
   pauseGameDuringDialogue: 1

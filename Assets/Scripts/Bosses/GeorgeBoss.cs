@@ -1,23 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// George Boss - FIXED ANIMATIONS VERSION
-/// Matches animator parameters: Punch, Hurt, Die, IsDead, Speed, IsGrounded, IsMoving
-/// </summary>
 public class GeorgeBoss : BossBase
 {
     [Header("George Dialogues")]
     public DialogueData firstEncounterDialogue;
-
-    [Header("Portal Names (will be found automatically)")]
-    public string portalBackToHubName = "Forest_Hub_Portal";
-
-    [Tooltip("Name of portal to next area")]
-    public string portalToNextAreaName = "GreenToRed_Portal";
-
-    private GameObject portalBackToHub;
-    private GameObject portalToNextArea;
 
     [Header("First Encounter Settings")]
     public int hitsToTriggerTaunt = 5;
@@ -54,51 +41,6 @@ public class GeorgeBoss : BossBase
 
     private bool isGrounded = false;
 
-    protected override void Start()
-    {
-        base.Start();
-
-        FindPortals();
-
-        if (portalBackToHub != null)
-        {
-            portalBackToHub.SetActive(false);
-            Debug.Log($"✅ Portal hidden: {portalBackToHubName}");
-        }
-
-        if (portalToNextArea != null)
-        {
-            portalToNextArea.SetActive(false);
-            Debug.Log($"✅ Portal hidden: {portalToNextAreaName}");
-        }
-    }
-
-    private void FindPortals()
-    {
-        portalBackToHub = FindObjectInHierarchy(portalBackToHubName);
-        portalToNextArea = FindObjectInHierarchy(portalToNextAreaName);
-    }
-
-    private GameObject FindObjectInHierarchy(string objectName)
-    {
-        GameObject obj = GameObject.Find(objectName);
-        if (obj != null) return obj;
-
-        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
-        foreach (GameObject go in allObjects)
-        {
-            if (go.hideFlags == HideFlags.None && go.scene.isLoaded)
-            {
-                if (go.name == objectName)
-                {
-                    return go;
-                }
-            }
-        }
-
-        return null;
-    }
-
     protected override void Update()
     {
         // Ground detection
@@ -106,7 +48,6 @@ public class GeorgeBoss : BossBase
         {
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-            // ✅ FIX: Update animator with ground state
             if (anim != null)
             {
                 anim.SetBool("IsGrounded", isGrounded);
@@ -175,7 +116,6 @@ public class GeorgeBoss : BossBase
         if (rb != null)
             rb.linearVelocity = Vector2.zero;
 
-        // ✅ FIX: Use "Tentacle" instead of "Taunt" (matches your animator)
         if (anim != null)
         {
             anim.SetTrigger("Tentacle");
@@ -235,17 +175,16 @@ public class GeorgeBoss : BossBase
             rb.linearVelocity = new Vector2(moveDirection * walkSpeed, rb.linearVelocity.y);
         }
 
-        // ✅ FIX: Set both Speed and IsMoving
         if (anim != null)
         {
-            anim.SetFloat("Speed", Mathf.Abs(walkSpeed)); // Speed > 0 triggers walk
+            anim.SetFloat("Speed", Mathf.Abs(walkSpeed));
             anim.SetBool("IsMoving", true);
         }
 
-        if (spriteRenderer != null)
-        {
-            spriteRenderer.flipX = moveDirection < 0;
-        }
+        if (moveDirection > 0 && !facingRight)
+            Flip();
+        else if (moveDirection < 0 && facingRight)
+            Flip();
     }
 
     IEnumerator AttackSequence()
@@ -256,7 +195,6 @@ public class GeorgeBoss : BossBase
         if (rb != null)
             rb.linearVelocity = Vector2.zero;
 
-        // ✅ FIX: Stop walking animation
         if (anim != null)
         {
             anim.SetFloat("Speed", 0);
@@ -286,10 +224,7 @@ public class GeorgeBoss : BossBase
                 if (hit.CompareTag("Player"))
                 {
                     PlayerHealth ph = hit.GetComponent<PlayerHealth>();
-                    if (ph != null)
-                    {
-                        ph.TakeDamage(damage);
-                    }
+                    DealDamageToPlayer();
                 }
             }
         }
@@ -401,18 +336,6 @@ public class GeorgeBoss : BossBase
         {
             GameManager.Instance.OnGeorgeDefeated();
             GameManager.Instance.SaveProgress();
-        }
-
-        if (portalBackToHub != null)
-        {
-            portalBackToHub.SetActive(true);
-            Debug.Log($"🌀 Portal spawned: {portalBackToHubName}");
-        }
-
-        if (portalToNextArea != null)
-        {
-            portalToNextArea.SetActive(true);
-            Debug.Log($"🌀 Portal spawned: {portalToNextAreaName}");
         }
 
         Destroy(gameObject, 2f);

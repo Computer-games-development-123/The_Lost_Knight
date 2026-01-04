@@ -32,7 +32,7 @@ public class WaveOfFireProjectile : MonoBehaviour
             EnemyBase enemy = collision.GetComponent<EnemyBase>();
             if (enemy != null)
             {
-                enemy.TakeDamage(damage);
+                enemy.TakeDamage(damage, transform.position);
             }
 
             BossBase boss = collision.GetComponent<BossBase>();

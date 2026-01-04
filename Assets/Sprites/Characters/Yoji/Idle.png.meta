@@ -143,12 +143,12 @@ TextureImporter:
       name: Idle_0
       rect:
         serializedVersion: 2
-        x: 65
+        x: 56
         y: 60
-        width: 41
+        width: 51
         height: 47
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -165,12 +165,12 @@ TextureImporter:
       name: Idle_1
       rect:
         serializedVersion: 2
-        x: 229
+        x: 218
         y: 60
-        width: 39
+        width: 51
         height: 47
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -187,12 +187,12 @@ TextureImporter:
       name: Idle_2
       rect:
         serializedVersion: 2
-        x: 394
+        x: 380
         y: 60
-        width: 36
+        width: 51
         height: 47
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -209,12 +209,12 @@ TextureImporter:
       name: Idle_3
       rect:
         serializedVersion: 2
-        x: 557
+        x: 542
         y: 60
-        width: 35
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 51
+        height: 47
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -231,12 +231,12 @@ TextureImporter:
       name: Idle_4
       rect:
         serializedVersion: 2
-        x: 719
+        x: 704
         y: 60
-        width: 36
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 51
+        height: 47
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -253,12 +253,12 @@ TextureImporter:
       name: Idle_5
       rect:
         serializedVersion: 2
-        x: 878
+        x: 866
         y: 60
-        width: 39
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 51
+        height: 47
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -275,12 +275,12 @@ TextureImporter:
       name: Idle_6
       rect:
         serializedVersion: 2
-        x: 1038
+        x: 1028
         y: 60
-        width: 41
-        height: 46
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 51
+        height: 47
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -297,12 +297,12 @@ TextureImporter:
       name: Idle_7
       rect:
         serializedVersion: 2
-        x: 1200
+        x: 1190
         y: 60
-        width: 41
-        height: 46
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 51
+        height: 47
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -319,12 +319,12 @@ TextureImporter:
       name: Idle_8
       rect:
         serializedVersion: 2
-        x: 1361
+        x: 1352
         y: 60
-        width: 42
+        width: 51
         height: 47
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -341,12 +341,12 @@ TextureImporter:
       name: Idle_9
       rect:
         serializedVersion: 2
-        x: 1523
+        x: 1514
         y: 60
-        width: 41
+        width: 51
         height: 47
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -363,7 +363,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 6fd627fbd3bf51748bf0dd8cadb17d70
     internalID: 0
     vertices: []
     indices: 

@@ -39,10 +39,10 @@ public class TutorialDummyEnemy : EnemyBase
     }
 
     // Override BOTH damage methods to handle hits properly
-    public override void TakeDamage(int damage)
-    {
-        HandleHit();
-    }
+    // public override void TakeDamage(int damage)
+    // {
+    //     HandleHit();
+    // }
 
     public override void TakeDamage(int damage, Vector2 hitDirection)
     {
