@@ -22,6 +22,7 @@ public class PhilipBoss : BossBase
     // }
     protected override void Start()
     {
+        base.Start();
         if (anim == null) anim = GetComponent<Animator>();
     }
 

@@ -5,12 +5,17 @@ public class PlayerAttack : MonoBehaviour
 {
     [Header("Attack Settings")]
     public int baseSwordDamage = 8;
+<<<<<<< HEAD
     [HideInInspector] public int swordDamage = 8;  // Runtime damage (can be upgraded)
     
     [Header("Attack Timing")]
     [Tooltip("Minimum time between attacks (0.33s = 3 attacks per second)")]
     public float attackCooldown = 0.33f;
     
+=======
+    public int swordDamage = 8;
+
+>>>>>>> 9930c28 (Added dialogues to Fika and fix bugs)
     [Header("Attack 1 & 2 (Close Range)")]
     public float normalAttackRange = 1.5f;
     public Transform attackPoint;
