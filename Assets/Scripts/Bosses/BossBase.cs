@@ -168,12 +168,6 @@ public class BossBase : MonoBehaviour
 
     protected virtual void OnDeathDialogueComplete()
     {
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.OnGeorgeDefeated();
-            GameManager.Instance.SaveProgress();
-        }
-
         Destroy(gameObject, 2f);
     }
 

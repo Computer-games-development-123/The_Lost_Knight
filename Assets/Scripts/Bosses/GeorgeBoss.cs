@@ -128,12 +128,6 @@ public class GeorgeBoss : BossBase
                 yield return null;
         }
 
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.SetFlag(GameFlag.GeorgeFirstEncounter, true);
-            GameManager.Instance.SaveProgress();
-        }
-
         if (player != null)
         {
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
@@ -142,6 +136,12 @@ public class GeorgeBoss : BossBase
                 playerHealth.TakeDamage(9999);
             }
         }
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnPlayerDiedToGeorge();
+        }
+
     }
 
     protected override void BossAI()
@@ -233,7 +233,6 @@ public class GeorgeBoss : BossBase
     {
         isFlying = true;
 
-        // ✅ FIX: Set flying animation state
         if (anim != null)
         {
             anim.SetBool("IsGrounded", false);
@@ -280,7 +279,6 @@ public class GeorgeBoss : BossBase
         if (rb != null)
             rb.linearVelocity = Vector2.zero;
 
-        // ✅ FIX: Land and stop moving
         if (anim != null)
         {
             anim.SetBool("IsGrounded", true);
@@ -291,8 +289,20 @@ public class GeorgeBoss : BossBase
         isFlying = false;
     }
 
+    protected override void OnDeathDialogueComplete()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnGeorgeDefeated();
+            GameManager.Instance.SaveProgress();
+        }
+
+        Destroy(gameObject, 2f);
+    }
+
     protected override void Die()
     {
+        base.Die();
         if (isDead) return;
         isDead = true;
 
@@ -304,14 +314,8 @@ public class GeorgeBoss : BossBase
 
         if (anim != null)
         {
-            anim.SetTrigger("Die");
             anim.SetBool("IsDead", true);
             anim.SetFloat("Speed", 0);
-        }
-
-        if (waveManager != null)
-        {
-            waveManager.OnBossDied(this);
         }
     }
 

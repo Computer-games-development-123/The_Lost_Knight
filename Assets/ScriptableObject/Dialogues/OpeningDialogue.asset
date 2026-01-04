@@ -17,5 +17,6 @@ MonoBehaviour:
   speakerName: Welcome
   lines:
   - Press Arrows To move, Up arrow to Jump.
+  - The tutorial is on your left if you need it.
   portrait: {fileID: -1033766676993296678, guid: 1d89e91bf9e89aa4f99ded252d1d5552, type: 3}
   pauseGameDuringDialogue: 1
