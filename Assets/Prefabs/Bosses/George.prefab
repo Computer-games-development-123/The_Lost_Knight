@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6400573088821524354}
   m_Layer: 6
   m_Name: George
-  m_TagString: Enemy
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -204,9 +204,9 @@ MonoBehaviour:
   deathDialogue: {fileID: 11400000, guid: 0d2bc21d3a11b5d499b9d06f7f697b87, type: 2}
   waveManager: {fileID: 0}
   player: {fileID: 0}
+  currentHP: 0
+  facingRight: 1
   firstEncounterDialogue: {fileID: 11400000, guid: 046c65efe49bd924385266f16426cc5d, type: 2}
-  portalBackToHubName: Forest_Hub_Portal
-  portalToNextAreaName: GreenToRed_Portal
   hitsToTriggerTaunt: 5
   attackCooldown: 4
   closeRangeThreshold: 2
