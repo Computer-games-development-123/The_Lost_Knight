@@ -1296,7 +1296,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack2_portal_0
+      name: open_portal_0
       rect:
         serializedVersion: 2
         x: 560
@@ -1318,7 +1318,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack2_portal_1
+      name: open_portal_1
       rect:
         serializedVersion: 2
         x: 700
@@ -1340,7 +1340,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: end_portal_0
+      name: close_portal_0
       rect:
         serializedVersion: 2
         x: 840
@@ -1362,7 +1362,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: end_portal_1
+      name: close_portal_1
       rect:
         serializedVersion: 2
         x: 980
@@ -1754,8 +1754,6 @@ TextureImporter:
       attack2_2: -6342980997288685656
       attack2_3: 1887337606458979207
       attack2_4: 2778454290109986065
-      attack2_portal_0: -6416028094590494610
-      attack2_portal_1: 6824449332584486427
       attack_0: -8871867928371661369
       attack_1: 5282158534819968045
       attack_2: -422922510760239427
@@ -1766,6 +1764,8 @@ TextureImporter:
       attack_7: -6766038691376649458
       attack_8: 2483782727947890954
       attack_9: 3687449107416671509
+      close_portal_0: 8403998346646135688
+      close_portal_1: 3879292089760221355
       death_0: -8645012906986925910
       death_1: 8914642584386402721
       death_2: -4964555800879844387
@@ -1776,8 +1776,6 @@ TextureImporter:
       death_7: -8721093536611414691
       death_8: -4818586564699129774
       death_9: -2960163153839071603
-      end_portal_0: 8403998346646135688
-      end_portal_1: 3879292089760221355
       hit_0: 4072241969498346569
       hit_1: 8385784872082410219
       hit_2: 2090659836945643480
@@ -1790,6 +1788,8 @@ TextureImporter:
       idle_5: 28493216337309425
       idle_6: 8118819912966400158
       idle_7: 8079674775554739003
+      open_portal_0: -6416028094590494610
+      open_portal_1: 6824449332584486427
       portal_0: 29702762353113097
       portal_1: 8687428498307349624
       portal_10: 6754218284649242354
