@@ -24,9 +24,9 @@ public class ScenePortal : MonoBehaviour
     [Header("Timing")]
     [SerializeField] private float fadeWaitTime = 1.2f;
 
-    [Header("Visuals (Optional)")]
-    [SerializeField] private Animator portalAnimator;
-    [SerializeField] private ParticleSystem portalParticles;
+    // [Header("Visuals (Optional)")]
+    // [SerializeField] private Animator portalAnimator;
+    // [SerializeField] private ParticleSystem portalParticles;
 
     [Header("Debug")]
     public bool showDebugLogs = false;

@@ -1,12 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// Player Controller - Movement, Jump, Knockback ONLY
-/// NO teleport (use Abilities.cs)
-/// NO i-frames (use Invulnerability.cs)
-/// NO attack (use PlayerAttack.cs)
-/// </summary>
+
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
@@ -76,7 +71,6 @@ public class PlayerController : MonoBehaviour
         {
             if (playerInventory != null)
             {
-                // PlayerInventory.UsePotion() handles all checks internally
                 playerInventory.UsePotion(healAmountPerPotion);
             }
             else
@@ -85,7 +79,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Animations
         if (anim != null)
         {
             float speed = Mathf.Abs(rb.linearVelocity.x);
@@ -100,9 +93,6 @@ public class PlayerController : MonoBehaviour
         return facingRight ? Vector2.right : Vector2.left;
     }
 
-    /// <summary>
-    /// Called by enemies/hazards to damage player
-    /// </summary>
     public void TakeDamage(int damageAmount)
     {
         // Check invulnerability component

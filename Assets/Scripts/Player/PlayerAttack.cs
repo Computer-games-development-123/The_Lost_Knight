@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     [Header("Attack Settings")]
-    public int swordDamage = 8;
+    public int swordDamage = 5;
     public float attackRange = 1.5f;
     public LayerMask enemyLayer;
 

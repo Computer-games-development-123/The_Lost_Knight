@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 /// <summary>
 /// HUD Controller - Displays player stats in UI
-/// NO PlayerState - reads directly from components
 /// </summary>
 public class HUDController : MonoBehaviour
 {
