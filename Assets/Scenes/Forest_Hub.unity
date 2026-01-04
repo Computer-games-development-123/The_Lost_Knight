@@ -2857,7 +2857,7 @@ MonoBehaviour:
   bossDeath: {fileID: 0}
   bossRoar: {fileID: 0}
   coinPickup: {fileID: 0}
-  itemPurchase: {fileID: 0}
+  itemPurchase: {fileID: 8300000, guid: f6aafe9df26439348a2f029f6f8048ac, type: 3}
   portalOpen: {fileID: 0}
   dialogueAdvance: {fileID: 0}
   musicVolume: 0.7
