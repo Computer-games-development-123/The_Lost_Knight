@@ -14,26 +14,27 @@ public class Abilities : MonoBehaviour
 
     [Header("Teleport Settings")]
     public float teleportDistance = 4.5f;
+    public float teleportCooldown = 1f;
     public LayerMask groundLayer;
 
     [Header("Upgraded Sword Settings")]
-    public int upgradeSwordValue = 5;
+    public int upgradeSwordValue = 2;
+
     private PlayerController controller;
-    private Invulnerability invulnerability;
     private PlayerAttack PA;
     private FormSwitcher FS;
+
+    private float lastTeleportTime = -999f;
 
     private void Awake()
     {
         controller = GetComponent<PlayerController>();
-        invulnerability = GetComponent<Invulnerability>();
         PA = GetComponent<PlayerAttack>();
         FS = GetComponent<FormSwitcher>();
     }
 
     private void Start()
     {
-        // ✅ Load upgrades from save as backup (in case LoadProgress ran before Player spawned)
         hasUpgradedSword = GameManager.Instance.GetFlag(GameFlag.hasUpgradedSword);
         hasTeleport = GameManager.Instance.GetFlag(GameFlag.hasTeleport);
         hasWaveOfFire = GameManager.Instance.GetFlag(GameFlag.hasWaveOfFire);
@@ -44,7 +45,6 @@ public class Abilities : MonoBehaviour
 
     private void Update()
     {
-        // Teleport ability (ALT key)
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
             if (hasTeleport)
@@ -66,6 +66,13 @@ public class Abilities : MonoBehaviour
             return;
         }
 
+        if (Time.time < lastTeleportTime + teleportCooldown)
+        {
+            float remainingCooldown = (lastTeleportTime + teleportCooldown) - Time.time;
+            Debug.Log($"⏳ Teleport on cooldown! Wait {remainingCooldown:F1}s");
+            return;
+        }
+
         Vector2 dir = controller.facingDir();
         Vector2 newPos = (Vector2)transform.position + dir * teleportDistance;
 
@@ -75,11 +82,7 @@ public class Abilities : MonoBehaviour
         {
             transform.position = newPos;
 
-            // ✅ FIXED: Use Invulnerability component instead of PlayerController
-            if (invulnerability != null)
-            {
-                invulnerability.Trigger();
-            }
+            lastTeleportTime = Time.time;
 
             Debug.Log("✨ Teleported!");
         }

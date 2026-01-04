@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6400573088821524354}
   m_Layer: 6
   m_Name: Phillip
-  m_TagString: Enemy
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -206,9 +206,7 @@ MonoBehaviour:
   player: {fileID: 6415566011707803852, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
   currentHP: 0
   facingRight: 0
-  shockwavePrefab: {fileID: 0}
-  slamCooldown: 4
-  slamDamage: 15
+  specialAttackPortal: {fileID: 0}
 --- !u!114 &6400573088821524354
 MonoBehaviour:
   m_ObjectHideFlags: 0

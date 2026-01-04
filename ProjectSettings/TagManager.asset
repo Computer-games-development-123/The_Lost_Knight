@@ -8,7 +8,7 @@ TagManager:
   - Portal
   - Enemy
   - Yoji
-  - BossHealthCanvas
+  - Boss
   layers:
   - Default
   - TransparentFX
