@@ -1,14 +1,15 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class PhilipBoss : BossBase
 {
     [Header("Philip Specific")]
-    public GameObject shockwavePrefab;
-    public float slamCooldown = 4f;
-    public int slamDamage = 15;
-    private float lastSlamTime;
-    private bool isSlaming = false;
+    public GameObject specialAttackPortal;
+    // public float slamCooldown = 4f;
+    // public int slamDamage = 15;
+    // private float lastSlamTime;
+    // private bool isSlaming = false;
 
     // protected override void OnBossStart()
     // {
@@ -19,13 +20,19 @@ public class PhilipBoss : BossBase
     //     moveSpeed = 2f;
     //     damage = 12;
     // }
+    protected override void Start()
+    {
+        if (anim == null) anim = GetComponent<Animator>();
+    }
 
+    protected override void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.V)) SpecialAttack();
+    }
     protected override void BossAI()
     {
-        if (player == null || isSlaming) return;
-
-        base.BossAI();
-
+        //base.BossAI();
+        SpecialAttack();
         // if (Time.time >= lastSlamTime + slamCooldown && distanceToPlayer < 5f)
         // {
         //     StartCoroutine(SpecialAttack());
@@ -36,7 +43,7 @@ public class PhilipBoss : BossBase
         // }
     }
 
-    IEnumerator SpecialAttack()
+    void SpecialAttack()
     {
         // isSlaming = true;
         // lastSlamTime = Time.time;
@@ -46,8 +53,7 @@ public class PhilipBoss : BossBase
 
         // if (anim != null)
         //     anim.SetTrigger("Jump");
-
-        yield return new WaitForSeconds(0.5f);
+        anim.SetTrigger("attack2");
 
         // // Slam down
         // rb.linearVelocity = new Vector2(0, -15f);
@@ -78,52 +84,65 @@ public class PhilipBoss : BossBase
         // isSlaming = false;
     }
 
+    IEnumerator OnSpecialAttackStart()
+    {
+        yield return new WaitForSeconds(0.5f);
+        specialAttackPortal.SetActive(true);
+    }
+
+    public IEnumerator OnSpecialAttackEnd()
+    {
+        anim.SetTrigger("ClosePortal");
+        yield return new WaitForSeconds(0.5f);
+        specialAttackPortal.SetActive(false);
+    }
+
     protected override void EnterPhase2()
     {
-        base.EnterPhase2();
-        slamCooldown *= 0.7f;
-        slamDamage = Mathf.RoundToInt(slamDamage * 1.5f);
+        // base.EnterPhase2();
+        // slamCooldown *= 0.7f;
+        // slamDamage = Mathf.RoundToInt(slamDamage * 1.5f);
     }
 
-    protected override void Die()
-    {
-        if (isDead) return;
-        isDead = true;
+    // protected override void Die()
+    // {
+    //     if (isDead) return;
+    //     isDead = true;
 
-        Debug.Log($"💀 {bossName} defeated!");
+    //     Debug.Log($"💀 {bossName} defeated!");
 
-        isSlaming = false;
+    //     isSlaming = false;
 
-        if (rb != null)
-            rb.linearVelocity = Vector2.zero;
+    //     if (rb != null)
+    //         rb.linearVelocity = Vector2.zero;
 
-        if (anim != null)
-            anim.SetTrigger("Death");
+    //     if (anim != null)
+    //         anim.SetTrigger("Death");
 
-        if (waveManager != null)
-        {
-            waveManager.OnBossDied(this);
-        }
+    //     if (waveManager != null)
+    //     {
+    //         waveManager.OnBossDied(this);
+    //     }
 
-        if (DialogueManager.Instance != null && deathDialogue != null)
-        {
-            DialogueManager.Instance.Play(deathDialogue, OnDeathDialogueComplete);
-        }
-        else
-        {
-            OnDeathDialogueComplete();
-        }
-    }
+    //     if (DialogueManager.Instance != null && deathDialogue != null)
+    //     {
+    //         DialogueManager.Instance.Play(deathDialogue, OnDeathDialogueComplete);
+    //     }
+    //     else
+    //     {
+    //         OnDeathDialogueComplete();
+    //     }
+    // }
 
-    private void OnDeathDialogueComplete()
-    {
-        Debug.Log($"✅ Philip defeated - spawning portals...");
+    // private void OnDeathDialogueComplete()
+    // {
+    //     Debug.Log($"✅ Philip defeated - spawning portals...");
 
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.OnPhilipDefeated();
-        }
+    //     if (GameManager.Instance != null)
+    //     {
+    //         GameManager.Instance.OnPhilipDefeated();
+    //     }
 
-        Destroy(gameObject, 2f);
-    }
+    //     Destroy(gameObject, 2f);
+    // }
 }

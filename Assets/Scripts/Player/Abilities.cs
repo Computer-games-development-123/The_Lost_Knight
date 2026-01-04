@@ -14,17 +14,19 @@ public class Abilities : MonoBehaviour
 
     [Header("Teleport Settings")]
     public float teleportDistance = 4.5f;
-    public float teleportCooldown = 1f;  // ✅ NEW: Cooldown between teleports
+    public float teleportCooldown = 1f;
     public LayerMask groundLayer;
 
     [Header("Upgraded Sword Settings")]
-    public int upgradeSwordValue = 2;  // ✅ Changed from 5 to 2 (8 base + 2 = 10)
-    
+    public int upgradeSwordValue = 2;
+
     private PlayerController controller;
     private PlayerAttack PA;
     private FormSwitcher FS;
     
     // ✅ NEW: Track last teleport time for cooldown
+    private float lastTeleportTime = -999f;
+
     private float lastTeleportTime = -999f;
 
     private void Awake()
@@ -36,7 +38,6 @@ public class Abilities : MonoBehaviour
 
     private void Start()
     {
-        // ✅ Load upgrades from save as backup (in case LoadProgress ran before Player spawned)
         hasUpgradedSword = GameManager.Instance.GetFlag(GameFlag.hasUpgradedSword);
         hasTeleport = GameManager.Instance.GetFlag(GameFlag.hasTeleport);
         hasWaveOfFire = GameManager.Instance.GetFlag(GameFlag.hasWaveOfFire);
@@ -47,7 +48,6 @@ public class Abilities : MonoBehaviour
 
     private void Update()
     {
-        // Teleport ability (ALT key)
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
             if (hasTeleport)
@@ -69,7 +69,6 @@ public class Abilities : MonoBehaviour
             return;
         }
 
-        // ✅ NEW: Check cooldown
         if (Time.time < lastTeleportTime + teleportCooldown)
         {
             float remainingCooldown = (lastTeleportTime + teleportCooldown) - Time.time;
@@ -86,10 +85,6 @@ public class Abilities : MonoBehaviour
         {
             transform.position = newPos;
 
-            // ✅ FIXED: Removed invulnerability trigger - player is NOT invulnerable after teleporting
-            // Previously: invulnerability.Trigger();
-            
-            // ✅ NEW: Update last teleport time
             lastTeleportTime = Time.time;
 
             Debug.Log("✨ Teleported!");

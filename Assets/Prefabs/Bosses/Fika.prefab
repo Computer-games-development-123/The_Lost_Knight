@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2253163603983191350}
   m_Layer: 6
   m_Name: Fika
-  m_TagString: Enemy
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -213,16 +213,17 @@ MonoBehaviour:
   bossName: Fika
   maxHP: 100
   damage: 10
-  moveSpeed: 3
+  moveSpeed: 2
   isInvulnerable: 0
   spawnDialogue: {fileID: 0}
   deathDialogue: {fileID: 0}
   waveManager: {fileID: 0}
   player: {fileID: 6415566011707803852, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
   currentHP: 0
+  facingRight: 1
   projectilePrefab: {fileID: 3829970125809780415, guid: d529d960b43b2df40b2a6295c1d969f9, type: 3}
   spawnPoint: {fileID: 2797142204784070127}
-  shootEverySeconds: 5
+  shootEverySeconds: 3
   projectileSpeed: 4
   projectileLifetime: 4
   teleportEverySeconds: 6

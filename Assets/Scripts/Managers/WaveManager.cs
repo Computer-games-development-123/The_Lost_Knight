@@ -29,6 +29,7 @@ public class WaveManager : MonoBehaviour
     [Header("UI References")]
     public GameObject waveCompleteUI;
     public TMPro.TextMeshProUGUI waveText;
+    public GameObject BossHealthBar;
 
     [Header("Debug")]
     public bool showDebugLogs = true;
@@ -226,6 +227,7 @@ public class WaveManager : MonoBehaviour
                 if (showDebugLogs) Debug.Log($"✅ Boss spawned: {bossPrefab.name}");
             }
         }
+        BossHealthBar.SetActive(true);
     }
 
     private bool IsBossAlreadyDefeated()
@@ -309,6 +311,7 @@ public class WaveManager : MonoBehaviour
     public void OnBossDied(BossBase boss)
     {
         if (showDebugLogs) Debug.Log($"{boss.bossName} defeated!");
+        BossHealthBar.SetActive(false);
         SpawnPortals();
     }
 

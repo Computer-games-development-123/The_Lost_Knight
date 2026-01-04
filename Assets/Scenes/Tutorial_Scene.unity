@@ -497,7 +497,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_text
-      value: Go Back
+      value: Go Back  (F)
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_fontSize
@@ -778,17 +778,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1473174496 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -6201109628588610363, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
-  m_PrefabInstance: {fileID: 765176663}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26c663d83eca1f347a685b86a182d5eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitConfirmBroadcaster
 --- !u!1001 &1511033855
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -907,7 +896,7 @@ PrefabInstance:
     - target: {fileID: 3433683307044414208, guid: 54a563c5c9793214fabaa464ae748412, type: 3}
       propertyPath: source
       value: 
-      objectReference: {fileID: 1473174496}
+      objectReference: {fileID: 0}
     - target: {fileID: 3433683307044414208, guid: 54a563c5c9793214fabaa464ae748412, type: 3}
       propertyPath: onceFlag
       value: 4
@@ -996,6 +985,8 @@ MonoBehaviour:
   attackCooldown: 2
   projectileSpeed: 8
   waveManager: {fileID: 0}
+  isFacingLeft: 0
+  hasEntringAnimation: 0
   hitsToTriggerDialogue: 3
   hitsNeededToUnlockPortal: 3
   afterHitsDialogue: {fileID: 11400000, guid: dbba714b68af6de4f9502c4af72e91da, type: 2}
