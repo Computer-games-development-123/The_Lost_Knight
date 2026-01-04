@@ -5,6 +5,7 @@ public class GeorgeBoss : BossBase
 {
     [Header("George Dialogues")]
     public DialogueData firstEncounterDialogue;
+    public DialogueData secondEncounterDialogue;
 
     [Header("First Encounter Settings")]
     public int hitsToTriggerTaunt = 5;
@@ -65,7 +66,7 @@ public class GeorgeBoss : BossBase
 
     protected override void OnBossStart()
     {
-        base.OnBossStart();
+        //base.OnBossStart();
         bossName = "George";
 
         bool hasUpgrade = false;
@@ -74,13 +75,9 @@ public class GeorgeBoss : BossBase
         {
             hasUpgrade = GameManager.Instance.GetFlag(GameFlag.hasUpgradedSword);
         }
-
         isInvulnerable = !hasUpgrade;
-
-        if (!hasUpgrade)
-        {
-            spawnDialogue = null;
-        }
+        if (hasUpgrade) DialogueManager.Instance.Play(secondEncounterDialogue);
+        else DialogueManager.Instance.Play(spawnDialogue);
 
         ResetInvulnerableHitCount();
     }
@@ -305,7 +302,6 @@ public class GeorgeBoss : BossBase
         if (rb != null)
             rb.linearVelocity = Vector2.zero;
 
-        // ✅ FIX: Use "Die" trigger (not "Death")
         if (anim != null)
         {
             anim.SetTrigger("Die");
@@ -317,28 +313,6 @@ public class GeorgeBoss : BossBase
         {
             waveManager.OnBossDied(this);
         }
-
-        if (DialogueManager.Instance != null && deathDialogue != null)
-        {
-            DialogueManager.Instance.Play(deathDialogue, OnDeathDialogueComplete);
-        }
-        else
-        {
-            OnDeathDialogueComplete();
-        }
-    }
-
-    private void OnDeathDialogueComplete()
-    {
-        Debug.Log("✅ George defeated - spawning portals");
-
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.OnGeorgeDefeated();
-            GameManager.Instance.SaveProgress();
-        }
-
-        Destroy(gameObject, 2f);
     }
 
     protected override void EnterPhase2()

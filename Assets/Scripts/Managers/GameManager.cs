@@ -75,12 +75,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // private void SyncPublicFlags()
-    // {
-    //     hasDiedToGeorge = GetFlag(GameFlag.GeorgeFirstEncounter);
-    //     yojiDead = GetFlag(GameFlag.YojiDead);
-    // }
-
     #endregion
 
     #region Progression Events
