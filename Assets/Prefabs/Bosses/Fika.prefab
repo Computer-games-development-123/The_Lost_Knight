@@ -229,7 +229,7 @@ MonoBehaviour:
   teleportEverySeconds: 6
   teleportChargeTime: 0.25
   teleportRecoverTime: 0.35
-  teleportOffsetFromEdge: 1
+  teleportOffsetFromEdge: 2
   teleportSmokePrefab: {fileID: 4893840369341895859, guid: d68226fd9323d0241a50757bcddd5023, type: 3}
   smokeYOffset: 0.2
 --- !u!1 &4878562210053445059

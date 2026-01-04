@@ -16,7 +16,6 @@ public class FikaBoss : BossBase
     [SerializeField] private float teleportChargeTime = 0.25f;
     [SerializeField] private float teleportRecoverTime = 0.35f;
     [SerializeField] private float teleportOffsetFromEdge = 1.2f;
-    //[SerializeField] private string teleportTrigger = "Teleport";
 
     [Header("Teleport FX")]
     [SerializeField] private GameObject teleportSmokePrefab;
@@ -173,7 +172,6 @@ public class FikaBoss : BossBase
 
         GameObject p = Instantiate(projectilePrefab, spawnPoint.position, Quaternion.identity);
 
-        // Flip ויזואלי לפרוג'קטייל
         Vector3 s = p.transform.localScale;
         s.x = Mathf.Abs(s.x) * (shootRight ? 1f : -1f);
         p.transform.localScale = s;
@@ -183,6 +181,17 @@ public class FikaBoss : BossBase
             rbP.linearVelocity = dir * projectileSpeed;
 
         Destroy(p, projectileLifetime);
+    }
+
+    protected override void OnDeathDialogueComplete()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnFikaDefeated();
+            GameManager.Instance.SaveProgress();
+        }
+
+        Destroy(gameObject, 2f);
     }
 
     private void OnDisable()
