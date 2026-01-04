@@ -20,16 +20,11 @@ public class WaveManager : MonoBehaviour
     public GameObject bossPrefab;
     public Transform bossSpawnPoint;
 
-    [Header("Portals (Direct References)")]
-    [Tooltip("Portal back to hub - leave empty to find by name")]
-    public string portalBackToHubName = "Forest_Hub_Portal";
-    [Tooltip("Portal to next area - leave empty to find by name")]
-    public string portalToNextAreaName = "GreenToRed_Portal";
-
-    [Header("Dialogues")]
-    public DialogueData beforeWaveDialogue;
-    public DialogueData afterWaveDialogue;
-    public DialogueData bossAlreadyDefeatedDialogue;
+    [Header("Portals")]
+    [Tooltip("Portal back")]
+    public GameObject portalBack;
+    [Tooltip("Portal to next area")]
+    public GameObject portalToNextArea;
 
     [Header("UI References")]
     public GameObject waveCompleteUI;
@@ -48,6 +43,12 @@ public class WaveManager : MonoBehaviour
 
     void Start()
     {
+        if (IsBossAlreadyDefeated())
+        {
+            SpawnPortals();
+            return;
+        }
+        closeBackPortal();
         ResetWaveManager();
 
         if (waveCompleteUI != null)
@@ -59,6 +60,11 @@ public class WaveManager : MonoBehaviour
     void OnDestroy()
     {
         spawnedEnemies.Clear();
+    }
+
+    void closeBackPortal()
+    {
+        portalBack.GetComponent<PortalSpawnEffect>().Close();
     }
 
     private void ResetWaveManager()
@@ -254,58 +260,56 @@ public class WaveManager : MonoBehaviour
     {
         if (showDebugLogs) Debug.Log("🌀 Spawning portals for cleared area...");
 
-        GameObject portalBack = FindObjectInHierarchy(portalBackToHubName);
-        GameObject portalNext = FindObjectInHierarchy(portalToNextAreaName);
-
         if (portalBack != null)
         {
             portalBack.SetActive(true);
-            if (showDebugLogs) Debug.Log($"✅ Portal activated: {portalBackToHubName}");
+            if (showDebugLogs) Debug.Log($"✅ Portal activated: {portalBack}");
         }
-        else if (!string.IsNullOrEmpty(portalBackToHubName))
+        else if (portalBack == null)
         {
-            Debug.LogWarning($"⚠️ Portal not found: {portalBackToHubName}");
+            Debug.LogWarning($"⚠️ Portal not found: {portalBack}");
         }
 
-        if (portalNext != null)
+        if (portalToNextArea != null)
         {
-            portalNext.SetActive(true);
-            if (showDebugLogs) Debug.Log($"✅ Portal activated: {portalToNextAreaName}");
+            portalToNextArea.SetActive(true);
+            if (showDebugLogs) Debug.Log($"✅ Portal activated: {portalToNextArea}");
         }
-        else if (!string.IsNullOrEmpty(portalToNextAreaName))
+        else
         {
-            Debug.LogWarning($"⚠️ Portal not found: {portalToNextAreaName}");
+            Debug.LogWarning($"⚠️ Portal not found: {portalToNextArea}");
         }
     }
 
     /// <summary>
     /// Finds GameObject anywhere in hierarchy
     /// </summary>
-    private GameObject FindObjectInHierarchy(string objectName)
-    {
-        if (string.IsNullOrEmpty(objectName)) return null;
+    // private GameObject FindObjectInHierarchy(string objectName)
+    // {
+    //     if (string.IsNullOrEmpty(objectName)) return null;
 
-        GameObject obj = GameObject.Find(objectName);
-        if (obj != null) return obj;
+    //     GameObject obj = GameObject.Find(objectName);
+    //     if (obj != null) return obj;
 
-        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
-        foreach (GameObject go in allObjects)
-        {
-            if (go.hideFlags == HideFlags.None && go.scene.isLoaded)
-            {
-                if (go.name == objectName)
-                {
-                    return go;
-                }
-            }
-        }
+    //     GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+    //     foreach (GameObject go in allObjects)
+    //     {
+    //         if (go.hideFlags == HideFlags.None && go.scene.isLoaded)
+    //         {
+    //             if (go.name == objectName)
+    //             {
+    //                 return go;
+    //             }
+    //         }
+    //     }
 
-        return null;
-    }
+    //     return null;
+    // }
 
     public void OnBossDied(BossBase boss)
     {
         if (showDebugLogs) Debug.Log($"{boss.bossName} defeated!");
+        SpawnPortals();
     }
 
     [ContextMenu("Debug Wave State")]

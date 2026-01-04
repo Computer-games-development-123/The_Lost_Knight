@@ -34,6 +34,12 @@ public class EnemyBase : MonoBehaviour
     [Header("References")]
     public WaveManager waveManager;
 
+    [Header("Sprite direction")]
+    public bool isFacingLeft = false;
+
+    [Header("waiting for entring animation")]
+    public bool hasEntringAnimation = false;
+
     // Runtime variables
     protected int currentHP;
     protected Rigidbody2D rb;
@@ -66,6 +72,7 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Start()
     {
+        if (hasEntringAnimation) return;
         currentHP = MaxHP;
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -107,6 +114,12 @@ public class EnemyBase : MonoBehaviour
         }
 
         UpdateAnimations();
+    }
+
+    public void OnEntringAnimationEnd()
+    {
+        hasEntringAnimation = false;
+        Start();
     }
 
     private void UpdateAnimations()
@@ -275,7 +288,7 @@ public class EnemyBase : MonoBehaviour
     protected void UpdateFacing(float directionX)
     {
         if (spriteRenderer == null) return;
-
+        if (isFacingLeft) directionX *= -1;
         if (directionX > 0)
             spriteRenderer.flipX = false;
         else if (directionX < 0)
@@ -286,26 +299,26 @@ public class EnemyBase : MonoBehaviour
 
     #region Damage System
 
-    public virtual void TakeDamage(int damage)
-    {
-        if (isDead) return;
+    // public virtual void TakeDamage(int damage)
+    // {
+    //     if (isDead) return;
 
-        currentHP -= damage;
+    //     currentHP -= damage;
 
-        Debug.Log($"{gameObject.name} took {damage} damage. HP: {currentHP}/{MaxHP}");
+    //     Debug.Log($"{gameObject.name} took {damage} damage. HP: {currentHP}/{MaxHP}");
 
-        if (anim != null)
-        {
-            anim.SetTrigger("Hurt");
-        }
+    //     if (anim != null)
+    //     {
+    //         anim.SetTrigger("Hurt");
+    //     }
 
-        StartCoroutine(FlashRed());
+    //     StartCoroutine(FlashRed());
 
-        if (currentHP <= 0)
-        {
-            Die();
-        }
-    }
+    //     if (currentHP <= 0)
+    //     {
+    //         Die();
+    //     }
+    // }
 
     public virtual void TakeDamage(int damage, Vector2 hitDirection)
     {

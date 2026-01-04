@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 1258113939937285363}
   - component: {fileID: 8657448812913615140}
   - component: {fileID: 146203837107733978}
-  - component: {fileID: 3137120050489525146}
   - component: {fileID: 998392704380348123}
   - component: {fileID: 4905180846096170032}
   - component: {fileID: 8580638515262600451}
@@ -203,19 +202,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScreenClamp
   edgeBuffer: 0.5
---- !u!114 &3137120050489525146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4376152552779809795}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d982983262294bf4585c7dd75dedc960, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterContext
-  attackPoint: {fileID: 6633376722634027389}
 --- !u!114 &998392704380348123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,6 +217,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   normalOverride: {fileID: 9100000, guid: 8a9ee0af6e2b96d4bab8cb7325ec24f6, type: 2}
   fireOverride: {fileID: 22100000, guid: 6003e38a102dd5548b1339092d8b680f, type: 2}
+  fireFormFlag: 7
 --- !u!114 &4905180846096170032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,6 +250,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
+  upgradeSwordValue: 5
 --- !u!114 &5019103269634199412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,6 +274,7 @@ MonoBehaviour:
   knockbackUpForce: 2
   knockbackDuration: 0.15
   healAmountPerPotion: 10
+  isGrounded: 0
 --- !u!114 &4003226436323456006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,15 +302,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 915d8101d3192174eb82313d7c3505a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
-  swordDamage: 8
+  swordDamage: 5
   attackRange: 0.5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  attackCooldown: 0.5
+  attackKey: 120
   enableComboSystem: 1
   comboWindow: 0.35
   maxComboSteps: 3
+  attackTriggerName: Attack
+  jumpAttackTriggerName: JumpAttack
+  comboIntName: Combo
   waveOfFirePrefab: {fileID: 0}
   firePoint: {fileID: 0}
   waveOfFireCooldown: 5
