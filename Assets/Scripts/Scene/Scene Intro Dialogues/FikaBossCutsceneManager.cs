@@ -17,7 +17,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
     [SerializeField] private DialogueData MonaFirstDialogue;
     [SerializeField] private DialogueData FikaFirstDialogue;
     [SerializeField] private DialogueData yojiInterruptsDialogue;
-        [Header("Movement")]
+    [Header("Movement")]
     [SerializeField] private float yojiMoveSpeed = 5f;
     [SerializeField] private float arriveDistance = 0.25f;
 
@@ -76,7 +76,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
 
         // Dialogue 1
         yield return PlayDialogueIfAny(MonaFirstDialogue);
-        
+
         // Dialogue 2
         yield return PlayDialogueIfAny(FikaFirstDialogue);
 
@@ -103,7 +103,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-       // Dialogue 3
+        // Dialogue 3
         yield return PlayDialogueIfAny(yojiInterruptsDialogue);
 
         // Move to Mona
