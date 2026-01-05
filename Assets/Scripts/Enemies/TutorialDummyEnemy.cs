@@ -21,6 +21,14 @@ public class TutorialDummyEnemy : EnemyBase
         // Dummy never really dies - set very high HP
         currentHP = 99999;
 
+        // ✅ CHECK: If tutorial already completed, unlock portal immediately
+        if (GameManager.Instance != null && GameManager.Instance.GetFlag(GameFlag.TutorialCompleted))
+        {
+            dialoguePlayed = true;  // Skip dialogue
+            UnlockPortal();         // Open portal immediately
+            return;
+        }
+
         // Make sure portal starts hidden
         if (portalToEnable != null)
         {

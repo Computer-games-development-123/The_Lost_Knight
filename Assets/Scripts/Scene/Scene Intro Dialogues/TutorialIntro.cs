@@ -7,6 +7,13 @@ public class TutorialIntro : MonoBehaviour
 
     private void Start()
     {
+        // ✅ CHECK: If tutorial already completed, don't play intro dialogue
+        if (GameManager.Instance != null && GameManager.Instance.GetFlag(GameFlag.TutorialCompleted))
+        {
+            // Tutorial already done - skip the intro dialogue
+            return;
+        }
+
         StartCoroutine(PlayTutorialHint());
     }
 
