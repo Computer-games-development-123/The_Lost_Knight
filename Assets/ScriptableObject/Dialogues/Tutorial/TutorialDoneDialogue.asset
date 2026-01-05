@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TutorialDoneDialogue
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 4
-  flag: 9
+  flag: 11
   speakerName: Tutorial Done
   lines:
   - Nice!, You've hit the dummy 3 times.

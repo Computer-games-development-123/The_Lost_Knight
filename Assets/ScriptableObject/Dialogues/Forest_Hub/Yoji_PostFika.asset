@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Yoji_PostFika
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
-  flag: 0
+  flag: 5
   speakerName: Yoji, Store Owner
   lines:
   - quite a fight we had there! But im glad you made it.
