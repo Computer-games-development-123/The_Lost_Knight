@@ -18,6 +18,8 @@ MonoBehaviour:
   lines:
   - Hmmf...?
   - eh, You're lost..
+  - look like you survived the attack of the evil forces on the forest.
+  - I thought i was the only one.
   - well, if you're looking for a way out of the forest, you should head right.
   - Good luck on your travels.
   portrait: {fileID: -5898556967480879587, guid: 308c2cc3ccc747546b66362cd154ddbb, type: 3}
