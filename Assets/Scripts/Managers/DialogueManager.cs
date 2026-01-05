@@ -86,6 +86,7 @@ public class DialogueManager : MonoBehaviour
 
     public void Play(DialogueData data, Action onComplete = null)
     {
+        UserInputManager.Instance.DisableInput();
         if (data == null)
         {
             Debug.LogWarning("DialogueManager.Play called with null data");
@@ -239,6 +240,7 @@ public class DialogueManager : MonoBehaviour
         ApplyPortrait(null);
 
         cb?.Invoke();
+        UserInputManager.Instance.EnableInput();
     }
 
     private void ApplyPortrait(Sprite sprite)
