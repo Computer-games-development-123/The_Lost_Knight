@@ -149,13 +149,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
   waves:
-  - waveName: 
+  - waveName: Wave1
     enemyPrefab: {fileID: 7219932414428029039, guid: 6aa477707d7db3d42a4040bcf35655b5, type: 3}
     enemyCount: 5
     spawnDelay: 2
     spawnPoints:
     - {fileID: 1201971798}
-  - waveName: 
+  - waveName: Wave2
     enemyPrefab: {fileID: 7219932414428029039, guid: 11c602bcc523fbb4f908b4d5b51d6482, type: 3}
     enemyCount: 10
     spawnDelay: 1.5
@@ -252,9 +252,9 @@ MonoBehaviour:
   fikaSpawnPoint: {fileID: 2042312077}
   monaSpawnPoint: {fileID: 1201971798}
   yojiSpawnPoint: {fileID: 1429205659}
-  fikaMonaAppearDialogue: {fileID: 0}
-  yojiInterruptsDialogue: {fileID: 0}
-  fikaChallengeDialogue: {fileID: 0}
+  fikaMonaAppearDialogue: {fileID: 11400000, guid: 6415c350f51fd0043b9d5b3f21ba5c50, type: 2}
+  yojiInterruptsDialogue: {fileID: 11400000, guid: 76f6a92cc8eed21498279fd9f9c79475, type: 2}
+  fikaChallengeDialogue: {fileID: 11400000, guid: dd885bea939866a40b7c8f45710192af, type: 2}
   yojiMoveSpeed: 15
   arriveDistance: 1
   pauseBeforeCombo: 0.15
