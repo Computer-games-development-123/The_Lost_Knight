@@ -15,6 +15,7 @@ public class BossBase : MonoBehaviour
     [Header("Dialogues")]
     public DialogueData spawnDialogue;
     public DialogueData deathDialogue;
+    public DialogueData slainDialogue;
 
     [Header("References")]
     public WaveManager waveManager;
@@ -168,6 +169,7 @@ public class BossBase : MonoBehaviour
 
     protected virtual void OnDeathDialogueComplete()
     {
+        DialogueManager.Instance.Play(slainDialogue);
         Destroy(gameObject, 2f);
     }
 

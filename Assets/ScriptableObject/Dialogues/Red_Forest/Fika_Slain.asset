@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10218a061c572484faf9e08ab7ff6a87, type: 3}
-  m_Name: George_Slayen
+  m_Name: Fika_Slain
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
   flag: 0
   speakerName: Game Progress
   lines:
-  - You have slayen The King's Royal Beast.
+  - You have slain Fika, The Sister Of Mailce.
   portrait: {fileID: 0}
   pauseGameDuringDialogue: 1

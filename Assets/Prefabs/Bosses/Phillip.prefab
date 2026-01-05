@@ -200,8 +200,9 @@ MonoBehaviour:
   damage: 10
   moveSpeed: 3
   isInvulnerable: 0
-  spawnDialogue: {fileID: 0}
-  deathDialogue: {fileID: 0}
+  spawnDialogue: {fileID: 11400000, guid: 7775c1fdf62b19e469d9f0316ad141bd, type: 2}
+  deathDialogue: {fileID: 11400000, guid: 88aff573d97e68c4ab8a01e5fbf4562f, type: 2}
+  slainDialogue: {fileID: 11400000, guid: 17494e2188242344e8389265a4815d98, type: 2}
   waveManager: {fileID: 0}
   player: {fileID: 6415566011707803852, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
   currentHP: 0
