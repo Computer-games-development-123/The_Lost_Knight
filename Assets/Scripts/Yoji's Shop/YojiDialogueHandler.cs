@@ -2,7 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// Yoji Dialogue Handler - INDEPENDENT version
-/// Sets its own flags directly (doesn't call GameManager.SetYojiTalked())
+/// Sets its own flags directly
 /// Only depends on GameManager for flag checking
 /// </summary>
 public class YojiDialogueHandler : MonoBehaviour
@@ -10,9 +10,11 @@ public class YojiDialogueHandler : MonoBehaviour
     [Header("Dialogue Data")]
     public DialogueData openingDialogue;
     public DialogueData postGeorgeDialogue;
+    public DialogueData unlockStoreDialogue;
+    public DialogueData postFikaDialogue;
 
     [Header("Interaction UI")]
-    public GameObject interactionPrompt; // "Press F to Talk"
+    public GameObject interactionPrompt;
 
     [Header("Portal Control")]
     [Tooltip("The Green Forest portal GameObject - starts INACTIVE, becomes active after dialogue")]
@@ -32,8 +34,6 @@ public class YojiDialogueHandler : MonoBehaviour
     {
         GameManagerReadyHelper.RunWhenReady(this, ApplySavedState);
     }
-
-
 
     private void Update()
     {
@@ -71,8 +71,16 @@ public class YojiDialogueHandler : MonoBehaviour
         if (!GM.GetFlag(GameFlag.YojiFirstDialogueCompleted))
             return true;
 
-        // After dying to George, before getting upgrade
-        if (GM.GetFlag(GameFlag.GeorgeFirstEncounter) && !GM.GetFlag(GameFlag.hasUpgradedSword))
+        // After dying to George, before seeing first dialogue
+        if (GM.GetFlag(GameFlag.GeorgeFirstEncounter) && !GM.GetFlag(GameFlag.YojiUnlocksStore))
+            return true;
+
+        // ✅ After first post-George dialogue, before upgrade dialogue
+        if (GM.GetFlag(GameFlag.YojiUnlocksStore) && !GM.GetFlag(GameFlag.hasUpgradedSword))
+            return true;
+
+        // After defeating Fika, before this dialogue is seen
+        if (GM.GetFlag(GameFlag.FikaDefeated) && !GM.GetFlag(GameFlag.YojiPostFikaDialogueSeen))
             return true;
 
         return false;
@@ -99,14 +107,13 @@ public class YojiDialogueHandler : MonoBehaviour
             else
             {
                 Debug.LogWarning("YojiDialogueHandler: openingDialogue is not assigned!");
-                // Still execute completion logic
                 OnOpeningDialogueComplete();
             }
             return;
         }
 
-        // CASE 2: After dying to George, give special sword upgrade
-        if (GM.GetFlag(GameFlag.GeorgeFirstEncounter) && !GM.GetFlag(GameFlag.hasUpgradedSword))
+        // CASE 2: After dying to George - First dialogue
+        if (GM.GetFlag(GameFlag.GeorgeFirstEncounter) && !GM.GetFlag(GameFlag.YojiUnlocksStore))
         {
             if (postGeorgeDialogue != null)
             {
@@ -116,6 +123,36 @@ public class YojiDialogueHandler : MonoBehaviour
             {
                 Debug.LogWarning("YojiDialogueHandler: postGeorgeDialogue is not assigned!");
                 OnPostGeorgeDialogueComplete();
+            }
+            return;
+        }
+
+        // ✅ CASE 3: RIGHT AFTER post-George dialogue - Give upgrade and unlock store
+        if (GM.GetFlag(GameFlag.YojiUnlocksStore) && !GM.GetFlag(GameFlag.hasUpgradedSword))
+        {
+            if (unlockStoreDialogue != null)
+            {
+                DM.Play(unlockStoreDialogue, OnPostGeorgeUpgradeDialogueComplete);
+            }
+            else
+            {
+                Debug.LogWarning("YojiDialogueHandler: postGeorgeUpgradeDialogue is not assigned!");
+                OnPostGeorgeUpgradeDialogueComplete();
+            }
+            return;
+        }
+        
+        // CASE 4: After defeating Fika (Reveal Wave Of Fire)
+        if (GM.GetFlag(GameFlag.FikaDefeated) && !GM.GetFlag(GameFlag.YojiPostFikaDialogueSeen))
+        {
+            if (postFikaDialogue != null)
+            {
+                DM.Play(postFikaDialogue, OnPostFikaDialogueComplete);
+            }
+            else
+            {
+                Debug.LogWarning("YojiDialogueHandler: postFikaDialogue is not assigned!");
+                OnPostFikaDialogueComplete();
             }
             return;
         }
@@ -159,9 +196,37 @@ public class YojiDialogueHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// Called after the post-George dialogue finishes (gives upgrade)
+    /// Called after the first post-George dialogue finishes
+    /// This just sets a flag - the upgrade happens in the NEXT dialogue
     /// </summary>
     private void OnPostGeorgeDialogueComplete()
+    {
+        if (GM != null)
+        {
+            GM.SetFlag(GameFlag.YojiUnlocksStore, true);
+        }
+
+        Debug.Log("Post-George dialogue complete - player needs to talk again for upgrade");
+
+        // Save progress
+        if (GM != null)
+        {
+            GM.SaveProgress();
+        }
+
+        // ✅ Immediately show prompt again so player can get the upgrade dialogue
+        if (playerInRange && ShouldShowDialoguePrompt())
+        {
+            if (interactionPrompt != null)
+                interactionPrompt.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// ✅ Called after the post-George UPGRADE dialogue finishes
+    /// THIS is where the player gets the sword upgrade and store unlocks
+    /// </summary>
+    private void OnPostGeorgeUpgradeDialogueComplete()
     {
         // Give sword upgrade to player
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -181,7 +246,7 @@ public class YojiDialogueHandler : MonoBehaviour
             StoreStateManager.Instance.SetStoreState(StoreStateManager.StoreState.PostGeorge);
         }
 
-        Debug.Log("Post-George dialogue complete - sword upgraded, store unlocked");
+        Debug.Log("Post-George UPGRADE dialogue complete - sword upgraded, store unlocked");
 
         // Notify the store interaction handler that store is now available
         YojiStoreHandler storeHandler = GetComponent<YojiStoreHandler>();
@@ -194,6 +259,53 @@ public class YojiDialogueHandler : MonoBehaviour
         if (GM != null)
         {
             GM.SaveProgress();
+        }
+
+        // Re-show prompt if player is still in range and has more dialogue
+        if (playerInRange && ShouldShowDialoguePrompt())
+        {
+            if (interactionPrompt != null)
+                interactionPrompt.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// Called after the post-Fika dialogue finishes
+    /// </summary>
+    private void OnPostFikaDialogueComplete()
+    {
+        if (GM != null)
+        {
+            GM.SetFlag(GameFlag.YojiPostFikaDialogueSeen, true);
+        }
+
+        // ✅ Update store state to PostFika (unlocks new items after defeating Fika)
+        if (StoreStateManager.Instance != null)
+        {
+            StoreStateManager.Instance.SetStoreState(StoreStateManager.StoreState.PostFika);
+            Debug.Log("✅ Store state changed to PostFika - New items unlocked!");
+        }
+
+        Debug.Log("Post-Fika dialogue complete - Congratulations given, store upgraded!");
+
+        // Notify the store interaction handler that new items are available
+        YojiStoreHandler storeHandler = GetComponent<YojiStoreHandler>();
+        if (storeHandler != null)
+        {
+            storeHandler.OnStoreUnlocked(); // Refresh store availability
+        }
+
+        // Save progress
+        if (GM != null)
+        {
+            GM.SaveProgress();
+        }
+
+        // Re-show prompt if player is still in range and has more dialogue
+        if (playerInRange && ShouldShowDialoguePrompt())
+        {
+            if (interactionPrompt != null)
+                interactionPrompt.SetActive(true);
         }
     }
 

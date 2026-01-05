@@ -681,6 +681,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YojiDialogueHandler
   openingDialogue: {fileID: 11400000, guid: 04898ccd97820eb4ba2d9c81d5bf17bb, type: 2}
   postGeorgeDialogue: {fileID: 11400000, guid: de76b4a5e3409554784a3dae97fff474, type: 2}
+  unlockStoreDialogue: {fileID: 11400000, guid: 76256d79d431f1348b21e36d3068ae1b, type: 2}
+  postFikaDialogue: {fileID: 11400000, guid: 2431da33271f5e146b56ea0416ad5f58, type: 2}
   interactionPrompt: {fileID: 150495100}
   greenForestPortal: {fileID: 530192566}
 --- !u!114 &80193913

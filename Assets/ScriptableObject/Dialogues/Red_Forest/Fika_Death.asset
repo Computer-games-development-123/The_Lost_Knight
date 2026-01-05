@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10218a061c572484faf9e08ab7ff6a87, type: 3}
-  m_Name: GeorgeOpening
+  m_Name: Fika_Death
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
-  flag: 0
-  speakerName: George
+  flag: 12
+  speakerName: Fika, Sister Of Malice.
   lines:
-  - How did you get here?
-  - I thought we killed everyone.
-  - Doesn't matter now...
-  - Face My Warth!.
-  portrait: {fileID: 973467727502728177, guid: 2b6046b114c58584a9d1ee5726db8f06, type: 3}
+  - You will pay for this...
+  - You will never leave the forest alive.
+  - Philip Won't let you escape...
+  portrait: {fileID: 0}
   pauseGameDuringDialogue: 1

@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10218a061c572484faf9e08ab7ff6a87, type: 3}
-  m_Name: Green_BattleStart
+  m_Name: Ending
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
   flag: 0
-  speakerName: Combat
+  speakerName: Game Progress
   lines:
-  - "Press X to Attack, Spacebar to Jump.\t"
-  - Your HP and potions are on the top-left corner. Press H to heal.
-  - Prepare For Battle!
-  portrait: {fileID: -6939695964637348897, guid: eece82678ee063e4e94bb14f85175a0f, type: 3}
+  - Ditor has started burning the whole forest.
+  - 'What would you do next?
+
+'
+  portrait: {fileID: 0}
   pauseGameDuringDialogue: 1

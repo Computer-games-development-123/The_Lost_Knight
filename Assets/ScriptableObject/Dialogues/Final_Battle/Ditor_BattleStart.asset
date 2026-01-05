@@ -10,12 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10218a061c572484faf9e08ab7ff6a87, type: 3}
-  m_Name: OpeningDialogue
+  m_Name: Ditor_BattleStart
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
-  flag: 1
-  speakerName: Welcome
+  flag: 0
+  speakerName: Ditor, Dark King Of The Forest
   lines:
-  - Press Arrows To move, Up arrow to Jump.
-  portrait: {fileID: -1033766676993296678, guid: 1d89e91bf9e89aa4f99ded252d1d5552, type: 3}
+  - Think you are a hero?
+  - Well, soon we will see...
+  - But i dont think you will survive soon enough.
+  - Like all the other heros..
+  - Your end is soon coming.
+  portrait: {fileID: 0}
   pauseGameDuringDialogue: 1

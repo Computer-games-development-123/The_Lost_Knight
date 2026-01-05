@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10218a061c572484faf9e08ab7ff6a87, type: 3}
-  m_Name: George_FirstEncounter
+  m_Name: Fika_1
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
-  flag: 8
-  speakerName: Geroge
+  flag: 0
+  speakerName: Fika, Sister Of Malice.
   lines:
-  - .....
-  - YOU'RE WEAK, BEGONE!.
-  portrait: {fileID: 973467727502728177, guid: 2b6046b114c58584a9d1ee5726db8f06, type: 3}
+  - Hush now Mona, we dont want to scare him away.
+  portrait: {fileID: 0}
   pauseGameDuringDialogue: 1

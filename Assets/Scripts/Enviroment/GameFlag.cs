@@ -6,6 +6,8 @@ public enum GameFlag
     OpeningDialogueSeen,
     YojiFirstDialogueCompleted,
     YojiAfterGeorge,
+    YojiUnlocksStore,
+    YojiPostFikaDialogueSeen,
     GreenBattleIntroSeen,
 
     // --- Portals / Gates ---

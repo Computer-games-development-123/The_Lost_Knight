@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10218a061c572484faf9e08ab7ff6a87, type: 3}
-  m_Name: TutorialDialogue
+  m_Name: Yoji_PostFika
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
   flag: 0
-  speakerName: Tutorial
+  speakerName: Yoji, Store Owner
   lines:
-  - Press X to Attack.
-  - Try to hit the dummy 3 Times!
-  portrait: {fileID: -6939695964637348897, guid: eece82678ee063e4e94bb14f85175a0f, type: 3}
+  - quite a fight we had there! But im glad you made it.
+  - You are one step closer to becoming the hero of the forest.
+  - Rejoice!
+  portrait: {fileID: 0}
   pauseGameDuringDialogue: 1

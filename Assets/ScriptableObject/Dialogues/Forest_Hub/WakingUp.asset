@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10218a061c572484faf9e08ab7ff6a87, type: 3}
-  m_Name: YojiInterrupts
+  m_Name: WakingUp
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
-  id: 
+  id: 1
   flag: 0
-  speakerName: Yoji, Store Owner
+  speakerName: Knight
   lines:
-  - WAIT!,
-  - I will handle Mona.
-  - Dont Hold Back, Charge Fika!.
-  portrait: {fileID: -5898556967480879587, guid: 308c2cc3ccc747546b66362cd154ddbb, type: 3}
+  - Where am I?
+  - What is this place?
+  - I need to find some answers.
+  portrait: {fileID: 4033487972480862772, guid: f6694ec89bfc1694d96be88fb06bcf0f, type: 3}
   pauseGameDuringDialogue: 1

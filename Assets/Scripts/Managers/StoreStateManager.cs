@@ -11,7 +11,7 @@ public class StoreStateManager : MonoBehaviour
     {
         Locked,           // Before first George death
         PostGeorge,       // After George death, basic items available
-        PostFika,         // After Fika, Sword of Fire visible
+        PostFika,         // After Fika, Wave of Fire visible
         PostPhilip        // After Philip (Yoji dead), everything free
     }
 
