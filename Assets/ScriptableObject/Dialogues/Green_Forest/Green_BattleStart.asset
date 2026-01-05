@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Green_BattleStart
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 6
-  flag: 4
+  flag: 6
   speakerName: Combat
   lines:
   - Your HP and potions are on the top-left corner. Press H to heal.

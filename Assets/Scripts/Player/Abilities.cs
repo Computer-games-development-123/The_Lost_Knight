@@ -24,9 +24,6 @@ public class Abilities : MonoBehaviour
     private PlayerAttack PA;
     private FormSwitcher FS;
     private float lastTeleportTime = -999f;
-
-    private float lastTeleportTime = -999f;
-
     private void Awake()
     {
         controller = GetComponent<PlayerController>();

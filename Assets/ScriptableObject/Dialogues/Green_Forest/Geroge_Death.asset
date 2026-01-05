@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Geroge_Death
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 11
-  flag: 11
+  flag: 13
   speakerName: Geroge, King's Royal Beast.
   lines:
   - 'How did you... Impossible..
