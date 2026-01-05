@@ -17,6 +17,7 @@ MonoBehaviour:
   speakerName: Combat
   lines:
   - Your HP and potions are on the top-left corner. Press H to heal.
+  - You get coins from killing monsters, top-right corner.
   - Prepare For Battle!
   portrait: {fileID: -6939695964637348897, guid: eece82678ee063e4e94bb14f85175a0f, type: 3}
   pauseGameDuringDialogue: 1
