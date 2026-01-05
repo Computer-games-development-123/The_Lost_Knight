@@ -1580,47 +1580,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossHealthCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 2687458723746466473, guid: 4f3e88e5172a60f45a1cbfd3b48b6877, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7551635356656965425, guid: 4f3e88e5172a60f45a1cbfd3b48b6877, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 855275651644905324}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f3e88e5172a60f45a1cbfd3b48b6877, type: 3}
---- !u!114 &855275651644905322 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9079304623934795123, guid: 4f3e88e5172a60f45a1cbfd3b48b6877, type: 3}
-  m_PrefabInstance: {fileID: 855275651644905321}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &855275651644905323 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7551635356656965425, guid: 4f3e88e5172a60f45a1cbfd3b48b6877, type: 3}
-  m_PrefabInstance: {fileID: 855275651644905321}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &855275651644905324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 855275651644905323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da09aa967359e6f448359d95ba08fef5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HealthBar
-  healthFill: {fileID: 855275651644905322}
 --- !u!1001 &3031156253348733785
 PrefabInstance:
   m_ObjectHideFlags: 0

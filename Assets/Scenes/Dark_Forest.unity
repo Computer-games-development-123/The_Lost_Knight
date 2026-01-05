@@ -309,6 +309,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 778514064233421265, guid: 4f3e88e5172a60f45a1cbfd3b48b6877, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -5738939844252893141, guid: 14f6e1dbc93e5cb4687b0f76ccfee853, type: 3}
     - target: {fileID: 1020790737070191607, guid: 4f3e88e5172a60f45a1cbfd3b48b6877, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -400,6 +404,10 @@ PrefabInstance:
     - target: {fileID: 3552585727002891705, guid: 4f3e88e5172a60f45a1cbfd3b48b6877, type: 3}
       propertyPath: m_text
       value: Phillip
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678170384927728501, guid: 4f3e88e5172a60f45a1cbfd3b48b6877, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

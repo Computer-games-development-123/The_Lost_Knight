@@ -1,10 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Yoji Dialogue Handler - INDEPENDENT version
-/// Sets its own flags directly (doesn't call GameManager.SetYojiTalked())
-/// Only depends on GameManager for flag checking
-/// </summary>
 public class YojiDialogueHandler : MonoBehaviour
 {
     [Header("Dialogue Data")]
@@ -12,7 +7,7 @@ public class YojiDialogueHandler : MonoBehaviour
     public DialogueData postGeorgeDialogue;
 
     [Header("Interaction UI")]
-    public GameObject interactionPrompt; // "Press F to Talk"
+    public GameObject interactionPrompt;
 
     [Header("Portal Control")]
     [Tooltip("The Green Forest portal GameObject - starts INACTIVE, becomes active after dialogue")]
@@ -32,8 +27,6 @@ public class YojiDialogueHandler : MonoBehaviour
     {
         GameManagerReadyHelper.RunWhenReady(this, ApplySavedState);
     }
-
-
 
     private void Update()
     {
@@ -170,7 +163,7 @@ public class YojiDialogueHandler : MonoBehaviour
             Abilities abilities = player.GetComponent<Abilities>();
             if (abilities != null)
             {
-                abilities.UpgradeSword(); // ✅ CORRECT: This is the sword upgrade!
+                abilities.UpgradeSword();
                 Debug.Log("✅ Player given sword upgrade - Can now damage George!");
             }
         }

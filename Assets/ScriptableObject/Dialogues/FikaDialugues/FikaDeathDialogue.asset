@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: FikaDeathDialogue
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
-  flag: 0
+  flag: 12
   speakerName: Fika
   lines:
-  - 
-  - 
-  - 
+  - How could I lose to this weak Human?
+  - I have failed.
+  - Hopfully Phillip will stop you.
   portrait: {fileID: -2323283619637132258, guid: 5a0ffb22eb716fc4989d7fb37bdaa0f0, type: 3}
   pauseGameDuringDialogue: 1
