@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: George_FirstEncounter
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 8
-  flag: 10
+  flag: 12
   speakerName: Geroge, King's Royal Beast.
   lines:
   - .....
