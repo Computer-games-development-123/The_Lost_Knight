@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Yoji_PostFika
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
-  flag: 0
+  flag: 5
   speakerName: Yoji, Store Owner
   lines:
   - quite a fight we had there! But im glad you made it.
   - You are one step closer to becoming the hero of the forest.
   - Rejoice!
-  portrait: {fileID: 0}
+  portrait: {fileID: -5898556967480879587, guid: 308c2cc3ccc747546b66362cd154ddbb, type: 3}
   pauseGameDuringDialogue: 1

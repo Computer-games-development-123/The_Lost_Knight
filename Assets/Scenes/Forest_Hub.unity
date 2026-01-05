@@ -3993,9 +3993,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 2084108342}
     m_Modifications:
     - target: {fileID: 5318802686532609789, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: postFikaDialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 2431da33271f5e146b56ea0416ad5f58, type: 2}
+    - target: {fileID: 5318802686532609789, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
       propertyPath: greenForestPortal
       value: 
       objectReference: {fileID: 530192566}
+    - target: {fileID: 5318802686532609789, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: unlockStoreDialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 76256d79d431f1348b21e36d3068ae1b, type: 2}
     - target: {fileID: 5941508025268686040, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
       propertyPath: m_Name
       value: Yoji
