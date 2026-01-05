@@ -266,7 +266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_text
-      value: Forest Hub
+      value: Forest Hub (F)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -574,7 +574,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_text
-      value: Continue on.
+      value: Continue on (F)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
