@@ -17,5 +17,5 @@ MonoBehaviour:
   speakerName: Fika, Sister Of Malice.
   lines:
   - Hush now Mona, we dont want to scare him away.
-  portrait: {fileID: 0}
+  portrait: {fileID: -2323283619637132258, guid: 5a0ffb22eb716fc4989d7fb37bdaa0f0, type: 3}
   pauseGameDuringDialogue: 1

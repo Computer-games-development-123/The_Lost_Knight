@@ -19,5 +19,5 @@ MonoBehaviour:
   - ' i will never let you get past me...'
   - I will end you In the name of king ditor!
   - RRAAHGHHH!!!
-  portrait: {fileID: 0}
+  portrait: {fileID: -2323283619637132258, guid: 5a0ffb22eb716fc4989d7fb37bdaa0f0, type: 3}
   pauseGameDuringDialogue: 1
