@@ -14,11 +14,10 @@ public class FikaBossCutsceneManager : MonoBehaviour
     [SerializeField] private Transform yojiSpawnPoint;
 
     [Header("Dialogues")]
-    [SerializeField] private DialogueData fikaMonaAppearDialogue;
+    [SerializeField] private DialogueData MonaFirstDialogue;
+    [SerializeField] private DialogueData FikaFirstDialogue;
     [SerializeField] private DialogueData yojiInterruptsDialogue;
-    [SerializeField] private DialogueData fikaChallengeDialogue;
-
-    [Header("Movement")]
+        [Header("Movement")]
     [SerializeField] private float yojiMoveSpeed = 5f;
     [SerializeField] private float arriveDistance = 0.25f;
 
@@ -76,7 +75,10 @@ public class FikaBossCutsceneManager : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
 
         // Dialogue 1
-        yield return PlayDialogueIfAny(fikaMonaAppearDialogue);
+        yield return PlayDialogueIfAny(MonaFirstDialogue);
+        
+        // Dialogue 2
+        yield return PlayDialogueIfAny(FikaFirstDialogue);
 
         // Spawn Yoji
         yojiInstance = Instantiate(yojiPrefab, yojiSpawnPoint.position, Quaternion.identity);
@@ -101,7 +103,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        // Dialogue 2
+       // Dialogue 3
         yield return PlayDialogueIfAny(yojiInterruptsDialogue);
 
         // Move to Mona
@@ -128,9 +130,6 @@ public class FikaBossCutsceneManager : MonoBehaviour
 
         Destroy(monaInstance);
         Destroy(yojiInstance);
-
-        // Dialogue 3
-        yield return PlayDialogueIfAny(fikaChallengeDialogue);
 
         // Start fight + unlock player
         if (fikaAI != null) fikaAI.enabled = true;

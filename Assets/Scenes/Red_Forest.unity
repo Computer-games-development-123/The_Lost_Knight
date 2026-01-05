@@ -252,9 +252,9 @@ MonoBehaviour:
   fikaSpawnPoint: {fileID: 2042312077}
   monaSpawnPoint: {fileID: 1201971798}
   yojiSpawnPoint: {fileID: 1429205659}
-  fikaMonaAppearDialogue: {fileID: 11400000, guid: 6415c350f51fd0043b9d5b3f21ba5c50, type: 2}
+  MonaFirstDialogue: {fileID: 11400000, guid: 6415c350f51fd0043b9d5b3f21ba5c50, type: 2}
+  FikaFirstDialogue: {fileID: 11400000, guid: 67697ab34f6a3b348b22e6acfb029fdf, type: 2}
   yojiInterruptsDialogue: {fileID: 11400000, guid: 76f6a92cc8eed21498279fd9f9c79475, type: 2}
-  fikaChallengeDialogue: {fileID: 11400000, guid: dd885bea939866a40b7c8f45710192af, type: 2}
   yojiMoveSpeed: 15
   arriveDistance: 1
   pauseBeforeCombo: 0.15
@@ -272,6 +272,51 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.61498, y: -0.3552, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &299996980
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 299996982}
+  - component: {fileID: 299996981}
+  m_Layer: 0
+  m_Name: RedBattleStart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &299996981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299996980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 223f151c6dc9fd14d99eac7b73e70536, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RedBattleStartIntro
+  BattleStartDialogue: {fileID: 11400000, guid: 95f16a93616f8eb49a7592e9b5172541, type: 2}
+--- !u!4 &299996982
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299996980}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.35733, y: -2.48807, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1519,3 +1564,4 @@ SceneRoots:
   - {fileID: 893627513}
   - {fileID: 922455462}
   - {fileID: 110813597}
+  - {fileID: 299996982}
