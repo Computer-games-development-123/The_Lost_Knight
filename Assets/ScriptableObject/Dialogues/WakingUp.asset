@@ -19,5 +19,6 @@ MonoBehaviour:
   - Where am I?
   - What is this place?
   - I need to find some answers.
+  - I see someone, maybe he can help me
   portrait: {fileID: 4033487972480862772, guid: f6694ec89bfc1694d96be88fb06bcf0f, type: 3}
   pauseGameDuringDialogue: 1
