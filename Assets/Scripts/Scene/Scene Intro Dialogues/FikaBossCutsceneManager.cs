@@ -50,12 +50,14 @@ public class FikaBossCutsceneManager : MonoBehaviour
     {
         if (cutsceneTriggered) return;
         cutsceneTriggered = true;
+        playerOverride.transform.position = new Vector3(-7, playerOverride.transform.position.y, 0);
         StartCoroutine(CutsceneSequence());
     }
 
     private IEnumerator CutsceneSequence()
     {
         // Lock player
+        UserInputManager.Instance.DisableInput();
         GameObject player = playerOverride != null ? playerOverride : GameObject.FindGameObjectWithTag("Player");
         PlayerController pc = player != null ? player.GetComponent<PlayerController>() : null;
         Rigidbody2D playerRB = player != null ? player.GetComponent<Rigidbody2D>() : null;
@@ -76,10 +78,10 @@ public class FikaBossCutsceneManager : MonoBehaviour
 
         // Dialogue 1
         yield return PlayDialogueIfAny(MonaFirstDialogue);
-
+        UserInputManager.Instance.DisableInput();
         // Dialogue 2
         yield return PlayDialogueIfAny(FikaFirstDialogue);
-
+        UserInputManager.Instance.DisableInput();
         // Spawn Yoji
         yojiInstance = Instantiate(yojiPrefab, yojiSpawnPoint.position, Quaternion.identity);
         yojiAnim = yojiInstance.GetComponentInChildren<Animator>();
@@ -105,7 +107,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
 
         // Dialogue 3
         yield return PlayDialogueIfAny(yojiInterruptsDialogue);
-
+        UserInputManager.Instance.DisableInput();
         // Move to Mona
         yield return MoveYojiToMona();
         if (yojiAnim != null) yojiAnim.SetBool("Run", false);
@@ -134,7 +136,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
         // Start fight + unlock player
         if (fikaAI != null) fikaAI.enabled = true;
         if (pc != null) pc.enabled = true;
-
+        UserInputManager.Instance.EnableInput();
         UnhookEvents();
 
         Debug.Log("✅ Cutscene done. Boss fight begins!");
@@ -142,24 +144,20 @@ public class FikaBossCutsceneManager : MonoBehaviour
 
     private IEnumerator DoYojiCombo3()
     {
-        // חשוב: כל מתקפה תחכה ל-Hit event שלה.
         lastHitIndex = 0;
 
-        // Attack 1
         if (yojiAnim != null) yojiAnim.SetTrigger("Attack1");
         yield return WaitUntilOrTimeout(() => lastHitIndex == 1, 2f);
         yield return new WaitForSeconds(pauseBetweenHits);
 
-        // Attack 2
         if (yojiAnim != null) yojiAnim.SetTrigger("Attack2");
         yield return WaitUntilOrTimeout(() => lastHitIndex == 2, 2f);
         yield return new WaitForSeconds(pauseBetweenHits);
 
-        // Attack 3
         if (yojiAnim != null) yojiAnim.SetTrigger("Attack3");
         yield return WaitUntilOrTimeout(() => lastHitIndex == 3, 2f);
 
-        // אופציונלי: “פלאש”/רעד למונה בכל Hit (אם תרצה נוסיף)
+        // נוסיף אנימציית Hurt למונה
     }
 
     private IEnumerator MoveYojiToMona()

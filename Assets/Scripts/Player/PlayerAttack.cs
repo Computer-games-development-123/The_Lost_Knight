@@ -64,6 +64,8 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+        if (!UserInputManager.Instance.IsInputEnabled)
+            return;
         // Basic attack with cooldown
         if (Input.GetKeyDown(attackKey))
         {

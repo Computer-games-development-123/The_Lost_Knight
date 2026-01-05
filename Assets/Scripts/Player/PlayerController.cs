@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!UserInputManager.Instance.IsInputEnabled)
+            return;
         // Ground Check
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
