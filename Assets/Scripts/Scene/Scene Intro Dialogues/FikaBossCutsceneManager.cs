@@ -1,144 +1,244 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// Manages the Fika & Mona boss cutscene:
-/// 1. Fika & Mona spawn
-/// 2. Fika dialogue
-/// 3. Yoji pops in
-/// 4. Yoji moves to Mona, both disappear
-/// 5. Fika challenge dialogue
-/// 6. Boss fight begins
-/// </summary>
 public class FikaBossCutsceneManager : MonoBehaviour
 {
-    [Header("Boss References")]
-    public GameObject fikaBossPrefab;
-    public GameObject monaBossPrefab;
-    public GameObject yojiPrefab; // Or use existing Yoji if available
+    [Header("Prefabs")]
+    [SerializeField] private GameObject fikaBossPrefab;
+    [SerializeField] private GameObject monaPrefab;
+    [SerializeField] private GameObject yojiPrefab;
 
-    [Header("Spawn Positions")]
-    public Transform fikaSpawnPoint;
-    public Transform monaSpawnPoint;
-    public Transform yojiSpawnPoint;
+    [Header("Spawn Points")]
+    [SerializeField] private Transform fikaSpawnPoint;
+    [SerializeField] private Transform monaSpawnPoint;
+    [SerializeField] private Transform yojiSpawnPoint;
 
     [Header("Dialogues")]
-    public DialogueData fikaMonaAppearDialogue;
-    public DialogueData yojiInterruptsDialogue;
-    public DialogueData fikaChallengeDialogue;
+    [SerializeField] private DialogueData fikaMonaAppearDialogue;
+    [SerializeField] private DialogueData yojiInterruptsDialogue;
+    [SerializeField] private DialogueData fikaChallengeDialogue;
 
     [Header("Movement")]
-    public float yojiMoveSpeed = 5f;
+    [SerializeField] private float yojiMoveSpeed = 5f;
+    [SerializeField] private float arriveDistance = 0.25f;
 
-    private GameObject fikaInstance;
-    private GameObject monaInstance;
-    private GameObject yojiInstance;
-    private bool cutsceneTriggered = false;
+    [Header("Drama Timings")]
+    [SerializeField] private float pauseBeforeCombo = 0.15f;     // רגע של דרמה לפני קומבו
+    [SerializeField] private float pauseBetweenHits = 0.12f;     // פאוזה קטנה בין מתקפות
+    [SerializeField] private float pauseBeforeMonaDies = 0.2f;   // רגע אחרי hit3 לפני Die
+
+    [Header("Vanish")]
+    [SerializeField] private float vanishDelay = 0.25f;
+
+    [Header("Player")]
+    [SerializeField] private GameObject playerOverride;
+
+    private bool cutsceneTriggered;
+
+    private GameObject fikaInstance, monaInstance, yojiInstance;
+
+    private FikaBoss fikaAI;
+    private Animator yojiAnim, monaAnim;
+    private Rigidbody2D yojiRB;
+
+    private CutsceneAnimEvents yojiEvents;
+    private CutsceneAnimEvents monaEvents;
+
+    private bool monaDeathFinished;
+    private int lastHitIndex;
 
     public void TriggerBossCutscene()
     {
         if (cutsceneTriggered) return;
         cutsceneTriggered = true;
-
-        StartCoroutine(BossCutsceneSequence());
+        StartCoroutine(CutsceneSequence());
     }
 
-    private IEnumerator BossCutsceneSequence()
+    private IEnumerator CutsceneSequence()
     {
-        // Pause player movement
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            PlayerController pc = player.GetComponent<PlayerController>();
-            if (pc != null) pc.enabled = false; // Disable player control
-        }
+        // Lock player
+        GameObject player = playerOverride != null ? playerOverride : GameObject.FindGameObjectWithTag("Player");
+        PlayerController pc = player != null ? player.GetComponent<PlayerController>() : null;
+        Rigidbody2D playerRB = player != null ? player.GetComponent<Rigidbody2D>() : null;
 
-        // 1. Spawn Fika and Mona
+        if (pc != null) pc.enabled = false;
+        if (playerRB != null) playerRB.linearVelocity = Vector2.zero;
+
+        // Spawn Fika + Mona
         fikaInstance = Instantiate(fikaBossPrefab, fikaSpawnPoint.position, Quaternion.identity);
-        monaInstance = Instantiate(monaBossPrefab, monaSpawnPoint.position, Quaternion.identity);
+        monaInstance = Instantiate(monaPrefab, monaSpawnPoint.position, Quaternion.identity);
 
-        // Disable Fika's AI temporarily
-        FikaBoss fikaScript = fikaInstance.GetComponent<FikaBoss>();
-        if (fikaScript != null) fikaScript.enabled = false;
+        fikaAI = fikaInstance.GetComponent<FikaBoss>();
+        if (fikaAI != null) fikaAI.enabled = false;
 
-        yield return new WaitForSeconds(1f);
+        monaAnim = monaInstance.GetComponentInChildren<Animator>();
 
-        // 2. Fika & Mona appear dialogue
-        if (DialogueManager.Instance != null && fikaMonaAppearDialogue != null)
-        {
-            bool dialogueDone = false;
-            DialogueManager.Instance.Play(fikaMonaAppearDialogue, () => dialogueDone = true);
+        yield return new WaitForSeconds(0.25f);
 
-            while (!dialogueDone)
-                yield return null;
-        }
+        // Dialogue 1
+        yield return PlayDialogueIfAny(fikaMonaAppearDialogue);
 
-        yield return new WaitForSeconds(0.5f);
-
-        // 3. Yoji pops in
+        // Spawn Yoji
         yojiInstance = Instantiate(yojiPrefab, yojiSpawnPoint.position, Quaternion.identity);
+        yojiAnim = yojiInstance.GetComponentInChildren<Animator>();
 
-        yield return new WaitForSeconds(0.5f);
+        yojiRB = yojiInstance.GetComponent<Rigidbody2D>();
+        if (yojiRB == null) yojiRB = yojiInstance.AddComponent<Rigidbody2D>();
+        yojiRB.gravityScale = 0f;
+        yojiRB.freezeRotation = true;
+        yojiRB.linearVelocity = Vector2.zero;
 
-        // 4. Yoji dialogue
-        if (DialogueManager.Instance != null && yojiInterruptsDialogue != null)
-        {
-            bool dialogueDone = false;
-            DialogueManager.Instance.Play(yojiInterruptsDialogue, () => dialogueDone = true);
+        // Events
+        yojiEvents = yojiInstance.GetComponentInChildren<CutsceneAnimEvents>();
+        if (yojiEvents == null) yojiEvents = yojiInstance.AddComponent<CutsceneAnimEvents>();
 
-            while (!dialogueDone)
-                yield return null;
-        }
+        monaEvents = monaInstance.GetComponentInChildren<CutsceneAnimEvents>();
+        if (monaEvents == null) monaEvents = monaInstance.AddComponent<CutsceneAnimEvents>();
 
-        // 5. Yoji moves to Mona
-        yield return StartCoroutine(MoveYojiToMona());
+        HookEvents();
 
-        yield return new WaitForSeconds(0.5f);
+        if (yojiAnim != null) yojiAnim.SetTrigger("Enter");
 
-        // 6. Both disappear
-        Destroy(yojiInstance);
+        yield return new WaitForSeconds(0.2f);
+
+        // Dialogue 2
+        yield return PlayDialogueIfAny(yojiInterruptsDialogue);
+
+        // Move to Mona
+        yield return MoveYojiToMona();
+        if (yojiAnim != null) yojiAnim.SetBool("Run", false);
+
+        yield return new WaitForSeconds(pauseBeforeCombo);
+
+        // 3-hit combo (Attack1 -> Attack2 -> Attack3)
+        yield return DoYojiCombo3();
+
+        yield return new WaitForSeconds(pauseBeforeMonaDies);
+
+        // Mona dies
+        monaDeathFinished = false;
+        if (monaAnim != null) monaAnim.SetTrigger("Die");
+
+        yield return WaitUntilOrTimeout(() => monaDeathFinished, 3f);
+
+        // Vanish
+        yield return new WaitForSeconds(vanishDelay);
+        SetRenderersEnabled(monaInstance, false);
+        SetRenderersEnabled(yojiInstance, false);
+
         Destroy(monaInstance);
+        Destroy(yojiInstance);
 
-        yield return new WaitForSeconds(1f);
+        // Dialogue 3
+        yield return PlayDialogueIfAny(fikaChallengeDialogue);
 
-        // 7. Fika challenge dialogue
-        if (DialogueManager.Instance != null && fikaChallengeDialogue != null)
-        {
-            bool dialogueDone = false;
-            DialogueManager.Instance.Play(fikaChallengeDialogue, () => dialogueDone = true);
+        // Start fight + unlock player
+        if (fikaAI != null) fikaAI.enabled = true;
+        if (pc != null) pc.enabled = true;
 
-            while (!dialogueDone)
-                yield return null;
-        }
+        UnhookEvents();
 
-        // 8. Enable Fika's AI - BOSS FIGHT STARTS
-        if (fikaScript != null) fikaScript.enabled = true;
+        Debug.Log("✅ Cutscene done. Boss fight begins!");
+    }
 
-        // Re-enable player control
-        if (player != null)
-        {
-            PlayerController pc = player.GetComponent<PlayerController>();
-            if (pc != null) pc.enabled = true;
-        }
+    private IEnumerator DoYojiCombo3()
+    {
+        // חשוב: כל מתקפה תחכה ל-Hit event שלה.
+        lastHitIndex = 0;
 
-        Debug.Log("Boss fight begins!");
+        // Attack 1
+        if (yojiAnim != null) yojiAnim.SetTrigger("Attack1");
+        yield return WaitUntilOrTimeout(() => lastHitIndex == 1, 2f);
+        yield return new WaitForSeconds(pauseBetweenHits);
+
+        // Attack 2
+        if (yojiAnim != null) yojiAnim.SetTrigger("Attack2");
+        yield return WaitUntilOrTimeout(() => lastHitIndex == 2, 2f);
+        yield return new WaitForSeconds(pauseBetweenHits);
+
+        // Attack 3
+        if (yojiAnim != null) yojiAnim.SetTrigger("Attack3");
+        yield return WaitUntilOrTimeout(() => lastHitIndex == 3, 2f);
+
+        // אופציונלי: “פלאש”/רעד למונה בכל Hit (אם תרצה נוסיף)
     }
 
     private IEnumerator MoveYojiToMona()
     {
-        if (yojiInstance == null || monaInstance == null) yield break;
+        if (yojiInstance == null || monaInstance == null || yojiRB == null) yield break;
 
-        Vector3 targetPos = monaInstance.transform.position;
+        Vector2 target = monaInstance.transform.position;
 
-        while (Vector3.Distance(yojiInstance.transform.position, targetPos) > 0.1f)
+        if (yojiAnim != null) yojiAnim.SetBool("Run", true);
+        FaceTowards(yojiInstance.transform, target);
+
+        while (Vector2.Distance(yojiRB.position, target) > arriveDistance)
         {
-            yojiInstance.transform.position = Vector3.MoveTowards(
-                yojiInstance.transform.position,
-                targetPos,
-                yojiMoveSpeed * Time.deltaTime
-            );
-
+            Vector2 next = Vector2.MoveTowards(yojiRB.position, target, yojiMoveSpeed * Time.deltaTime);
+            yojiRB.MovePosition(next);
             yield return null;
         }
+
+        yojiRB.linearVelocity = Vector2.zero;
+    }
+
+    private void FaceTowards(Transform t, Vector2 targetPos)
+    {
+        if (t == null) return;
+        float dir = targetPos.x - t.position.x;
+        if (Mathf.Abs(dir) < 0.01f) return;
+
+        Vector3 s = t.localScale;
+        s.x = Mathf.Abs(s.x) * (dir >= 0 ? 1f : -1f);
+        t.localScale = s;
+    }
+
+    private IEnumerator PlayDialogueIfAny(DialogueData data)
+    {
+        if (DialogueManager.Instance == null || data == null) yield break;
+
+        bool done = false;
+        DialogueManager.Instance.Play(data, () => done = true);
+        while (!done) yield return null;
+    }
+
+    private IEnumerator WaitUntilOrTimeout(System.Func<bool> condition, float timeoutSeconds)
+    {
+        float t = 0f;
+        while (!condition())
+        {
+            t += Time.deltaTime;
+            if (t >= timeoutSeconds) break;
+            yield return null;
+        }
+    }
+
+    private void SetRenderersEnabled(GameObject go, bool enabled)
+    {
+        if (go == null) return;
+        var srs = go.GetComponentsInChildren<SpriteRenderer>(true);
+        for (int i = 0; i < srs.Length; i++) srs[i].enabled = enabled;
+    }
+
+    private void HookEvents()
+    {
+        if (yojiEvents != null) yojiEvents.OnHitIndex += OnYojiHitIndex;
+        if (monaEvents != null) monaEvents.OnDeathFinished += OnMonaDeathFinished;
+    }
+
+    private void UnhookEvents()
+    {
+        if (yojiEvents != null) yojiEvents.OnHitIndex -= OnYojiHitIndex;
+        if (monaEvents != null) monaEvents.OnDeathFinished -= OnMonaDeathFinished;
+    }
+
+    private void OnYojiHitIndex(int idx)
+    {
+        lastHitIndex = idx;
+    }
+
+    private void OnMonaDeathFinished()
+    {
+        monaDeathFinished = true;
     }
 }

@@ -7,7 +7,9 @@ public class FikaBoss : BossBase
     [SerializeField] private Transform spawnPoint;
 
     [Header("Shooting")]
-    [SerializeField] private float shootEverySeconds = 3f;
+    [SerializeField] private float timeBetweenShots = 3f;
+    [SerializeField] private float attackSoonAfterSpawn = 0.6f;
+    [SerializeField] private float attackSoonAfterTeleport = 0.35f;
     [SerializeField] private float projectileSpeed = 8f;
     [SerializeField] private float projectileLifetime = 4f;
 
@@ -16,7 +18,6 @@ public class FikaBoss : BossBase
     [SerializeField] private float teleportChargeTime = 0.25f;
     [SerializeField] private float teleportRecoverTime = 0.35f;
     [SerializeField] private float teleportOffsetFromEdge = 1.2f;
-    //[SerializeField] private string teleportTrigger = "Teleport";
 
     [Header("Teleport FX")]
     [SerializeField] private GameObject teleportSmokePrefab;
@@ -32,39 +33,38 @@ public class FikaBoss : BossBase
     {
         base.Start();
 
-        shootTimer = shootEverySeconds;
-        teleportTimer = teleportEverySeconds;
-
         mainCam = Camera.main;
+
+        shootTimer = Mathf.Max(0.05f, attackSoonAfterSpawn);
+        teleportTimer = teleportEverySeconds;
     }
 
     protected override void BossAI()
     {
         if (isDead) return;
 
-        if (isTeleporting) return;
+        shootTimer -= Time.deltaTime;
+        teleportTimer -= Time.deltaTime;
 
-        // === Face player (Flip) ===
+        if (isTeleporting)
+            return;
+
         if (player != null)
         {
-            Vector2 direction = (player.position - transform.position).normalized;
+            float dx = player.position.x - transform.position.x;
 
-            if (direction.x > 0 && !facingRight)
-                Flip();
-            else if (direction.x < 0 && facingRight)
-                Flip();
+            if (dx > 0f && !facingRight) Flip();
+            else if (dx < 0f && facingRight) Flip();
         }
 
-        // === Shooting timer ===
-        shootTimer -= Time.deltaTime;
+        // === Attack trigger לפי טיימר ===
         if (shootTimer <= 0f)
         {
             anim.SetTrigger("Attack");
-            shootTimer = shootEverySeconds;
+            shootTimer = timeBetweenShots;
         }
 
-        // === Teleport timer ===
-        teleportTimer -= Time.deltaTime;
+        // === Teleport לפי טיימר ===
         if (teleportTimer <= 0f)
         {
             StartTeleport();
@@ -87,16 +87,12 @@ public class FikaBoss : BossBase
         if (isTeleporting) return;
 
         isTeleporting = true;
-
         isInvulnerable = true;
 
         if (rb != null)
             rb.linearVelocity = Vector2.zero;
 
         SpawnTeleportFX(transform.position);
-
-        // if (anim != null && !string.IsNullOrEmpty(teleportTrigger))
-        //     anim.SetTrigger(teleportTrigger);
 
         Invoke(nameof(DoTeleportToOtherSideEdge), teleportChargeTime);
     }
@@ -113,10 +109,9 @@ public class FikaBoss : BossBase
     private void EndTeleport()
     {
         isTeleporting = false;
-
         isInvulnerable = false;
 
-        shootTimer = Mathf.Max(shootTimer, 0.25f);
+        shootTimer = Mathf.Min(shootTimer, attackSoonAfterTeleport);
     }
 
     private void TeleportToOtherSideEdge()
@@ -135,17 +130,17 @@ public class FikaBoss : BossBase
         bool bossOnLeftSide = pos.x < camX;
 
         if (bossOnLeftSide)
-            pos.x = camX + camHalfWidth - teleportOffsetFromEdge; // לקצה ימין
+            pos.x = camX + camHalfWidth - teleportOffsetFromEdge;
         else
-            pos.x = camX - camHalfWidth + teleportOffsetFromEdge; // לקצה שמאל
+            pos.x = camX - camHalfWidth + teleportOffsetFromEdge;
 
         transform.position = pos;
 
         if (player != null)
         {
             float dx = player.position.x - transform.position.x;
-            if (dx > 0 && !facingRight) Flip();
-            else if (dx < 0 && facingRight) Flip();
+            if (dx > 0f && !facingRight) Flip();
+            else if (dx < 0f && facingRight) Flip();
         }
     }
 
@@ -173,7 +168,6 @@ public class FikaBoss : BossBase
 
         GameObject p = Instantiate(projectilePrefab, spawnPoint.position, Quaternion.identity);
 
-        // Flip ויזואלי לפרוג'קטייל
         Vector3 s = p.transform.localScale;
         s.x = Mathf.Abs(s.x) * (shootRight ? 1f : -1f);
         p.transform.localScale = s;
@@ -183,6 +177,17 @@ public class FikaBoss : BossBase
             rbP.linearVelocity = dir * projectileSpeed;
 
         Destroy(p, projectileLifetime);
+    }
+
+    protected override void OnDeathDialogueComplete()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnFikaDefeated();
+            GameManager.Instance.SaveProgress();
+        }
+
+        Destroy(gameObject, 2f);
     }
 
     private void OnDisable()

@@ -200,13 +200,14 @@ MonoBehaviour:
   damage: 10
   moveSpeed: 3
   isInvulnerable: 0
-  spawnDialogue: {fileID: 11400000, guid: a32fdae27b777f64caf222d639f708a5, type: 2}
+  spawnDialogue: {fileID: 11400000, guid: 1c8f23d4b659eb340bc7569b9b3d8224, type: 2}
   deathDialogue: {fileID: 11400000, guid: 0d2bc21d3a11b5d499b9d06f7f697b87, type: 2}
   waveManager: {fileID: 0}
   player: {fileID: 0}
   currentHP: 0
   facingRight: 1
   firstEncounterDialogue: {fileID: 11400000, guid: 046c65efe49bd924385266f16426cc5d, type: 2}
+  secondEncounterDialogue: {fileID: 11400000, guid: a32fdae27b777f64caf222d639f708a5, type: 2}
   hitsToTriggerTaunt: 5
   attackCooldown: 4
   closeRangeThreshold: 2

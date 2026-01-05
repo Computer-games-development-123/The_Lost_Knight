@@ -5,6 +5,7 @@ public class GeorgeBoss : BossBase
 {
     [Header("George Dialogues")]
     public DialogueData firstEncounterDialogue;
+    public DialogueData secondEncounterDialogue;
 
     [Header("First Encounter Settings")]
     public int hitsToTriggerTaunt = 5;
@@ -65,7 +66,7 @@ public class GeorgeBoss : BossBase
 
     protected override void OnBossStart()
     {
-        base.OnBossStart();
+        //base.OnBossStart();
         bossName = "George";
 
         bool hasUpgrade = false;
@@ -74,13 +75,9 @@ public class GeorgeBoss : BossBase
         {
             hasUpgrade = GameManager.Instance.GetFlag(GameFlag.hasUpgradedSword);
         }
-
         isInvulnerable = !hasUpgrade;
-
-        if (!hasUpgrade)
-        {
-            spawnDialogue = null;
-        }
+        if (hasUpgrade) DialogueManager.Instance.Play(secondEncounterDialogue);
+        else DialogueManager.Instance.Play(spawnDialogue);
 
         ResetInvulnerableHitCount();
     }
@@ -131,12 +128,6 @@ public class GeorgeBoss : BossBase
                 yield return null;
         }
 
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.SetFlag(GameFlag.GeorgeFirstEncounter, true);
-            GameManager.Instance.SaveProgress();
-        }
-
         if (player != null)
         {
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
@@ -145,6 +136,12 @@ public class GeorgeBoss : BossBase
                 playerHealth.TakeDamage(9999);
             }
         }
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnPlayerDiedToGeorge();
+        }
+
     }
 
     protected override void BossAI()
@@ -236,7 +233,6 @@ public class GeorgeBoss : BossBase
     {
         isFlying = true;
 
-        // ✅ FIX: Set flying animation state
         if (anim != null)
         {
             anim.SetBool("IsGrounded", false);
@@ -283,7 +279,6 @@ public class GeorgeBoss : BossBase
         if (rb != null)
             rb.linearVelocity = Vector2.zero;
 
-        // ✅ FIX: Land and stop moving
         if (anim != null)
         {
             anim.SetBool("IsGrounded", true);
@@ -294,8 +289,20 @@ public class GeorgeBoss : BossBase
         isFlying = false;
     }
 
+    protected override void OnDeathDialogueComplete()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnGeorgeDefeated();
+            GameManager.Instance.SaveProgress();
+        }
+
+        Destroy(gameObject, 2f);
+    }
+
     protected override void Die()
     {
+        base.Die();
         if (isDead) return;
         isDead = true;
 
@@ -305,40 +312,11 @@ public class GeorgeBoss : BossBase
         if (rb != null)
             rb.linearVelocity = Vector2.zero;
 
-        // ✅ FIX: Use "Die" trigger (not "Death")
         if (anim != null)
         {
-            anim.SetTrigger("Die");
             anim.SetBool("IsDead", true);
             anim.SetFloat("Speed", 0);
         }
-
-        if (waveManager != null)
-        {
-            waveManager.OnBossDied(this);
-        }
-
-        if (DialogueManager.Instance != null && deathDialogue != null)
-        {
-            DialogueManager.Instance.Play(deathDialogue, OnDeathDialogueComplete);
-        }
-        else
-        {
-            OnDeathDialogueComplete();
-        }
-    }
-
-    private void OnDeathDialogueComplete()
-    {
-        Debug.Log("✅ George defeated - spawning portals");
-
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.OnGeorgeDefeated();
-            GameManager.Instance.SaveProgress();
-        }
-
-        Destroy(gameObject, 2f);
     }
 
     protected override void EnterPhase2()

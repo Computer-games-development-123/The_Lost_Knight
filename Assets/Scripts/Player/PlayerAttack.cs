@@ -6,21 +6,21 @@ public class PlayerAttack : MonoBehaviour
     [Header("Attack Settings")]
     public int baseSwordDamage = 8;
     [HideInInspector] public int swordDamage = 8;  // Runtime damage (can be upgraded)
-    
+
     [Header("Attack Timing")]
     [Tooltip("Minimum time between attacks (0.33s = 3 attacks per second)")]
     public float attackCooldown = 0.33f;
-    
+
     [Header("Attack 1 & 2 (Close Range)")]
     public float normalAttackRange = 1.5f;
     public Transform attackPoint;
-    
+
     [Header("Attack 3 (Dash Attack)")]
     public float dashAttackRange = 2.5f;
     public float dashDistance = 1.5f;
     public float dashSpeed = 15f;
     public float dashKnockbackMultiplier = 1.5f;
-    
+
     [Header("General")]
     public LayerMask enemyLayer;
     [SerializeField] private KeyCode attackKey = KeyCode.X;
@@ -40,7 +40,7 @@ public class PlayerAttack : MonoBehaviour
     private bool isDashing = false;
     private float lastAttackTime = -999f;  // Time when last attack was started
     private bool canAttack = true;  // Simple flag to allow attacks
-    
+
     // Runtime - Wave of Fire
     private float lastWaveOfFireTime = 0f;
 
@@ -57,7 +57,7 @@ public class PlayerAttack : MonoBehaviour
         abilities = GetComponent<Abilities>();
         movement = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
-        
+
         // Load saved damage from GameManager
         LoadDamageFromSave();
     }
@@ -88,7 +88,7 @@ public class PlayerAttack : MonoBehaviour
     {
         // Check if enough time has passed since last attack
         float timeSinceLastAttack = Time.time - lastAttackTime;
-        
+
         if (timeSinceLastAttack < attackCooldown)
         {
             // Still on cooldown - ignore input
@@ -166,7 +166,7 @@ public class PlayerAttack : MonoBehaviour
         if (movement == null || rb == null) return;
 
         isDashing = true;
-        
+
         // Dash in facing direction
         Vector2 dashDirection = movement.facingDir();
         rb.linearVelocity = new Vector2(dashDirection.x * dashSpeed, rb.linearVelocity.y);
@@ -205,10 +205,10 @@ public class PlayerAttack : MonoBehaviour
         // Determine which attack was just performed
         // currentAttackIndex has already moved forward, so we check the previous one
         int performedAttackIndex = (currentAttackIndex - 1 + 3) % 3;
-        
+
         // Attack 3 (index 2) uses longer range
         float range = (performedAttackIndex == 2) ? dashAttackRange : normalAttackRange;
-        
+
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, range, enemyLayer);
 
         if (hitEnemies.Length > 0)
@@ -235,9 +235,9 @@ public class PlayerAttack : MonoBehaviour
     {
         // Cancel the backup reset timer since animation event fired properly
         CancelInvoke(nameof(ResetAttackState));
-        
+
         ResetAttackState();
-        
+
         if (isDashing)
         {
             StopDash();
@@ -255,13 +255,13 @@ public class PlayerAttack : MonoBehaviour
         if (enemyScript != null)
         {
             Vector2 knockDir = (enemy.transform.position - transform.position).normalized;
-            
+
             // Apply extra knockback for dash attack
             if (extraKnockback)
             {
                 knockDir *= dashKnockbackMultiplier;
             }
-            
+
             enemyScript.TakeDamage(swordDamage, knockDir);
             Debug.Log($"⚔️ Hit {enemy.name} for {swordDamage} damage!");
             return;
@@ -307,7 +307,7 @@ public class PlayerAttack : MonoBehaviour
     // =========================
     // Damage Persistence System
     // =========================
-    
+
     /// <summary>
     /// Load damage from save when script starts
     /// </summary>
@@ -317,7 +317,7 @@ public class PlayerAttack : MonoBehaviour
 
         // Check if sword has been upgraded
         bool hasUpgrade = GameManager.Instance.GetFlag(GameFlag.hasUpgradedSword);
-        
+
         if (hasUpgrade)
         {
             swordDamage = 10;  // Upgraded damage
@@ -336,14 +336,14 @@ public class PlayerAttack : MonoBehaviour
     public void IncreaseDamage(int amount)
     {
         swordDamage += amount;
-        
+
         // Save to GameManager flag
         if (swordDamage > baseSwordDamage)
         {
             GameManager.Instance.SetFlag(GameFlag.hasUpgradedSword, true);
             GameManager.Instance.SaveProgress();
         }
-        
+
         Debug.Log($"⚔️ Damage increased by {amount}. New damage: {swordDamage}");
     }
 
@@ -366,7 +366,7 @@ public class PlayerAttack : MonoBehaviour
             // Draw normal attack range
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(attackPoint.position, normalAttackRange);
-            
+
             // Draw dash attack range
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(attackPoint.position, dashAttackRange);

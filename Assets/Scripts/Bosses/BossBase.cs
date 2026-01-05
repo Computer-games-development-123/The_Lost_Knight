@@ -27,13 +27,6 @@ public class BossBase : MonoBehaviour
     protected bool isDead = false;
     protected bool isPhase2 = false;
     public bool facingRight = true;
-
-    // Health bar UI (auto-found)
-    // private Image healthBarFill;
-    // private TextMeshProUGUI bossNameText;
-    // private GameObject healthBarCanvas;
-
-    // Public property for external access
     public int CurrentHP => currentHP;
 
     protected virtual void Start()
@@ -49,18 +42,8 @@ public class BossBase : MonoBehaviour
             player = playerObj.transform;
         }
 
-        // Auto-find health bar UI in scene
-        //FindHealthBarUI();
-
         OnBossStart();
 
-        // Show health bar
-        // ShowHealthBar();
-
-        // if (DialogueManager.Instance != null && spawnDialogue != null)
-        // {
-        //     DialogueManager.Instance.Play(spawnDialogue);
-        // }
     }
 
     protected virtual void Update()
@@ -79,6 +62,7 @@ public class BossBase : MonoBehaviour
     protected virtual void OnBossStart()
     {
         Debug.Log($"{bossName} battle started!");
+        DialogueManager.Instance.Play(spawnDialogue);
     }
 
     protected virtual void BossAI()
@@ -115,9 +99,6 @@ public class BossBase : MonoBehaviour
         }
 
         currentHP -= damageAmount;
-
-        // Update health bar
-        //UpdateHealthBar();
 
         if (anim != null)
             anim.SetTrigger("Hurt");
@@ -164,9 +145,6 @@ public class BossBase : MonoBehaviour
     {
         isDead = true;
 
-        // Hide health bar
-        //HideHealthBar();
-
         if (anim != null)
             anim.SetTrigger("Death");
 
@@ -177,7 +155,20 @@ public class BossBase : MonoBehaviour
             waveManager.OnBossDied(this);
         }
 
+        if (DialogueManager.Instance != null && deathDialogue != null)
+        {
+            DialogueManager.Instance.Play(deathDialogue, OnDeathDialogueComplete);
+        }
+        else
+        {
+            OnDeathDialogueComplete();
+        }
         Destroy(gameObject, 3f);
+    }
+
+    protected virtual void OnDeathDialogueComplete()
+    {
+        Destroy(gameObject, 2f);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -194,100 +185,5 @@ public class BossBase : MonoBehaviour
         }
     }
 
-    #region Health Bar Methods
 
-    /// <summary>
-    /// Auto-find health bar UI in the scene
-    /// Looks for BossHealthCanvas or BossHealthBar objects
-    /// </summary>
-    // private void FindHealthBarUI()
-    // {
-    //     // Try to find BossHealthCanvas
-    //     GameObject canvas = GameObject.Find("BossHealthCanvas");
-    //     if (canvas == null)
-    //         canvas = GameObject.Find("BossHealthBar");
-
-    //     if (canvas != null)
-    //     {
-    //         healthBarCanvas = canvas;
-
-    //         // Find Fill image (look for Image with fillAmount)
-    //         Image[] images = canvas.GetComponentsInChildren<Image>(true);
-    //         foreach (Image img in images)
-    //         {
-    //             // Look for the fill bar (has Image Type = Filled)
-    //             if (img.type == Image.Type.Filled && img.name.ToLower().Contains("fill"))
-    //             {
-    //                 healthBarFill = img;
-    //                 Debug.Log($"✅ Found health bar fill: {img.name}");
-    //                 break;
-    //             }
-    //         }
-
-    //         // Find boss name text
-    //         TextMeshProUGUI[] texts = canvas.GetComponentsInChildren<TextMeshProUGUI>(true);
-    //         foreach (TextMeshProUGUI text in texts)
-    //         {
-    //             // Look for text named BossName or similar
-    //             if (text.name.ToLower().Contains("name") || text.name.ToLower().Contains("boss"))
-    //             {
-    //                 bossNameText = text;
-    //                 Debug.Log($"✅ Found boss name text: {text.name}");
-    //                 break;
-    //             }
-    //         }
-
-    //         if (healthBarFill == null)
-    //             Debug.LogWarning("⚠️ Could not find health bar Fill image!");
-
-    //         if (bossNameText == null)
-    //             Debug.LogWarning("⚠️ Could not find boss name text!");
-    //     }
-    //     else
-    //     {
-    //         Debug.LogError("❌ Could not find BossHealthCanvas in scene!");
-    //     }
-    // }
-
-    // private void ShowHealthBar()
-    // {
-    //     // Set boss name
-    //     if (bossNameText != null)
-    //     {
-    //         bossNameText.text = bossName;
-    //     }
-
-    //     // Set health to full
-    //     if (healthBarFill != null)
-    //     {
-    //         healthBarFill.fillAmount = 1f;
-    //     }
-
-    //     // Show canvas
-    //     if (healthBarCanvas != null)
-    //     {
-    //         healthBarCanvas.SetActive(true);
-    //         Debug.Log($"🌟 Health bar shown for {bossName}");
-    //     }
-    // }
-
-    // private void UpdateHealthBar()
-    // {
-    //     if (healthBarFill != null)
-    //     {
-    //         float fillAmount = (float)currentHP / maxHP;
-    //         healthBarFill.fillAmount = fillAmount;
-    //     }
-    // }
-
-    // private void HideHealthBar()
-    // {
-    //     if (healthBarCanvas != null)
-    //     {
-    //         healthBarCanvas.SetActive(false);
-    //         Debug.Log("🚫 Health bar hidden");
-    //     }
-    // }
-
-    #endregion
 }
