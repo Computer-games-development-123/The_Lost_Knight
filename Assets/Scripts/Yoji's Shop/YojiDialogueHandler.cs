@@ -1,5 +1,13 @@
 using UnityEngine;
 
+<<<<<<< HEAD
+/// <summary>
+/// Yoji Dialogue Handler - INDEPENDENT version
+/// Sets its own flags directly
+/// Only depends on GameManager for flag checking
+/// </summary>
+=======
+>>>>>>> 6e58cd296a17e719112cce8b1abcc8d0238c7e7d
 public class YojiDialogueHandler : MonoBehaviour
 {
     [Header("Dialogue Data")]
@@ -136,7 +144,11 @@ public class YojiDialogueHandler : MonoBehaviour
             }
             return;
         }
+<<<<<<< HEAD
+        
+=======
 
+>>>>>>> 6e58cd296a17e719112cce8b1abcc8d0238c7e7d
         // CASE 4: After defeating Fika (Reveal Wave Of Fire)
         if (GM.GetFlag(GameFlag.FikaDefeated) && !GM.GetFlag(GameFlag.YojiPostFikaDialogueSeen))
         {

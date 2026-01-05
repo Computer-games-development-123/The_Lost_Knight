@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: Yoji_Free_Weapon
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
+<<<<<<< HEAD
+  flag: 4
+=======
   flag: 0
+>>>>>>> 6e58cd296a17e719112cce8b1abcc8d0238c7e7d
   speakerName: Game Progress
   lines:
   - Yoji has given you a free weapon upgrade
