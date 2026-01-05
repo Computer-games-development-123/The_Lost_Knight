@@ -151,13 +151,13 @@ MonoBehaviour:
   waves:
   - waveName: 
     enemyPrefab: {fileID: 7219932414428029039, guid: 6aa477707d7db3d42a4040bcf35655b5, type: 3}
-    enemyCount: 0
-    spawnDelay: 3
+    enemyCount: 5
+    spawnDelay: 2
     spawnPoints:
     - {fileID: 1201971798}
   - waveName: 
     enemyPrefab: {fileID: 7219932414428029039, guid: 11c602bcc523fbb4f908b4d5b51d6482, type: 3}
-    enemyCount: 0
+    enemyCount: 10
     spawnDelay: 1.5
     spawnPoints:
     - {fileID: 1201971798}
@@ -215,6 +215,66 @@ Transform:
   m_Children:
   - {fileID: 985370993}
   - {fileID: 997321726}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &110813595
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 110813597}
+  - component: {fileID: 110813596}
+  m_Layer: 0
+  m_Name: BossCutsceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &110813596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110813595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4e33509f131a5f4b8ec1989c73fd460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FikaBossCutsceneManager
+  fikaBossPrefab: {fileID: 3005292868502567045, guid: c47d037dfce24824e903d6cee8a8a9d4, type: 3}
+  monaPrefab: {fileID: 3005292868502567045, guid: e348a76d4070d524082713f863505a33, type: 3}
+  yojiPrefab: {fileID: 5941508025268686040, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+  fikaSpawnPoint: {fileID: 2042312077}
+  monaSpawnPoint: {fileID: 1201971798}
+  yojiSpawnPoint: {fileID: 1429205659}
+  fikaMonaAppearDialogue: {fileID: 0}
+  yojiInterruptsDialogue: {fileID: 0}
+  fikaChallengeDialogue: {fileID: 0}
+  yojiMoveSpeed: 15
+  arriveDistance: 1
+  pauseBeforeCombo: 0.15
+  pauseBetweenHits: 0.1
+  pauseBeforeMonaDies: 0.2
+  vanishDelay: 0.1
+  playerOverride: {fileID: 621874279}
+--- !u!4 &110813597
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110813595}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.61498, y: -0.3552, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &328886957 stripped
@@ -428,6 +488,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &621874279 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4376152552779809795, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
+  m_PrefabInstance: {fileID: 1709288150}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &893627513
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -624,6 +689,10 @@ PrefabInstance:
     - target: {fileID: 2687458723746466473, guid: 4f3e88e5172a60f45a1cbfd3b48b6877, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281949083260585453, guid: 4f3e88e5172a60f45a1cbfd3b48b6877, type: 3}
+      propertyPath: m_text
+      value: Fika
       objectReference: {fileID: 0}
     - target: {fileID: 3552585727002891705, guid: 4f3e88e5172a60f45a1cbfd3b48b6877, type: 3}
       propertyPath: m_text
@@ -1021,7 +1090,7 @@ Transform:
   m_GameObject: {fileID: 1201971797}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.71, y: -3.5, z: 0}
+  m_LocalPosition: {x: 6, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1449,3 +1518,4 @@ SceneRoots:
   - {fileID: 42759255}
   - {fileID: 893627513}
   - {fileID: 922455462}
+  - {fileID: 110813597}

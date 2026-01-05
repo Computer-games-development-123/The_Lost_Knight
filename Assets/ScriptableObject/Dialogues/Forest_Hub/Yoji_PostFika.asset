@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10218a061c572484faf9e08ab7ff6a87, type: 3}
+  m_Name: Yoji_PostFika
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  id: 
+  flag: 0
+  speakerName: Yoji, Store Owner
+  lines:
+  - quite a fight we had there! But im glad you made it.
+  - You are one step closer to becoming the hero of the forest.
+  - Rejoice!
+  portrait: {fileID: 0}
+  pauseGameDuringDialogue: 1

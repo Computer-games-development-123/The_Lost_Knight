@@ -1062,13 +1062,13 @@ MonoBehaviour:
   waves:
   - waveName: Wave1
     enemyPrefab: {fileID: 7219932414428029039, guid: 8e7ea1085299b6b498ffc927cf854677, type: 3}
-    enemyCount: 1
+    enemyCount: 4
     spawnDelay: 2
     spawnPoints:
     - {fileID: 1444554979}
   - waveName: Wave2
     enemyPrefab: {fileID: 7219932414428029039, guid: b06cd6ddcadebe04188a45ce0e4601ec, type: 3}
-    enemyCount: 1
+    enemyCount: 8
     spawnDelay: 1.5
     spawnPoints:
     - {fileID: 1444554979}
@@ -1579,6 +1579,16 @@ PrefabInstance:
     - target: {fileID: 2687458723746466473, guid: 4f3e88e5172a60f45a1cbfd3b48b6877, type: 3}
       propertyPath: m_Name
       value: BossHealthCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687458723746466473, guid: 4f3e88e5172a60f45a1cbfd3b48b6877, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281949083260585453, guid: 4f3e88e5172a60f45a1cbfd3b48b6877, type: 3}
+      propertyPath: m_text
+      value: 'George
+
+'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
