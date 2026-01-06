@@ -230,7 +230,7 @@ public class YojiDialogueHandler : MonoBehaviour
             Abilities abilities = player.GetComponent<Abilities>();
             if (abilities != null)
             {
-                abilities.UpgradeSword(); // ✅ CORRECT: This is the sword upgrade!
+                abilities.UpgradeSword();
                 Debug.Log("✅ Player given sword upgrade - Can now damage George!");
             }
         }

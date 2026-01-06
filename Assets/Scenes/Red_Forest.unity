@@ -263,6 +263,7 @@ MonoBehaviour:
   pauseBetweenHits: 0.12
   pauseBeforeMonaDies: 0.2
   vanishDelay: 0.25
+  FikaHealthBar: {fileID: 940774280}
   playerOverride: {fileID: 621874279}
 --- !u!4 &110813597
 Transform:

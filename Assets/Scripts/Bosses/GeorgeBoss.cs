@@ -302,21 +302,18 @@ public class GeorgeBoss : BossBase
 
     protected override void Die()
     {
-        base.Die();
         if (isDead) return;
         isDead = true;
-
         isAttacking = false;
         isFlying = false;
-
         if (rb != null)
             rb.linearVelocity = Vector2.zero;
 
         if (anim != null)
         {
-            anim.SetBool("IsDead", true);
             anim.SetFloat("Speed", 0);
         }
+        base.Die();
     }
 
     protected override void EnterPhase2()
