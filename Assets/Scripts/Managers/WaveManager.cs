@@ -228,7 +228,7 @@ public class WaveManager : MonoBehaviour
                 if (showDebugLogs) Debug.Log($"✅ Boss spawned: {bossPrefab.name}");
             }
         }
-        BossHealthBar.SetActive(true);
+        if (cutsceneManager == null) BossHealthBar.SetActive(true);
     }
 
     private bool IsBossAlreadyDefeated()

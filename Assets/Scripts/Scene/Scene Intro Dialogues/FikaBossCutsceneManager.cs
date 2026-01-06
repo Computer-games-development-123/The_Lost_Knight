@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class FikaBossCutsceneManager : MonoBehaviour
 {
@@ -28,6 +29,9 @@ public class FikaBossCutsceneManager : MonoBehaviour
 
     [Header("Vanish")]
     [SerializeField] private float vanishDelay = 0.25f;
+
+    [Header("Boss HealthBar")]
+    [SerializeField] private GameObject FikaHealthBar;
 
     [Header("Player")]
     [SerializeField] private GameObject playerOverride;
@@ -136,6 +140,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
 
         // Start fight + unlock player
         if (fikaAI != null) fikaAI.enabled = true;
+        FikaHealthBar.SetActive(true);
         if (pc != null) pc.enabled = true;
         UserInputManager.Instance.EnableInput();
         UnhookEvents();
@@ -146,24 +151,38 @@ public class FikaBossCutsceneManager : MonoBehaviour
     private IEnumerator DoYojiCombo3()
     {
         lastHitIndex = 0;
+        SpriteRenderer monaSR = monaInstance.GetComponent<SpriteRenderer>();
 
         if (yojiAnim != null) yojiAnim.SetTrigger("Attack1");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         if (monaAnim != null) monaAnim.SetTrigger("Hurt");
+        StartCoroutine(FlashRed(monaSR));
         yield return WaitUntilOrTimeout(() => lastHitIndex == 1, 2f);
         yield return new WaitForSeconds(pauseBetweenHits);
 
         if (yojiAnim != null) yojiAnim.SetTrigger("Attack2");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         if (monaAnim != null) monaAnim.SetTrigger("Hurt");
+        StartCoroutine(FlashRed(monaSR));
         yield return WaitUntilOrTimeout(() => lastHitIndex == 2, 2f);
         yield return new WaitForSeconds(pauseBetweenHits);
 
         if (yojiAnim != null) yojiAnim.SetTrigger("Attack3");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         if (monaAnim != null) monaAnim.SetTrigger("Hurt");
+        StartCoroutine(FlashRed(monaSR));
         yield return WaitUntilOrTimeout(() => lastHitIndex == 3, 2f);
 
+    }
+
+    protected IEnumerator FlashRed(SpriteRenderer sr)
+    {
+        if (sr != null)
+        {
+            sr.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+            sr.color = Color.white;
+        }
     }
 
     private IEnumerator MoveYojiToMona()
