@@ -155,12 +155,14 @@ MonoBehaviour:
     spawnDelay: 2
     spawnPoints:
     - {fileID: 1201971798}
+    - {fileID: 1670074845}
   - waveName: Rising Deads
     enemyPrefab: {fileID: 7219932414428029039, guid: 11c602bcc523fbb4f908b4d5b51d6482, type: 3}
     enemyCount: 10
     spawnDelay: 1.5
     spawnPoints:
     - {fileID: 1201971798}
+    - {fileID: 1670074845}
   bossPrefab: {fileID: 3005292868502567045, guid: c47d037dfce24824e903d6cee8a8a9d4, type: 3}
   bossSpawnPoint: {fileID: 1201971798}
   portalBack: {fileID: 985370994}
@@ -248,19 +250,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FikaBossCutsceneManager
   fikaBossPrefab: {fileID: 3005292868502567045, guid: c47d037dfce24824e903d6cee8a8a9d4, type: 3}
   monaPrefab: {fileID: 3005292868502567045, guid: e348a76d4070d524082713f863505a33, type: 3}
-  yojiPrefab: {fileID: 5941508025268686040, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
-  fikaSpawnPoint: {fileID: 2042312077}
-  monaSpawnPoint: {fileID: 1201971798}
-  yojiSpawnPoint: {fileID: 1429205659}
+  yojiPrefab: {fileID: 1617563445}
+  fikaSpawnPoint: {fileID: 1856544739}
+  monaSpawnPoint: {fileID: 864202718}
+  yojiSpawnPoint: {fileID: 551915082}
   MonaFirstDialogue: {fileID: 11400000, guid: 6415c350f51fd0043b9d5b3f21ba5c50, type: 2}
   FikaFirstDialogue: {fileID: 11400000, guid: 67697ab34f6a3b348b22e6acfb029fdf, type: 2}
   yojiInterruptsDialogue: {fileID: 11400000, guid: 76f6a92cc8eed21498279fd9f9c79475, type: 2}
   yojiMoveSpeed: 15
-  arriveDistance: 1
+  arriveDistance: 2
   pauseBeforeCombo: 0.15
-  pauseBetweenHits: 0.1
+  pauseBetweenHits: 0.12
   pauseBeforeMonaDies: 0.2
-  vanishDelay: 0.1
+  vanishDelay: 0.25
   playerOverride: {fileID: 621874279}
 --- !u!4 &110813597
 Transform:
@@ -590,6 +592,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &551915081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 551915082}
+  m_Layer: 0
+  m_Name: YojiSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &551915082
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551915081}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8, y: -3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1985152123}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &621874279 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4376152552779809795, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
@@ -641,6 +674,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &864202717
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 864202718}
+  m_Layer: 0
+  m_Name: MonaSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &864202718
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864202717}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6, y: -3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1985152123}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &893627513
 PrefabInstance:
@@ -1232,7 +1296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1201971798}
   m_Layer: 0
-  m_Name: EnemySpawn
+  m_Name: EnemySpawn1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1247,7 +1311,7 @@ Transform:
   m_GameObject: {fileID: 1201971797}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: -3, z: 0}
+  m_LocalPosition: {x: 7, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1504,6 +1568,42 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4061a98beba98f244b971448007db841, type: 3}
+--- !u!1 &1617563445 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5941508025268686040, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+  m_PrefabInstance: {fileID: 1968745222}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1670074844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1670074845}
+  m_Layer: 0
+  m_Name: EnemySpawn2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1670074845
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670074844}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7, y: -3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1985152123}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1709288150
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1561,6 +1661,104 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
+--- !u!1 &1856544738
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1856544739}
+  m_Layer: 0
+  m_Name: FikaSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1856544739
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856544738}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8, y: -3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1985152123}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1968745222
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5941508025268686040, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: m_Name
+      value: Yoji
+      objectReference: {fileID: 0}
+    - target: {fileID: 5941508025268686040, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197112414191215884, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197112414191215884, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197112414191215884, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197112414191215884, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197112414191215884, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197112414191215884, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197112414191215884, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197112414191215884, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197112414191215884, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197112414191215884, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197112414191215884, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5318802686532609789, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+    - {fileID: 6506609825868262242, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
 --- !u!1 &1985152122
 GameObject:
   m_ObjectHideFlags: 0
@@ -1593,6 +1791,10 @@ Transform:
   - {fileID: 1429205659}
   - {fileID: 2042312077}
   - {fileID: 1201971798}
+  - {fileID: 1670074845}
+  - {fileID: 864202718}
+  - {fileID: 1856544739}
+  - {fileID: 551915082}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2042312076
@@ -1679,3 +1881,4 @@ SceneRoots:
   - {fileID: 299996982}
   - {fileID: 858666949}
   - {fileID: 214919654}
+  - {fileID: 1968745222}

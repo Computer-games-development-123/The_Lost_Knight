@@ -306,9 +306,9 @@ MonoBehaviour:
   baseSwordDamage: 8
   swordDamage: 5
   attackCooldown: 0.33
-  normalAttackRange: 0.5
+  normalAttackRange: 0.75
   attackPoint: {fileID: 6633376722634027389}
-  dashAttackRange: 1
+  dashAttackRange: 0.75
   dashDistance: 1.5
   dashSpeed: 15
   dashKnockbackMultiplier: 1.5
@@ -402,7 +402,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.75
 --- !u!1 &7292398752505297536
 GameObject:
   m_ObjectHideFlags: 0
