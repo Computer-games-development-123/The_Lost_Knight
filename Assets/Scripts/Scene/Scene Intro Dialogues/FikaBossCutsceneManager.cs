@@ -102,6 +102,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
         HookEvents();
 
         if (yojiAnim != null) yojiAnim.SetTrigger("Enter");
+        yojiInstance.SetActive(true);
 
         yield return new WaitForSeconds(0.2f);
 
@@ -147,17 +148,22 @@ public class FikaBossCutsceneManager : MonoBehaviour
         lastHitIndex = 0;
 
         if (yojiAnim != null) yojiAnim.SetTrigger("Attack1");
+        yield return new WaitForSeconds(0.5f);
+        if (monaAnim != null) monaAnim.SetTrigger("Hurt");
         yield return WaitUntilOrTimeout(() => lastHitIndex == 1, 2f);
         yield return new WaitForSeconds(pauseBetweenHits);
 
         if (yojiAnim != null) yojiAnim.SetTrigger("Attack2");
+        yield return new WaitForSeconds(0.5f);
+        if (monaAnim != null) monaAnim.SetTrigger("Hurt");
         yield return WaitUntilOrTimeout(() => lastHitIndex == 2, 2f);
         yield return new WaitForSeconds(pauseBetweenHits);
 
         if (yojiAnim != null) yojiAnim.SetTrigger("Attack3");
+        yield return new WaitForSeconds(0.5f);
+        if (monaAnim != null) monaAnim.SetTrigger("Hurt");
         yield return WaitUntilOrTimeout(() => lastHitIndex == 3, 2f);
 
-        // נוסיף אנימציית Hurt למונה
     }
 
     private IEnumerator MoveYojiToMona()
