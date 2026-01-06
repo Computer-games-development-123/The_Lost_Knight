@@ -247,9 +247,10 @@ MonoBehaviour:
   hasWaveOfFire: 0
   hasUpgradedSword: 0
   teleportDistance: 4.5
+  teleportCooldown: 1
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   upgradeSwordValue: 5
 --- !u!114 &5019103269634199412
 MonoBehaviour:
@@ -302,22 +303,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 915d8101d3192174eb82313d7c3505a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  baseSwordDamage: 8
   swordDamage: 5
-  attackRange: 0.5
+  attackCooldown: 0.33
+  normalAttackRange: 0.5
+  attackPoint: {fileID: 6633376722634027389}
+  dashAttackRange: 1
+  dashDistance: 1.5
+  dashSpeed: 15
+  dashKnockbackMultiplier: 1.5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
   attackKey: 120
-  enableComboSystem: 1
-  comboWindow: 0.35
-  maxComboSteps: 3
   attackTriggerName: Attack
-  jumpAttackTriggerName: JumpAttack
-  comboIntName: Combo
+  attackIndexIntName: AttackIndex
   waveOfFirePrefab: {fileID: 0}
   firePoint: {fileID: 0}
   waveOfFireCooldown: 5
-  attackPoint: {fileID: 6633376722634027389}
 --- !u!114 &8192387872576722755
 MonoBehaviour:
   m_ObjectHideFlags: 0

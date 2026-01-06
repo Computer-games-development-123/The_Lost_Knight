@@ -27,7 +27,7 @@ public class WaveManager : MonoBehaviour
     public GameObject portalToNextArea;
 
     [Header("UI References")]
-    public GameObject waveCompleteUI;
+    public GameObject waveUI;
     public TMPro.TextMeshProUGUI waveText;
     public GameObject BossHealthBar;
 
@@ -52,8 +52,8 @@ public class WaveManager : MonoBehaviour
         closeBackPortal();
         ResetWaveManager();
 
-        if (waveCompleteUI != null)
-            waveCompleteUI.SetActive(false);
+        if (waveUI != null)
+            waveUI.SetActive(false);
 
         StartCoroutine(StartNextWave());
     }
@@ -99,6 +99,12 @@ public class WaveManager : MonoBehaviour
         if (waveText != null)
             waveText.text = $"Wave {currentWaveIndex + 1}: {currentWave.waveName}";
 
+        if (waveUI != null)
+        {
+            waveUI.SetActive(true);
+            StartCoroutine(HideWaveCompleteUI());
+        }
+
         if (showDebugLogs) Debug.Log($"🌊 Wave {currentWaveIndex + 1}: {currentWave.waveName}");
 
         for (int i = 0; i < currentWave.enemyCount; i++)
@@ -130,12 +136,6 @@ public class WaveManager : MonoBehaviour
             if (showDebugLogs) Debug.Log($"⚠️ Wave {currentWaveIndex + 1} completed during spawn");
             currentWaveIndex++;
 
-            if (waveCompleteUI != null)
-            {
-                waveCompleteUI.SetActive(true);
-                StartCoroutine(HideWaveCompleteUI());
-            }
-
             StartCoroutine(StartNextWave());
             yield break;
         }
@@ -165,13 +165,6 @@ public class WaveManager : MonoBehaviour
         if (enemiesAlive <= 0 && !waveInProgress && !bossSpawned)
         {
             currentWaveIndex++;
-
-            if (waveCompleteUI != null)
-            {
-                waveCompleteUI.SetActive(true);
-                StartCoroutine(HideWaveCompleteUI());
-            }
-
             StartCoroutine(StartNextWave());
         }
     }
@@ -179,8 +172,8 @@ public class WaveManager : MonoBehaviour
     IEnumerator HideWaveCompleteUI()
     {
         yield return new WaitForSeconds(2f);
-        if (waveCompleteUI != null)
-            waveCompleteUI.SetActive(false);
+        if (waveUI != null)
+            waveUI.SetActive(false);
     }
 
     void SpawnBoss()
@@ -194,6 +187,14 @@ public class WaveManager : MonoBehaviour
         // Check if boss already defeated
         if (IsBossAlreadyDefeated())
         {
+            if (waveText != null)
+                waveText.text = $"Boss: {bossPrefab.name} already defeated";
+
+            if (waveUI != null)
+            {
+                waveUI.SetActive(true);
+                StartCoroutine(HideWaveCompleteUI());
+            }
             if (showDebugLogs) Debug.Log("✅ Boss already defeated - spawning portals");
             SpawnPortals();
             return;
