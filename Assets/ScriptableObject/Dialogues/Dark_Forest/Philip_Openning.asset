@@ -28,5 +28,5 @@ MonoBehaviour:
 
 '
   - Lets end this quick shall we?.
-  portrait: {fileID: 0}
+  portrait: {fileID: -4820138417903964484, guid: 65550d09339df2b49ad54eae4acf18cd, type: 3}
   pauseGameDuringDialogue: 1

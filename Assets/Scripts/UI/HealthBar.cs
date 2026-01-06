@@ -21,10 +21,10 @@ public class HealthBar : MonoBehaviour
         {
             BB = boss.GetComponent<BossBase>();
         }
-        if (BB == null)
-        {
-            Debug.LogWarning("Can't find BossBase component!");
-        }
+        // if (BB == null)
+        // {
+        //     Debug.LogWarning("Can't find BossBase component!");
+        // }
 
     }
 

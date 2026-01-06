@@ -255,6 +255,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e92ee2fb53de314192bbae7bce9529d, type: 3}
+--- !u!1001 &433735190
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1297589789808259966, guid: 16b259cd5226bc1488df6378d1063127, type: 3}
+      propertyPath: m_Name
+      value: UserInputManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4978577206331034308, guid: 16b259cd5226bc1488df6378d1063127, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.59907
+      objectReference: {fileID: 0}
+    - target: {fileID: 4978577206331034308, guid: 16b259cd5226bc1488df6378d1063127, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.30422
+      objectReference: {fileID: 0}
+    - target: {fileID: 4978577206331034308, guid: 16b259cd5226bc1488df6378d1063127, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4978577206331034308, guid: 16b259cd5226bc1488df6378d1063127, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4978577206331034308, guid: 16b259cd5226bc1488df6378d1063127, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4978577206331034308, guid: 16b259cd5226bc1488df6378d1063127, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4978577206331034308, guid: 16b259cd5226bc1488df6378d1063127, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4978577206331034308, guid: 16b259cd5226bc1488df6378d1063127, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4978577206331034308, guid: 16b259cd5226bc1488df6378d1063127, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4978577206331034308, guid: 16b259cd5226bc1488df6378d1063127, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 16b259cd5226bc1488df6378d1063127, type: 3}
 --- !u!1 &491598867
 GameObject:
   m_ObjectHideFlags: 0
@@ -1759,13 +1816,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
   waves:
-  - waveName: 
+  - waveName: Night Crows
     enemyPrefab: {fileID: 7219932414428029039, guid: a56479f991fdbe1488040931ce518809, type: 3}
     enemyCount: 0
     spawnDelay: 2
     spawnPoints:
     - {fileID: 717735140}
-  - waveName: 
+  - waveName: HellHounds
     enemyPrefab: {fileID: 7219932414428029039, guid: db9f2e1378d1f0348b8cf7ca69b1d9dd, type: 3}
     enemyCount: 0
     spawnDelay: 2
@@ -1775,7 +1832,7 @@ MonoBehaviour:
   bossSpawnPoint: {fileID: 717735140}
   portalBack: {fileID: 1268311585}
   portalToNextArea: {fileID: 1175005180}
-  waveCompleteUI: {fileID: 1630719080}
+  waveUI: {fileID: 1630719080}
   waveText: {fileID: 1630719081}
   BossHealthBar: {fileID: 550692846}
   showDebugLogs: 1
@@ -1877,3 +1934,4 @@ SceneRoots:
   - {fileID: 550692845}
   - {fileID: 49446250}
   - {fileID: 134692370}
+  - {fileID: 433735190}
