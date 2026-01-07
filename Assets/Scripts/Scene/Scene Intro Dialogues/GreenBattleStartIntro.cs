@@ -2,11 +2,15 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// Green Battle Start Intro - Plays dialogue only on first visit
+/// Green Battle Start Intro - Plays multiple dialogues in sequence on first visit
+/// Player presses F to advance through all 3 dialogues
 /// </summary>
 public class GreenBattleStartIntro : MonoBehaviour
 {
-    public DialogueData BattleStartDialogue;
+    [Header("Dialogue Sequence")]
+    public DialogueData hpAndPotionsDialogue;
+    public DialogueData coinsDialogue;
+    public DialogueData prepareForBattleDialogue;
 
     [Header("Flag to Check")]
     [Tooltip("Which flag determines if this dialogue has been seen?")]
@@ -20,11 +24,11 @@ public class GreenBattleStartIntro : MonoBehaviour
     {
         if (ShouldPlayDialogue())
         {
-            StartCoroutine(PlayBattleStartDialogue());
+            StartCoroutine(PlayDialogueSequence());
         }
         else
         {
-            Debug.Log("🚫 Green Battle intro dialogue already seen - skipping");
+            Debug.Log("Green Battle intro dialogue already seen - skipping");
         }
     }
 
@@ -45,26 +49,61 @@ public class GreenBattleStartIntro : MonoBehaviour
         return true;
     }
 
-    private IEnumerator PlayBattleStartDialogue()
+    private IEnumerator PlayDialogueSequence()
     {
         yield return null;
 
-        if (DialogueManager.Instance != null && BattleStartDialogue != null)
+        if (DialogueManager.Instance == null)
         {
-            Debug.Log("🎬 Playing Green Battle intro dialogue");
-
-            // Play dialogue and mark as seen when complete
-            DialogueManager.Instance.Play(BattleStartDialogue, OnDialogueComplete);
+            Debug.LogError("DialogueManager not found!");
+            yield break;
         }
+
+        Debug.Log("tarting Green Battle intro dialogue sequence");
+
+        // dialogue 1: HP and Potions
+        if (hpAndPotionsDialogue != null)
+        {
+            bool dialogue1Done = false;
+            DialogueManager.Instance.Play(hpAndPotionsDialogue, () => dialogue1Done = true);
+            
+            // Wait for player to finish this dialogue (pressing F)
+            yield return new WaitUntil(() => dialogue1Done);
+            // immediately start next dialogue
+        }
+
+        // dialogue 2: Coins
+        if (coinsDialogue != null)
+        {
+            bool dialogue2Done = false;
+            DialogueManager.Instance.Play(coinsDialogue, () => dialogue2Done = true);
+            
+            // Wait for player to finish this dialogue (pressing F)
+            yield return new WaitUntil(() => dialogue2Done);
+            // immediately start next dialogue
+        }
+
+        // dialogue 3: Prepare for Battle
+        if (prepareForBattleDialogue != null)
+        {
+            bool dialogue3Done = false;
+            DialogueManager.Instance.Play(prepareForBattleDialogue, () => dialogue3Done = true);
+            
+            // Wait for player to finish this dialogue (pressing F)
+            yield return new WaitUntil(() => dialogue3Done);
+        }
+
+        // Mark all dialogues as seen after the sequence completes
+        OnDialogueSequenceComplete();
     }
 
-    private void OnDialogueComplete()
+    private void OnDialogueSequenceComplete()
     {
         // Mark dialogue as seen
         if (GameManager.Instance != null && !playEveryTime)
         {
             GameManager.Instance.SetFlag(dialogueSeenFlag, true);
-            Debug.Log($"✅ Green Battle intro marked as seen (Flag: {dialogueSeenFlag})");
+            Debug.Log($"Green Battle intro sequence completed and marked as seen (Flag: {dialogueSeenFlag})");
         }
     }
 }

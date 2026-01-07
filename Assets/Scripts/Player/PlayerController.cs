@@ -61,6 +61,8 @@ public class PlayerController : MonoBehaviour
             // Jump
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
+                AudioManager.Instance?.PlayPlayerJump();
+                
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
 
                 if (anim != null)

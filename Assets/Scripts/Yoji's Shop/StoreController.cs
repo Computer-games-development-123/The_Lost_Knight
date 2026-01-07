@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Store Controller - Manages shop UI and purchases
-/// FIXED: Uses PlayerState for coins/stats (NOT PlayerHealth or GameManager)
 /// </summary>
 public class ListStoreController : MonoBehaviour
 {
@@ -237,6 +236,11 @@ public class ListStoreController : MonoBehaviour
         }
 
         Time.timeScale = 0f;
+
+        //Disables player input while being is shop menu.
+        if (UserInputManager.Instance != null)
+            UserInputManager.Instance.DisableInput();
+
         selectedIndex = 0;
         UpdateStoreTitle();
         UpdateCoinsDisplay();
@@ -253,6 +257,9 @@ public class ListStoreController : MonoBehaviour
         }
 
         Time.timeScale = 1f;
+        //Re-ables input from the player when it closes.
+        if (UserInputManager.Instance != null)
+            UserInputManager.Instance.EnableInput();
     }
 
     void UpdateStoreTitle()
@@ -457,6 +464,8 @@ public class ListStoreController : MonoBehaviour
         {
             inventory.SpendCoins(cost);
         }
+
+        AudioManager.Instance?.PlayItemPurchase();
 
         // Apply item effect
         ApplyItemEffect(itemData.itemType, player);

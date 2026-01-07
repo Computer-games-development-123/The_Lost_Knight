@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Threading.Tasks;
+using Unity.Services.CloudSave.Models;
 
 /// <summary>
 /// Player Health - HP Management ONLY
@@ -27,10 +29,36 @@ public class PlayerHealth : MonoBehaviour
         invulnerability = GetComponent<Invulnerability>();
     }
 
-    private void Start()
+    private async void Start()
     {
+        await LoadMaxHealthFromCloud();
+        
         // Start with full HP
         currentHealth = maxHealth;
+    }
+
+    private async Task LoadMaxHealthFromCloud()
+    {
+        try
+        {
+            var data = await DatabaseManager.LoadData("PlayerMaxHealth");
+            
+            if (data.TryGetValue("PlayerMaxHealth", out Item item))
+            {
+                maxHealth = item.Value.GetAs<float>();
+                Debug.Log($"Max health loaded from cloud: {maxHealth}");
+            }
+            else
+            {
+                maxHealth = 50; // Default starting health
+                Debug.Log($"No saved max health found, using default: {maxHealth}");
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Failed to load max health: {e}");
+            maxHealth = 50; // Fallback to default
+        }
     }
 
     public void TakeDamage(int amount)
@@ -38,7 +66,7 @@ public class PlayerHealth : MonoBehaviour
         // BYPASS invulnerability for scripted deaths (George's instant kill)
         if (amount >= 9000)
         {
-            Debug.Log($"⚠️ SCRIPTED DEATH: Taking {amount} damage (bypassing invulnerability)");
+            Debug.Log($"SCRIPTED DEATH: Taking {amount} damage (bypassing invulnerability)");
             currentHealth = 0;
             Die();
             return;
@@ -83,7 +111,7 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
 
-        Debug.Log($"💚 Healed {amount} HP. Current: {currentHealth}/{maxHealth}");
+        Debug.Log($"Healed {amount} HP. Current: {currentHealth}/{maxHealth}");
     }
 
     /// <summary>
@@ -94,12 +122,12 @@ public class PlayerHealth : MonoBehaviour
         maxHealth = newMaxHealth;
         currentHealth = Mathf.Min(currentHealth, maxHealth);
 
-        Debug.Log($"💚 Max health updated to {maxHealth}");
+        Debug.Log($"💚Max health updated to {maxHealth}");
     }
 
     private void Die()
     {
-        Debug.Log("💀 Player died!");
+        Debug.Log("Player died!");
 
         if (playerController != null)
         {
@@ -139,7 +167,8 @@ public class PlayerHealth : MonoBehaviour
     public void IncreaseMaxHealth(float amount)
     {
         maxHealth += amount;
-        Debug.Log($"❤️ Max health increased by {amount}. New max: {maxHealth}");
+        SaveMaxHealthToCloud();
+        Debug.Log($"Max health increased by {amount}. New max: {maxHealth}");
     }
 
     /// <summary>
@@ -149,7 +178,24 @@ public class PlayerHealth : MonoBehaviour
     public void MultiplyMaxHealth(float multiplier)
     {
         maxHealth *= multiplier;
-        Debug.Log($"❤️ Max health multiplied by {multiplier}. New max: {maxHealth}");
+        SaveMaxHealthToCloud();
+        Debug.Log($"Max health multiplied by {multiplier}. New max: {maxHealth}");
+    }
+
+    /// <summary>
+    /// Save max health to cloud
+    /// </summary>
+    private async void SaveMaxHealthToCloud()
+    {
+        try
+        {
+            await DatabaseManager.SaveData(("PlayerMaxHealth", maxHealth));
+            Debug.Log($"💾 Max health saved to cloud: {maxHealth}");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"❌ Failed to save max health: {e}");
+        }
     }
 
     #endregion

@@ -40,7 +40,7 @@ public class SceneMusicTrigger : MonoBehaviour
     {
         if (AudioManager.Instance == null)
         {
-            Debug.LogError("❌ AudioManager not found! Make sure AudioManager exists in the scene.");
+            Debug.LogError("AudioManager not found! Make sure AudioManager exists in the scene.");
             return;
         }
 
@@ -82,7 +82,7 @@ public class SceneMusicTrigger : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"⚠️ Music clip for {sceneMusic} not assigned in AudioManager!");
+            Debug.LogWarning($"Music clip for {sceneMusic} not assigned in AudioManager!");
         }
     }
 }

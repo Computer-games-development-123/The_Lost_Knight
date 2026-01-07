@@ -77,7 +77,7 @@ public class WaveManager : MonoBehaviour
         allWavesComplete = false;
         spawnedEnemies.Clear();
 
-        if (showDebugLogs) Debug.Log("🔄 WaveManager reset");
+        if (showDebugLogs) Debug.Log("WaveManager reset");
     }
 
     IEnumerator StartNextWave()
@@ -85,7 +85,7 @@ public class WaveManager : MonoBehaviour
         if (currentWaveIndex >= waves.Count)
         {
             allWavesComplete = true;
-            if (showDebugLogs) Debug.Log("✅ All waves complete!");
+            if (showDebugLogs) Debug.Log("All waves complete!");
 
             yield return new WaitForSeconds(2f);
 
@@ -105,13 +105,13 @@ public class WaveManager : MonoBehaviour
             StartCoroutine(HideWaveCompleteUI());
         }
 
-        if (showDebugLogs) Debug.Log($"🌊 Wave {currentWaveIndex + 1}: {currentWave.waveName}");
+        if (showDebugLogs) Debug.Log($"Wave {currentWaveIndex + 1}: {currentWave.waveName}");
 
         for (int i = 0; i < currentWave.enemyCount; i++)
         {
             if (currentWave.spawnPoints.Length == 0)
             {
-                Debug.LogError("❌ No spawn points!");
+                Debug.LogError("No spawn points!");
                 yield break;
             }
 
@@ -133,7 +133,7 @@ public class WaveManager : MonoBehaviour
 
         if (enemiesAlive <= 0)
         {
-            if (showDebugLogs) Debug.Log($"⚠️ Wave {currentWaveIndex + 1} completed during spawn");
+            if (showDebugLogs) Debug.Log($"Wave {currentWaveIndex + 1} completed during spawn");
             currentWaveIndex++;
 
             StartCoroutine(StartNextWave());
@@ -147,18 +147,18 @@ public class WaveManager : MonoBehaviour
     {
         if (!spawnedEnemies.Contains(enemy))
         {
-            if (showDebugLogs) Debug.LogWarning("⚠️ Unknown enemy - ignoring");
+            if (showDebugLogs) Debug.LogWarning("Unknown enemy - ignoring");
             return;
         }
 
         spawnedEnemies.Remove(enemy);
         enemiesAlive--;
 
-        if (showDebugLogs) Debug.Log($"💀 Enemy died. Remaining: {enemiesAlive}");
+        if (showDebugLogs) Debug.Log($"Enemy died. Remaining: {enemiesAlive}");
 
         if (enemiesAlive < 0)
         {
-            Debug.LogError($"❌ Enemy counter negative!");
+            Debug.LogError($"Enemy counter negative!");
             enemiesAlive = 0;
         }
 
@@ -180,22 +180,15 @@ public class WaveManager : MonoBehaviour
     {
         if (!allWavesComplete)
         {
-            Debug.LogWarning("⚠️ SpawnBoss called but waves not complete!");
+            Debug.LogWarning("SpawnBoss called but waves not complete!");
             return;
         }
 
         // Check if boss already defeated
         if (IsBossAlreadyDefeated())
         {
-            if (waveText != null)
-                waveText.text = $"Boss: {bossPrefab.name} already defeated";
-
-            if (waveUI != null)
-            {
-                waveUI.SetActive(true);
-                StartCoroutine(HideWaveCompleteUI());
-            }
-            if (showDebugLogs) Debug.Log("✅ Boss already defeated - spawning portals");
+            // Boss already defeated - just spawn portals, no UI needed
+            if (showDebugLogs) Debug.Log("Boss already defeated - spawning portals");
             SpawnPortals();
             return;
         }
@@ -225,7 +218,7 @@ public class WaveManager : MonoBehaviour
                     bossScript.waveManager = this;
                 }
 
-                if (showDebugLogs) Debug.Log($"✅ Boss spawned: {bossPrefab.name}");
+                if (showDebugLogs) Debug.Log($"Boss spawned: {bossPrefab.name}");
             }
         }
         if (cutsceneManager == null) BossHealthBar.SetActive(true);
@@ -261,53 +254,28 @@ public class WaveManager : MonoBehaviour
     /// </summary>
     private void SpawnPortals()
     {
-        if (showDebugLogs) Debug.Log("🌀 Spawning portals for cleared area...");
+        if (showDebugLogs) Debug.Log("Spawning portals for cleared area...");
 
         if (portalBack != null)
         {
             portalBack.SetActive(true);
-            if (showDebugLogs) Debug.Log($"✅ Portal activated: {portalBack}");
+            if (showDebugLogs) Debug.Log($"Portal activated: {portalBack}");
         }
         else if (portalBack == null)
         {
-            Debug.LogWarning($"⚠️ Portal not found: {portalBack}");
+            Debug.LogWarning($"Portal not found: {portalBack}");
         }
 
         if (portalToNextArea != null)
         {
             portalToNextArea.SetActive(true);
-            if (showDebugLogs) Debug.Log($"✅ Portal activated: {portalToNextArea}");
+            if (showDebugLogs) Debug.Log($"Portal activated: {portalToNextArea}");
         }
         else
         {
-            Debug.LogWarning($"⚠️ Portal not found: {portalToNextArea}");
+            Debug.LogWarning($"Portal not found: {portalToNextArea}");
         }
     }
-
-    /// <summary>
-    /// Finds GameObject anywhere in hierarchy
-    /// </summary>
-    // private GameObject FindObjectInHierarchy(string objectName)
-    // {
-    //     if (string.IsNullOrEmpty(objectName)) return null;
-
-    //     GameObject obj = GameObject.Find(objectName);
-    //     if (obj != null) return obj;
-
-    //     GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
-    //     foreach (GameObject go in allObjects)
-    //     {
-    //         if (go.hideFlags == HideFlags.None && go.scene.isLoaded)
-    //         {
-    //             if (go.name == objectName)
-    //             {
-    //                 return go;
-    //             }
-    //         }
-    //     }
-
-    //     return null;
-    // }
 
     public void OnBossDied(BossBase boss)
     {

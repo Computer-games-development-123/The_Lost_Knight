@@ -129,7 +129,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0.03103438, y: -0.11166245}
-  m_Size: {x: 0.1315788, y: 0.33869183}
+  m_Size: {x: 0.21, y: 0.33869183}
   m_Direction: 0
 --- !u!50 &8780919851282773113
 Rigidbody2D:
@@ -193,10 +193,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBase
   enemyData: {fileID: 11400000, guid: 0cc75135b9032f7419cd9dc897daca68, type: 2}
-  fallbackMaxHP: 10
+  fallbackMaxHP: 30
   fallbackDamage: 5
   fallbackMoveSpeed: 2
-  fallbackCoinsDropped: 1
+  fallbackCoinsDropped: 3
   knockbackForce: 8
   knockbackDuration: 0.12
   jumperJumpForce: 15
@@ -207,3 +207,5 @@ MonoBehaviour:
   attackCooldown: 2
   projectileSpeed: 8
   waveManager: {fileID: 0}
+  isFacingLeft: 0
+  hasEntringAnimation: 0

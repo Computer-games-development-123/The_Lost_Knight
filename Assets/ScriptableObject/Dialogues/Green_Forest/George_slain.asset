@@ -17,5 +17,5 @@ MonoBehaviour:
   speakerName: Game Progress
   lines:
   - You have slain The King's Royal Beast.
-  portrait: {fileID: 973467727502728177, guid: 2b6046b114c58584a9d1ee5726db8f06, type: 3}
+  portrait: {fileID: -2138534889620764463, guid: 8499aa222c9ccfd4198291b7557eb4f1, type: 3}
   pauseGameDuringDialogue: 1

@@ -80,6 +80,9 @@ public class PlayerInventory : MonoBehaviour
 
         potions--;
         playerHealth.Heal(healAmount);
+
+        AudioManager.Instance?.PlayPlayerHeal();
+        
         Debug.Log($"🧪 Used potion to heal. Remaining potions: {potions}");
         SaveInventory(); // Auto-save on change
         return true;

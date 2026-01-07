@@ -125,7 +125,7 @@ public class BossBase : MonoBehaviour
 
     protected virtual void OnInvulnerableHit()
     {
-        // Override for special invulnerability logic
+        Debug.Log($"{bossName} is invulnerable - no damage taken!");
     }
 
     protected virtual void EnterPhase2()

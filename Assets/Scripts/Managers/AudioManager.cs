@@ -164,6 +164,25 @@ public class AudioManager : MonoBehaviour
         currentMusic = null;
     }
 
+    /// <summary>
+    /// Immediately stop all music without fading (for scene transitions/death)
+    /// </summary>
+    public void StopMusicImmediately()
+    {
+        StopAllCoroutines(); // Stop any fade coroutines
+        
+        if (musicSource != null)
+        {
+            musicSource.Stop();
+            musicSource.volume = musicVolume;
+        }
+        
+        currentMusic = null;
+        musicBeforeBoss = null;
+        
+        Debug.Log("Music stopped immediately");
+    }
+
     public void StopMusic()
     {
         StartCoroutine(FadeOutMusic());

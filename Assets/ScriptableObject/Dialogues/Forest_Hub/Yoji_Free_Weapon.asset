@@ -18,5 +18,6 @@ MonoBehaviour:
   lines:
   - Yoji has given you a free weapon upgrade
   - The store in now open.
-  portrait: {fileID: 0}
+  - Press E to open the shop, use arrows to move in shop, Enter to buy!
+  portrait: {fileID: -2138534889620764463, guid: 8499aa222c9ccfd4198291b7557eb4f1, type: 3}
   pauseGameDuringDialogue: 1

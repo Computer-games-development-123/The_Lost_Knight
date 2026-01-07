@@ -124,6 +124,8 @@ public class PlayerAttack : MonoBehaviour
         // Set the attack index for animator (1, 2, or 3)
         int animatorIndex = currentAttackIndex + 1;
         anim.SetInteger(attackIndexIntName, animatorIndex);
+        
+        AudioManager.Instance?.PlayPlayerAttack();
 
         // Trigger appropriate attack animation
         if (!grounded)

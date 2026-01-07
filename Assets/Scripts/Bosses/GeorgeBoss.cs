@@ -96,7 +96,7 @@ public class GeorgeBoss : BossBase
         if (!isInvulnerable) return;
 
         invulnerableHitCount++;
-        Debug.Log($"⚔️ Hit {invulnerableHitCount}/{hitsToTriggerTaunt}");
+        Debug.Log($"Hit {invulnerableHitCount}/{hitsToTriggerTaunt}");
 
         if (!firstEncounterSequenceStarted && invulnerableHitCount >= hitsToTriggerTaunt)
         {

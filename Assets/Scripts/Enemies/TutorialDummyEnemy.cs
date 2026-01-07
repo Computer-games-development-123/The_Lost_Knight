@@ -21,7 +21,7 @@ public class TutorialDummyEnemy : EnemyBase
         // Dummy never really dies - set very high HP
         currentHP = 99999;
 
-        // ✅ CHECK: If tutorial already completed, unlock portal immediately
+        //If tutorial already completed, unlock portal immediately
         if (GameManager.Instance != null && GameManager.Instance.GetFlag(GameFlag.TutorialCompleted))
         {
             dialoguePlayed = true;  // Skip dialogue
@@ -36,7 +36,7 @@ public class TutorialDummyEnemy : EnemyBase
         }
         else
         {
-            Debug.LogWarning("⚠️ TutorialDummyEnemy: portalToEnable is not assigned! Please drag the Forest_Hub_Portal GameObject to this field in Inspector!");
+            Debug.LogWarning("⚠️ TutorialDummyEnemy: portalToEnable is not assigned!");
         }
     }
 
@@ -45,12 +45,6 @@ public class TutorialDummyEnemy : EnemyBase
         // No AI / movement for the dummy
         // (do NOT call base.Update())
     }
-
-    // Override BOTH damage methods to handle hits properly
-    // public override void TakeDamage(int damage)
-    // {
-    //     HandleHit();
-    // }
 
     public override void TakeDamage(int damage, Vector2 hitDirection)
     {
@@ -73,14 +67,12 @@ public class TutorialDummyEnemy : EnemyBase
         // Flash red briefly
         StartCoroutine(FlashRed());
 
-        // 1) Dialogue after N hits - WITH CALLBACK TO UNLOCK PORTAL
         if (!dialoguePlayed && currentHits >= hitsToTriggerDialogue)
         {
             dialoguePlayed = true;    // Mark as played
 
             if (DialogueManager.Instance != null && afterHitsDialogue != null)
             {
-                // ✅ FIX: Pass callback to unlock portal AFTER dialogue finishes
                 DialogueManager.Instance.Play(afterHitsDialogue, OnDialogueComplete);
             }
             else
@@ -121,12 +113,30 @@ public class TutorialDummyEnemy : EnemyBase
         if (portalToEnable != null)
         {
             portalToEnable.SetActive(true);
-            Debug.Log("✅ Tutorial: portal back to ForestHub spawned!");
+            Debug.Log("Tutorial: portal back to ForestHub spawned!");
         }
         else
         {
-            Debug.LogError("❌ portalToEnable is NOT ASSIGNED! Drag the Forest_Hub_Portal to TutorialDummyEnemy in Inspector!");
+            Debug.LogError("portalToEnable is NOT ASSIGNED!");
         }
+    }
+
+    /// <summary>
+    /// Override collision to prevent damage to player
+    /// Tutorial dummy should not hurt the player
+    /// </summary>
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Do nothing - tutorial dummy doesn't damage player on collision
+    }
+
+    /// <summary>
+    /// Override trigger to prevent damage to player
+    /// Tutorial dummy should not hurt the player
+    /// </summary>
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Do nothing - tutorial dummy doesn't damage player on trigger
     }
 
     protected override void Die()

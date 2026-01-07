@@ -21,5 +21,5 @@ MonoBehaviour:
   - All of it to the ground.
   - Then you will have no forest to save.
   - Its time for you to give up!.
-  portrait: {fileID: 0}
+  portrait: {fileID: 6909738974090149135, guid: 6316b682b062233489375eee9663da9c, type: 3}
   pauseGameDuringDialogue: 1

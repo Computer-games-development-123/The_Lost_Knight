@@ -74,7 +74,22 @@ public class FikaBossCutsceneManager : MonoBehaviour
         monaInstance = Instantiate(monaPrefab, monaSpawnPoint.position, Quaternion.identity);
 
         fikaAI = fikaInstance.GetComponent<FikaBoss>();
-        if (fikaAI != null) fikaAI.enabled = false;
+        if (fikaAI != null)
+        {
+            fikaAI.enabled = false;
+            
+            // IMPORTANT: Assign WaveManager reference so portals spawn when Fika dies
+            WaveManager waveManager = FindFirstObjectByType<WaveManager>();
+            if (waveManager != null)
+            {
+                fikaAI.waveManager = waveManager;
+                Debug.Log("Fika WaveManager reference assigned");
+            }
+            else
+            {
+                Debug.LogWarning("WaveManager not found in scene!");
+            }
+        }
 
         monaAnim = monaInstance.GetComponentInChildren<Animator>();
 
@@ -145,7 +160,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
         UserInputManager.Instance.EnableInput();
         UnhookEvents();
 
-        Debug.Log("✅ Cutscene done. Boss fight begins!");
+        Debug.Log("Cutscene done. Boss fight begins!");
     }
 
     private IEnumerator DoYojiCombo3()

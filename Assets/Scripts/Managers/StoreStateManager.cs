@@ -24,7 +24,7 @@ public class StoreStateManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log("✅ StoreStateManager initialized");
+            Debug.Log("StoreStateManager initialized");
         }
         else
         {
@@ -62,13 +62,13 @@ public class StoreStateManager : MonoBehaviour
             currentState = StoreState.Locked;
         }
 
-        Debug.Log($"🏪 Store state: {currentState}");
+        Debug.Log($"Store state: {currentState}");
     }
 
     public void SetStoreState(StoreState newState)
     {
         currentState = newState;
-        Debug.Log($"🏪 Store state set to: {currentState}");
+        Debug.Log($"Store state set to: {currentState}");
     }
 
     public bool IsStoreUnlocked()
@@ -95,9 +95,9 @@ public class StoreStateManager : MonoBehaviour
             case StoreState.PostGeorge:
                 return "Yoji's Shop";
             case StoreState.PostFika:
-                return "Yoji's Shop - Rare Item Available!";
+                return "Yoji's Shop";
             case StoreState.PostPhilip:
-                return "Yoji's Legacy - Take What You Need";
+                return "Yoji's Legacy";
             default:
                 return "Unknown";
         }
