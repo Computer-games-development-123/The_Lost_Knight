@@ -17,5 +17,5 @@ MonoBehaviour:
   speakerName: Mona, Sister Of Malice.
   lines:
   - ' Oh, How lovely.. a visitor..'
-  portrait: {fileID: 0}
+  portrait: {fileID: 1432627701658463433, guid: 9b64422e3d9c02b4baf501a2783e5955, type: 3}
   pauseGameDuringDialogue: 1

@@ -41,7 +41,7 @@ public class BossMusicController : MonoBehaviour
     {
         if (AudioManager.Instance == null)
         {
-            Debug.LogError("❌ AudioManager not found!");
+            Debug.LogError("AudioManager not found!");
             return;
         }
 
@@ -81,17 +81,26 @@ public class BossMusicController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"⚠️ Boss music for {bossType} not assigned in AudioManager!");
+            Debug.LogWarning($"Boss music for {bossType} not assigned in AudioManager!");
         }
     }
 
     private void OnDestroy()
     {
-        // Stop all music when boss is destroyed
-        if (AudioManager.Instance != null)
+        // DON'T stop music on destroy - this runs even when scene changes!
+        // Music should be handled by ReturnToSceneMusic() or scene music triggers
+        
+        // Only return to scene music if the boss was actually defeated (not just scene change)
+        if (AudioManager.Instance != null && GetComponent<BossBase>() != null)
         {
-            AudioManager.Instance.StopMusic();
-            Debug.Log("🔇 Boss defeated - stopping music");
+            BossBase boss = GetComponent<BossBase>();
+            
+            // Only return to scene music if boss is dead (not if object destroyed by scene load)
+            if (boss.CurrentHP <= 0)
+            {
+                AudioManager.Instance.ReturnToSceneMusic();
+                Debug.Log("Boss defeated - returning to scene music");
+            }
         }
     }
 }

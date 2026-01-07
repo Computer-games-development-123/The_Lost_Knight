@@ -17,5 +17,5 @@ MonoBehaviour:
   speakerName: Game Progress
   lines:
   - You have slain Philip, The Prince Of Darkness
-  portrait: {fileID: 0}
+  portrait: {fileID: -2138534889620764463, guid: 8499aa222c9ccfd4198291b7557eb4f1, type: 3}
   pauseGameDuringDialogue: 1

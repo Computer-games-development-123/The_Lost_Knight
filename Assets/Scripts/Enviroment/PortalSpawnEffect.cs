@@ -24,7 +24,6 @@ public class PortalSpawnEffect : MonoBehaviour
         PlayOpen();
     }
 
-    // ====== פתיחה ======
     public void PlayOpen()
     {
         if (routine != null) StopCoroutine(routine);
@@ -65,7 +64,6 @@ public class PortalSpawnEffect : MonoBehaviour
         routine = null;
     }
 
-    // ====== סגירה ======
     public void Close()
     {
         if (routine != null) StopCoroutine(routine);

@@ -25,5 +25,5 @@ MonoBehaviour:
 '
   - For what purpose?
   - Do you even know what you are fighting for?
-  portrait: {fileID: 0}
+  portrait: {fileID: 6909738974090149135, guid: 6316b682b062233489375eee9663da9c, type: 3}
   pauseGameDuringDialogue: 1

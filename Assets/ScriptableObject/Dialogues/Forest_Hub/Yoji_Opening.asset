@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10218a061c572484faf9e08ab7ff6a87, type: 3}
   m_Name: Yoji_Opening
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
-  id: 5
+  id: 
   flag: 2
   speakerName: Yoji, Store Owner
   lines:

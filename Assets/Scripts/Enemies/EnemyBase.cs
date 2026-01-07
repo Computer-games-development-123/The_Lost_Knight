@@ -298,28 +298,6 @@ public class EnemyBase : MonoBehaviour
     #endregion
 
     #region Damage System
-
-    // public virtual void TakeDamage(int damage)
-    // {
-    //     if (isDead) return;
-
-    //     currentHP -= damage;
-
-    //     Debug.Log($"{gameObject.name} took {damage} damage. HP: {currentHP}/{MaxHP}");
-
-    //     if (anim != null)
-    //     {
-    //         anim.SetTrigger("Hurt");
-    //     }
-
-    //     StartCoroutine(FlashRed());
-
-    //     if (currentHP <= 0)
-    //     {
-    //         Die();
-    //     }
-    // }
-
     public virtual void TakeDamage(int damage, Vector2 hitDirection)
     {
         if (isDead) return;

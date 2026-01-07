@@ -10,9 +10,6 @@ public enum GameFlag
     YojiPostFikaDialogueSeen,
     GreenBattleIntroSeen,
 
-    // --- Portals / Gates ---
-    ForestHubGateOpened,
-
     // -- Upgrades --
     hasTeleport,
     hasUpgradedSword,

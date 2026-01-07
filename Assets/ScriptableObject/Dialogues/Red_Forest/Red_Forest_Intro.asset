@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Red_Forest_Intro
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 12
-  flag: 0
+  flag: 7
   speakerName: Knight
   lines:
   - These trees are corrupted by dark magic.

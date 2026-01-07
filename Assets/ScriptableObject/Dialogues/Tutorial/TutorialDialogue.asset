@@ -17,6 +17,7 @@ MonoBehaviour:
   speakerName: Tutorial Start
   lines:
   - Press X to Attack.
+  - The dummy cant hurt you.
   - Try to hit the dummy 3 Times!
   portrait: {fileID: -6939695964637348897, guid: 5b8f284fba5fde64e80b524f873b554f, type: 3}
   pauseGameDuringDialogue: 1

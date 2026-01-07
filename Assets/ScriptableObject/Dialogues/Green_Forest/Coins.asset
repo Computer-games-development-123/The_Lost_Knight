@@ -10,14 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10218a061c572484faf9e08ab7ff6a87, type: 3}
-  m_Name: Green_BattleStart
+  m_Name: Coins
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 6
-  flag: 6
-  speakerName: Combat
+  flag: 0
+  speakerName: Coins
   lines:
-  - Your HP and potions are on the top-left corner. Press H to heal.
   - You get coins from killing monsters, top-right corner.
-  - Prepare For Battle!
-  portrait: {fileID: -6939695964637348897, guid: eece82678ee063e4e94bb14f85175a0f, type: 3}
+  portrait: {fileID: 7359078315922974584, guid: 3c5fa3ee53d958b4b8eb66aec86df45e, type: 3}
   pauseGameDuringDialogue: 1

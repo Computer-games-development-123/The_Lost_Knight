@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
 using Unity.Services.CloudSave.Models;
+using System.Collections;
 
 /// <summary>
 /// GameManager - Manages game progression and flags (Cloud Save ONLY)
@@ -18,10 +19,6 @@ public class GameManager : MonoBehaviour
     [Header("Debug")]
     public bool showDebugLogs = true;
 
-    // [Header("Progression Flags (Legacy - for backwards compatibility)")]
-    // public bool hasDiedToGeorge = false;
-    // public bool yojiDead = false;
-
     [Header("Unified Flag System")]
     private Dictionary<GameFlag, bool> flags = new Dictionary<GameFlag, bool>();
 
@@ -33,9 +30,8 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
 
             InitDefaultFlags();
-            //SyncPublicFlags();
 
-            if (showDebugLogs) Debug.Log("✅ GameManager initialized");
+            if (showDebugLogs) Debug.Log("GameManager initialized");
         }
         else
         {
@@ -53,10 +49,9 @@ public class GameManager : MonoBehaviour
     public void SetFlag(GameFlag flag, bool value)
     {
         flags[flag] = value;
-        //SyncPublicFlags();
 
         if (showDebugLogs)
-            Debug.Log($"🚩 Flag set: {flag} = {value}");
+            Debug.Log($"Flag set: {flag} = {value}");
     }
 
     public bool GetFlag(GameFlag flag)
@@ -116,11 +111,12 @@ public class GameManager : MonoBehaviour
 
     public void OnPlayerDied()
     {
-        if (showDebugLogs) Debug.Log("💀 Player died - respawning in ForestHub");
+        if (showDebugLogs) Debug.Log("Player died - respawning in ForestHub");
 
         if (AudioManager.Instance != null)
         {
-            AudioManager.Instance.ForceStopBossMusic();
+            //Stops music immediately and clears all state
+            AudioManager.Instance.StopMusicImmediately();
         }
 
         SaveProgress();
@@ -176,11 +172,11 @@ public class GameManager : MonoBehaviour
             await DatabaseManager.SaveData(list.ToArray());
 
             if (showDebugLogs)
-                Debug.Log("✅ Cloud save (flags) completed");
+                Debug.Log("Cloud save (flags) completed");
         }
         catch (System.Exception e)
         {
-            Debug.LogError("❌ Cloud save failed: " + e);
+            Debug.LogError("Cloud save failed: " + e);
         }
     }
 

@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 299996982}
   - component: {fileID: 299996981}
   m_Layer: 0
-  m_Name: RedBattleStart
+  m_Name: Red_Battle_Intro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -367,6 +367,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RedBattleStartIntro
   BattleStartDialogue: {fileID: 11400000, guid: 95f16a93616f8eb49a7592e9b5172541, type: 2}
+  dialogueSeenFlag: 7
+  playEveryTime: 0
 --- !u!4 &299996982
 Transform:
   m_ObjectHideFlags: 0
@@ -719,6 +721,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WavesCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1062879833351468741, guid: 1e26d4e87a35c3f49bc6e3c376bb8a8b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1535491965377922261, guid: 1e26d4e87a35c3f49bc6e3c376bb8a8b, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1014,13 +1020,17 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2631059196294902293, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: targetSceneName
+      value: Green_Forest
+      objectReference: {fileID: 0}
     - target: {fileID: 2859922422059892669, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_Name
       value: Green_Forest_Portal
       objectReference: {fileID: 0}
     - target: {fileID: 2859922422059892669, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2859922422059892669, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_TagString
@@ -1090,17 +1100,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.854
+      objectReference: {fileID: 0}
     - target: {fileID: 7097537527546248989, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7159216176550064141, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_text
+      value: Green Forest(F)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7159216176550064141, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
 --- !u!4 &985370993 stripped
 Transform:
@@ -1268,9 +1295,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.831
+      objectReference: {fileID: 0}
     - target: {fileID: 7097537527546248989, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159216176550064141, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_text
+      value: Dark Forest(F)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -129,7 +129,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: -0.13770209, y: -0.20596437}
-  m_Size: {x: 0.24014628, y: 0.6212163}
+  m_Size: {x: 0.31, y: 0.6212163}
   m_Direction: 0
 --- !u!50 &8780919851282773113
 Rigidbody2D:
@@ -196,7 +196,7 @@ MonoBehaviour:
   fallbackMaxHP: 10
   fallbackDamage: 5
   fallbackMoveSpeed: 2
-  fallbackCoinsDropped: 1
+  fallbackCoinsDropped: 2
   knockbackForce: 8
   knockbackDuration: 0.12
   jumperJumpForce: 15
@@ -208,3 +208,4 @@ MonoBehaviour:
   projectileSpeed: 8
   waveManager: {fileID: 0}
   isFacingLeft: 1
+  hasEntringAnimation: 0

@@ -266,7 +266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_text
-      value: Back (F)
+      value: Forest Hub(F)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -375,6 +375,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6944239878394753612, guid: 201a531a0643c6f438c05ab47ebbc66c, type: 3}
   m_PrefabInstance: {fileID: 340686332}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &369414612
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 369414614}
+  - component: {fileID: 369414613}
+  m_Layer: 0
+  m_Name: Green_Battle_Intro
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &369414613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369414612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad84287563b5b3d4bb7e8055497b778b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GreenBattleStartIntro
+  hpAndPotionsDialogue: {fileID: 11400000, guid: e563dda5b15df18438986c8c71d48c7c, type: 2}
+  coinsDialogue: {fileID: 11400000, guid: 053f9d4d69d17a64bb9c56b6e9636fdb, type: 2}
+  prepareForBattleDialogue: {fileID: 11400000, guid: 13464d08fdcb3e943a17c701b4535f4d, type: 2}
+  dialogueSeenFlag: 6
+  playEveryTime: 0
+--- !u!4 &369414614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369414612}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.86477, y: -0.53311, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &429435922
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -662,15 +711,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 23
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -0.08
       objectReference: {fileID: 0}
     - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.69
+      value: 0.643
       objectReference: {fileID: 0}
     - target: {fileID: 7159216176550064141, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_IsActive
@@ -678,11 +727,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_text
-      value: Continue (F)
+      value: Red Forest(F)
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_HorizontalAlignment
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -842,103 +891,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1412431705}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1045364976
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2815697573233241010, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: flag
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2815697573233241010, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: portal
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2815697573233241010, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: dialogue
-      value: 
-      objectReference: {fileID: 11400000, guid: 0a1d04321290d9b45831e59b7c1b6605, type: 2}
-    - target: {fileID: 2815697573233241010, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: onceFlag
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4460582935798312227, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_Name
-      value: Green_Battle_Intro
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.09993
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.20218
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2815697573233241010, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4460582935798312227, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1045364978}
-  m_SourcePrefab: {fileID: 100100000, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
---- !u!1 &1045364977 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4460582935798312227, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-  m_PrefabInstance: {fileID: 1045364976}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1045364978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1045364977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad84287563b5b3d4bb7e8055497b778b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GreenBattleStartIntro
-  BattleStartDialogue: {fileID: 11400000, guid: e563dda5b15df18438986c8c71d48c7c, type: 2}
-  dialogueSeenFlag: 0
-  playEveryTime: 0
 --- !u!1001 &1061293523
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1724,6 +1676,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WavesCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1062879833351468741, guid: 1e26d4e87a35c3f49bc6e3c376bb8a8b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1535491965377922261, guid: 1e26d4e87a35c3f49bc6e3c376bb8a8b, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1820,10 +1776,10 @@ SceneRoots:
   - {fileID: 813087157}
   - {fileID: 1412431705}
   - {fileID: 519846131}
-  - {fileID: 1045364976}
   - {fileID: 1314573962}
   - {fileID: 855275651644905321}
   - {fileID: 791844656}
   - {fileID: 1305282505}
   - {fileID: 3031156253348733785}
   - {fileID: 429435922}
+  - {fileID: 369414614}

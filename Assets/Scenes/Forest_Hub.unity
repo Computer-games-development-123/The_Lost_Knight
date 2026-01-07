@@ -320,6 +320,34 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3008246383725433329, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+    - target: {fileID: 3008246383725433329, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008246383725433329, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.8867924
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008246383725433329, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008246383725433329, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+    - target: {fileID: 3008246383725433329, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278247936
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008246383725433329, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4290723333698954396, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -409,12 +437,84 @@ PrefabInstance:
       value: Wave Of Fire
       objectReference: {fileID: 0}
     - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[1].itemName
+      value: Flash Ability
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[3].itemIcon
+      value: 
+      objectReference: {fileID: -6939695964637348897, guid: 5b8f284fba5fde64e80b524f873b554f, type: 3}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[3].maxStock
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[5].itemIcon
+      value: 
+      objectReference: {fileID: -505430822247763581, guid: ecdc770c10aba6e45a1b252127b17eee, type: 3}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[5].maxStock
+      value: 9999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: storeItems.Array.data[0].description
       value: Doubles damage + Wave of Fire (C)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103337387099088423, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_text
+      value: Coins:0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103337387099088423, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+    - target: {fileID: 5103337387099088423, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+    - target: {fileID: 5103337387099088423, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6594849069928141937, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6594849069928141937, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -90.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6594849069928141937, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -20.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519282709849790703, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+    - target: {fileID: 7519282709849790703, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+    - target: {fileID: 7519282709849790703, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7658046893750186460, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7745665678289440325, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 521
+      objectReference: {fileID: 0}
+    - target: {fileID: 7745665678289440325, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7745665678289440325, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 205
       objectReference: {fileID: 0}
     - target: {fileID: 8763844204997506523, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1696,7 +1796,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0/5
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -2502,13 +2602,13 @@ MonoBehaviour:
   playerAttack: {fileID: 8300000, guid: c86a0850a69f7c74fa3c60a8edb539ba, type: 3}
   playerTakeDamage: {fileID: 8300000, guid: 0a177132a619e5945ad81de7957fb67e, type: 3}
   playerDeath: {fileID: 8300000, guid: 3f12287b838540c4cb4bf0de1fce6726, type: 3}
-  playerHeal: {fileID: 0}
+  playerHeal: {fileID: 8300000, guid: 7558c8242715d294a92bd31639071d03, type: 3}
   enemyHit: {fileID: 0}
   enemyDeath: {fileID: 0}
   bossHit: {fileID: 0}
   bossDeath: {fileID: 0}
   bossRoar: {fileID: 0}
-  coinPickup: {fileID: 0}
+  coinPickup: {fileID: 8300000, guid: 426316a2373c19544b2774f8267d83e2, type: 3}
   itemPurchase: {fileID: 8300000, guid: f6aafe9df26439348a2f029f6f8048ac, type: 3}
   portalOpen: {fileID: 0}
   dialogueAdvance: {fileID: 0}
@@ -2818,7 +2918,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100/100
+  m_text: 50/50
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
