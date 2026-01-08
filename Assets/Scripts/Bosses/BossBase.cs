@@ -12,6 +12,10 @@ public class BossBase : MonoBehaviour
     public float moveSpeed = 3f;
     public bool isInvulnerable = false;
 
+    [Header("Rewards")]
+    [Tooltip("Coins awarded to player when this boss is defeated")]
+    public int coinsReward = 100;
+
     [Header("Dialogues")]
     public DialogueData spawnDialogue;
     public DialogueData deathDialogue;
@@ -125,6 +129,7 @@ public class BossBase : MonoBehaviour
 
     protected virtual void OnInvulnerableHit()
     {
+        StartCoroutine(FlashRed());
         Debug.Log($"{bossName} is invulnerable - no damage taken!");
     }
 
@@ -169,7 +174,27 @@ public class BossBase : MonoBehaviour
 
     protected virtual void OnDeathDialogueComplete()
     {
-        DialogueManager.Instance.Play(slainDialogue);
+        // Award coins to player
+        if (player != null && coinsReward > 0)
+        {
+            PlayerInventory inventory = player.GetComponent<PlayerInventory>();
+            if (inventory != null)
+            {
+                inventory.AddCoins(coinsReward);
+                Debug.Log($"Player received {coinsReward} coins for defeating {bossName}!");
+            }
+            else
+            {
+                Debug.LogWarning($"PlayerInventory component not found on player - could not award {coinsReward} coins!");
+            }
+        }
+
+        // Play slain dialogue if available
+        if (DialogueManager.Instance != null && slainDialogue != null)
+        {
+            DialogueManager.Instance.Play(slainDialogue);
+        }
+
         Destroy(gameObject, 2f);
     }
 

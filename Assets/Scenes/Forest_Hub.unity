@@ -462,7 +462,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5103337387099088423, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_text
-      value: Coins:0
+      value: Coins:0000
       objectReference: {fileID: 0}
     - target: {fileID: 5103337387099088423, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_fontAsset
@@ -513,6 +513,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7745665678289440325, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 205
+      objectReference: {fileID: 0}
+    - target: {fileID: 8169393295716418920, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 8169393295716418920, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -800
+      objectReference: {fileID: 0}
+    - target: {fileID: 8169393295716418920, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 205
       objectReference: {fileID: 0}
@@ -2004,8 +2016,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -130, y: -52}
-  m_SizeDelta: {x: 100, y: 50}
+  m_AnchoredPosition: {x: -150, y: -52}
+  m_SizeDelta: {x: 140, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1128978502
 MonoBehaviour:
@@ -2600,18 +2612,18 @@ MonoBehaviour:
   yojiDeathMusic: {fileID: 8300000, guid: b920d2ecc6e8dec42b9557d9b7eecc54, type: 3}
   playerJump: {fileID: 8300000, guid: eb2c701948b82b14da31b0e9af9d3a28, type: 3}
   playerAttack: {fileID: 8300000, guid: c86a0850a69f7c74fa3c60a8edb539ba, type: 3}
-  playerTakeDamage: {fileID: 8300000, guid: 0a177132a619e5945ad81de7957fb67e, type: 3}
+  playerTakeDamage: {fileID: 8300000, guid: fb6d286350f257347aafdafae35b51d7, type: 3}
   playerDeath: {fileID: 8300000, guid: 3f12287b838540c4cb4bf0de1fce6726, type: 3}
   playerHeal: {fileID: 8300000, guid: 7558c8242715d294a92bd31639071d03, type: 3}
   enemyHit: {fileID: 0}
-  enemyDeath: {fileID: 0}
+  enemyDeath: {fileID: 8300000, guid: 426316a2373c19544b2774f8267d83e2, type: 3}
   bossHit: {fileID: 0}
   bossDeath: {fileID: 0}
   bossRoar: {fileID: 0}
   coinPickup: {fileID: 8300000, guid: 426316a2373c19544b2774f8267d83e2, type: 3}
   itemPurchase: {fileID: 8300000, guid: f6aafe9df26439348a2f029f6f8048ac, type: 3}
-  portalOpen: {fileID: 0}
-  dialogueAdvance: {fileID: 0}
+  portalOpen: {fileID: 8300000, guid: 101deedb4bc5f4d4caf244aa6e8fec0f, type: 3}
+  dialogueAdvance: {fileID: 8300000, guid: ba1e520d183c9fe429ffb30a8898b1ce, type: 3}
   musicVolume: 0.7
   sfxVolume: 1
   fadeDuration: 1.5
@@ -3253,7 +3265,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -350, y: 80}
+  m_AnchoredPosition: {x: -350, y: 90}
   m_SizeDelta: {x: 500, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2029544106
@@ -3965,6 +3977,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 998392704380348123, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
+      propertyPath: fireFormFlag
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4376152552779809795, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
       propertyPath: m_Name
       value: Player

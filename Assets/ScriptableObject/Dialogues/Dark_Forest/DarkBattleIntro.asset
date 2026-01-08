@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10218a061c572484faf9e08ab7ff6a87, type: 3}
-  m_Name: TutorialDoneDialogue
+  m_Name: DarkBattleIntro
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
-  id: 4
-  flag: 11
-  speakerName: Game Progress
+  id: 
+  flag: 8
+  speakerName: Knight
   lines:
-  - Nice!, You've hit the dummy 3 times.
-  - Now should head back to the forest.
-  portrait: {fileID: -2138534889620764463, guid: 8499aa222c9ccfd4198291b7557eb4f1, type: 3}
+  - 'I can sense something powerful ahead. '
+  - 'Whatever awaits me in these shadows... '
+  - there's no turning back now.
+  portrait: {fileID: 4033487972480862772, guid: f6694ec89bfc1694d96be88fb06bcf0f, type: 3}
   pauseGameDuringDialogue: 1

@@ -9,6 +9,8 @@ public enum GameFlag
     YojiUnlocksStore,
     YojiPostFikaDialogueSeen,
     GreenBattleIntroSeen,
+    RedBattleIntroSeen,
+    DarkBattleIntroSeen,
 
     // -- Upgrades --
     hasTeleport,

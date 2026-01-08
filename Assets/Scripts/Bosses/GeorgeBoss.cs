@@ -291,13 +291,15 @@ public class GeorgeBoss : BossBase
 
     protected override void OnDeathDialogueComplete()
     {
+        // Call base to handle coins and slain dialogue
+        base.OnDeathDialogueComplete();
+
+        // George-specific death logic
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnGeorgeDefeated();
             GameManager.Instance.SaveProgress();
         }
-
-        Destroy(gameObject, 2f);
     }
 
     protected override void Die()

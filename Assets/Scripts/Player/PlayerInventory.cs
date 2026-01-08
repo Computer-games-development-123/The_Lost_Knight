@@ -29,7 +29,7 @@ public class PlayerInventory : MonoBehaviour
     public void AddCoins(int amount)
     {
         coins += amount;
-        Debug.Log($"💰 Coins added: {amount}. Total: {coins}");
+        Debug.Log($"Coins added: {amount}. Total: {coins}");
         SaveInventory(); // Auto-save on change
     }
 
@@ -37,12 +37,12 @@ public class PlayerInventory : MonoBehaviour
     {
         if (coins < amount)
         {
-            Debug.LogWarning($"⚠️ Not enough coins! Have {coins}, need {amount}");
+            Debug.LogWarning($"Not enough coins! Have {coins}, need {amount}");
             return false;
         }
 
         coins -= amount;
-        Debug.Log($"💰 Coins spent: {amount}. Remaining: {coins}");
+        Debug.Log($"Coins spent: {amount}. Remaining: {coins}");
         SaveInventory(); // Auto-save on change
         return true;
     }
@@ -54,7 +54,7 @@ public class PlayerInventory : MonoBehaviour
     public void AddPotion(int amount = 1)
     {
         potions += amount;
-        Debug.Log($"🧪 Potions added: {amount}. Total: {potions}");
+        Debug.Log($"Potions added: {amount}. Total: {potions}");
         SaveInventory(); // Auto-save on change
     }
 
@@ -62,28 +62,27 @@ public class PlayerInventory : MonoBehaviour
     {
         if (potions <= 0)
         {
-            Debug.Log("⚠️ No potions left!");
+            Debug.Log("No potions left!");
             return false;
         }
 
         if (playerHealth == null)
         {
-            Debug.LogWarning("⚠️ PlayerHealth not found!");
+            Debug.LogWarning("PlayerHealth not found!");
             return false;
         }
 
         if (playerHealth.IsAtFullHealth)
         {
-            Debug.Log("⚠️ HP already full - can't use potion!");
+            Debug.Log("HP already full - can't use potion!");
             return false;
         }
 
         potions--;
         playerHealth.Heal(healAmount);
+        // Sound is now handled by PlayerHealth.Heal()
 
-        AudioManager.Instance?.PlayPlayerHeal();
-        
-        Debug.Log($"🧪 Used potion to heal. Remaining potions: {potions}");
+        Debug.Log($"Used potion to heal. Remaining potions: {potions}");
         SaveInventory(); // Auto-save on change
         return true;
     }
@@ -96,7 +95,6 @@ public class PlayerInventory : MonoBehaviour
     #endregion
 
     #region Save/Load
-
     private async Task EnsureCloudReady()
     {
         if (cloudReady) return;
@@ -120,12 +118,10 @@ public class PlayerInventory : MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.LogError("❌ Cloud SaveInventory failed: " + e);
+            Debug.LogError("Cloud SaveInventory failed: " + e);
 
         }
     }
-
-
     private async Task LoadInventoryCloud()
     {
         try
@@ -142,19 +138,14 @@ public class PlayerInventory : MonoBehaviour
             else
                 potions = 5;
 
-            Debug.Log($"☁️ Inventory loaded (Cloud): {coins} coins, {potions} potions");
+            Debug.Log($"Inventory loaded (Cloud): {coins} coins, {potions} potions");
         }
         catch (System.Exception e)
         {
-            Debug.LogError("❌ Cloud LoadInventory failed: " + e);
+            Debug.LogError("Cloud LoadInventory failed: " + e);
 
-            Debug.Log($"📂 Inventory loaded (Local fallback): {coins} coins, {potions} potions");
+            Debug.Log($"Inventory loaded (Local fallback): {coins} coins, {potions} potions");
         }
     }
-    // public void Save()
-    // {
-    //     SaveInventory();
-    // }
-
     #endregion
 }

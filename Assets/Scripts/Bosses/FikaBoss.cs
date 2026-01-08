@@ -181,13 +181,15 @@ public class FikaBoss : BossBase
 
     protected override void OnDeathDialogueComplete()
     {
+        // Call base to handle coins and slain dialogue
+        base.OnDeathDialogueComplete();
+
+        // Fika-specific death logic
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnFikaDefeated();
             GameManager.Instance.SaveProgress();
         }
-
-        Destroy(gameObject, 2f);
     }
 
     private void OnDisable()

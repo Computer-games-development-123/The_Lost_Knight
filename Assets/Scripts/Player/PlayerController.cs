@@ -18,8 +18,14 @@ public class PlayerController : MonoBehaviour
     public float knockbackDuration = 0.15f;
     private bool isKnockback = false;
 
+    [Header("Hurt State")]
+    public float hurtDuration = 0.4f; // How long the hurt state lasts
+
     [Header("Potions")]
     [SerializeField] private float healAmountPerPotion = 10f;
+
+    // Public property to check if player is hurt
+    public bool isHurt { get; private set; } = false;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -117,9 +123,8 @@ public class PlayerController : MonoBehaviour
             invulnerability.Trigger();
         }
 
-        // Play hurt animation
-        if (anim != null)
-            anim.SetTrigger("Hurt");
+        // Play hurt animation and start hurt state
+        PlayHurtAnimation();
     }
 
     /// <summary>
@@ -158,6 +163,20 @@ public class PlayerController : MonoBehaviour
     {
         if (anim != null)
             anim.SetTrigger("Hurt");
+
+        // Start hurt state
+        StartCoroutine(HurtStateRoutine());
+    }
+
+    private IEnumerator HurtStateRoutine()
+    {
+        isHurt = true;
+        Debug.Log("Player entered hurt state - cannot attack");
+
+        yield return new WaitForSeconds(hurtDuration);
+
+        isHurt = false;
+        Debug.Log("Player exited hurt state - can attack again");
     }
 
     public void PlayDeathAnimation()

@@ -200,6 +200,7 @@ MonoBehaviour:
   damage: 10
   moveSpeed: 3
   isInvulnerable: 0
+  coinsReward: 150
   spawnDialogue: {fileID: 11400000, guid: 1c8f23d4b659eb340bc7569b9b3d8224, type: 2}
   deathDialogue: {fileID: 11400000, guid: 0d2bc21d3a11b5d499b9d06f7f697b87, type: 2}
   slainDialogue: {fileID: 11400000, guid: efc8e486514be174e9d0200626929fc4, type: 2}

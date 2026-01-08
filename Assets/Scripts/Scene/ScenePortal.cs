@@ -78,7 +78,7 @@ public class ScenePortal : MonoBehaviour
         if (isTransitioning) return;
 
         if (showDebugLogs)
-            Debug.Log($"🌀 Entering portal to {targetSceneName}");
+            Debug.Log($"Entering portal to {targetSceneName}");
 
         isTransitioning = true;
 
@@ -104,14 +104,14 @@ public class ScenePortal : MonoBehaviour
             SceneFadeManager.Instance.FadeOut();
 
             if (showDebugLogs)
-                Debug.Log($"⏳ Waiting {fadeWaitTime} seconds for fade...");
+                Debug.Log($"Waiting {fadeWaitTime} seconds for fade...");
 
             yield return new WaitForSecondsRealtime(fadeWaitTime);
         }
         else
         {
             if (showDebugLogs)
-                Debug.LogWarning("⚠️ SceneFadeManager not found! Loading scene without fade.");
+                Debug.LogWarning("SceneFadeManager not found! Loading scene without fade.");
 
             yield return new WaitForSecondsRealtime(0.5f);
         }
@@ -120,13 +120,13 @@ public class ScenePortal : MonoBehaviour
         if (!string.IsNullOrEmpty(targetSceneName))
         {
             if (showDebugLogs)
-                Debug.Log($"📂 Loading scene: {targetSceneName}");
+                Debug.Log($"Loading scene: {targetSceneName}");
 
             SceneManager.LoadScene(targetSceneName);
         }
         else
         {
-            Debug.LogError("❌ Target scene name is not set!");
+            Debug.LogError("Target scene name is not set!");
         }
     }
 
@@ -143,7 +143,7 @@ public class ScenePortal : MonoBehaviour
         }
 
         if (showDebugLogs)
-            Debug.Log($"👤 Player entered portal range: {gameObject.name}");
+            Debug.Log($"Player entered portal range: {gameObject.name}");
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -156,7 +156,7 @@ public class ScenePortal : MonoBehaviour
             interactionPrompt.SetActive(false);
 
         if (showDebugLogs)
-            Debug.Log($"👤 Player left portal range: {gameObject.name}");
+            Debug.Log($"Player left portal range: {gameObject.name}");
     }
 
     // Allow changing prompt text at runtime
