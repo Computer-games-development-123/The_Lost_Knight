@@ -83,7 +83,7 @@ public class AudioManager : MonoBehaviour
             musicSource.volume = musicVolume;
             sfxSource.volume = sfxVolume;
 
-            Debug.Log("✅ AudioManager initialized");
+            Debug.Log("AudioManager initialized");
         }
         else
         {

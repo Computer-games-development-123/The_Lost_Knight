@@ -2,17 +2,17 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// Red Battle Start Intro - Plays dialogue on first visit
+/// Dark Battle Start Intro - Plays dialogue on first visit
 /// Uses flag system to ensure dialogue plays only once
 /// </summary>
-public class RedBattleStartIntro : MonoBehaviour
+public class DarkBattleStartIntro : MonoBehaviour
 {
     [Header("Dialogue")]
     public DialogueData BattleStartDialogue;
 
     [Header("Flag to Check")]
     [Tooltip("Which flag determines if this dialogue has been seen?")]
-    public GameFlag dialogueSeenFlag = GameFlag.RedBattleIntroSeen;
+    public GameFlag dialogueSeenFlag = GameFlag.DarkBattleIntroSeen;
 
     [Header("Settings")]
     [Tooltip("If true, plays every time. If false, plays only once.")]
@@ -26,7 +26,7 @@ public class RedBattleStartIntro : MonoBehaviour
         }
         else
         {
-            Debug.Log("Red Battle intro dialogue already seen - skipping");
+            Debug.Log("Dark Battle intro dialogue already seen - skipping");
         }
     }
 
@@ -63,7 +63,7 @@ public class RedBattleStartIntro : MonoBehaviour
             yield break;
         }
 
-        Debug.Log("Starting Red Battle intro dialogue");
+        Debug.Log("Starting Dark Battle intro dialogue");
 
         bool dialogueDone = false;
         DialogueManager.Instance.Play(BattleStartDialogue, () => dialogueDone = true);
@@ -81,7 +81,7 @@ public class RedBattleStartIntro : MonoBehaviour
         if (GameManager.Instance != null && !playEveryTime)
         {
             GameManager.Instance.SetFlag(dialogueSeenFlag, true);
-            Debug.Log($"Red Battle intro completed and marked as seen (Flag: {dialogueSeenFlag})");
+            Debug.Log($"Dark Battle intro completed and marked as seen (Flag: {dialogueSeenFlag})");
         }
     }
 }

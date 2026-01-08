@@ -84,6 +84,12 @@ public class PlayerHealth : MonoBehaviour
 
         Debug.Log($"Player took {amount} damage. HP: {currentHealth}/{maxHealth}");
 
+        // Play hurt sound through AudioManager
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayPlayerTakeDamage();
+        }
+
         // Trigger i-frames
         if (invulnerability != null)
         {
@@ -112,6 +118,12 @@ public class PlayerHealth : MonoBehaviour
             currentHealth = maxHealth;
 
         Debug.Log($"Healed {amount} HP. Current: {currentHealth}/{maxHealth}");
+        
+        // Play heal sound through AudioManager
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayPlayerHeal();
+        }
     }
 
     /// <summary>
@@ -122,12 +134,17 @@ public class PlayerHealth : MonoBehaviour
         maxHealth = newMaxHealth;
         currentHealth = Mathf.Min(currentHealth, maxHealth);
 
-        Debug.Log($"💚Max health updated to {maxHealth}");
+        Debug.Log($"Max health updated to {maxHealth}");
     }
-
     private void Die()
     {
         Debug.Log("Player died!");
+
+        // Play death sound through AudioManager
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayPlayerDeath();
+        }
 
         if (playerController != null)
         {
@@ -190,11 +207,11 @@ public class PlayerHealth : MonoBehaviour
         try
         {
             await DatabaseManager.SaveData(("PlayerMaxHealth", maxHealth));
-            Debug.Log($"💾 Max health saved to cloud: {maxHealth}");
+            Debug.Log($"Max health saved to cloud: {maxHealth}");
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"❌ Failed to save max health: {e}");
+            Debug.LogError($"Failed to save max health: {e}");
         }
     }
 

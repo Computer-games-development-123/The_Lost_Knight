@@ -88,6 +88,13 @@ public class PlayerAttack : MonoBehaviour
     /// </summary>
     private void TryPerformAttack()
     {
+        // Check if player is currently hurt - cannot attack while hurt
+        if (movement != null && movement.isHurt)
+        {
+            Debug.Log("🚫 Cannot attack - player is hurt!");
+            return;
+        }
+
         // Check if enough time has passed since last attack
         float timeSinceLastAttack = Time.time - lastAttackTime;
 
@@ -124,8 +131,12 @@ public class PlayerAttack : MonoBehaviour
         // Set the attack index for animator (1, 2, or 3)
         int animatorIndex = currentAttackIndex + 1;
         anim.SetInteger(attackIndexIntName, animatorIndex);
-        
-        AudioManager.Instance?.PlayPlayerAttack();
+
+        // Play attack sound
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayPlayerAttack();
+        }
 
         // Trigger appropriate attack animation
         if (!grounded)
@@ -143,7 +154,7 @@ public class PlayerAttack : MonoBehaviour
             StartDashAttack();
         }
 
-        Debug.Log($"⚔️ Performing Attack {animatorIndex}, current time: {Time.time:F2}");
+        Debug.Log($"Performing Attack {animatorIndex}, current time: {Time.time:F2}");
 
         // Cycle to next attack for the next input (0 → 1 → 2 → 0...)
         currentAttackIndex = (currentAttackIndex + 1) % 3;
@@ -159,7 +170,7 @@ public class PlayerAttack : MonoBehaviour
     {
         isAttacking = false;
         canAttack = true;
-        Debug.Log($"🔓 Attack state reset at {Time.time:F2}");
+        Debug.Log($"Attack state reset at {Time.time:F2}");
     }
 
     /// <summary>
@@ -224,11 +235,11 @@ public class PlayerAttack : MonoBehaviour
                 DealDamageToEnemy(enemy, isDashAttack);
             }
 
-            Debug.Log($"✅ Hit {hitEnemies.Length} target(s) with Attack {performedAttackIndex + 1} for {swordDamage} damage!");
+            Debug.Log($"Hit {hitEnemies.Length} target(s) with Attack {performedAttackIndex + 1} for {swordDamage} damage!");
         }
         else
         {
-            Debug.Log($"💨 Attack {performedAttackIndex + 1} missed - no enemies in range");
+            Debug.Log($"Attack {performedAttackIndex + 1} missed - no enemies in range");
         }
     }
 
@@ -247,7 +258,7 @@ public class PlayerAttack : MonoBehaviour
             StopDash();
         }
 
-        Debug.Log("🔵 Attack animation ended (called by animation event)");
+        Debug.Log("Attack animation ended (called by animation event)");
     }
 
     /// <summary>
@@ -267,7 +278,7 @@ public class PlayerAttack : MonoBehaviour
             }
 
             enemyScript.TakeDamage(swordDamage, knockDir);
-            Debug.Log($"⚔️ Hit {enemy.name} for {swordDamage} damage!");
+            Debug.Log($"Hit {enemy.name} for {swordDamage} damage!");
             return;
         }
 
@@ -275,7 +286,7 @@ public class PlayerAttack : MonoBehaviour
         if (bossScript != null)
         {
             bossScript.TakeDamage(swordDamage);
-            Debug.Log($"⚔️ Hit boss {enemy.name} for {swordDamage} damage!");
+            Debug.Log($"Hit boss {enemy.name} for {swordDamage} damage!");
             return;
         }
 
@@ -305,7 +316,7 @@ public class PlayerAttack : MonoBehaviour
             projectile.damage = swordDamage * 5;
         }
 
-        Debug.Log($"✨ Wave of Fire fired! Damage: {swordDamage * 5}");
+        Debug.Log($"Wave of Fire fired! Damage: {swordDamage * 5}");
     }
 
     // =========================
@@ -325,12 +336,12 @@ public class PlayerAttack : MonoBehaviour
         if (hasUpgrade)
         {
             swordDamage = 10;  // Upgraded damage
-            Debug.Log("⚔️ Loaded upgraded sword damage, damage forced - set to: 10");
+            Debug.Log("Loaded upgraded sword damage, damage forced - set to: 10");
         }
         else
         {
             swordDamage = baseSwordDamage;  // Base damage (8)
-            Debug.Log($"⚔️ Loaded base sword damage: {baseSwordDamage}");
+            Debug.Log($"Loaded base sword damage: {baseSwordDamage}");
         }
     }
 
@@ -348,7 +359,7 @@ public class PlayerAttack : MonoBehaviour
             GameManager.Instance.SaveProgress();
         }
 
-        Debug.Log($"⚔️ Damage increased by {amount}. New damage: {swordDamage}");
+        Debug.Log($"Damage increased by {amount}. New damage: {swordDamage}");
     }
 
     /// <summary>
@@ -357,7 +368,7 @@ public class PlayerAttack : MonoBehaviour
     public void MultiplyDamage(int multiplier)
     {
         swordDamage *= multiplier;
-        Debug.Log($"⚔️ Damage multiplied by {multiplier}. New damage: {swordDamage}");
+        Debug.Log($"Damage multiplied by {multiplier}. New damage: {swordDamage}");
     }
 
     // =========================

@@ -70,7 +70,7 @@ public class YojiDialogueHandler : MonoBehaviour
         if (GM.GetFlag(GameFlag.GeorgeFirstEncounter) && !GM.GetFlag(GameFlag.YojiUnlocksStore))
             return true;
 
-        // ✅ After first post-George dialogue, before upgrade dialogue
+        // After first post-George dialogue, before upgrade dialogue
         if (GM.GetFlag(GameFlag.YojiUnlocksStore) && !GM.GetFlag(GameFlag.hasUpgradedSword))
             return true;
 
@@ -122,7 +122,7 @@ public class YojiDialogueHandler : MonoBehaviour
             return;
         }
 
-        // ✅ CASE 3: RIGHT AFTER post-George dialogue - Give upgrade and unlock store
+        // CASE 3: RIGHT AFTER post-George dialogue - Give upgrade and unlock store
         if (GM.GetFlag(GameFlag.YojiUnlocksStore) && !GM.GetFlag(GameFlag.hasUpgradedSword))
         {
             if (unlockStoreDialogue != null)
@@ -167,11 +167,11 @@ public class YojiDialogueHandler : MonoBehaviour
         if (greenForestPortal != null)
         {
             greenForestPortal.SetActive(true);
-            Debug.Log("✅ Green Forest portal activated!");
+            Debug.Log("Green Forest portal activated!");
         }
         else
         {
-            Debug.LogError("❌ greenForestPortal is not assigned! Please drag the portal GameObject to YojiDialogueHandler in Inspector!");
+            Debug.LogError("greenForestPortal is not assigned! Please drag the portal GameObject to YojiDialogueHandler in Inspector!");
         }
 
         // Save progress
@@ -209,7 +209,7 @@ public class YojiDialogueHandler : MonoBehaviour
             GM.SaveProgress();
         }
 
-        // ✅ Immediately show prompt again so player can get the upgrade dialogue
+        // Immediately show prompt again so player can get the upgrade dialogue
         if (playerInRange && ShouldShowDialoguePrompt())
         {
             if (interactionPrompt != null)
@@ -218,7 +218,7 @@ public class YojiDialogueHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// ✅ Called after the post-George UPGRADE dialogue finishes
+    /// Called after the post-George UPGRADE dialogue finishes
     /// THIS is where the player gets the sword upgrade and store unlocks
     /// </summary>
     private void OnPostGeorgeUpgradeDialogueComplete()
@@ -231,7 +231,7 @@ public class YojiDialogueHandler : MonoBehaviour
             if (abilities != null)
             {
                 abilities.UpgradeSword();
-                Debug.Log("✅ Player given sword upgrade - Can now damage George!");
+                Debug.Log("Player given sword upgrade - Can now damage George!");
             }
         }
 
@@ -274,11 +274,11 @@ public class YojiDialogueHandler : MonoBehaviour
             GM.SetFlag(GameFlag.YojiPostFikaDialogueSeen, true);
         }
 
-        // ✅ Update store state to PostFika (unlocks new items after defeating Fika)
+        //Update store state to PostFika (unlocks new items after defeating Fika)
         if (StoreStateManager.Instance != null)
         {
             StoreStateManager.Instance.SetStoreState(StoreStateManager.StoreState.PostFika);
-            Debug.Log("✅ Store state changed to PostFika - New items unlocked!");
+            Debug.Log("Store state changed to PostFika - New items unlocked!");
         }
 
         Debug.Log("Post-Fika dialogue complete - Congratulations given, store upgraded!");
@@ -340,7 +340,7 @@ public class YojiDialogueHandler : MonoBehaviour
             if (interactionPrompt != null)
                 interactionPrompt.SetActive(false);
 
-            Debug.Log("✅ Saved state applied: Yoji talked -> portal active");
+            Debug.Log("Saved state applied: Yoji talked -> portal active");
         }
     }
 
