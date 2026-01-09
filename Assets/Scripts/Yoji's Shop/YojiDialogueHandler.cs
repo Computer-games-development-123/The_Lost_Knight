@@ -15,6 +15,10 @@ public class YojiDialogueHandler : MonoBehaviour
     [Tooltip("The Green Forest portal GameObject - starts INACTIVE, becomes active after dialogue")]
     public GameObject greenForestPortal;
 
+    [Header("Yoji Visual")]
+    [Tooltip("Yoji's sprite renderer - will be made invisible when dead")]
+    public SpriteRenderer yojiSprite;
+
     private bool playerInRange = false;
     private GameManager GM => GameManager.Instance;
     private DialogueManager DM => DialogueManager.Instance;
@@ -23,6 +27,10 @@ public class YojiDialogueHandler : MonoBehaviour
     {
         if (interactionPrompt != null)
             interactionPrompt.SetActive(false);
+
+        // Auto-find sprite renderer if not assigned
+        if (yojiSprite == null)
+            yojiSprite = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -32,6 +40,10 @@ public class YojiDialogueHandler : MonoBehaviour
 
     private void Update()
     {
+        // Don't allow dialogue interactions if Yoji is dead
+        if (GM != null && GM.GetFlag(GameFlag.YojiDead))
+            return;
+
         if (!playerInRange) return;
         if (DM == null) return;
         if (DM.IsDialogueActive) return; // Don't interrupt active dialogue
@@ -61,6 +73,9 @@ public class YojiDialogueHandler : MonoBehaviour
     private bool ShouldShowDialoguePrompt()
     {
         if (GM == null) return false;
+
+        // Don't show dialogue if Yoji is dead
+        if (GM.GetFlag(GameFlag.YojiDead)) return false;
 
         // First time talking to Yoji
         if (!GM.GetFlag(GameFlag.YojiFirstDialogueCompleted))
@@ -274,7 +289,7 @@ public class YojiDialogueHandler : MonoBehaviour
             GM.SetFlag(GameFlag.YojiPostFikaDialogueSeen, true);
         }
 
-        //Update store state to PostFika (unlocks new items after defeating Fika)
+        // Update store state to PostFika (unlocks new items after defeating Fika)
         if (StoreStateManager.Instance != null)
         {
             StoreStateManager.Instance.SetStoreState(StoreStateManager.StoreState.PostFika);
@@ -310,7 +325,7 @@ public class YojiDialogueHandler : MonoBehaviour
 
         playerInRange = true;
 
-        // Show prompt if there's dialogue available
+        // Show prompt if there's dialogue available (and Yoji is not dead)
         if (ShouldShowDialoguePrompt() && (DM == null || !DM.IsDialogueActive))
         {
             if (interactionPrompt != null)
@@ -332,6 +347,13 @@ public class YojiDialogueHandler : MonoBehaviour
     {
         if (GM == null || !GM.IsProgressLoaded) return;
 
+        // Check if Yoji is dead - make him invisible
+        if (GM.GetFlag(GameFlag.YojiDead))
+        {
+            HideYoji();
+            return;
+        }
+
         if (GM.GetFlag(GameFlag.YojiFirstDialogueCompleted))
         {
             if (greenForestPortal != null)
@@ -344,4 +366,23 @@ public class YojiDialogueHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Makes Yoji invisible (called when YojiDead flag is set)
+    /// </summary>
+    private void HideYoji()
+    {
+        if (yojiSprite != null)
+        {
+            yojiSprite.enabled = false;
+            Debug.Log("Yoji is dead - sprite hidden");
+        }
+
+        // Hide dialogue prompt
+        if (interactionPrompt != null)
+        {
+            interactionPrompt.SetActive(false);
+        }
+
+        Debug.Log("Yoji's spirit has moved on... but his store remains.");
+    }
 }

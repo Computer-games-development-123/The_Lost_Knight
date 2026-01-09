@@ -165,7 +165,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0.014836498, y: -0.017328113}
-  m_Size: {x: 0.14800166, y: 0.45649213}
+  m_Size: {x: 0.15, y: 0.45}
   m_Direction: 0
 --- !u!95 &8657448812913615140
 Animator:
@@ -274,6 +274,7 @@ MonoBehaviour:
   knockbackForce: 7
   knockbackUpForce: 2
   knockbackDuration: 0.15
+  hurtDuration: 0.4
   healAmountPerPotion: 10
   isGrounded: 0
 --- !u!114 &4003226436323456006
@@ -345,7 +346,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6633376722634027389}
   - component: {fileID: 2073613544214795591}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

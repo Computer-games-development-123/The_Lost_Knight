@@ -321,6 +321,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3008246383725433329, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_text
+      value: Yoji's Shop
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008246383725433329, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -343,6 +347,10 @@ PrefabInstance:
     - target: {fileID: 3008246383725433329, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4278247936
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008246383725433329, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3008246383725433329, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_hasFontAssetChanged
@@ -433,12 +441,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1703703511770862608, guid: a1e809f7dd6496743881d1e3d8730933, type: 3}
     - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[0].itemIcon
+      value: 
+      objectReference: {fileID: 7335253737980009713, guid: d063f430c02875c449921c5071478404, type: 3}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: storeItems.Array.data[0].itemName
       value: Wave Of Fire
       objectReference: {fileID: 0}
     - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[1].itemIcon
+      value: 
+      objectReference: {fileID: 1320761110985423309, guid: 1b7b213d4c2e4ff439b9ff71fd72a41c, type: 3}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: storeItems.Array.data[1].itemName
       value: Flash Ability
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[2].itemIcon
+      value: 
+      objectReference: {fileID: 5682928527487293180, guid: a659375f69a2986488ad61b56c88db8f, type: 3}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[2].itemName
+      value: Essence Of The Forest
       objectReference: {fileID: 0}
     - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: storeItems.Array.data[3].itemIcon
@@ -448,6 +472,10 @@ PrefabInstance:
       propertyPath: storeItems.Array.data[3].maxStock
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[4].itemIcon
+      value: 
+      objectReference: {fileID: -6741449898653340355, guid: 62970d27b42756e44be08901cc66697b, type: 3}
     - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: storeItems.Array.data[5].itemIcon
       value: 
@@ -459,6 +487,10 @@ PrefabInstance:
     - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: storeItems.Array.data[0].description
       value: Doubles damage + Wave of Fire (C)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[2].description
+      value: Adds +125 to your maximum HP
       objectReference: {fileID: 0}
     - target: {fileID: 5103337387099088423, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_text
@@ -506,11 +538,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7745665678289440325, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 521
+      value: 650
       objectReference: {fileID: 0}
     - target: {fileID: 7745665678289440325, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 7745665678289440325, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -522,7 +554,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8169393295716418920, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -800
+      value: -780
       objectReference: {fileID: 0}
     - target: {fileID: 8169393295716418920, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2642,6 +2674,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1612344721 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+  m_PrefabInstance: {fileID: 42447073}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ad750594d24ea43a9a72ed2288b9cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ListStoreController
 --- !u!1 &1635181849
 GameObject:
   m_ObjectHideFlags: 0
@@ -2778,26 +2821,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635181849}
   m_CullTransparentMesh: 1
---- !u!1 &1679681153 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4460582935798312227, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-  m_PrefabInstance: {fileID: 4007629750977778869}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1679681156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1679681153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f3d453154eb5a14cac7978d649d315c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ForestHubIntro
-  dialogues:
-  - {fileID: 11400000, guid: 6efb75435bc54074585be1807d47c962, type: 2}
-  - {fileID: 11400000, guid: e89ae4a013d4fcb4abc1cdfb55630a0b, type: 2}
 --- !u!4 &1715231297 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6191616853348164979, guid: 96af5c479d854594eb609ab7c6cface1, type: 3}
@@ -3231,6 +3254,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6463278094854310218, guid: 1290e0e2618021e419020ba5df6b9fca, type: 3}
   m_PrefabInstance: {fileID: 358322018085916412}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1969652848
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1969652850}
+  - component: {fileID: 1969652849}
+  m_Layer: 0
+  m_Name: Forest_Hub_Intro
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1969652849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969652848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f3d453154eb5a14cac7978d649d315c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ForestHubIntro
+  dialogues:
+  - {fileID: 11400000, guid: 6efb75435bc54074585be1807d47c962, type: 2}
+  - {fileID: 11400000, guid: e89ae4a013d4fcb4abc1cdfb55630a0b, type: 2}
+--- !u!4 &1969652850
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969652848}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.34805, y: -1.56839, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2029544104
 GameObject:
   m_ObjectHideFlags: 0
@@ -3847,71 +3917,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16b259cd5226bc1488df6378d1063127, type: 3}
---- !u!1001 &4007629750977778869
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2815697573233241010, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: dialogue
-      value: 
-      objectReference: {fileID: 11400000, guid: e89ae4a013d4fcb4abc1cdfb55630a0b, type: 2}
-    - target: {fileID: 4460582935798312227, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_Name
-      value: ForestHub_Intro
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.09993
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.20218
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6600173198951880116, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2815697573233241010, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4460582935798312227, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1679681156}
-  m_SourcePrefab: {fileID: 100100000, guid: 6558080b7528938469fb8c3bd6069e2b, type: 3}
 --- !u!1001 &6282994954908446217
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4195,6 +4200,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Yoji
       objectReference: {fileID: 0}
+    - target: {fileID: 6506609825868262242, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: storeController
+      value: 
+      objectReference: {fileID: 1612344721}
     - target: {fileID: 7820586316942577860, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -4342,10 +4351,10 @@ SceneRoots:
   - {fileID: 1103092797}
   - {fileID: 639827110}
   - {fileID: 1733824341}
-  - {fileID: 4007629750977778869}
   - {fileID: 1094946179}
   - {fileID: 1425836767}
   - {fileID: 566535976}
   - {fileID: 322129010}
   - {fileID: 42447073}
   - {fileID: 3467779209498842189}
+  - {fileID: 1969652850}

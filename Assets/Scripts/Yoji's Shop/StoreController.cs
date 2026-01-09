@@ -306,10 +306,10 @@ public class ListStoreController : MonoBehaviour
         if (row == null || row.itemData == null) return;
 
         bool isFreeStore = StoreStateManager.Instance != null && StoreStateManager.Instance.IsStoreFree();
-        bool swordRevealed = StoreStateManager.Instance != null && StoreStateManager.Instance.IsSwordOfFireRevealed();
+        bool WaveRevealed = StoreStateManager.Instance != null && StoreStateManager.Instance.IsWaveOfFireRevealed();
 
-        bool isSwordOfFire = row.itemData.itemType == ShopItem.ShopItemType.SwordOfFire;
-        bool isLocked = isSwordOfFire && !swordRevealed;
+        bool isWaveOfFire = row.itemData.itemType == ShopItem.ShopItemType.WaveOfFire;
+        bool isLocked = isWaveOfFire && !WaveRevealed;
         bool outOfStock = row.itemData.currentStock == 0 && row.itemData.maxStock != -1;
 
         if (outOfStock)
@@ -434,10 +434,10 @@ public class ListStoreController : MonoBehaviour
             return;
         }
 
-        bool isSwordOfFire = itemData.itemType == ShopItem.ShopItemType.SwordOfFire;
-        bool swordRevealed = StoreStateManager.Instance.IsSwordOfFireRevealed();
+        bool isWaveOfFire = itemData.itemType == ShopItem.ShopItemType.WaveOfFire;
+        bool WaveRevealed = StoreStateManager.Instance.IsWaveOfFireRevealed();
 
-        if (isSwordOfFire && !swordRevealed)
+        if (isWaveOfFire && !WaveRevealed)
         {
             Debug.Log("This item is locked!");
             return;
@@ -485,7 +485,7 @@ public class ListStoreController : MonoBehaviour
         UpdateCoinsDisplay();
         RefreshAllItems();
 
-        Debug.Log($"✅ {(isFree ? "Taken" : "Purchased")}: {itemData.itemName}!");
+        Debug.Log($"{(isFree ? "Taken" : "Purchased")}: {itemData.itemName}!");
     }
 
     void ApplyItemEffect(ShopItem.ShopItemType itemType, GameObject player)
@@ -513,22 +513,22 @@ public class ListStoreController : MonoBehaviour
                 }
                 break;
 
-            case ShopItem.ShopItemType.MagicArmor:
+            case ShopItem.ShopItemType.EssenceOfTheForest:
                 if (playerHealth != null)
                 {
-                    playerHealth.MultiplyMaxHealth(2);
+                    playerHealth.MultiplyMaxHealth(125);
                     playerHealth.Heal(playerHealth.MaxHealth); // Heal to new max
                 }
                 break;
 
-            case ShopItem.ShopItemType.FlashHelmet:
+            case ShopItem.ShopItemType.FlashAbility:
                 if (abilities != null)
                 {
                     abilities.UnlockTeleport();
                 }
                 break;
 
-            case ShopItem.ShopItemType.SwordOfFire:
+            case ShopItem.ShopItemType.WaveOfFire:
                 if (abilities != null && playerAttack != null)
                 {
                     abilities.UnlockWaveOfFire();

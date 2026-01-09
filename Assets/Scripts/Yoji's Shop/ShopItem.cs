@@ -19,9 +19,9 @@ public class ShopItem
     {
         HPUpgrade,
         DamageUpgrade,
-        MagicArmor,
-        FlashHelmet,
-        SwordOfFire,
+        EssenceOfTheForest,
+        FlashAbility,
+        WaveOfFire,
         Potion
     }
 }
