@@ -194,7 +194,7 @@ public class PlayerHealth : MonoBehaviour
     /// </summary>
     public void MultiplyMaxHealth(float multiplier)
     {
-        maxHealth *= multiplier;
+        maxHealth += multiplier;
         SaveMaxHealthToCloud();
         Debug.Log($"Max health multiplied by {multiplier}. New max: {maxHealth}");
     }

@@ -91,7 +91,7 @@ public class PlayerAttack : MonoBehaviour
         // Check if player is currently hurt - cannot attack while hurt
         if (movement != null && movement.isHurt)
         {
-            Debug.Log("🚫 Cannot attack - player is hurt!");
+            Debug.Log("Cannot attack - player is hurt!");
             return;
         }
 
@@ -101,18 +101,18 @@ public class PlayerAttack : MonoBehaviour
         if (timeSinceLastAttack < attackCooldown)
         {
             // Still on cooldown - ignore input
-            Debug.Log($"⏱️ Attack on cooldown. Wait {(attackCooldown - timeSinceLastAttack):F2}s more. Time since last: {timeSinceLastAttack:F2}s");
+            Debug.Log($"Attack on cooldown. Wait {(attackCooldown - timeSinceLastAttack):F2}s more. Time since last: {timeSinceLastAttack:F2}s");
             return;
         }
 
         // Additional check - make sure we can attack
         if (!canAttack)
         {
-            Debug.Log("🚫 Cannot attack - canAttack is false");
+            Debug.Log("Cannot attack - canAttack is false");
             return;
         }
 
-        Debug.Log($"✅ COOLDOWN PASSED! Time since last attack: {timeSinceLastAttack:F2}s (needed {attackCooldown:F2}s)");
+        Debug.Log($"COOLDOWN PASSED! Time since last attack: {timeSinceLastAttack:F2}s (needed {attackCooldown:F2}s)");
 
         // Cooldown passed - perform attack
         PerformAttack();

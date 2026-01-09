@@ -76,7 +76,7 @@ public class StoreStateManager : MonoBehaviour
         return currentState != StoreState.Locked;
     }
 
-    public bool IsSwordOfFireRevealed()
+    public bool IsWaveOfFireRevealed()
     {
         return currentState == StoreState.PostFika || currentState == StoreState.PostPhilip;
     }

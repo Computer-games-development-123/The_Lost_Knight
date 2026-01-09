@@ -6,16 +6,40 @@ public class PhilipBoss : BossBase
 {
     [Header("Philip Specific")]
     public GameObject specialAttackPortal;
+
     protected override void Start()
     {
         base.Start();
         if (anim == null) anim = GetComponent<Animator>();
     }
 
+    protected override void OnBossStart()
+    {
+        base.OnBossStart();
+        
+        bossName = "Philip";
+
+        // Set Yoji as dead when Philip appears
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SetFlag(GameFlag.YojiDead, true);
+            GameManager.Instance.SaveProgress();
+            Debug.Log("Philip has killed Yoji - YojiDead flag set");
+        }
+
+        // Update store to free (PostPhilip state)
+        if (StoreStateManager.Instance != null)
+        {
+            StoreStateManager.Instance.SetStoreState(StoreStateManager.StoreState.PostPhilip);
+            Debug.Log("Store is now free - Yoji's Legacy");
+        }
+    }
+
     protected override void Update()
     {
         if (Input.GetKeyDown(KeyCode.V)) SpecialAttack();
     }
+
     protected override void BossAI()
     {
         //base.BossAI();
@@ -47,45 +71,46 @@ public class PhilipBoss : BossBase
         // slamDamage = Mathf.RoundToInt(slamDamage * 1.5f);
     }
 
-    // protected override void Die()
-    // {
-    //     if (isDead) return;
-    //     isDead = true;
+    protected override void Die()
+    {
+        if (isDead) return;
+        isDead = true;
 
-    //     Debug.Log($"💀 {bossName} defeated!");
+        Debug.Log($"{bossName} defeated!");
 
-    //     isSlaming = false;
+        //isSlaming = false;
 
-    //     if (rb != null)
-    //         rb.linearVelocity = Vector2.zero;
+        if (rb != null)
+            rb.linearVelocity = Vector2.zero;
 
-    //     if (anim != null)
-    //         anim.SetTrigger("Death");
+        if (anim != null)
+            anim.SetTrigger("Death");
 
-    //     if (waveManager != null)
-    //     {
-    //         waveManager.OnBossDied(this);
-    //     }
+        if (waveManager != null)
+        {
+            waveManager.OnBossDied(this);
+        }
 
-    //     if (DialogueManager.Instance != null && deathDialogue != null)
-    //     {
-    //         DialogueManager.Instance.Play(deathDialogue, OnDeathDialogueComplete);
-    //     }
-    //     else
-    //     {
-    //         OnDeathDialogueComplete();
-    //     }
-    // }
+        if (DialogueManager.Instance != null && deathDialogue != null)
+        {
+            DialogueManager.Instance.Play(deathDialogue, OnDeathDialogueComplete);
+        }
+        else
+        {
+            OnDeathDialogueComplete();
+        }
+    }
 
-    // private void OnDeathDialogueComplete()
-    // {
-    //     Debug.Log($"✅ Philip defeated - spawning portals...");
+    protected override void OnDeathDialogueComplete()
+    {
+        // Call base to handle coins and slain dialogue
+        base.OnDeathDialogueComplete();
 
-    //     if (GameManager.Instance != null)
-    //     {
-    //         GameManager.Instance.OnPhilipDefeated();
-    //     }
+        Debug.Log($"Philip defeated - spawning portals...");
 
-    //     Destroy(gameObject, 2f);
-    // }
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnPhilipDefeated();
+        }
+    }
 }
