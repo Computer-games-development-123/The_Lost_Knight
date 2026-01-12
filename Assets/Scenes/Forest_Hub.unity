@@ -2305,26 +2305,25 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'CONTROLS
 
-    
+
 
     AD / Left Right Arrow Keys - Move
 
-    Up Arrow
-    - Jump
+    Up Arrow - Jump
 
-    X - Attack
+    X
+    - Attack
 
     F - Interact / Advance Dialogue
 
-    E - Shop (in
-    shop, up/down/enter)
+    E - Shop (in shop, up/down/enter)
 
-    H - Use Potion
+    H
+    - Use Potion
 
     Alt - Teleport
 
-    C - Wave of
-    Fire
+    C - Wave of Fire
 
     ESC - Pause Menu'
   m_isRightToLeft: 0

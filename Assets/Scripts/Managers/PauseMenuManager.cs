@@ -48,6 +48,13 @@ public class PauseMenuManager : MonoBehaviour
             return;
         }
 
+        // Don't allow pausing when store is open
+        ListStoreController storeController = FindFirstObjectByType<ListStoreController>();
+        if (storeController != null && storeController.IsStoreOpen)
+        {
+            return;
+        }
+
         // Toggle pause with ESC key
         if (Input.GetKeyDown(pauseKey))
         {
