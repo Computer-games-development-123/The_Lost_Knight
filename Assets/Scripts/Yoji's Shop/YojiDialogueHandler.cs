@@ -213,6 +213,7 @@ public class YojiDialogueHandler : MonoBehaviour
     {
         if (GM != null)
         {
+            GM.SetFlag(GameFlag.YojiAfterGeorge, true);
             GM.SetFlag(GameFlag.YojiUnlocksStore, true);
         }
 

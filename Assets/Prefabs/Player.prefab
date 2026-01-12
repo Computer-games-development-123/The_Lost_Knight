@@ -217,7 +217,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   normalOverride: {fileID: 9100000, guid: 8a9ee0af6e2b96d4bab8cb7325ec24f6, type: 2}
   fireOverride: {fileID: 22100000, guid: 6003e38a102dd5548b1339092d8b680f, type: 2}
-  fireFormFlag: 7
+  fireFormFlag: 10
 --- !u!114 &4905180846096170032
 MonoBehaviour:
   m_ObjectHideFlags: 0

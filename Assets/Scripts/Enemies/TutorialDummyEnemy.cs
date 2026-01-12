@@ -36,7 +36,7 @@ public class TutorialDummyEnemy : EnemyBase
         }
         else
         {
-            Debug.LogWarning("⚠️ TutorialDummyEnemy: portalToEnable is not assigned!");
+            Debug.LogWarning("TutorialDummyEnemy: portalToEnable is not assigned!");
         }
     }
 
@@ -122,21 +122,17 @@ public class TutorialDummyEnemy : EnemyBase
     }
 
     /// <summary>
-    /// Override collision to prevent damage to player
+    /// Override collision and trigger methods to prevent damage to player
     /// Tutorial dummy should not hurt the player
     /// </summary>
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        // Do nothing - tutorial dummy doesn't damage player on collision
+        // Do nothing - tutorial dummy doesn't damage player while touching
     }
 
-    /// <summary>
-    /// Override trigger to prevent damage to player
-    /// Tutorial dummy should not hurt the player
-    /// </summary>
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        // Do nothing - tutorial dummy doesn't damage player on trigger
+        // Do nothing - tutorial dummy doesn't damage player while overlapping
     }
 
     protected override void Die()
