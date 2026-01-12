@@ -122,6 +122,7 @@ public class YojiStoreHandler : MonoBehaviour
     private bool ShouldShowStorePrompt()
     {
         if (SSM == null) return false;
+        //if (!GM.GetFlag(GameFlag.YojiUnlocksStore)) return false;
 
         // Store must be unlocked
         if (!SSM.IsStoreUnlocked()) return false;

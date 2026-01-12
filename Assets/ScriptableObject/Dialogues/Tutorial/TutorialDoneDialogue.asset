@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: TutorialDoneDialogue
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 4
-  flag: 11
+  flag: 12
   speakerName: Game Progress
   lines:
   - Nice!, You've hit the dummy 3 times.
-  - Now should head back to the forest.
+  - Now you should head back to the forest.
   portrait: {fileID: -2138534889620764463, guid: 8499aa222c9ccfd4198291b7557eb4f1, type: 3}
   pauseGameDuringDialogue: 1

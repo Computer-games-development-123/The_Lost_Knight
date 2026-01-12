@@ -213,17 +213,17 @@ public class GameManager : MonoBehaviour
             IsProgressLoaded = true;
 
             if (showDebugLogs)
-                Debug.Log($"✅ Cloud load completed. Flags loaded: {cloudData.Count}");
+                Debug.Log($"Cloud load completed. Flags loaded: {cloudData.Count}");
 
-            // ✅ apply things that depend on flags right now
+            // apply things that depend on flags right now
             UpdateStoreState();
 
-            // ✅ notify others
+            // notify others
             ProgressLoaded?.Invoke();
         }
         catch (System.Exception e)
         {
-            Debug.LogError("❌ Cloud load failed: " + e);
+            Debug.LogError("Cloud load failed: " + e);
 
             IsProgressLoaded = true;
 

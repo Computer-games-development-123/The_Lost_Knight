@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Philip_Death
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
-  flag: 15
+  flag: 16
   speakerName: Philip, Prince Of Darkness
   lines:
   - i cant beilve this...
