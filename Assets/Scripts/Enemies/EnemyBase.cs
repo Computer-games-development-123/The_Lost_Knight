@@ -382,12 +382,15 @@ public class EnemyBase : MonoBehaviour
 
     #region Collision - Player Damage
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private float lastDamageTime = 0f;
+    private float damageCooldown = 0.5f; // Only damage player every 0.5 seconds
+
+    private void OnCollisionStay2D(Collision2D collision)
     {
         DealContactDamage(collision.gameObject);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         DealContactDamage(collision.gameObject);
     }
@@ -396,12 +399,17 @@ public class EnemyBase : MonoBehaviour
     {
         if (isDead) return;
 
+        // Cooldown check to prevent spamming damage every frame
+        if (Time.time < lastDamageTime + damageCooldown)
+            return;
+
         if (other.CompareTag("Player"))
         {
             PlayerController playerController = other.GetComponent<PlayerController>();
             if (playerController != null)
             {
                 playerController.TakeDamage(Damage, transform.position);
+                lastDamageTime = Time.time;
                 Debug.Log($"{gameObject.name} dealt {Damage} contact damage to Player!");
                 return;
             }
@@ -410,6 +418,7 @@ public class EnemyBase : MonoBehaviour
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(Damage);
+                lastDamageTime = Time.time;
                 Debug.Log($"{gameObject.name} dealt {Damage} contact damage to Player!");
                 return;
             }
