@@ -30,6 +30,9 @@ public class ListStoreController : MonoBehaviour
     private bool isStoreOpen = false;
     private int selectedIndex = 0;
 
+    // Public property so PauseMenuManager can check if store is open
+    public bool IsStoreOpen => isStoreOpen;
+
     [System.Serializable]
     public class StoreItemData
     {
@@ -274,15 +277,17 @@ public class ListStoreController : MonoBehaviour
     {
         if (coinsText != null)
         {
-            // Find player and get inventory
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
             {
                 PlayerInventory inventory = player.GetComponent<PlayerInventory>();
                 if (inventory != null)
                 {
-                    if (StoreStateManager.Instance != null && StoreStateManager.Instance.IsStoreFree())
+                    bool isFree = StoreStateManager.Instance != null && StoreStateManager.Instance.IsStoreFree();
+
+                    if (isFree)
                     {
+                        coinsText.color = freeTextColor;
                         coinsText.text = "FREE";
                     }
                     else
