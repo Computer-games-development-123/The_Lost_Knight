@@ -41,13 +41,13 @@ public class ProjectileDamage : MonoBehaviour
 
         // 1) Damage player - search for PlayerHealth in parent if not found on self
         PlayerHealth ph = other.GetComponent<PlayerHealth>();
-        
+
         // If not found (for example, we hit the attack point), search in parent
         if (ph == null)
         {
             ph = other.GetComponentInParent<PlayerHealth>();
         }
-        
+
         if (ph != null)
         {
             ph.TakeDamage(damage);
