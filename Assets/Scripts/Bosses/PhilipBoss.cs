@@ -9,26 +9,26 @@ public class PhilipBoss : BossBase
     public Transform portalSpawnPoint; // Where portal spawns above Philip
     public float portalAttackCooldown = 5f;
     public float portalAttackDuration = 2f;
-    
+
     [Header("Philip Specific - Melee Attack")]
     public Transform meleeAttackPoint;
     public float meleeAttackRange = 2f;
     public float meleeAttackCooldown = 3f;
-    
+
     [Header("Philip Specific - Movement")]
     public float floatSpeed = 2f;
     public float attackRange = 6f; // Distance to start attacking
     public float meleeRange = 2.5f; // Distance for melee attacks
-    
+
     [Header("Phase 2 Changes")]
     public float phase2PortalCooldownMultiplier = 0.6f;
     public float phase2MeleeCooldownMultiplier = 0.7f;
-    
+
     private float lastPortalAttackTime = -999f;
     private float lastMeleeAttackTime = -999f;
     private bool isAttacking = false;
     private GameObject activePortal;
-    
+
     private enum AttackType { None, Melee, Portal }
     private AttackType currentAttack = AttackType.None;
 
@@ -42,7 +42,7 @@ public class PhilipBoss : BossBase
     protected override void OnBossStart()
     {
         base.OnBossStart();
-        
+
         bossName = "Philip, Bringer of Death";
 
         // Set Yoji as dead when Philip appears
@@ -64,7 +64,7 @@ public class PhilipBoss : BossBase
     protected override void Update()
     {
         base.Update();
-        
+
         // Debug: Manual attack testing
         if (Input.GetKeyDown(KeyCode.V)) StartCoroutine(PerformPortalAttack());
         if (Input.GetKeyDown(KeyCode.B)) StartCoroutine(PerformMeleeAttack());
@@ -100,7 +100,7 @@ public class PhilipBoss : BossBase
             // Wait for cooldowns - play idle
             if (anim != null)
                 anim.SetBool("IsMoving", false);
-            
+
             if (rb != null)
                 rb.linearVelocity = Vector2.zero;
         }
@@ -111,7 +111,7 @@ public class PhilipBoss : BossBase
         if (player == null) return;
 
         Vector2 direction = (player.position - transform.position).normalized;
-        
+
         if (rb != null)
         {
             rb.linearVelocity = new Vector2(direction.x * floatSpeed, rb.linearVelocity.y);
@@ -128,7 +128,7 @@ public class PhilipBoss : BossBase
         if (player == null) return;
 
         float direction = player.position.x - transform.position.x;
-        
+
         if (direction > 0 && !facingRight)
             Flip();
         else if (direction < 0 && facingRight)
@@ -224,7 +224,7 @@ public class PhilipBoss : BossBase
             // Spawn lightning above player's current position
             Vector3 lightningSpawnPos = new Vector3(player.position.x, player.position.y + 5f, player.position.z);
             GameObject lightning = Instantiate(lightningPrefab, lightningSpawnPos, Quaternion.identity);
-            
+
             // Give lightning downward velocity
             Rigidbody2D lightningRb = lightning.GetComponent<Rigidbody2D>();
             if (lightningRb != null)

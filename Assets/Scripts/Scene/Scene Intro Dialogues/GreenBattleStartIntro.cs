@@ -66,7 +66,7 @@ public class GreenBattleStartIntro : MonoBehaviour
         {
             bool dialogue1Done = false;
             DialogueManager.Instance.Play(hpAndPotionsDialogue, () => dialogue1Done = true);
-            
+
             // Wait for player to finish this dialogue (pressing F)
             yield return new WaitUntil(() => dialogue1Done);
             // immediately start next dialogue
@@ -77,7 +77,7 @@ public class GreenBattleStartIntro : MonoBehaviour
         {
             bool dialogue2Done = false;
             DialogueManager.Instance.Play(coinsDialogue, () => dialogue2Done = true);
-            
+
             // Wait for player to finish this dialogue (pressing F)
             yield return new WaitUntil(() => dialogue2Done);
             // immediately start next dialogue
@@ -88,7 +88,7 @@ public class GreenBattleStartIntro : MonoBehaviour
         {
             bool dialogue3Done = false;
             DialogueManager.Instance.Play(prepareForBattleDialogue, () => dialogue3Done = true);
-            
+
             // Wait for player to finish this dialogue (pressing F)
             yield return new WaitUntil(() => dialogue3Done);
         }

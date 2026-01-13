@@ -77,7 +77,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
         if (fikaAI != null)
         {
             fikaAI.enabled = false;
-            
+
             // IMPORTANT: Assign WaveManager reference so portals spawn when Fika dies
             WaveManager waveManager = FindFirstObjectByType<WaveManager>();
             if (waveManager != null)

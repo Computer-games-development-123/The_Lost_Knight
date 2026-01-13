@@ -32,7 +32,7 @@ public class PlayerHealth : MonoBehaviour
     private async void Start()
     {
         await LoadMaxHealthFromCloud();
-        
+
         // Start with full HP
         currentHealth = maxHealth;
     }
@@ -42,7 +42,7 @@ public class PlayerHealth : MonoBehaviour
         try
         {
             var data = await DatabaseManager.LoadData("PlayerMaxHealth");
-            
+
             if (data.TryGetValue("PlayerMaxHealth", out Item item))
             {
                 maxHealth = item.Value.GetAs<float>();
@@ -118,7 +118,7 @@ public class PlayerHealth : MonoBehaviour
             currentHealth = maxHealth;
 
         Debug.Log($"Healed {amount} HP. Current: {currentHealth}/{maxHealth}");
-        
+
         // Play heal sound through AudioManager
         if (AudioManager.Instance != null)
         {
