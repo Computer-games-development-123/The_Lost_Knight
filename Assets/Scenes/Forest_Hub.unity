@@ -4644,7 +4644,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2652256247896392823, guid: 24e596e74ee1cbb46bfb992e6a5c29d3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -968.5
+      value: -968.3
       objectReference: {fileID: 0}
     - target: {fileID: 2652256247896392823, guid: 24e596e74ee1cbb46bfb992e6a5c29d3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4697,7 +4697,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 998392704380348123, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
       propertyPath: fireFormFlag
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4376152552779809795, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
       propertyPath: m_Name

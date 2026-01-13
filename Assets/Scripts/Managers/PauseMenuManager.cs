@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Pause Menu Manager - Handles pausing the game and showing controls
 /// Press ESC to pause/unpause
+/// FIXED: Canvas sorting order set to 10000 to appear above all UI
 /// </summary>
 public class PauseMenuManager : MonoBehaviour
 {
@@ -37,6 +38,14 @@ public class PauseMenuManager : MonoBehaviour
         if (pauseMenuPanel != null)
         {
             pauseMenuPanel.SetActive(false);
+        }
+
+        //Set Canvas sorting order to appear above all other UI
+        Canvas canvas = GetComponent<Canvas>();
+        if (canvas != null)
+        {
+            canvas.sortingOrder = 10000; // Very high value to ensure it's on top
+            Debug.Log("Pause menu canvas sorting order set to 10000");
         }
     }
 

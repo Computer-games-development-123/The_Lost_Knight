@@ -21,8 +21,9 @@ public enum GameFlag
     TutorialCompleted,
     GeorgeFirstEncounter,
     GeorgeDefeated,
+    FikaCutsceneSeen,
     FikaDefeated,
-    PhillipDefeated,
+    PhilipDefeated,
     DitorDefeated,
     YojiDead
 }

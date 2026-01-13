@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
 
     public void OnPhilipDefeated()
     {
-        SetFlag(GameFlag.PhillipDefeated, true);
+        SetFlag(GameFlag.PhilipDefeated, true);
         UpdateStoreState();
         SaveProgress();
     }
