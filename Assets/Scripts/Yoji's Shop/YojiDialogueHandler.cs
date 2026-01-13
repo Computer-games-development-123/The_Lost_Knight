@@ -348,13 +348,26 @@ public class YojiDialogueHandler : MonoBehaviour
     {
         if (GM == null || !GM.IsProgressLoaded) return;
 
-        // Check if Yoji is dead - make him invisible
+        // Check if Yoji is dead AND handle portal activation
         if (GM.GetFlag(GameFlag.YojiDead))
         {
             HideYoji();
-            return;
+
+            // Still need to activate portal if dialogue was completed
+            // Even though Yoji is dead, the portal should remain open
+            if (GM.GetFlag(GameFlag.YojiFirstDialogueCompleted))
+            {
+                if (greenForestPortal != null)
+                {
+                    greenForestPortal.SetActive(true);
+                    Debug.Log("Yoji is dead but portal stays active (dialogue was completed)");
+                }
+            }
+
+            return; // Now we can return after handling portal
         }
 
+        // If Yoji is alive and dialogue was completed, activate portal
         if (GM.GetFlag(GameFlag.YojiFirstDialogueCompleted))
         {
             if (greenForestPortal != null)
