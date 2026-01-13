@@ -14,8 +14,10 @@ public class GeorgeBoss : BossBase
 
     [Header("Attack Settings")]
     public float attackCooldown = 4f;
+    public float attackWindupTime = 0.8f; // NEW: Time before attack actually happens (telegraph)
     private float lastAttackTime = -999f;
     private bool isAttacking = false;
+    private bool isWindingUp = false; // NEW: Flag for attack telegraph
 
     [Header("Range Detection")]
     public float closeRangeThreshold = 2f;
@@ -28,6 +30,7 @@ public class GeorgeBoss : BossBase
 
     [Header("Movement Settings")]
     public float walkSpeed = 3f;
+    public float retreatDistance = 5f; // NEW: How far to fly back after attack
 
     [Header("Boundaries")]
     public float minX = -8f;
@@ -147,7 +150,7 @@ public class GeorgeBoss : BossBase
     protected override void BossAI()
     {
         if (isDead || player == null) return;
-        if (isAttacking || isFlying) return;
+        if (isAttacking || isFlying || isWindingUp) return; //Don't move during windup
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
@@ -198,8 +201,20 @@ public class GeorgeBoss : BossBase
             anim.SetBool("IsMoving", false);
         }
 
+        //Attack telegraph/windup phase - gives player time to react
+        isWindingUp = true;
+        Debug.Log("George is winding up attack - player can dodge now!");
+        
+        yield return new WaitForSeconds(attackWindupTime);
+        
+        isWindingUp = false;
+
+        // Now perform the actual attack
         yield return StartCoroutine(CloseRangeAttack());
-        yield return new WaitForSeconds(1f);
+        
+        yield return new WaitForSeconds(0.5f);
+        
+        // Fly backwards after attack
         yield return StartCoroutine(FlyAway());
 
         isAttacking = false;
@@ -236,14 +251,15 @@ public class GeorgeBoss : BossBase
         if (anim != null)
         {
             anim.SetBool("IsGrounded", false);
-            anim.SetFloat("Speed", flySpeed); // Speed > 0 for fly animation
+            anim.SetFloat("Speed", flySpeed);
             anim.SetBool("IsMoving", true);
         }
 
+        // Calculate retreat direction (opposite of player)
         float direction = Mathf.Sign(transform.position.x - player.position.x);
         if (direction == 0) direction = 1;
 
-        float targetX = Mathf.Clamp(transform.position.x + (direction * 5f), minX, maxX);
+        float targetX = Mathf.Clamp(transform.position.x + (direction * retreatDistance), minX, maxX);
         float startX = transform.position.x;
         float distance = Mathf.Abs(targetX - startX);
 
@@ -304,17 +320,31 @@ public class GeorgeBoss : BossBase
 
     protected override void Die()
     {
+        // Prevent double death
         if (isDead) return;
+        
         isDead = true;
         isAttacking = false;
         isFlying = false;
+        isWindingUp = false;
+        
+        // Stop all coroutines to prevent flying during death
+        StopAllCoroutines();
+        
         if (rb != null)
+        {
             rb.linearVelocity = Vector2.zero;
+            rb.bodyType = RigidbodyType2D.Kinematic; // Prevent physics interactions
+        }
 
         if (anim != null)
         {
             anim.SetFloat("Speed", 0);
+            anim.SetBool("IsMoving", false);
+            anim.SetBool("IsGrounded", true);
         }
+        
+        // Call base Die() which handles animation and cleanup
         base.Die();
     }
 
@@ -323,6 +353,7 @@ public class GeorgeBoss : BossBase
         base.EnterPhase2();
 
         attackCooldown *= 0.75f;
+        attackWindupTime *= 0.8f; // Slightly faster telegraph in phase 2
         walkSpeed *= 1.3f;
         flySpeed *= 1.2f;
     }

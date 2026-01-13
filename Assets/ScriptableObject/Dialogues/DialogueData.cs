@@ -4,8 +4,8 @@ using UnityEngine;
 public class DialogueData : ScriptableObject
 {
     [Header("ID")]
-    public string id; // ✅ For BUNCH 2's DialogueManager
-    public GameFlag flag = GameFlag.None; // ✅ For BUNCH 1's dialogue triggers
+    public string id;
+    public GameFlag flag = GameFlag.None;
     
     [Header("Speaker")]
     public string speakerName;

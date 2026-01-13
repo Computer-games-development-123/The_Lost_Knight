@@ -243,7 +243,7 @@ public class WaveManager : MonoBehaviour
 
         if (bossName.Contains("philip"))
         {
-            return GameManager.Instance.GetFlag(GameFlag.PhillipDefeated);
+            return GameManager.Instance.GetFlag(GameFlag.PhilipDefeated);
         }
 
         return false;

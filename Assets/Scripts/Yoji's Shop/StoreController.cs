@@ -2,9 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Unity.Services.Core;
+using Unity.Services.Authentication;
+using Unity.Services.CloudSave.Models;
 
 /// <summary>
 /// Store Controller - Manages shop UI and purchases
+/// FIXED: Now saves and loads stock data to CloudSave
 /// </summary>
 public class ListStoreController : MonoBehaviour
 {
@@ -29,6 +34,7 @@ public class ListStoreController : MonoBehaviour
     private List<StoreItemRow> itemRows = new List<StoreItemRow>();
     private bool isStoreOpen = false;
     private int selectedIndex = 0;
+    private static bool cloudReady = false;
 
     // Public property so PauseMenuManager can check if store is open
     public bool IsStoreOpen => isStoreOpen;
@@ -67,11 +73,14 @@ public class ListStoreController : MonoBehaviour
         public int rowIndex;
     }
 
-    void Start()
+    private bool stockLoaded = false;
+
+    async void Start()
     {
         if (storePanel != null)
             storePanel.SetActive(false);
 
+        // Initialize items with default values
         if (storeItems != null)
         {
             foreach (var item in storeItems)
@@ -81,7 +90,14 @@ public class ListStoreController : MonoBehaviour
             }
         }
 
+        // Load saved stock data from cloud - WAIT for it to complete
+        await LoadStoreStock();
+        stockLoaded = true;
+
+        // Only build UI after stock is loaded
         BuildStoreUI();
+        
+        Debug.Log("Store initialization complete - stock loaded: " + stockLoaded);
     }
 
     void Update()
@@ -260,7 +276,7 @@ public class ListStoreController : MonoBehaviour
         }
 
         Time.timeScale = 1f;
-        //Re-ables input from the player when it closes.
+        //Re-enables input from the player when it closes.
         if (UserInputManager.Instance != null)
             UserInputManager.Instance.EnableInput();
     }
@@ -306,6 +322,7 @@ public class ListStoreController : MonoBehaviour
             UpdateRowDisplay(row);
         }
     }
+    
     void UpdateRowDisplay(StoreItemRow row)
     {
         if (row == null || row.itemData == null) return;
@@ -481,6 +498,9 @@ public class ListStoreController : MonoBehaviour
             itemData.currentStock--;
         }
 
+        // IMPORTANT: Save store stock to cloud
+        SaveStoreStock();
+
         // Save progress
         if (GameManager.Instance != null)
         {
@@ -490,7 +510,7 @@ public class ListStoreController : MonoBehaviour
         UpdateCoinsDisplay();
         RefreshAllItems();
 
-        Debug.Log($"{(isFree ? "Taken" : "Purchased")}: {itemData.itemName}!");
+        Debug.Log($"{(isFree ? "Taken" : "Purchased")}: {itemData.itemName}! Stock remaining: {itemData.currentStock}");
     }
 
     void ApplyItemEffect(ShopItem.ShopItemType itemType, GameObject player)
@@ -549,4 +569,130 @@ public class ListStoreController : MonoBehaviour
                 break;
         }
     }
+
+    #region Cloud Save/Load
+
+    private async Task EnsureCloudReady()
+    {
+        if (cloudReady) return;
+
+        await UnityServices.InitializeAsync();
+
+        if (!AuthenticationService.Instance.IsSignedIn)
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+
+        cloudReady = true;
+        Debug.Log("StoreController: Cloud ready");
+    }
+
+    /// <summary>
+    /// Save current stock of all items to CloudSave
+    /// </summary>
+    private async void SaveStoreStock()
+    {
+        Debug.Log("=== SAVING STORE STOCK ===");
+        
+        try
+        {
+            await EnsureCloudReady();
+
+            List<(string key, object value)> stockData = new List<(string, object)>();
+
+            for (int i = 0; i < storeItems.Length; i++)
+            {
+                if (storeItems[i] != null)
+                {
+                    // FIX: Remove spaces from key names (CloudSave doesn't allow spaces)
+                    string sanitizedName = storeItems[i].itemName.Replace(" ", "_");
+                    string key = $"StoreStock_{i}_{sanitizedName}";
+                    int stock = storeItems[i].currentStock;
+                    stockData.Add((key, stock));
+                    
+                    Debug.Log($"  Saving [{i}] {storeItems[i].itemName}: {stock} (key: {key})");
+                }
+            }
+
+            await DatabaseManager.SaveData(stockData.ToArray());
+
+            Debug.Log($"Store stock saved to cloud ({stockData.Count} items)");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Failed to save store stock: {e}");
+        }
+        
+        Debug.Log("=== SAVE COMPLETE ===");
+    }
+
+    /// <summary>
+    /// Load stock data from CloudSave
+    /// </summary>
+    private async Task LoadStoreStock()
+    {
+        Debug.Log("=== LOADING STORE STOCK ===");
+        
+        try
+        {
+            await EnsureCloudReady();
+
+            List<string> keys = new List<string>();
+            for (int i = 0; i < storeItems.Length; i++)
+            {
+                if (storeItems[i] != null)
+                {
+                    //Remove spaces from key names (CloudSave doesn't allow spaces)
+                    string sanitizedName = storeItems[i].itemName.Replace(" ", "_");
+                    keys.Add($"StoreStock_{i}_{sanitizedName}");
+                }
+            }
+
+            if (keys.Count == 0)
+            {
+                Debug.Log("No store items to load");
+                return;
+            }
+
+            Debug.Log($"Requesting {keys.Count} keys from cloud...");
+            Dictionary<string, Item> cloudData = await DatabaseManager.LoadData(keys.ToArray());
+            Debug.Log($"Received {cloudData.Count} items from cloud");
+
+            int loadedCount = 0;
+            for (int i = 0; i < storeItems.Length; i++)
+            {
+                if (storeItems[i] != null)
+                {
+                    //Remove spaces from key names (CloudSave doesn't allow spaces)
+                    string sanitizedName = storeItems[i].itemName.Replace(" ", "_");
+                    string key = $"StoreStock_{i}_{sanitizedName}";
+                    
+                    Debug.Log($"  Checking item [{i}] {storeItems[i].itemName} (key: {key}):");
+                    Debug.Log($"    Default stock: {storeItems[i].currentStock}");
+                    
+                    if (cloudData.TryGetValue(key, out Item item))
+                    {
+                        int savedStock = item.Value.GetAs<int>();
+                        storeItems[i].currentStock = savedStock;
+                        loadedCount++;
+                        Debug.Log($"Loaded from cloud: {savedStock}");
+                    }
+                    else
+                    {
+                        // No saved data - use default (already initialized)
+                        Debug.Log($"No saved data, using default: {storeItems[i].currentStock}");
+                    }
+                }
+            }
+
+            Debug.Log($"Store stock loaded from cloud ({loadedCount}/{storeItems.Length} items)");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Failed to load store stock: {e}");
+            Debug.Log("Using default stock values");
+        }
+        
+        Debug.Log("=== LOAD COMPLETE ===");
+    }
+
+    #endregion
 }

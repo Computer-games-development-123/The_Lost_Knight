@@ -17,15 +17,17 @@ public class FikaBossCutsceneManager : MonoBehaviour
     [Header("Dialogues")]
     [SerializeField] private DialogueData MonaFirstDialogue;
     [SerializeField] private DialogueData FikaFirstDialogue;
+    [SerializeField] private DialogueData FikaBattleStartDialogue; // Battle start dialogue for return visits
     [SerializeField] private DialogueData yojiInterruptsDialogue;
+    
     [Header("Movement")]
     [SerializeField] private float yojiMoveSpeed = 5f;
     [SerializeField] private float arriveDistance = 0.25f;
 
     [Header("Drama Timings")]
-    [SerializeField] private float pauseBeforeCombo = 0.15f;     // רגע של דרמה לפני קומבו
-    [SerializeField] private float pauseBetweenHits = 0.12f;     // פאוזה קטנה בין מתקפות
-    [SerializeField] private float pauseBeforeMonaDies = 0.2f;   // רגע אחרי hit3 לפני Die
+    [SerializeField] private float pauseBeforeCombo = 0.15f;
+    [SerializeField] private float pauseBetweenHits = 0.12f;
+    [SerializeField] private float pauseBeforeMonaDies = 0.2f;
 
     [Header("Vanish")]
     [SerializeField] private float vanishDelay = 0.25f;
@@ -54,8 +56,83 @@ public class FikaBossCutsceneManager : MonoBehaviour
     {
         if (cutsceneTriggered) return;
         cutsceneTriggered = true;
-        playerOverride.transform.position = new Vector3(-7, playerOverride.transform.position.y, 0);
+
+        // Check if cutscene has already been seen using dedicated flag
+        if (GameManager.Instance != null)
+        {
+            bool cutsceneSeen = GameManager.Instance.GetFlag(GameFlag.FikaCutsceneSeen);
+            
+            if (cutsceneSeen)
+            {
+                Debug.Log("Fika cutscene already seen (FikaCutsceneSeen flag = true) - skipping to battle start");
+                StartCoroutine(SkipToBattle());
+                return;
+            }
+            else
+            {
+                Debug.Log("First time seeing Fika cutscene - playing full sequence");
+            }
+        }
+
+        // First time - play full cutscene
+        if (playerOverride != null)
+        {
+            playerOverride.transform.position = new Vector3(-7, playerOverride.transform.position.y, 0);
+        }
         StartCoroutine(CutsceneSequence());
+    }
+
+    /// <summary>
+    /// Skip cutscene and go straight to battle (for return visits)
+    /// </summary>
+    private IEnumerator SkipToBattle()
+    {
+        // Lock player briefly
+        UserInputManager.Instance.DisableInput();
+        GameObject player = playerOverride != null ? playerOverride : GameObject.FindGameObjectWithTag("Player");
+        PlayerController pc = player != null ? player.GetComponent<PlayerController>() : null;
+        Rigidbody2D playerRB = player != null ? player.GetComponent<Rigidbody2D>() : null;
+
+        if (pc != null) pc.enabled = false;
+        if (playerRB != null) playerRB.linearVelocity = Vector2.zero;
+
+        yield return new WaitForSeconds(0.2f);
+
+        // Spawn only Fika (no Mona, no Yoji)
+        fikaInstance = Instantiate(fikaBossPrefab, fikaSpawnPoint.position, Quaternion.identity);
+
+        fikaAI = fikaInstance.GetComponent<FikaBoss>();
+        if (fikaAI != null)
+        {
+            fikaAI.enabled = false;
+            
+            // Assign WaveManager reference
+            WaveManager waveManager = FindFirstObjectByType<WaveManager>();
+            if (waveManager != null)
+            {
+                fikaAI.waveManager = waveManager;
+                Debug.Log("Fika WaveManager reference assigned");
+            }
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        // Play battle start dialogue (quick intro)
+        if (FikaBattleStartDialogue != null)
+        {
+            yield return PlayDialogueIfAny(FikaBattleStartDialogue);
+            UserInputManager.Instance.DisableInput();
+        }
+
+        yield return new WaitForSeconds(0.3f);
+
+        // Start fight
+        if (fikaAI != null) fikaAI.enabled = true;
+        if (FikaHealthBar != null) FikaHealthBar.SetActive(true);
+        if (pc != null) pc.enabled = true;
+        UserInputManager.Instance.EnableInput();
+
+        Debug.Log("Skipped cutscene - Boss fight begins!");
     }
 
     private IEnumerator CutsceneSequence()
@@ -78,7 +155,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
         {
             fikaAI.enabled = false;
             
-            // IMPORTANT: Assign WaveManager reference so portals spawn when Fika dies
+            // Assign WaveManager reference so portals spawn when Fika dies
             WaveManager waveManager = FindFirstObjectByType<WaveManager>();
             if (waveManager != null)
             {
@@ -98,9 +175,11 @@ public class FikaBossCutsceneManager : MonoBehaviour
         // Dialogue 1
         yield return PlayDialogueIfAny(MonaFirstDialogue);
         UserInputManager.Instance.DisableInput();
+        
         // Dialogue 2
         yield return PlayDialogueIfAny(FikaFirstDialogue);
         UserInputManager.Instance.DisableInput();
+        
         // Spawn Yoji
         yojiInstance = Instantiate(yojiPrefab, yojiSpawnPoint.position, Quaternion.identity);
         yojiAnim = yojiInstance.GetComponentInChildren<Animator>();
@@ -128,6 +207,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
         // Dialogue 3
         yield return PlayDialogueIfAny(yojiInterruptsDialogue);
         UserInputManager.Instance.DisableInput();
+        
         // Move to Mona
         yield return MoveYojiToMona();
         if (yojiAnim != null) yojiAnim.SetBool("Run", false);
@@ -153,14 +233,22 @@ public class FikaBossCutsceneManager : MonoBehaviour
         Destroy(monaInstance);
         Destroy(yojiInstance);
 
+        //Mark cutscene as seen BEFORE starting the fight
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SetFlag(GameFlag.FikaCutsceneSeen, true);
+            GameManager.Instance.SaveProgress();
+            Debug.Log("Fika cutscene completed - FikaCutsceneSeen flag set to true");
+        }
+
         // Start fight + unlock player
         if (fikaAI != null) fikaAI.enabled = true;
-        FikaHealthBar.SetActive(true);
+        if (FikaHealthBar != null) FikaHealthBar.SetActive(true);
         if (pc != null) pc.enabled = true;
         UserInputManager.Instance.EnableInput();
         UnhookEvents();
 
-        Debug.Log("Cutscene done. Boss fight begins!");
+        Debug.Log("Full cutscene done. Boss fight begins!");
     }
 
     private IEnumerator DoYojiCombo3()
