@@ -204,16 +204,16 @@ public class GeorgeBoss : BossBase
         //Attack telegraph/windup phase - gives player time to react
         isWindingUp = true;
         Debug.Log("George is winding up attack - player can dodge now!");
-        
+
         yield return new WaitForSeconds(attackWindupTime);
-        
+
         isWindingUp = false;
 
         // Now perform the actual attack
         yield return StartCoroutine(CloseRangeAttack());
-        
+
         yield return new WaitForSeconds(0.5f);
-        
+
         // Fly backwards after attack
         yield return StartCoroutine(FlyAway());
 
@@ -322,15 +322,15 @@ public class GeorgeBoss : BossBase
     {
         // Prevent double death
         if (isDead) return;
-        
+
         isDead = true;
         isAttacking = false;
         isFlying = false;
         isWindingUp = false;
-        
+
         // Stop all coroutines to prevent flying during death
         StopAllCoroutines();
-        
+
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
@@ -343,7 +343,7 @@ public class GeorgeBoss : BossBase
             anim.SetBool("IsMoving", false);
             anim.SetBool("IsGrounded", true);
         }
-        
+
         // Call base Die() which handles animation and cleanup
         base.Die();
     }

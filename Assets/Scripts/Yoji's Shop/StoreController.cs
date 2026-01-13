@@ -96,7 +96,7 @@ public class ListStoreController : MonoBehaviour
 
         // Only build UI after stock is loaded
         BuildStoreUI();
-        
+
         Debug.Log("Store initialization complete - stock loaded: " + stockLoaded);
     }
 
@@ -322,7 +322,7 @@ public class ListStoreController : MonoBehaviour
             UpdateRowDisplay(row);
         }
     }
-    
+
     void UpdateRowDisplay(StoreItemRow row)
     {
         if (row == null || row.itemData == null) return;
@@ -591,7 +591,7 @@ public class ListStoreController : MonoBehaviour
     private async void SaveStoreStock()
     {
         Debug.Log("=== SAVING STORE STOCK ===");
-        
+
         try
         {
             await EnsureCloudReady();
@@ -607,7 +607,7 @@ public class ListStoreController : MonoBehaviour
                     string key = $"StoreStock_{i}_{sanitizedName}";
                     int stock = storeItems[i].currentStock;
                     stockData.Add((key, stock));
-                    
+
                     Debug.Log($"  Saving [{i}] {storeItems[i].itemName}: {stock} (key: {key})");
                 }
             }
@@ -620,7 +620,7 @@ public class ListStoreController : MonoBehaviour
         {
             Debug.LogError($"Failed to save store stock: {e}");
         }
-        
+
         Debug.Log("=== SAVE COMPLETE ===");
     }
 
@@ -630,7 +630,7 @@ public class ListStoreController : MonoBehaviour
     private async Task LoadStoreStock()
     {
         Debug.Log("=== LOADING STORE STOCK ===");
-        
+
         try
         {
             await EnsureCloudReady();
@@ -664,10 +664,10 @@ public class ListStoreController : MonoBehaviour
                     //Remove spaces from key names (CloudSave doesn't allow spaces)
                     string sanitizedName = storeItems[i].itemName.Replace(" ", "_");
                     string key = $"StoreStock_{i}_{sanitizedName}";
-                    
+
                     Debug.Log($"  Checking item [{i}] {storeItems[i].itemName} (key: {key}):");
                     Debug.Log($"    Default stock: {storeItems[i].currentStock}");
-                    
+
                     if (cloudData.TryGetValue(key, out Item item))
                     {
                         int savedStock = item.Value.GetAs<int>();
@@ -690,7 +690,7 @@ public class ListStoreController : MonoBehaviour
             Debug.LogError($"Failed to load store stock: {e}");
             Debug.Log("Using default stock values");
         }
-        
+
         Debug.Log("=== LOAD COMPLETE ===");
     }
 

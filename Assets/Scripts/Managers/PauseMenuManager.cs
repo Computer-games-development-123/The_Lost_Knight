@@ -161,9 +161,9 @@ public class PauseMenuManager : MonoBehaviour
         Debug.Log("Quitting game");
         Application.Quit();
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        #endif
+#endif
     }
 
     private void OnDestroy()

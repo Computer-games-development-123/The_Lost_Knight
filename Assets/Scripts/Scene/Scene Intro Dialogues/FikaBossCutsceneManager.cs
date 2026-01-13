@@ -19,7 +19,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
     [SerializeField] private DialogueData FikaFirstDialogue;
     [SerializeField] private DialogueData FikaBattleStartDialogue; // Battle start dialogue for return visits
     [SerializeField] private DialogueData yojiInterruptsDialogue;
-    
+
     [Header("Movement")]
     [SerializeField] private float yojiMoveSpeed = 5f;
     [SerializeField] private float arriveDistance = 0.25f;
@@ -61,7 +61,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
         if (GameManager.Instance != null)
         {
             bool cutsceneSeen = GameManager.Instance.GetFlag(GameFlag.FikaCutsceneSeen);
-            
+
             if (cutsceneSeen)
             {
                 Debug.Log("Fika cutscene already seen (FikaCutsceneSeen flag = true) - skipping to battle start");
@@ -105,7 +105,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
         if (fikaAI != null)
         {
             fikaAI.enabled = false;
-            
+
             // Assign WaveManager reference
             WaveManager waveManager = FindFirstObjectByType<WaveManager>();
             if (waveManager != null)
@@ -154,7 +154,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
         if (fikaAI != null)
         {
             fikaAI.enabled = false;
-            
+
             // Assign WaveManager reference so portals spawn when Fika dies
             WaveManager waveManager = FindFirstObjectByType<WaveManager>();
             if (waveManager != null)
@@ -175,11 +175,11 @@ public class FikaBossCutsceneManager : MonoBehaviour
         // Dialogue 1
         yield return PlayDialogueIfAny(MonaFirstDialogue);
         UserInputManager.Instance.DisableInput();
-        
+
         // Dialogue 2
         yield return PlayDialogueIfAny(FikaFirstDialogue);
         UserInputManager.Instance.DisableInput();
-        
+
         // Spawn Yoji
         yojiInstance = Instantiate(yojiPrefab, yojiSpawnPoint.position, Quaternion.identity);
         yojiAnim = yojiInstance.GetComponentInChildren<Animator>();
@@ -207,7 +207,7 @@ public class FikaBossCutsceneManager : MonoBehaviour
         // Dialogue 3
         yield return PlayDialogueIfAny(yojiInterruptsDialogue);
         UserInputManager.Instance.DisableInput();
-        
+
         // Move to Mona
         yield return MoveYojiToMona();
         if (yojiAnim != null) yojiAnim.SetBool("Run", false);

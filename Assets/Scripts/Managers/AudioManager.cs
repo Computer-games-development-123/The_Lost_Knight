@@ -170,16 +170,16 @@ public class AudioManager : MonoBehaviour
     public void StopMusicImmediately()
     {
         StopAllCoroutines(); // Stop any fade coroutines
-        
+
         if (musicSource != null)
         {
             musicSource.Stop();
             musicSource.volume = musicVolume;
         }
-        
+
         currentMusic = null;
         musicBeforeBoss = null;
-        
+
         Debug.Log("Music stopped immediately");
     }
 
