@@ -31,6 +31,28 @@ public class PhilipBoss : BossBase
         floatSpeed = moveSpeed;
     }
 
+    protected override void OnBossStart()
+    {
+        base.OnBossStart();
+
+        bossName = "Philip, Bringer of Death";
+
+        // Set Yoji as dead when Philip appears
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SetFlag(GameFlag.YojiDead, true);
+            GameManager.Instance.SaveProgress();
+            Debug.Log("Philip has killed Yoji - YojiDead flag set");
+        }
+
+        // Update store to free (PostPhilip state)
+        if (StoreStateManager.Instance != null)
+        {
+            StoreStateManager.Instance.SetStoreState(StoreStateManager.StoreState.PostPhilip);
+            Debug.Log("Store is now free - Yoji's Legacy");
+        }
+    }
+
     protected override void BossAI()
     {
         if (isDead || player == null || isAttacking) return;
@@ -149,6 +171,51 @@ public class PhilipBoss : BossBase
                 playerHealth.TakeDamage(damage);
                 Debug.Log($"Philip melee hit for {damage} damage!");
             }
+        }
+    }
+
+    protected override void OnDeathDialogueComplete()
+    {
+        // Call base to handle coins and slain dialogue
+        base.OnDeathDialogueComplete();
+
+        Debug.Log($"Philip defeated - unlocking final area...");
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnPhilipDefeated();
+        }
+    }
+
+    protected override void Die()
+    {
+        if (isDead) return;
+        isDead = true;
+
+        Debug.Log($"{bossName} defeated!");
+
+        // Stop all movement and attacks
+        isAttacking = false;
+        StopAllCoroutines();
+
+        if (rb != null)
+            rb.linearVelocity = Vector2.zero;
+
+        if (anim != null)
+            anim.SetTrigger("Death");
+
+        if (waveManager != null)
+        {
+            waveManager.OnBossDied(this);
+        }
+
+        if (DialogueManager.Instance != null && deathDialogue != null)
+        {
+            DialogueManager.Instance.Play(deathDialogue, OnDeathDialogueComplete);
+        }
+        else
+        {
+            OnDeathDialogueComplete();
         }
     }
 

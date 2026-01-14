@@ -492,6 +492,10 @@ PrefabInstance:
       propertyPath: storeItems.Array.data[2].description
       value: Adds +125 to your maximum HP
       objectReference: {fileID: 0}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[5].description
+      value: Restores 10 HP
+      objectReference: {fileID: 0}
     - target: {fileID: 5026470533414387633, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_UiScaleMode
       value: 1
@@ -535,6 +539,10 @@ PrefabInstance:
     - target: {fileID: 6594849069928141937, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -20.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519282709849790703, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_text
+      value: Close (P)
       objectReference: {fileID: 0}
     - target: {fileID: 7519282709849790703, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_fontAsset
@@ -1129,6 +1137,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1225,6 +1234,18 @@ MonoBehaviour:
   referenceOrthographicSize: 5
   referenceAspectWidth: 16
   referenceAspectHeight: 9
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 931d909ac6884484e9c4a05a3459e9c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &530192566 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2859922422059892669, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
@@ -2425,7 +2446,7 @@ MonoBehaviour:
 
     F - Interact / Advance Dialogue
 
-    E - Shop (in shop, up/down/enter)
+    E - Shop (in shop, up/down/enter/P)
 
     H
     - Use Potion
@@ -2434,7 +2455,7 @@ MonoBehaviour:
 
     C - Wave of Fire
 
-    ESC - Pause Menu'
+    P - Pause Menu'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -3328,7 +3349,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Resume Game (ESC)
+  m_text: Resume Game (P)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}

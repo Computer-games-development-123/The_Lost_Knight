@@ -434,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa07d2a79ef9cfd438c4ff9754034eed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DarkBattleStartIntro
-  BattleStartDialogue: {fileID: 0}
+  BattleStartDialogue: {fileID: 11400000, guid: e44e917387775e04eacf871083bf5506, type: 2}
   dialogueSeenFlag: 8
   playEveryTime: 0
 --- !u!4 &536932878
@@ -1885,13 +1885,13 @@ MonoBehaviour:
   waves:
   - waveName: Night Crows
     enemyPrefab: {fileID: 7219932414428029039, guid: a56479f991fdbe1488040931ce518809, type: 3}
-    enemyCount: 0
+    enemyCount: 4
     spawnDelay: 2
     spawnPoints:
     - {fileID: 717735140}
   - waveName: HellHounds
     enemyPrefab: {fileID: 7219932414428029039, guid: db9f2e1378d1f0348b8cf7ca69b1d9dd, type: 3}
-    enemyCount: 0
+    enemyCount: 8
     spawnDelay: 2
     spawnPoints:
     - {fileID: 717735140}
