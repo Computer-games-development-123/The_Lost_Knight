@@ -142,10 +142,10 @@ TextureImporter:
         serializedVersion: 2
         x: 57
         y: 15
-        width: 28
-        height: 49
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 55
+        height: 50
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -164,10 +164,10 @@ TextureImporter:
         serializedVersion: 2
         x: 202
         y: 15
-        width: 52
+        width: 55
         height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -184,12 +184,12 @@ TextureImporter:
       name: Fire_Warrior_FireSwordSpell_2
       rect:
         serializedVersion: 2
-        x: 351
+        x: 346
         y: 15
-        width: 47
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 55
+        height: 50
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -206,12 +206,12 @@ TextureImporter:
       name: Fire_Warrior_FireSwordSpell_3
       rect:
         serializedVersion: 2
-        x: 496
+        x: 490
         y: 15
-        width: 46
-        height: 51
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 55
+        height: 50
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -228,12 +228,12 @@ TextureImporter:
       name: Fire_Warrior_FireSwordSpell_4
       rect:
         serializedVersion: 2
-        x: 640
+        x: 635
         y: 15
-        width: 46
+        width: 55
         height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -250,12 +250,12 @@ TextureImporter:
       name: Fire_Warrior_FireSwordSpell_5
       rect:
         serializedVersion: 2
-        x: 779
+        x: 778
         y: 15
-        width: 46
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 55
+        height: 50
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -272,12 +272,12 @@ TextureImporter:
       name: Fire_Warrior_FireSwordSpell_6
       rect:
         serializedVersion: 2
-        x: 926
+        x: 922
         y: 15
-        width: 44
-        height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 55
+        height: 50
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -294,12 +294,12 @@ TextureImporter:
       name: Fire_Warrior_FireSwordSpell_7
       rect:
         serializedVersion: 2
-        x: 1072
+        x: 1067
         y: 15
-        width: 43
-        height: 39
+        width: 55
+        height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -316,12 +316,12 @@ TextureImporter:
       name: Fire_Warrior_FireSwordSpell_8
       rect:
         serializedVersion: 2
-        x: 1216
+        x: 1210
         y: 15
-        width: 34
-        height: 47
+        width: 55
+        height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -338,7 +338,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 855bbe19637b6084f96cd2681175e209
     internalID: 0
     vertices: []
     indices: 

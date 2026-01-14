@@ -128,12 +128,12 @@ TextureImporter:
       name: atk19_0
       rect:
         serializedVersion: 2
-        x: 469
-        y: 29
-        width: 2182
-        height: 1842
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 0
+        width: 6400
+        height: 2650
+      alignment: 9
+      pivot: {x: 0.23, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -146,99 +146,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: atk19_1
-      rect:
-        serializedVersion: 2
-        x: 1289
-        y: 1799
-        width: 152
-        height: 112
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6182fd6b0c34a2830800000000000000
-      internalID: 4047121710126671894
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk19_2
-      rect:
-        serializedVersion: 2
-        x: 2739
-        y: 439
-        width: 12
-        height: 42
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e472ccbb3778fd720800000000000000
-      internalID: 2873164018427373390
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk19_3
-      rect:
-        serializedVersion: 2
-        x: 3009
-        y: 119
-        width: 742
-        height: 1502
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ccd0ed248d52eb930800000000000000
-      internalID: 4160804716501929420
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk19_4
-      rect:
-        serializedVersion: 2
-        x: 3089
-        y: 79
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: bc8721410970a64f0800000000000000
-      internalID: -834846465530365749
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5c2db0cc8c91e8d49af0c168a62aa184
     internalID: 0
     vertices: []
     indices: 

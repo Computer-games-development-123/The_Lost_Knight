@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     public bool isGrounded;
-    private bool facingRight = true;
+    public bool facingRight = true;
     private PlayerHealth playerHealth;
     private PlayerInventory playerInventory;
     private Invulnerability invulnerability;

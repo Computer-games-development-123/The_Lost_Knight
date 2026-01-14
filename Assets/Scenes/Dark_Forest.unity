@@ -838,11 +838,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6191616853348164979, guid: 96af5c479d854594eb609ab7c6cface1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.24
+      value: -6.29
       objectReference: {fileID: 0}
     - target: {fileID: 6191616853348164979, guid: 96af5c479d854594eb609ab7c6cface1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.91
+      value: 3.72
       objectReference: {fileID: 0}
     - target: {fileID: 6191616853348164979, guid: 96af5c479d854594eb609ab7c6cface1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1008,11 +1008,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4562235434037178960, guid: 96af5c479d854594eb609ab7c6cface1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.12
+      value: -4.68
       objectReference: {fileID: 0}
     - target: {fileID: 4562235434037178960, guid: 96af5c479d854594eb609ab7c6cface1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.83
+      value: -3.92
       objectReference: {fileID: 0}
     - target: {fileID: 4562235434037178960, guid: 96af5c479d854594eb609ab7c6cface1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1211,7 +1211,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5044626344483555084, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 5044626344483555084, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1250,12 +1250,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.625
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7159216176550064141, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_IsActive
@@ -1263,7 +1271,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_text
-      value: Ditor(F)
+      value: Ditor (F)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1334,7 +1350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5044626344483555084, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8
+      value: -7.5
       objectReference: {fileID: 0}
     - target: {fileID: 5044626344483555084, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1374,15 +1390,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 24
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.38
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.614
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7159216176550064141, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_IsActive
@@ -1390,7 +1410,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_text
-      value: Red Forest(F)
+      value: Red Forest (F)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1857,19 +1885,13 @@ MonoBehaviour:
   waves:
   - waveName: Night Crows
     enemyPrefab: {fileID: 7219932414428029039, guid: a56479f991fdbe1488040931ce518809, type: 3}
-    enemyCount: 4
+    enemyCount: 0
     spawnDelay: 2
     spawnPoints:
     - {fileID: 717735140}
   - waveName: HellHounds
     enemyPrefab: {fileID: 7219932414428029039, guid: db9f2e1378d1f0348b8cf7ca69b1d9dd, type: 3}
-    enemyCount: 7
-    spawnDelay: 2
-    spawnPoints:
-    - {fileID: 717735140}
-  - waveName: Toad Mini-Boss
-    enemyPrefab: {fileID: 7219932414428029039, guid: e0010448ea1da9c419a670ca1721123a, type: 3}
-    enemyCount: 1
+    enemyCount: 0
     spawnDelay: 2
     spawnPoints:
     - {fileID: 717735140}

@@ -319,8 +319,8 @@ MonoBehaviour:
   attackKey: 120
   attackTriggerName: Attack
   attackIndexIntName: AttackIndex
-  waveOfFirePrefab: {fileID: 0}
-  firePoint: {fileID: 0}
+  waveOfFirePrefab: {fileID: 6368996947615989597, guid: 8217b52b0e5d87f4fa521878058f5250, type: 3}
+  firePoint: {fileID: 6633376722634027389}
   waveOfFireCooldown: 5
 --- !u!114 &8192387872576722755
 MonoBehaviour:
@@ -362,7 +362,7 @@ Transform:
   m_GameObject: {fileID: 4695522883229318128}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.15, y: -0.09, z: 0}
+  m_LocalPosition: {x: 0.15, y: 0.006, z: 0}
   m_LocalScale: {x: 0.29, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

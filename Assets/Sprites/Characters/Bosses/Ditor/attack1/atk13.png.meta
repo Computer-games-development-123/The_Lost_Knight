@@ -125,12 +125,12 @@ TextureImporter:
       name: atk13_0
       rect:
         serializedVersion: 2
-        x: 629
-        y: 549
-        width: 1552
-        height: 1402
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 0
+        width: 6400
+        height: 2650
+      alignment: 9
+      pivot: {x: 0.23, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -143,77 +143,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: atk13_1
-      rect:
-        serializedVersion: 2
-        x: 2119
-        y: 1429
-        width: 122
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dda950e0cf5652260800000000000000
-      internalID: 7072170923096644317
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk13_2
-      rect:
-        serializedVersion: 2
-        x: 2149
-        y: 1399
-        width: 112
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ea921204cd05b03a0800000000000000
-      internalID: -6698171113884538450
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk13_3
-      rect:
-        serializedVersion: 2
-        x: 2169
-        y: 669
-        width: 2222
-        height: 1162
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dad51161b095b5360800000000000000
-      internalID: 7159413936785284525
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 75bb35d764a6a334fb9fad037152f8e6
     internalID: 0
     vertices: []
     indices: 

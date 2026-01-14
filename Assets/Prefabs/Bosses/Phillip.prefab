@@ -181,8 +181,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.2}
-  m_Size: {x: 0.21875167, y: 0.56153756}
+  m_Offset: {x: 0.021151258, y: -0.2}
+  m_Size: {x: 0.15692501, y: 0.56153756}
   m_Direction: 0
 --- !u!114 &-6456172041598449184
 MonoBehaviour:
@@ -209,19 +209,17 @@ MonoBehaviour:
   player: {fileID: 6415566011707803852, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
   currentHP: 0
   facingRight: 0
-  portalPrefab: {fileID: 6250693284041437098, guid: 6e92ee2fb53de314192bbae7bce9529d, type: 3}
-  lightningPrefab: {fileID: 6919898453832215197, guid: 9e88c25e43d50af498894fefd3732b61, type: 3}
+  portalPrefab: {fileID: 9004577169421428112, guid: 1bd391634eb1a394986b0f64a9257dfb, type: 3}
   portalSpawnPoint: {fileID: 3474047838961653429}
   portalAttackCooldown: 5
-  portalAttackDuration: 2
+  portalTelegraphDelay: 0.25
+  portalLifetime: 1.2
   meleeAttackPoint: {fileID: 2797142204784070127}
   meleeAttackRange: 2
   meleeAttackCooldown: 3
   floatSpeed: 2
   attackRange: 6
   meleeRange: 2.5
-  phase2PortalCooldownMultiplier: 0.6
-  phase2MeleeCooldownMultiplier: 0.7
 --- !u!114 &6400573088821524354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,7 +291,7 @@ Transform:
   m_GameObject: {fileID: 5228593960019450670}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2, z: 0}
+  m_LocalPosition: {x: -1, y: 0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

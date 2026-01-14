@@ -122,12 +122,12 @@ TextureImporter:
       name: atk23_0
       rect:
         serializedVersion: 2
-        x: 1489
-        y: 89
-        width: 662
-        height: 1372
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 0
+        width: 6400
+        height: 2650
+      alignment: 9
+      pivot: {x: 0.23, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -140,55 +140,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: atk23_1
-      rect:
-        serializedVersion: 2
-        x: 3249
-        y: 259
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 222ea7f74c7e67620800000000000000
-      internalID: 2771657451831484962
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk23_2
-      rect:
-        serializedVersion: 2
-        x: 3089
-        y: 79
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 027c70820fdf82a90800000000000000
-      internalID: -7338336384894646496
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e530c97837bcb8f46bd8c10ac369f0d8
     internalID: 0
     vertices: []
     indices: 

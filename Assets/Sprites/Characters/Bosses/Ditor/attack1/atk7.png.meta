@@ -140,12 +140,12 @@ TextureImporter:
       name: atk7_0
       rect:
         serializedVersion: 2
-        x: 629
-        y: 549
-        width: 1552
-        height: 1402
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 0
+        width: 6400
+        height: 2650
+      alignment: 9
+      pivot: {x: 0.23, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -158,187 +158,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: atk7_1
-      rect:
-        serializedVersion: 2
-        x: 2209
-        y: 1609
-        width: 302
-        height: 42
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c58b8035a45b40b50800000000000000
-      internalID: 6558566288183572572
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk7_2
-      rect:
-        serializedVersion: 2
-        x: 2429
-        y: 1529
-        width: 72
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8d9beb56ed7edafb0800000000000000
-      internalID: -4634793499118618152
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk7_3
-      rect:
-        serializedVersion: 2
-        x: 2569
-        y: 1539
-        width: 52
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e4d61941ccb6abbb0800000000000000
-      internalID: -4919501118686270130
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk7_4
-      rect:
-        serializedVersion: 2
-        x: 2649
-        y: 1489
-        width: 122
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 591432138e4309e00800000000000000
-      internalID: 1049396885038776725
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk7_5
-      rect:
-        serializedVersion: 2
-        x: 2129
-        y: 1469
-        width: 92
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dd3cb84fb21027650800000000000000
-      internalID: 6229042522904839133
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk7_6
-      rect:
-        serializedVersion: 2
-        x: 2219
-        y: 399
-        width: 2172
-        height: 1112
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0efcc283730b23400800000000000000
-      internalID: 302497876199395296
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk7_7
-      rect:
-        serializedVersion: 2
-        x: 2099
-        y: 1319
-        width: 352
-        height: 142
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ce84c9861e9964160800000000000000
-      internalID: 7009459063450519788
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk7_8
-      rect:
-        serializedVersion: 2
-        x: 2159
-        y: 1069
-        width: 102
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5ff77308f512d0460800000000000000
-      internalID: 7209455272546762741
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: ebeefa9a14911c944ba50e7f7ee91350
     internalID: 0
     vertices: []
     indices: 

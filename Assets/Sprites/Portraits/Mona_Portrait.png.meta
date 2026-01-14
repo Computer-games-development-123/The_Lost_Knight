@@ -116,10 +116,10 @@ TextureImporter:
       name: Mona_Portrait_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 78
         y: 0
-        width: 422
-        height: 323
+        width: 779
+        height: 1012
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

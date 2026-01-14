@@ -122,12 +122,12 @@ TextureImporter:
       name: atk4_0
       rect:
         serializedVersion: 2
-        x: 1009
-        y: 229
-        width: 1672
-        height: 1792
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 0
+        width: 6400
+        height: 2650
+      alignment: 9
+      pivot: {x: 0.23, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -140,55 +140,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: atk4_1
-      rect:
-        serializedVersion: 2
-        x: 1539
-        y: 2019
-        width: 22
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 982d3ccadda8efd70800000000000000
-      internalID: 9078846583516418697
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk4_2
-      rect:
-        serializedVersion: 2
-        x: 1579
-        y: 199
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b2cef2c4effd8e8b0800000000000000
-      internalID: -5122598292841042901
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e854e510ea9dc88438b98442a6b5035d
     internalID: 0
     vertices: []
     indices: 
