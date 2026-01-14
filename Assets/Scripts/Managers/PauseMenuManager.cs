@@ -3,8 +3,7 @@ using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Pause Menu Manager - Handles pausing the game and showing controls
-/// Press ESC to pause/unpause
-/// FIXED: Canvas sorting order set to 10000 to appear above all UI
+/// Press P to pause/unpause
 /// </summary>
 public class PauseMenuManager : MonoBehaviour
 {
@@ -14,7 +13,7 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenuPanel;
 
     [Header("Settings")]
-    [SerializeField] private KeyCode pauseKey = KeyCode.Escape;
+    [SerializeField] private KeyCode pauseKey = KeyCode.P;
 
     private bool isPaused = false;
 

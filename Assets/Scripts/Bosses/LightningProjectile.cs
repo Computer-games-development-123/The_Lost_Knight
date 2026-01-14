@@ -57,7 +57,7 @@ public class LightningProjectile : MonoBehaviour
             DestroyLightning();
         }
         // Hit ground
-        else if (other.CompareTag("Ground") || other.CompareTag("Wall"))
+        else if (other.CompareTag("Ground"))
         {
             hasHit = true;
             DestroyLightning();

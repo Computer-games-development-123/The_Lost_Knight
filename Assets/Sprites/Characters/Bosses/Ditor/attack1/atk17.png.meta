@@ -128,12 +128,12 @@ TextureImporter:
       name: atk17_0
       rect:
         serializedVersion: 2
-        x: 1089
-        y: 839
-        width: 962
-        height: 1262
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 0
+        width: 6400
+        height: 2650
+      alignment: 9
+      pivot: {x: 0.23, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -146,99 +146,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: atk17_1
-      rect:
-        serializedVersion: 2
-        x: 3019
-        y: 2009
-        width: 22
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7c50d3d5f3b1a0c30800000000000000
-      internalID: 4326300351003952583
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk17_2
-      rect:
-        serializedVersion: 2
-        x: 389
-        y: 1009
-        width: 22
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7997f5b665f50fba0800000000000000
-      internalID: -6057236674040071785
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk17_3
-      rect:
-        serializedVersion: 2
-        x: 2749
-        y: 889
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4ac38fd806a6bbee0800000000000000
-      internalID: -1244283909106549596
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk17_4
-      rect:
-        serializedVersion: 2
-        x: 2909
-        y: 879
-        width: 22
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 977f71a25a2738e50800000000000000
-      internalID: 6810413115215705977
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 928b7b91ac9ce7c41be227453bbdbe73
     internalID: 0
     vertices: []
     indices: 

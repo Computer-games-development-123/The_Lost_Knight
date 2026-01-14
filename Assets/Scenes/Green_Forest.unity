@@ -218,11 +218,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5044626344483555084, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.87
+      value: -7.5
       objectReference: {fileID: 0}
     - target: {fileID: 5044626344483555084, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.68
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 5044626344483555084, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -258,7 +258,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 15
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7159216176550064141, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_IsActive
@@ -266,12 +278,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_text
-      value: Forest Hub(F)
+      value: Forest Hub (Press F)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7159216176550064141, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
 --- !u!4 &293510533 stripped
 Transform:
@@ -671,11 +694,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5044626344483555084, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.46
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 5044626344483555084, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.81
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 5044626344483555084, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -711,15 +734,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 24
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.08
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5688283901476304323, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.643
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7159216176550064141, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_IsActive
@@ -727,16 +754,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_text
-      value: Red Forest(F)
+      value: Red Forest (Press F)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_HorizontalAlignment
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7159216176550064141, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
 --- !u!4 &732125920 stripped
 Transform:

@@ -40,6 +40,7 @@ public class BossBase : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        if (anim == null) anim = GetComponentInChildren<Animator>();
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
@@ -198,7 +199,7 @@ public class BossBase : MonoBehaviour
         Destroy(gameObject, 2f);
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (isDead) return;
 

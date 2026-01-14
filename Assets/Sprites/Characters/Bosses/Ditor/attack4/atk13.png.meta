@@ -131,12 +131,12 @@ TextureImporter:
       name: atk13_0
       rect:
         serializedVersion: 2
-        x: 589
-        y: 89
-        width: 1552
-        height: 1302
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 0
+        width: 6400
+        height: 1400
+      alignment: 9
+      pivot: {x: 0.24, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -149,121 +149,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: atk13_1
-      rect:
-        serializedVersion: 2
-        x: 3239
-        y: 819
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dda950e0cf5652260800000000000000
-      internalID: 7072170923096644317
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk13_2
-      rect:
-        serializedVersion: 2
-        x: 3269
-        y: 829
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ea921204cd05b03a0800000000000000
-      internalID: -6698171113884538450
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk13_3
-      rect:
-        serializedVersion: 2
-        x: 2279
-        y: 779
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dad51161b095b5360800000000000000
-      internalID: 7159413936785284525
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk13_4
-      rect:
-        serializedVersion: 2
-        x: 2399
-        y: 689
-        width: 12
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9fd2daebde3381620800000000000000
-      internalID: 2745001069081603577
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk13_5
-      rect:
-        serializedVersion: 2
-        x: 2419
-        y: 709
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e2a39cdf2ca521c00800000000000000
-      internalID: 869857471563905582
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 24250f0583ed1be4caf6c1c5f5644ce3
     internalID: 0
     vertices: []
     indices: 

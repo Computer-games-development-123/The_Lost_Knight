@@ -128,37 +128,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: atk6_0
-      rect:
-        serializedVersion: 2
-        x: 789
-        y: 529
-        width: 522
-        height: 1492
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: bb59d3c49674540a0800000000000000
-      internalID: -6898028736671803973
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: atk6_1
       rect:
         serializedVersion: 2
-        x: 1019
-        y: 89
-        width: 2212
-        height: 1762
+        x: 0
+        y: 0
+        width: 3300
+        height: 2650
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -171,99 +149,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: atk6_2
-      rect:
-        serializedVersion: 2
-        x: 1289
-        y: 1809
-        width: 82
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2ea014abae18d3b40800000000000000
-      internalID: 5421632371571100386
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk6_3
-      rect:
-        serializedVersion: 2
-        x: 1399
-        y: 1829
-        width: 1022
-        height: 282
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 01150b38c39346970800000000000000
-      internalID: 8747179308330537232
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk6_4
-      rect:
-        serializedVersion: 2
-        x: 1999
-        y: 59
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 05a15faf229f82b90800000000000000
-      internalID: -7266284070127723952
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk6_5
-      rect:
-        serializedVersion: 2
-        x: 2029
-        y: 69
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d34673c49f54d2b30800000000000000
-      internalID: 4264141359217599549
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: f798de6401cf9a54294b03376ffbca7c
     internalID: 0
     vertices: []
     indices: 

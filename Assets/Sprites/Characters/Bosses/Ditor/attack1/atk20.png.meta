@@ -137,12 +137,12 @@ TextureImporter:
       name: atk20_0
       rect:
         serializedVersion: 2
-        x: 49
-        y: 29
-        width: 2602
-        height: 1842
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 0
+        width: 6400
+        height: 2650
+      alignment: 9
+      pivot: {x: 0.23, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -155,165 +155,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: atk20_1
-      rect:
-        serializedVersion: 2
-        x: 1289
-        y: 1799
-        width: 152
-        height: 112
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1132da9e2d77b7690800000000000000
-      internalID: -7603351798137674991
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_2
-      rect:
-        serializedVersion: 2
-        x: 2739
-        y: 439
-        width: 12
-        height: 42
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9da0ae71f9b895380800000000000000
-      internalID: -8981994466396468519
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_3
-      rect:
-        serializedVersion: 2
-        x: 3009
-        y: 119
-        width: 922
-        height: 1502
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 46df040240aa2eb10800000000000000
-      internalID: 2009355318458383716
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_4
-      rect:
-        serializedVersion: 2
-        x: 3599
-        y: 139
-        width: 732
-        height: 1162
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b70d9af06d5951650800000000000000
-      internalID: 6203028808391053435
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_5
-      rect:
-        serializedVersion: 2
-        x: 3909
-        y: 219
-        width: 502
-        height: 522
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a77806f60d118d8d0800000000000000
-      internalID: -2821485579628148870
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_6
-      rect:
-        serializedVersion: 2
-        x: 29
-        y: 149
-        width: 482
-        height: 262
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3eec6d5451e3d9f70800000000000000
-      internalID: 9195574275247361763
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_7
-      rect:
-        serializedVersion: 2
-        x: 3089
-        y: 79
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e4e8923beb14cd3a0800000000000000
-      internalID: -6639359463345516978
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 18602f55637c7dc41a9581013fac259d
     internalID: 0
     vertices: []
     indices: 

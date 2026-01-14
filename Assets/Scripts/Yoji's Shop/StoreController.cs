@@ -148,7 +148,7 @@ public class ListStoreController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             CloseStore();
         }

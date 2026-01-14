@@ -116,37 +116,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: atk2_0
-      rect:
-        serializedVersion: 2
-        x: 1139
-        y: 499
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 906a29b6d8842fc50800000000000000
-      internalID: 6697495368085710345
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: atk2_1
       rect:
         serializedVersion: 2
-        x: 1499
-        y: 89
-        width: 1522
-        height: 2322
+        x: 0
+        y: 0
+        width: 3300
+        height: 2650
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -163,7 +141,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: ff9dc44067ae7be4a970fd5f6fc46baf
     internalID: 0
     vertices: []
     indices: 

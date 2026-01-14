@@ -5,12 +5,12 @@ public class ProjectileDamage : MonoBehaviour
 {
     [Header("Damage")]
     [SerializeField] private int damage = 10;
-    [SerializeField] private LayerMask playerMask; // Set this to the Player layer
+    [SerializeField] private LayerMask playerMask;
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
     [SerializeField] private string hitTrigger = "Hit";
-    [SerializeField] private float destroyFallbackDelay = 1.2f; // If there's no Animation Event
+    [SerializeField] private float destroyFallbackDelay = 1.2f;
 
     [Header("Components")]
     [SerializeField] private Rigidbody2D rb;
@@ -32,33 +32,42 @@ public class ProjectileDamage : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (hasHit) return;
-
-        // Only hit player by layer (recommended)
         if (((1 << other.gameObject.layer) & playerMask) == 0)
             return;
 
         hasHit = true;
 
-        // 1) Damage player - search for PlayerHealth in parent if not found on self
-        PlayerHealth ph = other.GetComponent<PlayerHealth>();
-
-        // If not found (for example, we hit the attack point), search in parent
-        if (ph == null)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            ph = other.GetComponentInParent<PlayerHealth>();
+            PlayerHealth ph = other.GetComponent<PlayerHealth>();
+            if (ph == null)
+            {
+                ph = other.GetComponentInParent<PlayerHealth>();
+            }
+            if (ph != null)
+            {
+                ph.TakeDamage(damage);
+                Debug.Log($"Projectile dealt {damage} damage to player!");
+            }
         }
-
-        if (ph != null)
+        else if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            ph.TakeDamage(damage);
-            Debug.Log($"Projectile dealt {damage} damage to player!");
+            EnemyBase eh = other.GetComponent<EnemyBase>();
+            if (eh == null)
+            {
+                eh = other.GetComponentInParent<EnemyBase>();
+            }
+            if (eh != null)
+            {
+                eh.TakeDamage(damage, transform.position);
+                Debug.Log($"Projectile dealt {damage} damage to enemy!");
+            }
         }
         else
         {
-            Debug.LogWarning("Hit player layer but couldn't find PlayerHealth component!");
+            Debug.LogWarning("Hit player/enemy layer but couldn't find Health component!");
         }
 
-        // 2) Stop movement and prevent repeated hits
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
@@ -67,22 +76,17 @@ public class ProjectileDamage : MonoBehaviour
         if (col != null)
             col.enabled = false;
 
-        // 3) Play hit animation
         if (animator != null && !string.IsNullOrEmpty(hitTrigger))
         {
             animator.SetTrigger(hitTrigger);
 
-            // Backup for deletion if you didn't add an Animation Event at the end of the clip
             Invoke(nameof(DestroySelf), destroyFallbackDelay);
         }
         else
         {
-            // If there's no animator - delete immediately
             DestroySelf();
         }
     }
-
-    // Call this at the end of the Hit animation using an Animation Event
     public void OnHitAnimationFinished()
     {
         DestroySelf();

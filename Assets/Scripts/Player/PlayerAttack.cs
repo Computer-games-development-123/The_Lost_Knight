@@ -33,6 +33,10 @@ public class PlayerAttack : MonoBehaviour
     public GameObject waveOfFirePrefab;
     public Transform firePoint;
     public float waveOfFireCooldown = 5f;
+    public float waveOfFireSpeed = 5f;
+
+    [Header("Fire Breath")]
+    public float FireBreathCooldown = 5f;
 
     // Runtime - Attack State
     private int currentAttackIndex = 0;  // 0, 1, or 2 (for attacks 1, 2, 3)
@@ -43,6 +47,7 @@ public class PlayerAttack : MonoBehaviour
 
     // Runtime - Wave of Fire
     private float lastWaveOfFireTime = 0f;
+    private float lastFireBreathTime = 0f;
 
     // Components
     private Animator anim;
@@ -75,10 +80,24 @@ public class PlayerAttack : MonoBehaviour
         // Wave of Fire
         if (Input.GetKeyDown(KeyCode.C) && Time.time >= lastWaveOfFireTime + waveOfFireCooldown)
         {
+            //anim.SetTrigger("WaveOfFire");
             if (abilities != null && abilities.hasWaveOfFire)
             {
-                ShootWaveOfFire();
+                if (anim != null)
+                    anim.SetTrigger("WaveOfFire");
                 lastWaveOfFireTime = Time.time;
+            }
+        }
+
+        // Fire Breath
+        if (Input.GetKeyDown(KeyCode.V) && Time.time >= lastFireBreathTime + waveOfFireCooldown)
+        {
+            //anim.SetTrigger("FireBreath");
+            if (abilities != null && abilities.hasWaveOfFire)
+            {
+                if (anim != null)
+                    anim.SetTrigger("FireBreath");
+                lastFireBreathTime = Time.time;
             }
         }
     }
@@ -304,17 +323,20 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
 
-        if (anim != null)
-            anim.SetTrigger("WaveOfFire");
+        //Vector2 dir = movement.facingDir();
+        bool shootRight = GetComponent<PlayerController>().facingRight;
+        Vector2 dir = shootRight ? Vector2.right : Vector2.left;
+
 
         GameObject wave = Instantiate(waveOfFirePrefab, firePoint.position, Quaternion.identity);
 
-        WaveOfFireProjectile projectile = wave.GetComponent<WaveOfFireProjectile>();
-        if (projectile != null)
-        {
-            projectile.direction = new Vector2(Mathf.Sign(transform.localScale.x), 0f);
-            projectile.damage = swordDamage * 5;
-        }
+        Vector3 s = wave.transform.localScale;
+        s.x = Mathf.Abs(s.x) * (shootRight ? 1f : -1f);
+        wave.transform.localScale = s;
+
+        Rigidbody2D rbP = wave.GetComponent<Rigidbody2D>();
+        if (rbP != null)
+            rbP.linearVelocity = dir * waveOfFireSpeed;
 
         Debug.Log($"Wave of Fire fired! Damage: {swordDamage * 5}");
     }
