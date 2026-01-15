@@ -15,7 +15,8 @@ public enum GameFlag
     // -- Upgrades --
     hasTeleport,
     hasUpgradedSword,
-    hasWaveOfFire,
+    hasBreathOfFire,
+    hasFireballSpell,
 
     // --- Boss / Events ---
     TutorialCompleted,

@@ -39,12 +39,11 @@ public class PauseMenuManager : MonoBehaviour
             pauseMenuPanel.SetActive(false);
         }
 
-        //Set Canvas sorting order to appear above all other UI
+        // Set Canvas sorting order to appear above all other UI
         Canvas canvas = GetComponent<Canvas>();
         if (canvas != null)
         {
             canvas.sortingOrder = 10000; // Very high value to ensure it's on top
-            Debug.Log("Pause menu canvas sorting order set to 10000");
         }
     }
 
@@ -63,7 +62,7 @@ public class PauseMenuManager : MonoBehaviour
             return;
         }
 
-        // Toggle pause with ESC key
+        // Toggle pause with P key
         if (Input.GetKeyDown(pauseKey))
         {
             if (isPaused)
@@ -103,8 +102,6 @@ public class PauseMenuManager : MonoBehaviour
         {
             AudioListener.pause = true;
         }
-
-        Debug.Log("Game paused");
     }
 
     /// <summary>
@@ -133,12 +130,10 @@ public class PauseMenuManager : MonoBehaviour
         {
             AudioListener.pause = false;
         }
-
-        Debug.Log("Game resumed");
     }
 
     /// <summary>
-    /// Quit to main menu (optional - implement if you have a main menu scene)
+    /// Quit to main menu
     /// </summary>
     public void QuitToMainMenu()
     {
@@ -146,10 +141,7 @@ public class PauseMenuManager : MonoBehaviour
         AudioListener.pause = false; // Resume audio
         isPaused = false;
 
-        // Load your main menu scene
-        SceneManager.LoadScene("MainMenu"); // Change to your main menu scene name
-
-        Debug.Log("Returning to main menu");
+        SceneManager.LoadScene("MainMenu");
     }
 
     /// <summary>
@@ -157,7 +149,6 @@ public class PauseMenuManager : MonoBehaviour
     /// </summary>
     public void QuitGame()
     {
-        Debug.Log("Quitting game");
         Application.Quit();
 
 #if UNITY_EDITOR

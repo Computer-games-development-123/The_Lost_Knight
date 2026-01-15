@@ -9,9 +9,10 @@ public class StoreStateManager : MonoBehaviour
 
     public enum StoreState
     {
-        Locked,           // Before first George death
-        PostGeorge,       // After George death, basic items available
-        PostFika,         // After Fika, Sword of Fire visible
+        Locked,           // Before first George encounter
+        UnlockedBasic,    // After first George encounter (sword upgrade) - store opens but special items hidden
+        PostGeorge,       // After George defeated - Fireball spell revealed
+        PostFika,         // After Fika defeated - Breath of Fire revealed
         PostPhilip        // After Philip (Yoji dead), everything free
     }
 
@@ -44,7 +45,7 @@ public class StoreStateManager : MonoBehaviour
     {
         if (GameManager.Instance == null) return;
 
-        // Determine state based on boss defeats
+        // Determine state based on boss defeats and flags
         if (GameManager.Instance.GetFlag(GameFlag.YojiDead))
         {
             currentState = StoreState.PostPhilip;
@@ -56,6 +57,11 @@ public class StoreStateManager : MonoBehaviour
         else if (GameManager.Instance.GetFlag(GameFlag.GeorgeDefeated))
         {
             currentState = StoreState.PostGeorge;
+        }
+        else if (GameManager.Instance.GetFlag(GameFlag.YojiUnlocksStore))
+        {
+            // Store is unlocked but George not yet defeated - basic items only
+            currentState = StoreState.UnlockedBasic;
         }
         else
         {
@@ -76,9 +82,28 @@ public class StoreStateManager : MonoBehaviour
         return currentState != StoreState.Locked;
     }
 
+    public bool IsFireballRevealed()
+    {
+        // Fireball spell unlocks ONLY after George is actually defeated
+        bool georgeDefeated = GameManager.Instance != null && GameManager.Instance.GetFlag(GameFlag.GeorgeDefeated);
+        bool revealed = georgeDefeated;
+        Debug.Log($"[StoreStateManager] IsFireballRevealed check: GeorgeDefeated={georgeDefeated}, revealed={revealed}");
+        return revealed;
+    }
+
+    public bool IsBreathOfFireRevealed()
+    {
+        // Breath of Fire unlocks after Fika is defeated
+        bool revealed = currentState >= StoreState.PostFika;
+        Debug.Log($"[StoreStateManager] IsBreathOfFireRevealed check: currentState={currentState}, PostFika={StoreState.PostFika}, revealed={revealed}");
+        return revealed;
+    }
+
+    // Legacy method for backwards compatibility
     public bool IsWaveOfFireRevealed()
     {
-        return currentState == StoreState.PostFika || currentState == StoreState.PostPhilip;
+        // Keep for any other code that might use it
+        return IsFireballRevealed();
     }
 
     public bool IsStoreFree()
@@ -92,6 +117,8 @@ public class StoreStateManager : MonoBehaviour
         {
             case StoreState.Locked:
                 return "Locked";
+            case StoreState.UnlockedBasic:
+                return "Yoji's Shop";
             case StoreState.PostGeorge:
                 return "Yoji's Shop";
             case StoreState.PostFika:

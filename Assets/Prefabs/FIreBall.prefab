@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7902402052575594431}
   m_Layer: 7
   m_Name: FIreBall
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4edd04abcd42fc942af30223ceb3a299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  damage: 15
+  damage: 30
   playerMask:
     serializedVersion: 2
     m_Bits: 64

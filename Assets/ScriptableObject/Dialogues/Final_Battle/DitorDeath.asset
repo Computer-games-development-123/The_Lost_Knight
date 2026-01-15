@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DitorDeath
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
-  flag: 0
+  flag: 19
   speakerName: Ditor, Dark King Of The Forest
   lines:
   - Time to end this.

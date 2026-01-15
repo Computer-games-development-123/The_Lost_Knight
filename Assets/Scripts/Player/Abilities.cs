@@ -1,15 +1,16 @@
 using UnityEngine;
 
 /// <summary>
-/// Handles player abilities: Teleport and Wave of Fire
-/// Owns the ability unlock flags (hasTeleport, hasWaveOfFire)
+/// Handles player abilities: Teleport, Breath of Fire, and Fireball Spell
+/// Owns the ability unlock flags (hasTeleport, hasBreathOfFire, hasFireballSpell)
 /// </summary>
 [RequireComponent(typeof(PlayerController))]
 public class Abilities : MonoBehaviour
 {
     [Header("Ability Unlocks")]
     public bool hasTeleport = false;
-    public bool hasWaveOfFire = false;
+    public bool hasBreathOfFire = false;      // Previously hasWaveOfFire
+    public bool hasFireballSpell = false;     // NEW
     public bool hasUpgradedSword = false;
 
     [Header("Teleport Settings")]
@@ -36,7 +37,8 @@ public class Abilities : MonoBehaviour
     {
         hasUpgradedSword = GameManager.Instance.GetFlag(GameFlag.hasUpgradedSword);
         hasTeleport = GameManager.Instance.GetFlag(GameFlag.hasTeleport);
-        hasWaveOfFire = GameManager.Instance.GetFlag(GameFlag.hasWaveOfFire);
+        hasBreathOfFire = GameManager.Instance.GetFlag(GameFlag.hasBreathOfFire);
+        hasFireballSpell = GameManager.Instance.GetFlag(GameFlag.hasFireballSpell);
 
         if (hasUpgradedSword)
             Debug.Log("✅ Abilities Start: Loaded hasUpgradedSword = true from save");
@@ -108,17 +110,31 @@ public class Abilities : MonoBehaviour
     }
 
     /// <summary>
-    /// Unlock Wave of Fire ability
-    /// Called by StoreController when purchasing Sword of Fire
+    /// Unlock Breath of Fire ability
+    /// Called by StoreController when purchasing Breath of Fire
     /// </summary>
-    public void UnlockWaveOfFire()
+    public void UnlockBreathOfFire()
     {
-        hasWaveOfFire = true;
+        hasBreathOfFire = true;
 
-        GameManager.Instance.SetFlag(GameFlag.hasWaveOfFire, true);
+        GameManager.Instance.SetFlag(GameFlag.hasBreathOfFire, true);
         GameManager.Instance.SaveProgress();
 
-        Debug.Log("✨ Wave of Fire ability unlocked!");
+        Debug.Log("✨ Breath of Fire ability unlocked!");
+    }
+
+    /// <summary>
+    /// Unlock Fireball Spell ability
+    /// Called by StoreController when purchasing Fireball Spell
+    /// </summary>
+    public void UnlockFireballSpell()
+    {
+        hasFireballSpell = true;
+
+        GameManager.Instance.SetFlag(GameFlag.hasFireballSpell, true);
+        GameManager.Instance.SaveProgress();
+
+        Debug.Log("✨ Fireball Spell ability unlocked!");
     }
 
     /// <summary>
