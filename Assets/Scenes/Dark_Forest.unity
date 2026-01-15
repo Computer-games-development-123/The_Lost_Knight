@@ -166,6 +166,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &118807084
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 118807085}
+  m_Layer: 0
+  m_Name: EnemySpawnPoint2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &118807085
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118807084}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8, y: -2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 855044790}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &433735190
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -696,6 +727,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6944239878394753612, guid: 201a531a0643c6f438c05ab47ebbc66c, type: 3}
   m_PrefabInstance: {fileID: 717735139}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &727996772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 727996773}
+  m_Layer: 0
+  m_Name: EnemySpawnPoint1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &727996773
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727996772}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8, y: -2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 855044790}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &731338529
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1155,6 +1217,8 @@ Transform:
   m_Children:
   - {fileID: 1305541617}
   - {fileID: 717735140}
+  - {fileID: 727996773}
+  - {fileID: 118807085}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1175005178
@@ -1735,6 +1799,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4003226436323456006, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
+      propertyPath: currentHealth
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 4376152552779809795, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1885,16 +1953,18 @@ MonoBehaviour:
   waves:
   - waveName: Night Crows
     enemyPrefab: {fileID: 7219932414428029039, guid: a56479f991fdbe1488040931ce518809, type: 3}
-    enemyCount: 4
+    enemyCount: 0
     spawnDelay: 2
     spawnPoints:
-    - {fileID: 717735140}
+    - {fileID: 727996773}
+    - {fileID: 118807085}
   - waveName: HellHounds
     enemyPrefab: {fileID: 7219932414428029039, guid: db9f2e1378d1f0348b8cf7ca69b1d9dd, type: 3}
-    enemyCount: 8
+    enemyCount: 0
     spawnDelay: 2
     spawnPoints:
-    - {fileID: 717735140}
+    - {fileID: 727996773}
+    - {fileID: 118807085}
   bossPrefab: {fileID: 3005292868502567045, guid: 6e144d73484ed6e41886d2f8e8c263a4, type: 3}
   bossSpawnPoint: {fileID: 717735140}
   portalBack: {fileID: 1268311585}
