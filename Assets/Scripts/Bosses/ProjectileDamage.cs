@@ -52,6 +52,7 @@ public class ProjectileDamage : MonoBehaviour
         }
         else if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
+            // Try to find EnemyBase first
             EnemyBase eh = other.GetComponent<EnemyBase>();
             if (eh == null)
             {
@@ -61,6 +62,24 @@ public class ProjectileDamage : MonoBehaviour
             {
                 eh.TakeDamage(damage, transform.position);
                 Debug.Log($"Projectile dealt {damage} damage to enemy!");
+            }
+            else
+            {
+                // If not an EnemyBase, try BossBase 
+                BossBase boss = other.GetComponent<BossBase>();
+                if (boss == null)
+                {
+                    boss = other.GetComponentInParent<BossBase>();
+                }
+                if (boss != null)
+                {
+                    boss.TakeDamage(damage);
+                    Debug.Log($"Projectile dealt {damage} damage to boss!");
+                }
+                else
+                {
+                    Debug.LogWarning("Hit enemy layer but couldn't find EnemyBase or BossBase component!");
+                }
             }
         }
         else

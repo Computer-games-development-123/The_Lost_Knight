@@ -9,7 +9,6 @@ using Unity.Services.CloudSave.Models;
 
 /// <summary>
 /// Store Controller - Manages shop UI and purchases
-/// FIXED: Now saves and loads stock data to CloudSave
 /// </summary>
 public class ListStoreController : MonoBehaviour
 {
@@ -328,10 +327,23 @@ public class ListStoreController : MonoBehaviour
         if (row == null || row.itemData == null) return;
 
         bool isFreeStore = StoreStateManager.Instance != null && StoreStateManager.Instance.IsStoreFree();
-        bool WaveRevealed = StoreStateManager.Instance != null && StoreStateManager.Instance.IsWaveOfFireRevealed();
 
-        bool isWaveOfFire = row.itemData.itemType == ShopItem.ShopItemType.WaveOfFire;
-        bool isLocked = isWaveOfFire && !WaveRevealed;
+        // Check each special item separately
+        bool isBreathOfFire = row.itemData.itemType == ShopItem.ShopItemType.BreathOfFire;
+        bool isFireballSpell = row.itemData.itemType == ShopItem.ShopItemType.FireballSpell;
+
+        bool isLocked = false;
+        if (isBreathOfFire)
+        {
+            // Breath of Fire unlocks after Fika
+            isLocked = StoreStateManager.Instance == null || !StoreStateManager.Instance.IsBreathOfFireRevealed();
+        }
+        else if (isFireballSpell)
+        {
+            // Fireball spell unlocks after George
+            isLocked = StoreStateManager.Instance == null || !StoreStateManager.Instance.IsFireballRevealed();
+        }
+
         bool outOfStock = row.itemData.currentStock == 0 && row.itemData.maxStock != -1;
 
         if (outOfStock)
@@ -456,12 +468,24 @@ public class ListStoreController : MonoBehaviour
             return;
         }
 
-        bool isWaveOfFire = itemData.itemType == ShopItem.ShopItemType.WaveOfFire;
-        bool WaveRevealed = StoreStateManager.Instance.IsWaveOfFireRevealed();
+        bool isBreathOfFire = itemData.itemType == ShopItem.ShopItemType.BreathOfFire;
+        bool isFireballSpell = itemData.itemType == ShopItem.ShopItemType.FireballSpell;
 
-        if (isWaveOfFire && !WaveRevealed)
+        // Check if items are still locked
+        bool isLocked = false;
+        if (isBreathOfFire && !StoreStateManager.Instance.IsBreathOfFireRevealed())
         {
-            Debug.Log("This item is locked!");
+            Debug.Log("Breath of Fire is still locked - defeat Fika first!");
+            isLocked = true;
+        }
+        else if (isFireballSpell && !StoreStateManager.Instance.IsFireballRevealed())
+        {
+            Debug.Log("Fireball spell is still locked - defeat George first!");
+            isLocked = true;
+        }
+
+        if (isLocked)
+        {
             return;
         }
 
@@ -498,7 +522,7 @@ public class ListStoreController : MonoBehaviour
             itemData.currentStock--;
         }
 
-        // IMPORTANT: Save store stock to cloud
+        // Save store stock to cloud
         SaveStoreStock();
 
         // Save progress
@@ -525,8 +549,8 @@ public class ListStoreController : MonoBehaviour
             case ShopItem.ShopItemType.HPUpgrade:
                 if (playerHealth != null)
                 {
-                    playerHealth.IncreaseMaxHealth(15);
-                    playerHealth.Heal(15); // Also heal
+                    playerHealth.IncreaseMaxHealth(20);
+                    playerHealth.Heal(20);
                 }
                 break;
 
@@ -538,11 +562,10 @@ public class ListStoreController : MonoBehaviour
                 }
                 break;
 
-            case ShopItem.ShopItemType.EssenceOfTheForest:
+            case ShopItem.ShopItemType.FireballSpell:
                 if (playerHealth != null)
                 {
-                    playerHealth.MultiplyMaxHealth(125);
-                    playerHealth.Heal(playerHealth.MaxHealth); // Heal to new max
+                    abilities.UnlockFireballSpell();
                 }
                 break;
 
@@ -553,10 +576,10 @@ public class ListStoreController : MonoBehaviour
                 }
                 break;
 
-            case ShopItem.ShopItemType.WaveOfFire:
+            case ShopItem.ShopItemType.BreathOfFire:
                 if (abilities != null && playerAttack != null)
                 {
-                    abilities.UnlockWaveOfFire();
+                    abilities.UnlockBreathOfFire();
                     playerAttack.MultiplyDamage(2);
                 }
                 break;
@@ -602,7 +625,7 @@ public class ListStoreController : MonoBehaviour
             {
                 if (storeItems[i] != null)
                 {
-                    // FIX: Remove spaces from key names (CloudSave doesn't allow spaces)
+                    // Remove spaces from key names (CloudSave doesn't allow spaces)
                     string sanitizedName = storeItems[i].itemName.Replace(" ", "_");
                     string key = $"StoreStock_{i}_{sanitizedName}";
                     int stock = storeItems[i].currentStock;

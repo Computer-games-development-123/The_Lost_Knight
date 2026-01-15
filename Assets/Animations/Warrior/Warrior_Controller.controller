@@ -108,7 +108,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: WaveOfFire
+    m_ConditionEvent: FireBall
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8371963831779205096}
@@ -482,7 +482,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: WaveOfFire
+  - m_Name: FireBall
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -877,7 +877,7 @@ AnimatorStateMachine:
     m_Position: {x: 0, y: -310, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8371963831779205096}
-    m_Position: {x: 397.82123, y: -302.38098, z: 0}
+    m_Position: {x: 400, y: -300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3051183684277325366}
     m_Position: {x: 250, y: -370, z: 0}

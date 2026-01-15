@@ -446,23 +446,31 @@ PrefabInstance:
       objectReference: {fileID: 7335253737980009713, guid: d063f430c02875c449921c5071478404, type: 3}
     - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: storeItems.Array.data[0].itemName
-      value: Wave Of Fire
+      value: Breath Of Fire
       objectReference: {fileID: 0}
     - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: storeItems.Array.data[1].itemIcon
       value: 
-      objectReference: {fileID: 1320761110985423309, guid: 1b7b213d4c2e4ff439b9ff71fd72a41c, type: 3}
+      objectReference: {fileID: -6607481912129624618, guid: b030c00c2af36e747bd35a9ccb053159, type: 3}
     - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: storeItems.Array.data[1].itemName
-      value: Flash Ability
+      value: Fire Ball Spell
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[1].itemType
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: storeItems.Array.data[2].itemIcon
       value: 
-      objectReference: {fileID: 5682928527487293180, guid: a659375f69a2986488ad61b56c88db8f, type: 3}
+      objectReference: {fileID: 1320761110985423309, guid: 1b7b213d4c2e4ff439b9ff71fd72a41c, type: 3}
     - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: storeItems.Array.data[2].itemName
-      value: Essence Of The Forest
+      value: Flash Ability
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[2].itemType
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: storeItems.Array.data[3].itemIcon
@@ -477,6 +485,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -6741449898653340355, guid: 62970d27b42756e44be08901cc66697b, type: 3}
     - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[4].maxStock
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: storeItems.Array.data[5].itemIcon
       value: 
       objectReference: {fileID: -505430822247763581, guid: ecdc770c10aba6e45a1b252127b17eee, type: 3}
@@ -486,11 +498,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: storeItems.Array.data[0].description
-      value: Doubles damage + Wave of Fire (C)
+      value: Doubles damage + Breath of Fire (V)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[1].costPerUnit
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[1].description
+      value: Shoots a fireball that deals damage (C)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: storeItems.Array.data[2].costPerUnit
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: storeItems.Array.data[2].description
-      value: Adds +125 to your maximum HP
+      value: Unlocks Teleport (ALT)
       objectReference: {fileID: 0}
     - target: {fileID: 4912240337613563656, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: storeItems.Array.data[5].description
@@ -1137,7 +1161,6 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
-  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1234,18 +1257,6 @@ MonoBehaviour:
   referenceOrthographicSize: 5
   referenceAspectWidth: 16
   referenceAspectHeight: 9
---- !u!114 &519420034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 931d909ac6884484e9c4a05a3459e9c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!1 &530192566 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2859922422059892669, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
@@ -1462,7 +1473,7 @@ MonoBehaviour:
   hidePortraitIfMissing: 1
   advanceKey: 102
   useTypewriter: 1
-  charactersPerSecond: 40
+  charactersPerSecond: 100
 --- !u!1001 &691125823
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2242,7 +2253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenuManager
   pauseMenuPanel: {fileID: 201420475}
-  pauseKey: 27
+  pauseKey: 112
 --- !u!1 &1023743891
 GameObject:
   m_ObjectHideFlags: 0
@@ -4788,6 +4799,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 524193434095801508, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
+      propertyPath: fireballPrefab
+      value: 
+      objectReference: {fileID: 6368996947615989597, guid: 8217b52b0e5d87f4fa521878058f5250, type: 3}
     - target: {fileID: 998392704380348123, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
       propertyPath: fireFormFlag
       value: 10
