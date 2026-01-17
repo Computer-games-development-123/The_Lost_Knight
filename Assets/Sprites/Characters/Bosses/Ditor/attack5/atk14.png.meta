@@ -8,9 +8,6 @@ TextureImporter:
   - first:
       213: 942916321038654360
     second: atk14_1
-  - first:
-      213: 4236522674524022890
-    second: atk14_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -122,10 +119,10 @@ TextureImporter:
       name: atk14_0
       rect:
         serializedVersion: 2
-        x: 2559
-        y: 659
-        width: 12
-        height: 12
+        x: 253
+        y: 63
+        width: 6
+        height: 6
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,10 +141,10 @@ TextureImporter:
       name: atk14_1
       rect:
         serializedVersion: 2
-        x: 2609
-        y: 559
-        width: 242
-        height: 172
+        x: 259
+        y: 12
+        width: 333
+        height: 130
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,28 +155,6 @@ TextureImporter:
       bones: []
       spriteID: 89b5d60f569e51d00800000000000000
       internalID: 942916321038654360
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk14_2
-      rect:
-        serializedVersion: 2
-        x: 2859
-        y: 139
-        width: 3032
-        height: 1262
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a6864e92de62bca30800000000000000
-      internalID: 4236522674524022890
       vertices: []
       indices: 
       edges: []
@@ -200,7 +175,6 @@ TextureImporter:
     nameFileIdTable:
       atk14_0: 9009943991893333144
       atk14_1: 942916321038654360
-      atk14_2: 4236522674524022890
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

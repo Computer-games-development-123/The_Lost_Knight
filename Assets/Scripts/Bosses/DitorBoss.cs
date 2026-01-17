@@ -3,212 +3,442 @@ using System.Collections;
 
 public class DitorBoss : BossBase
 {
-    public enum AttackType
-    {
-        ForwardAttack,
-        Uppercut,
-        AirCombo
-    }
+    [Header("Ditor Attack Settings")]
+    [Tooltip("Distance ranges for different attacks")]
+    public float closeRangeMax = 2f;
+    public float midRangeMax = 4f;
 
-    [Header("Combat - General")]
-    [SerializeField] private float attackRange = 1.6f;
-    [SerializeField] private float attackCooldown = 1.25f;
-    [SerializeField] private float recoverTime = 0.35f;
+    [Tooltip("Special attack (combo) settings")]
+    public float comboAttackCooldown = 8f;
+    public float comboAttackRange = 6f;
+    public float comboTelegraphDuration = 0.5f;
 
-    [Header("Hitbox")]
-    [SerializeField] private Transform hitPoint;
-    [SerializeField] private float hitRadius = 0.6f;
-    [SerializeField] private LayerMask playerMask;
+    [Tooltip("Attack cooldowns")]
+    public float attack1Cooldown = 2f;
+    public float attack2Cooldown = 2.5f;
+    public float attack3Cooldown = 3f;
+    public float postAttackDelay = 1f;
 
-    [Header("Forward Attack")]
-    [SerializeField] private int forwardDamageBonus = 0;
-    [SerializeField] private float forwardLungeForce = 7f;
+    [Header("Attack Hit Colliders")]
+    [Tooltip("Colliders for each attack type")]
+    public Collider2D attack1HitCollider;
+    public Collider2D attack2HitCollider;
+    public Collider2D comboHitPoint1;
+    public Collider2D comboHitPoint2;
 
-    [Header("Uppercut")]
-    [SerializeField] private int uppercutDamageBonus = 3;
-    [SerializeField] private float uppercutUpForce = 10f;
-    [SerializeField] private float uppercutForwardForce = 4f;
-
-    [Header("Air Combo (Special)")]
-    [SerializeField] private int airHitCount = 3;
-    [SerializeField] private float airJumpForce = 9f;
-    [SerializeField] private int airDamageBonusPerHit = -2;
-
-    [Header("AI Weights")]
-    [SerializeField] private int weightForward = 55;
-    [SerializeField] private int weightUppercut = 25;
-    [SerializeField] private int weightAirCombo = 20;
-
-    private float attackTimer = 0f;
+    private float lastAttackTime;
+    private float lastComboAttackTime;
+    private float currentAttackCooldown;
     private bool isAttacking = false;
-
-    private int airHitsDone = 0;
+    private bool isTelegraphing = false;
+    private bool isRecovering = false;
+    private float distanceToPlayer;
+    private bool isMoving = false;
+    private bool hasDealtDamageThisAttack = false;
 
     protected override void Start()
     {
         base.Start();
-        if (hitPoint == null) hitPoint = transform;
+        lastComboAttackTime = -comboAttackCooldown;
+        lastAttackTime = -attack1Cooldown;
+
+        DisableAllHitColliders();
     }
 
     protected override void Update()
     {
-        base.Update();
-        if (isDead) return;
+        if (isDead || player == null) return;
 
-        if (attackTimer > 0f)
-            attackTimer -= Time.deltaTime;
+        distanceToPlayer = Vector2.Distance(transform.position, player.position);
+
+        if (currentHP <= maxHP / 2 && !isPhase2)
+        {
+            EnterPhase2();
+        }
+
+        UpdateMovementAnimation();
+
+        BossAI();
+    }
+
+    private void UpdateMovementAnimation()
+    {
+        isMoving = !isAttacking && !isTelegraphing && !isRecovering && Mathf.Abs(rb.linearVelocity.x) > 0.1f;
+
+        if (anim != null)
+            anim.SetBool("IsMoving", isMoving);
     }
 
     protected override void BossAI()
     {
-        if (player == null) return;
-
-        if (isAttacking)
+        if (isAttacking || isTelegraphing || isRecovering)
         {
-            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
             return;
         }
 
-        base.BossAI();
-
-        float dist = Vector2.Distance(player.position, transform.position);
-
-        if (dist <= attackRange && attackTimer <= 0f)
-        {
-            AttackType chosen = ChooseAttack();
-            StartCoroutine(AttackRoutine(chosen));
-        }
-    }
-
-    private AttackType ChooseAttack()
-    {
-        int wF = weightForward;
-        int wU = weightUppercut;
-        int wA = weightAirCombo;
-
-        if (isPhase2)
-        {
-            wF = Mathf.Max(10, wF - 15);
-            wU += 10;
-            wA += 15;
-        }
-
-        int total = wF + wU + wA;
-        int roll = Random.Range(0, total);
-
-        if (roll < wF) return AttackType.ForwardAttack;
-        roll -= wF;
-        if (roll < wU) return AttackType.Uppercut;
-        return AttackType.AirCombo;
-    }
-
-    private IEnumerator AttackRoutine(AttackType type)
-    {
-        isAttacking = true;
-        attackTimer = attackCooldown;
-
-        rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
-
         FacePlayer();
 
-        airHitsDone = 0;
-
-        if (anim != null)
+        if (Time.time >= lastComboAttackTime + comboAttackCooldown && distanceToPlayer <= comboAttackRange)
         {
-            switch (type)
+            StartCoroutine(PerformComboAttack());
+            return;
+        }
+
+        if (Time.time >= lastAttackTime + currentAttackCooldown)
+        {
+            if (distanceToPlayer <= closeRangeMax)
             {
-                case AttackType.ForwardAttack:
-                    anim.SetTrigger("Attack1");
-                    break;
-
-                case AttackType.Uppercut:
-                    anim.SetTrigger("Attack2");
-                    break;
-
-                case AttackType.AirCombo:
-                    anim.SetTrigger("Attack3");
-                    break;
+                StartCoroutine(PerformAttack1());
+            }
+            else if (distanceToPlayer <= midRangeMax)
+            {
+                StartCoroutine(PerformAttack2());
+            }
+            else
+            {
+                MoveTowardsPlayer();
             }
         }
-        yield return new WaitForSeconds(recoverTime);
-
-        isAttacking = false;
+        else
+        {
+            MoveTowardsPlayer();
+        }
     }
 
     private void FacePlayer()
     {
-        if (player == null) return;
+        if (player == null || isAttacking || isTelegraphing || isRecovering)
+            return;
 
-        float dx = player.position.x - transform.position.x;
-        if (dx > 0f && !facingRight) Flip();
-        else if (dx < 0f && facingRight) Flip();
+        float directionToPlayer = player.position.x - transform.position.x;
+
+        if (directionToPlayer > 0 && !facingRight)
+            Flip();
+        else if (directionToPlayer < 0 && facingRight)
+            Flip();
     }
 
-    public void AE_HitForward()
+    private void MoveTowardsPlayer()
     {
-        if (isDead) return;
+        if (isAttacking || isTelegraphing || isRecovering)
+        {
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            return;
+        }
 
-        float dir = facingRight ? 1f : -1f;
-        rb.linearVelocity = new Vector2(dir * forwardLungeForce, rb.linearVelocity.y);
+        if (player != null)
+        {
+            Vector2 direction = (player.position - transform.position).normalized;
+            rb.linearVelocity = new Vector2(direction.x * moveSpeed, rb.linearVelocity.y);
 
-        DealHit(damage + forwardDamageBonus);
+            if (!isAttacking && !isTelegraphing && !isRecovering)
+            {
+                if (direction.x > 0 && !facingRight)
+                    Flip();
+                else if (direction.x < 0 && facingRight)
+                    Flip();
+            }
+        }
     }
 
-    public void AE_HitUppercut()
+    // Attack 1: Close Range
+    private IEnumerator PerformAttack1()
     {
-        if (isDead) return;
+        isAttacking = true;
+        hasDealtDamageThisAttack = false;
+        rb.linearVelocity = Vector2.zero;
 
-        float dir = facingRight ? 1f : -1f;
-        rb.linearVelocity = new Vector2(dir * uppercutForwardForce, uppercutUpForce);
+        if (anim != null)
+            anim.SetTrigger("Attack1");
 
-        DealHit(damage + uppercutDamageBonus);
-    }
+        lastAttackTime = Time.time;
+        currentAttackCooldown = attack1Cooldown;
 
-    public void AE_AirStartJump()
-    {
-        if (isDead) return;
+        // Wait for animation to complete
+        yield return new WaitForSeconds(0.6f);
 
-        rb.linearVelocity = new Vector2(0f, airJumpForce);
-    }
+        DisableAllHitColliders();
 
-    public void AE_AirHit()
-    {
-        if (isDead) return;
-
-        if (airHitsDone >= airHitCount) return;
-
-        int hitDamage = damage + airDamageBonusPerHit;
-        if (isPhase2) hitDamage += 1;
-
-        DealHit(hitDamage);
-        airHitsDone++;
-    }
-
-    public void AE_AttackEnd()
-    {
         isAttacking = false;
+
+        yield return StartCoroutine(PostAttackRecovery());
     }
 
-    private void DealHit(int dmg)
+    // Attack 2: Mid Range
+    private IEnumerator PerformAttack2()
     {
-        if (hitPoint == null) return;
+        isAttacking = true;
+        hasDealtDamageThisAttack = false;
+        rb.linearVelocity = Vector2.zero;
 
-        Collider2D col = Physics2D.OverlapCircle(hitPoint.position, hitRadius, playerMask);
-        if (col == null) return;
+        if (anim != null)
+            anim.SetTrigger("Attack2");
 
-        PlayerHealth ph = col.GetComponent<PlayerHealth>();
-        if (ph != null)
-            ph.TakeDamage(dmg);
+        lastAttackTime = Time.time;
+        currentAttackCooldown = attack2Cooldown;
+
+        // Wait for animation to complete
+        yield return new WaitForSeconds(0.8f);
+
+        DisableAllHitColliders();
+
+        isAttacking = false;
+
+        yield return StartCoroutine(PostAttackRecovery());
     }
 
-    private void OnDrawGizmosSelected()
+    // Attack 3: Combo Attack with Telegraph
+    private IEnumerator PerformComboAttack()
     {
-        if (hitPoint == null) return;
-        Gizmos.DrawWireSphere(hitPoint.position, hitRadius);
+        isTelegraphing = true;
+        rb.linearVelocity = Vector2.zero;
+
+        // Telegraph warning - flash effect
+        StartCoroutine(TelegraphFlash());
+
+        yield return new WaitForSeconds(comboTelegraphDuration);
+
+        isTelegraphing = false;
+        isAttacking = true;
+        hasDealtDamageThisAttack = false;
+
+        if (anim != null)
+            anim.SetTrigger("Attack3");
+
+        lastComboAttackTime = Time.time;
+        lastAttackTime = Time.time;
+        currentAttackCooldown = attack3Cooldown;
+
+        // Wait for animation to complete
+        yield return new WaitForSeconds(1.5f);
+
+        DisableAllHitColliders();
+
+        isAttacking = false;
+
+        yield return StartCoroutine(PostAttackRecovery());
     }
 
-    protected override void OnCollisionEnter2D(Collision2D collision)
+    // Recovery period after attack
+    private IEnumerator PostAttackRecovery()
     {
-        // בכוונה ריק
+        isRecovering = true;
+        rb.linearVelocity = Vector2.zero;
+
+        yield return new WaitForSeconds(postAttackDelay);
+
+        isRecovering = false;
+    }
+
+    // Telegraph flash warning
+    private IEnumerator TelegraphFlash()
+    {
+        float elapsed = 0f;
+        Color originalColor = sr.color;
+
+        while (elapsed < comboTelegraphDuration)
+        {
+            // Flash between white and yellow
+            sr.color = Color.Lerp(Color.white, Color.yellow, Mathf.PingPong(elapsed * 8f, 1f));
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        sr.color = originalColor;
+    }
+
+    public void EnableAttack1HitCollider()
+    {
+        if (attack1HitCollider != null)
+        {
+            attack1HitCollider.enabled = true;
+            Debug.Log("Attack1 hit collider ENABLED");
+            StartCoroutine(DisableHitColliderAfterDelay(attack1HitCollider, 0.25f));
+        }
+    }
+
+    public void EnableAttack2HitCollider()
+    {
+        if (attack2HitCollider != null)
+        {
+            attack2HitCollider.enabled = true;
+            Debug.Log("Attack2 hit collider ENABLED");
+            StartCoroutine(DisableHitColliderAfterDelay(attack2HitCollider, 0.3f));
+        }
+    }
+
+    public void EnableComboHitPoint1()
+    {
+        if (comboHitPoint1 != null)
+        {
+            comboHitPoint1.enabled = true;
+            Debug.Log("Combo hit point 1 ENABLED");
+            StartCoroutine(DisableHitColliderAfterDelay(comboHitPoint1, 0.25f));
+        }
+    }
+
+    public void EnableComboHitPoint2()
+    {
+        if (comboHitPoint2 != null)
+        {
+            comboHitPoint2.enabled = true;
+            Debug.Log("Combo hit point 2 ENABLED");
+            StartCoroutine(DisableHitColliderAfterDelay(comboHitPoint2, 0.25f));
+        }
+    }
+
+    private IEnumerator DisableHitColliderAfterDelay(Collider2D hitCollider, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (hitCollider != null)
+        {
+            hitCollider.enabled = false;
+            Debug.Log($"{hitCollider.name} DISABLED");
+        }
+    }
+
+    public void DisableCurrentHitCollider()
+    {
+        DisableAllHitColliders();
+    }
+
+    private void DisableAllHitColliders()
+    {
+        if (attack1HitCollider != null) attack1HitCollider.enabled = false;
+        if (attack2HitCollider != null) attack2HitCollider.enabled = false;
+        if (comboHitPoint1 != null) comboHitPoint1.enabled = false;
+        if (comboHitPoint2 != null) comboHitPoint2.enabled = false;
+    }
+
+    public void OnAttackHitPlayer()
+    {
+        Debug.Log($"OnAttackHitPlayer called. hasDealtDamageThisAttack: {hasDealtDamageThisAttack}");
+
+        if (isDead || hasDealtDamageThisAttack) return;
+
+        // Check if any hit collider is currently active
+        if ((attack1HitCollider != null && attack1HitCollider.enabled) ||
+            (attack2HitCollider != null && attack2HitCollider.enabled) ||
+            (comboHitPoint1 != null && comboHitPoint1.enabled) ||
+            (comboHitPoint2 != null && comboHitPoint2.enabled))
+        {
+            Debug.Log("Dealing damage to player!");
+            DealDamageToPlayer();
+            hasDealtDamageThisAttack = true;
+        }
+        else
+        {
+            Debug.Log("No active hit collider found");
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log($"OnTriggerEnter2D called with: {collision.gameObject.name}, Tag: {collision.tag}");
+
+        if (isDead)
+        {
+            Debug.Log("Ditor is dead, ignoring trigger");
+            return;
+        }
+
+        if (hasDealtDamageThisAttack)
+        {
+            Debug.Log("Already dealt damage this attack, ignoring");
+            return;
+        }
+
+        if (collision.CompareTag("Player"))
+        {
+            Debug.Log("Player detected in trigger!");
+
+            if (attack1HitCollider != null && attack1HitCollider.enabled)
+            {
+                Debug.Log("Attack1 collider is enabled - dealing damage");
+                DealDamageToPlayer();
+                hasDealtDamageThisAttack = true;
+            }
+            else if (attack2HitCollider != null && attack2HitCollider.enabled)
+            {
+                Debug.Log("Attack2 collider is enabled - dealing damage");
+                DealDamageToPlayer();
+                hasDealtDamageThisAttack = true;
+            }
+            else if (comboHitPoint1 != null && comboHitPoint1.enabled)
+            {
+                Debug.Log("Combo1 collider is enabled - dealing damage");
+                DealDamageToPlayer();
+                hasDealtDamageThisAttack = true;
+            }
+            else if (comboHitPoint2 != null && comboHitPoint2.enabled)
+            {
+                Debug.Log("Combo2 collider is enabled - dealing damage");
+                DealDamageToPlayer();
+                hasDealtDamageThisAttack = true;
+            }
+            else
+            {
+                Debug.Log("No enabled hit collider found!");
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (isDead || hasDealtDamageThisAttack) return;
+
+        if (collision.CompareTag("Player"))
+        {
+            Debug.Log("Player in OnTriggerStay2D");
+
+            // Only deal damage once per attack
+            if (attack1HitCollider != null && attack1HitCollider.enabled)
+            {
+                Debug.Log("Attack1 collider active (Stay) - dealing damage");
+                DealDamageToPlayer();
+                hasDealtDamageThisAttack = true;
+            }
+            else if (attack2HitCollider != null && attack2HitCollider.enabled)
+            {
+                Debug.Log("Attack2 collider active (Stay) - dealing damage");
+                DealDamageToPlayer();
+                hasDealtDamageThisAttack = true;
+            }
+            else if (comboHitPoint1 != null && comboHitPoint1.enabled)
+            {
+                Debug.Log("Combo1 collider active (Stay) - dealing damage");
+                DealDamageToPlayer();
+                hasDealtDamageThisAttack = true;
+            }
+            else if (comboHitPoint2 != null && comboHitPoint2.enabled)
+            {
+                Debug.Log("Combo2 collider active (Stay) - dealing damage");
+                DealDamageToPlayer();
+                hasDealtDamageThisAttack = true;
+            }
+        }
+    }
+
+    protected override void Flip()
+    {
+        if (isAttacking || isTelegraphing || isRecovering)
+            return;
+
+        facingRight = !facingRight;
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+    }
+    protected override void EnterPhase2()
+    {
+        base.EnterPhase2();
+
+        attack1Cooldown *= 0.7f;
+        attack2Cooldown *= 0.7f;
+        attack3Cooldown *= 0.7f;
+        comboAttackCooldown *= 0.8f;
+
+        Debug.Log("Ditor is now enraged!");
     }
 }

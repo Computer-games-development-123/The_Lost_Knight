@@ -1953,14 +1953,14 @@ MonoBehaviour:
   waves:
   - waveName: Night Crows
     enemyPrefab: {fileID: 7219932414428029039, guid: a56479f991fdbe1488040931ce518809, type: 3}
-    enemyCount: 0
+    enemyCount: 5
     spawnDelay: 2
     spawnPoints:
     - {fileID: 727996773}
     - {fileID: 118807085}
   - waveName: HellHounds
     enemyPrefab: {fileID: 7219932414428029039, guid: db9f2e1378d1f0348b8cf7ca69b1d9dd, type: 3}
-    enemyCount: 0
+    enemyCount: 10
     spawnDelay: 2
     spawnPoints:
     - {fileID: 727996773}

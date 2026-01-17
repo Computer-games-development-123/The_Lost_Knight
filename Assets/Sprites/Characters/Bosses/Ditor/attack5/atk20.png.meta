@@ -14,27 +14,6 @@ TextureImporter:
   - first:
       213: 2009355318458383716
     second: atk20_3
-  - first:
-      213: 6203028808391053435
-    second: atk20_4
-  - first:
-      213: -2821485579628148870
-    second: atk20_5
-  - first:
-      213: 9195574275247361763
-    second: atk20_6
-  - first:
-      213: -6639359463345516978
-    second: atk20_7
-  - first:
-      213: 8378888093497033802
-    second: atk20_8
-  - first:
-      213: -3113910025153334073
-    second: atk20_9
-  - first:
-      213: 6305231587603163608
-    second: atk20_10
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -146,10 +125,10 @@ TextureImporter:
       name: atk20_0
       rect:
         serializedVersion: 2
-        x: 2219
-        y: 1389
-        width: 12
-        height: 12
+        x: 50
+        y: 8
+        width: 175
+        height: 134
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,10 +147,10 @@ TextureImporter:
       name: atk20_1
       rect:
         serializedVersion: 2
-        x: 3229
-        y: 129
-        width: 892
-        height: 1372
+        x: 312
+        y: 11
+        width: 178
+        height: 141
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -190,10 +169,10 @@ TextureImporter:
       name: atk20_2
       rect:
         serializedVersion: 2
-        x: 519
-        y: 99
-        width: 1472
-        height: 1242
+        x: 316
+        y: 87
+        width: 6
+        height: 6
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -212,10 +191,10 @@ TextureImporter:
       name: atk20_3
       rect:
         serializedVersion: 2
-        x: 3189
-        y: 1149
-        width: 12
-        height: 12
+        x: 217
+        y: 22
+        width: 10
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,160 +205,6 @@ TextureImporter:
       bones: []
       spriteID: 46df040240aa2eb10800000000000000
       internalID: 2009355318458383716
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_4
-      rect:
-        serializedVersion: 2
-        x: 3139
-        y: 989
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b70d9af06d5951650800000000000000
-      internalID: 6203028808391053435
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_5
-      rect:
-        serializedVersion: 2
-        x: 3179
-        y: 889
-        width: 22
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a77806f60d118d8d0800000000000000
-      internalID: -2821485579628148870
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_6
-      rect:
-        serializedVersion: 2
-        x: 4709
-        y: 869
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3eec6d5451e3d9f70800000000000000
-      internalID: 9195574275247361763
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_7
-      rect:
-        serializedVersion: 2
-        x: 4849
-        y: 769
-        width: 32
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e4e8923beb14cd3a0800000000000000
-      internalID: -6639359463345516978
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_8
-      rect:
-        serializedVersion: 2
-        x: 2209
-        y: 249
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a4404a9e35ac74470800000000000000
-      internalID: 8378888093497033802
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_9
-      rect:
-        serializedVersion: 2
-        x: 2229
-        y: 259
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7c43530945b29c4d0800000000000000
-      internalID: -3113910025153334073
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_10
-      rect:
-        serializedVersion: 2
-        x: 2189
-        y: 239
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8d9a8ade8bea08750800000000000000
-      internalID: 6305231587603163608
       vertices: []
       indices: 
       edges: []
@@ -400,15 +225,8 @@ TextureImporter:
     nameFileIdTable:
       atk20_0: -8033445899425044210
       atk20_1: -7603351798137674991
-      atk20_10: 6305231587603163608
       atk20_2: -8981994466396468519
       atk20_3: 2009355318458383716
-      atk20_4: 6203028808391053435
-      atk20_5: -2821485579628148870
-      atk20_6: 9195574275247361763
-      atk20_7: -6639359463345516978
-      atk20_8: 8378888093497033802
-      atk20_9: -3113910025153334073
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

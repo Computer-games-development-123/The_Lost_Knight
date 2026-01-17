@@ -14,9 +14,6 @@ TextureImporter:
   - first:
       213: 3837019848518963404
     second: atk16_3
-  - first:
-      213: 4226832739534528723
-    second: atk16_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -129,11 +126,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 6400
-        height: 2650
-      alignment: 9
-      pivot: {x: 0.23, y: 0.25}
+        y: 20
+        width: 450
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -150,7 +147,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5535ed78cda1a224a942b77110609340
+    spriteID: 5e2f936f43c34814d85f23e500401543
     internalID: 0
     vertices: []
     indices: 
@@ -164,7 +161,6 @@ TextureImporter:
       atk16_1: -7526281090078127742
       atk16_2: 7801053549595660720
       atk16_3: 3837019848518963404
-      atk16_4: 4226832739534528723
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

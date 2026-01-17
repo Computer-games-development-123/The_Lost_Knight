@@ -5,12 +5,6 @@ TextureImporter:
   - first:
       213: -7052618146114396526
     second: atk23_0
-  - first:
-      213: 2771657451831484962
-    second: atk23_1
-  - first:
-      213: -7338336384894646496
-    second: atk23_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -122,12 +116,12 @@ TextureImporter:
       name: atk23_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 6400
-        height: 2650
-      alignment: 9
-      pivot: {x: 0.23, y: 0.25}
+        x: 147
+        y: 6
+        width: 181
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -144,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e530c97837bcb8f46bd8c10ac369f0d8
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -155,8 +149,6 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       atk23_0: -7052618146114396526
-      atk23_1: 2771657451831484962
-      atk23_2: -7338336384894646496
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
