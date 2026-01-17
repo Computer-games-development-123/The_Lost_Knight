@@ -116,10 +116,10 @@ TextureImporter:
       name: atk4_0
       rect:
         serializedVersion: 2
-        x: 759
-        y: 119
-        width: 1462
-        height: 1452
+        x: 73
+        y: 10
+        width: 151
+        height: 149
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

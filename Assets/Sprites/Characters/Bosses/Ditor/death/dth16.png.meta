@@ -11,9 +11,6 @@ TextureImporter:
   - first:
       213: 5129583928885456223
     second: dth16_2
-  - first:
-      213: 4329354857508748415
-    second: dth16_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -125,10 +122,10 @@ TextureImporter:
       name: dth16_0
       rect:
         serializedVersion: 2
-        x: 1709
-        y: 1499
-        width: 22
-        height: 22
+        x: 85
+        y: 7
+        width: 124
+        height: 145
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,10 +144,10 @@ TextureImporter:
       name: dth16_1
       rect:
         serializedVersion: 2
-        x: 849
-        y: 269
-        width: 312
-        height: 192
+        x: 168
+        y: 148
+        width: 7
+        height: 6
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,10 +166,10 @@ TextureImporter:
       name: dth16_2
       rect:
         serializedVersion: 2
-        x: 869
-        y: 149
-        width: 1132
-        height: 1342
+        x: 83
+        y: 15
+        width: 43
+        height: 33
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -183,28 +180,6 @@ TextureImporter:
       bones: []
       spriteID: f5d25c6d761ff2740800000000000000
       internalID: 5129583928885456223
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dth16_3
-      rect:
-        serializedVersion: 2
-        x: 1849
-        y: 89
-        width: 222
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f7cbb641e45f41c30800000000000000
-      internalID: 4329354857508748415
       vertices: []
       indices: 
       edges: []
@@ -226,7 +201,6 @@ TextureImporter:
       dth16_0: 7561421037262348090
       dth16_1: 3501524614323300541
       dth16_2: 5129583928885456223
-      dth16_3: 4329354857508748415
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

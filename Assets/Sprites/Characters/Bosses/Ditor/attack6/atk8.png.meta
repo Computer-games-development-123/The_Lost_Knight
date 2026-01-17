@@ -8,21 +8,6 @@ TextureImporter:
   - first:
       213: 8582384980406827390
     second: atk8_1
-  - first:
-      213: -5337328312570306843
-    second: atk8_2
-  - first:
-      213: 7370499370319300521
-    second: atk8_3
-  - first:
-      213: 5905638657551654592
-    second: atk8_4
-  - first:
-      213: -158405109395530932
-    second: atk8_5
-  - first:
-      213: -755016830031157835
-    second: atk8_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -134,12 +119,12 @@ TextureImporter:
       name: atk8_0
       rect:
         serializedVersion: 2
-        x: 1649
-        y: 709
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 160
+        y: 0
+        width: 445
+        height: 265
+      alignment: 9
+      pivot: {x: -0.03, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -152,143 +137,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: atk8_1
-      rect:
-        serializedVersion: 2
-        x: 1669
-        y: 719
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e79fbc21ba1ca1770800000000000000
-      internalID: 8582384980406827390
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk8_2
-      rect:
-        serializedVersion: 2
-        x: 1759
-        y: 19
-        width: 4282
-        height: 2631
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5ee9c979d200ee5b0800000000000000
-      internalID: -5337328312570306843
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk8_3
-      rect:
-        serializedVersion: 2
-        x: 1639
-        y: 679
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9a74f117026494660800000000000000
-      internalID: 7370499370319300521
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk8_4
-      rect:
-        serializedVersion: 2
-        x: 1719
-        y: 599
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0ce5e23d11b05f150800000000000000
-      internalID: 5905638657551654592
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk8_5
-      rect:
-        serializedVersion: 2
-        x: 1719
-        y: 569
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c4b5fdb646b3dcdf0800000000000000
-      internalID: -158405109395530932
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk8_6
-      rect:
-        serializedVersion: 2
-        x: 1629
-        y: 539
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5b52d8e7134a585f0800000000000000
-      internalID: -755016830031157835
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 6639a534799006749ae3c4d2076aa0f8
     internalID: 0
     vertices: []
     indices: 
@@ -300,11 +153,6 @@ TextureImporter:
     nameFileIdTable:
       atk8_0: 6702791981847922596
       atk8_1: 8582384980406827390
-      atk8_2: -5337328312570306843
-      atk8_3: 7370499370319300521
-      atk8_4: 5905638657551654592
-      atk8_5: -158405109395530932
-      atk8_6: -755016830031157835
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

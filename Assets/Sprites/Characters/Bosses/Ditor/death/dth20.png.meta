@@ -119,10 +119,10 @@ TextureImporter:
       name: dth20_0
       rect:
         serializedVersion: 2
-        x: 809
-        y: 79
-        width: 1222
-        height: 1572
+        x: 78
+        y: 6
+        width: 127
+        height: 161
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,10 +141,10 @@ TextureImporter:
       name: dth20_1
       rect:
         serializedVersion: 2
-        x: 1949
-        y: 89
-        width: 122
-        height: 42
+        x: 193
+        y: 7
+        width: 16
+        height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

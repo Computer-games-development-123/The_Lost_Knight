@@ -26,18 +26,6 @@ TextureImporter:
   - first:
       213: -4822444130167286670
     second: atk9_7
-  - first:
-      213: -9015270353911624042
-    second: atk9_8
-  - first:
-      213: -1679032839866138976
-    second: atk9_9
-  - first:
-      213: 6016388982846782736
-    second: atk9_10
-  - first:
-      213: 6558198550242523445
-    second: atk9_11
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -149,12 +137,12 @@ TextureImporter:
       name: atk9_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 6400
-        height: 1400
+        x: 57
+        y: 7
+        width: 288
+        height: 151
       alignment: 9
-      pivot: {x: 0.24, y: 0.5}
+      pivot: {x: 0.3, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -171,7 +159,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 45264425066c82543954394d78ccc983
+    spriteID: 94191d40d19771e4eb8be70d5f9ef91b
     internalID: 0
     vertices: []
     indices: 
@@ -183,16 +171,12 @@ TextureImporter:
     nameFileIdTable:
       atk9_0: 2292432434647731931
       atk9_1: 2684606993181103805
-      atk9_10: 6016388982846782736
-      atk9_11: 6558198550242523445
       atk9_2: -345599164961410482
       atk9_3: -8798393416059379740
       atk9_4: -3615037529482478194
       atk9_5: -2969306249538215218
       atk9_6: 7855273534132277039
       atk9_7: -4822444130167286670
-      atk9_8: -9015270353911624042
-      atk9_9: -1679032839866138976
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

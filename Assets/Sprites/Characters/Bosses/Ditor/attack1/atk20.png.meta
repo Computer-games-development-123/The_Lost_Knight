@@ -20,12 +20,6 @@ TextureImporter:
   - first:
       213: -2821485579628148870
     second: atk20_5
-  - first:
-      213: 9195574275247361763
-    second: atk20_6
-  - first:
-      213: -6639359463345516978
-    second: atk20_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,10 +133,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 6400
-        height: 2650
-      alignment: 9
-      pivot: {x: 0.23, y: 0.25}
+        width: 450
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -159,7 +153,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 18602f55637c7dc41a9581013fac259d
+    spriteID: b5ee833b6e6bf2f42ba67bee82da1977
     internalID: 0
     vertices: []
     indices: 
@@ -175,8 +169,6 @@ TextureImporter:
       atk20_3: 2009355318458383716
       atk20_4: 6203028808391053435
       atk20_5: -2821485579628148870
-      atk20_6: 9195574275247361763
-      atk20_7: -6639359463345516978
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

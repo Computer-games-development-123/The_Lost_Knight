@@ -119,10 +119,10 @@ TextureImporter:
       name: atk22_0
       rect:
         serializedVersion: 2
-        x: 809
-        y: 129
-        width: 2142
-        height: 2521
+        x: 78
+        y: 11
+        width: 219
+        height: 254
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,10 +141,10 @@ TextureImporter:
       name: atk22_1
       rect:
         serializedVersion: 2
-        x: 2959
-        y: 129
-        width: 1632
-        height: 2082
+        x: 293
+        y: 11
+        width: 169
+        height: 212
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

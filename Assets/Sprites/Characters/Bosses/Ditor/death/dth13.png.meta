@@ -14,27 +14,6 @@ TextureImporter:
   - first:
       213: -1914991533888374469
     second: dth13_3
-  - first:
-      213: -4661423929624225441
-    second: dth13_4
-  - first:
-      213: -3174477548674286355
-    second: dth13_5
-  - first:
-      213: 3272840164879908846
-    second: dth13_6
-  - first:
-      213: 1639321677266347087
-    second: dth13_7
-  - first:
-      213: -3719764094474690232
-    second: dth13_8
-  - first:
-      213: 8284084090415037480
-    second: dth13_9
-  - first:
-      213: 6053492081597875750
-    second: dth13_10
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -146,10 +125,10 @@ TextureImporter:
       name: dth13_0
       rect:
         serializedVersion: 2
-        x: 1069
-        y: 149
-        width: 722
-        height: 1282
+        x: 105
+        y: 7
+        width: 104
+        height: 138
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,10 +147,10 @@ TextureImporter:
       name: dth13_1
       rect:
         serializedVersion: 2
-        x: 1469
-        y: 1379
-        width: 72
-        height: 112
+        x: 145
+        y: 136
+        width: 14
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -190,10 +169,10 @@ TextureImporter:
       name: dth13_2
       rect:
         serializedVersion: 2
-        x: 1619
-        y: 1409
-        width: 42
-        height: 62
+        x: 160
+        y: 125
+        width: 13
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -212,10 +191,10 @@ TextureImporter:
       name: dth13_3
       rect:
         serializedVersion: 2
-        x: 1769
-        y: 819
-        width: 72
-        height: 242
+        x: 83
+        y: 15
+        width: 43
+        height: 33
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,160 +205,6 @@ TextureImporter:
       bones: []
       spriteID: b39f3b298559c65e0800000000000000
       internalID: -1914991533888374469
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dth13_4
-      rect:
-        serializedVersion: 2
-        x: 1859
-        y: 489
-        width: 32
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f591e3f12ab4f4fb0800000000000000
-      internalID: -4661423929624225441
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dth13_5
-      rect:
-        serializedVersion: 2
-        x: 849
-        y: 269
-        width: 312
-        height: 192
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: decf0d31d7df1f3d0800000000000000
-      internalID: -3174477548674286355
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dth13_6
-      rect:
-        serializedVersion: 2
-        x: 1049
-        y: 259
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: eef3c4a2ac67b6d20800000000000000
-      internalID: 3272840164879908846
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dth13_7
-      rect:
-        serializedVersion: 2
-        x: 1789
-        y: 189
-        width: 172
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f44ee06416a00c610800000000000000
-      internalID: 1639321677266347087
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dth13_8
-      rect:
-        serializedVersion: 2
-        x: 889
-        y: 189
-        width: 132
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8416594a34eb06cc0800000000000000
-      internalID: -3719764094474690232
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dth13_9
-      rect:
-        serializedVersion: 2
-        x: 1789
-        y: 159
-        width: 52
-        height: 42
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 82c37aad69af6f270800000000000000
-      internalID: 8284084090415037480
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dth13_10
-      rect:
-        serializedVersion: 2
-        x: 1849
-        y: 89
-        width: 222
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6260846b9f2520450800000000000000
-      internalID: 6053492081597875750
       vertices: []
       indices: 
       edges: []
@@ -400,15 +225,8 @@ TextureImporter:
     nameFileIdTable:
       dth13_0: 2458550004849706356
       dth13_1: 4012112368681800820
-      dth13_10: 6053492081597875750
       dth13_2: -7827330572143944727
       dth13_3: -1914991533888374469
-      dth13_4: -4661423929624225441
-      dth13_5: -3174477548674286355
-      dth13_6: 3272840164879908846
-      dth13_7: 1639321677266347087
-      dth13_8: -3719764094474690232
-      dth13_9: 8284084090415037480
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

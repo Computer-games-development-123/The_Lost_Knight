@@ -14,9 +14,6 @@ TextureImporter:
   - first:
       213: -845004568885550927
     second: atk2_3
-  - first:
-      213: -8193726431007513334
-    second: atk2_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -128,10 +125,10 @@ TextureImporter:
       name: atk2_0
       rect:
         serializedVersion: 2
-        x: 759
-        y: 119
-        width: 1322
-        height: 1452
+        x: 73
+        y: 10
+        width: 137
+        height: 149
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,10 +147,10 @@ TextureImporter:
       name: atk2_1
       rect:
         serializedVersion: 2
-        x: 2049
-        y: 449
-        width: 72
-        height: 92
+        x: 203
+        y: 40
+        width: 11
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,10 +169,10 @@ TextureImporter:
       name: atk2_2
       rect:
         serializedVersion: 2
-        x: 2069
-        y: 419
-        width: 22
-        height: 32
+        x: 208
+        y: 27
+        width: 9
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,10 +191,10 @@ TextureImporter:
       name: atk2_3
       rect:
         serializedVersion: 2
-        x: 2109
-        y: 289
-        width: 42
-        height: 72
+        x: 208
+        y: 22
+        width: 6
+        height: 6
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,28 +205,6 @@ TextureImporter:
       bones: []
       spriteID: 1b0aef552d0f544f0800000000000000
       internalID: -845004568885550927
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk2_4
-      rect:
-        serializedVersion: 2
-        x: 2109
-        y: 239
-        width: 12
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a05611529390a4e80800000000000000
-      internalID: -8193726431007513334
       vertices: []
       indices: 
       edges: []
@@ -252,7 +227,6 @@ TextureImporter:
       atk2_1: 6815424004865809576
       atk2_2: 2383010308293386791
       atk2_3: -845004568885550927
-      atk2_4: -8193726431007513334
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

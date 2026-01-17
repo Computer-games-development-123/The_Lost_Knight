@@ -5,21 +5,6 @@ TextureImporter:
   - first:
       213: -3096477094196056583
     second: dth11_0
-  - first:
-      213: -4467680539661408047
-    second: dth11_1
-  - first:
-      213: -9150423709547359546
-    second: dth11_2
-  - first:
-      213: -5897829976907637834
-    second: dth11_3
-  - first:
-      213: -1636954746063906615
-    second: dth11_4
-  - first:
-      213: 2052972047361234406
-    second: dth11_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -131,10 +116,10 @@ TextureImporter:
       name: dth11_0
       rect:
         serializedVersion: 2
-        x: 1469
-        y: 1379
-        width: 72
-        height: 112
+        x: 77
+        y: 7
+        width: 132
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,116 +130,6 @@ TextureImporter:
       bones: []
       spriteID: 9fd6f491d7a1705d0800000000000000
       internalID: -3096477094196056583
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dth11_1
-      rect:
-        serializedVersion: 2
-        x: 1549
-        y: 1379
-        width: 22
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1d86e8f483c9ff1c0800000000000000
-      internalID: -4467680539661408047
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dth11_2
-      rect:
-        serializedVersion: 2
-        x: 1619
-        y: 1409
-        width: 42
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6c21e100e1a230180800000000000000
-      internalID: -9150423709547359546
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dth11_3
-      rect:
-        serializedVersion: 2
-        x: 879
-        y: 89
-        width: 1192
-        height: 1272
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6bb15c052e2b62ea0800000000000000
-      internalID: -5897829976907637834
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dth11_4
-      rect:
-        serializedVersion: 2
-        x: 1669
-        y: 1329
-        width: 42
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9c89877d45e5849e0800000000000000
-      internalID: -1636954746063906615
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dth11_5
-      rect:
-        serializedVersion: 2
-        x: 789
-        y: 229
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6e5d5c0333f9d7c10800000000000000
-      internalID: 2052972047361234406
       vertices: []
       indices: 
       edges: []
@@ -274,11 +149,6 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       dth11_0: -3096477094196056583
-      dth11_1: -4467680539661408047
-      dth11_2: -9150423709547359546
-      dth11_3: -5897829976907637834
-      dth11_4: -1636954746063906615
-      dth11_5: 2052972047361234406
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

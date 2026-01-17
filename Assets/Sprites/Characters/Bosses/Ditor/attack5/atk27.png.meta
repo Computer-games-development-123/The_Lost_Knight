@@ -14,12 +14,6 @@ TextureImporter:
   - first:
       213: 489221049960415126
     second: atk27_3
-  - first:
-      213: -7517359950833575484
-    second: atk27_4
-  - first:
-      213: 2910598615237061592
-    second: atk27_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -131,10 +125,10 @@ TextureImporter:
       name: atk27_0
       rect:
         serializedVersion: 2
-        x: 1399
-        y: 129
-        width: 1052
-        height: 1912
+        x: 138
+        y: 11
+        width: 109
+        height: 196
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,10 +147,10 @@ TextureImporter:
       name: atk27_1
       rect:
         serializedVersion: 2
-        x: 2969
-        y: 1549
-        width: 12
-        height: 22
+        x: 278
+        y: 11
+        width: 151
+        height: 212
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -175,10 +169,10 @@ TextureImporter:
       name: atk27_2
       rect:
         serializedVersion: 2
-        x: 3009
-        y: 129
-        width: 1262
-        height: 2082
+        x: 453
+        y: 65
+        width: 7
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,10 +191,10 @@ TextureImporter:
       name: atk27_3
       rect:
         serializedVersion: 2
-        x: 2799
-        y: 779
-        width: 12
-        height: 12
+        x: 455
+        y: 53
+        width: 7
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -211,50 +205,6 @@ TextureImporter:
       bones: []
       spriteID: 69fb883f3ff0ac600800000000000000
       internalID: 489221049960415126
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk27_4
-      rect:
-        serializedVersion: 2
-        x: 4549
-        y: 669
-        width: 32
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4c911d114f8fca790800000000000000
-      internalID: -7517359950833575484
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk27_5
-      rect:
-        serializedVersion: 2
-        x: 4569
-        y: 549
-        width: 22
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8dbe2f00506846820800000000000000
-      internalID: 2910598615237061592
       vertices: []
       indices: 
       edges: []
@@ -277,8 +227,6 @@ TextureImporter:
       atk27_1: -8551086186725608240
       atk27_2: 6083030075041917906
       atk27_3: 489221049960415126
-      atk27_4: -7517359950833575484
-      atk27_5: 2910598615237061592
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
