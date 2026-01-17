@@ -244,7 +244,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Abilities
   hasTeleport: 0
-  hasWaveOfFire: 0
+  hasBreathOfFire: 0
+  hasFireballSpell: 0
   hasUpgradedSword: 0
   teleportDistance: 4.5
   teleportCooldown: 1
@@ -277,6 +278,7 @@ MonoBehaviour:
   hurtDuration: 0.4
   healAmountPerPotion: 10
   isGrounded: 0
+  facingRight: 1
 --- !u!114 &4003226436323456006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,9 +321,14 @@ MonoBehaviour:
   attackKey: 120
   attackTriggerName: Attack
   attackIndexIntName: AttackIndex
-  waveOfFirePrefab: {fileID: 6368996947615989597, guid: 8217b52b0e5d87f4fa521878058f5250, type: 3}
+  fireballPrefab: {fileID: 6368996947615989597, guid: 8217b52b0e5d87f4fa521878058f5250, type: 3}
   firePoint: {fileID: 6633376722634027389}
-  waveOfFireCooldown: 5
+  fireballCooldown: 5
+  fireballSpeed: 5
+  breathOfFireCooldown: 5
+  breathOfFireRange: 3
+  breathOfFireWidth: 1.5
+  breathOrigin: {fileID: 0}
 --- !u!114 &8192387872576722755
 MonoBehaviour:
   m_ObjectHideFlags: 0
