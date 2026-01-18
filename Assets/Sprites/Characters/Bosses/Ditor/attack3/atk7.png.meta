@@ -17,9 +17,6 @@ TextureImporter:
   - first:
       213: 1049396885038776725
     second: atk7_4
-  - first:
-      213: 6229042522904839133
-    second: atk7_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -131,10 +128,10 @@ TextureImporter:
       name: atk7_0
       rect:
         serializedVersion: 2
-        x: 789
-        y: 529
-        width: 522
-        height: 1492
+        x: 77
+        y: 51
+        width: 56
+        height: 153
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,10 +150,10 @@ TextureImporter:
       name: atk7_1
       rect:
         serializedVersion: 2
-        x: 1019
-        y: 89
-        width: 2212
-        height: 1762
+        x: 97
+        y: 7
+        width: 228
+        height: 180
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -175,10 +172,10 @@ TextureImporter:
       name: atk7_2
       rect:
         serializedVersion: 2
-        x: 1289
-        y: 1809
-        width: 82
-        height: 82
+        x: 127
+        y: 178
+        width: 12
+        height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,10 +194,10 @@ TextureImporter:
       name: atk7_3
       rect:
         serializedVersion: 2
-        x: 1399
-        y: 1829
-        width: 1022
-        height: 282
+        x: 138
+        y: 181
+        width: 106
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -219,10 +216,10 @@ TextureImporter:
       name: atk7_4
       rect:
         serializedVersion: 2
-        x: 1999
-        y: 59
-        width: 12
-        height: 12
+        x: 198
+        y: 3
+        width: 8
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -233,28 +230,6 @@ TextureImporter:
       bones: []
       spriteID: 591432138e4309e00800000000000000
       internalID: 1049396885038776725
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk7_5
-      rect:
-        serializedVersion: 2
-        x: 2029
-        y: 69
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dd3cb84fb21027650800000000000000
-      internalID: 6229042522904839133
       vertices: []
       indices: 
       edges: []
@@ -278,7 +253,6 @@ TextureImporter:
       atk7_2: -4634793499118618152
       atk7_3: -4919501118686270130
       atk7_4: 1049396885038776725
-      atk7_5: 6229042522904839133
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

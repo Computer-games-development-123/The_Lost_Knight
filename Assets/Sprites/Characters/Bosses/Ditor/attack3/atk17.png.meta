@@ -14,9 +14,6 @@ TextureImporter:
   - first:
       213: -1244283909106549596
     second: atk17_3
-  - first:
-      213: 6810413115215705977
-    second: atk17_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -128,10 +125,10 @@ TextureImporter:
       name: atk17_0
       rect:
         serializedVersion: 2
-        x: 789
-        y: 529
-        width: 522
-        height: 1492
+        x: 77
+        y: 51
+        width: 56
+        height: 153
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,10 +147,10 @@ TextureImporter:
       name: atk17_1
       rect:
         serializedVersion: 2
-        x: 1019
-        y: 89
-        width: 2572
-        height: 1862
+        x: 97
+        y: 7
+        width: 265
+        height: 190
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,10 +169,10 @@ TextureImporter:
       name: atk17_2
       rect:
         serializedVersion: 2
-        x: 1399
-        y: 1829
-        width: 1022
-        height: 282
+        x: 138
+        y: 181
+        width: 106
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,10 +191,10 @@ TextureImporter:
       name: atk17_3
       rect:
         serializedVersion: 2
-        x: 1999
-        y: 59
-        width: 12
-        height: 12
+        x: 198
+        y: 3
+        width: 8
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,28 +205,6 @@ TextureImporter:
       bones: []
       spriteID: 4ac38fd806a6bbee0800000000000000
       internalID: -1244283909106549596
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk17_4
-      rect:
-        serializedVersion: 2
-        x: 2029
-        y: 69
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 977f71a25a2738e50800000000000000
-      internalID: 6810413115215705977
       vertices: []
       indices: 
       edges: []
@@ -252,7 +227,6 @@ TextureImporter:
       atk17_1: 4326300351003952583
       atk17_2: -6057236674040071785
       atk17_3: -1244283909106549596
-      atk17_4: 6810413115215705977
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

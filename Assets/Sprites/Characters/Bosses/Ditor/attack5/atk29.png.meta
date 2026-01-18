@@ -29,36 +29,6 @@ TextureImporter:
   - first:
       213: -99122088628839250
     second: atk29_8
-  - first:
-      213: 3577815318004677892
-    second: atk29_9
-  - first:
-      213: 2147042295415782868
-    second: atk29_10
-  - first:
-      213: 149394819029774542
-    second: atk29_11
-  - first:
-      213: -1028011791341245748
-    second: atk29_12
-  - first:
-      213: -8902146703855209377
-    second: atk29_13
-  - first:
-      213: -589195966708064806
-    second: atk29_14
-  - first:
-      213: -9127293018540690216
-    second: atk29_15
-  - first:
-      213: -119152783170540543
-    second: atk29_16
-  - first:
-      213: -2630849630707373203
-    second: atk29_17
-  - first:
-      213: -4414772708946597178
-    second: atk29_18
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -170,10 +140,10 @@ TextureImporter:
       name: atk29_0
       rect:
         serializedVersion: 2
-        x: 1399
-        y: 129
-        width: 1052
-        height: 1912
+        x: 138
+        y: 11
+        width: 145
+        height: 196
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,10 +162,10 @@ TextureImporter:
       name: atk29_1
       rect:
         serializedVersion: 2
-        x: 3759
-        y: 129
-        width: 522
-        height: 1522
+        x: 373
+        y: 11
+        width: 64
+        height: 156
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,10 +184,10 @@ TextureImporter:
       name: atk29_2
       rect:
         serializedVersion: 2
-        x: 4259
-        y: 1569
-        width: 102
-        height: 62
+        x: 424
+        y: 155
+        width: 14
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,10 +206,10 @@ TextureImporter:
       name: atk29_3
       rect:
         serializedVersion: 2
-        x: 3379
-        y: 1489
-        width: 12
-        height: 12
+        x: 336
+        y: 137
+        width: 11
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,10 +228,10 @@ TextureImporter:
       name: atk29_4
       rect:
         serializedVersion: 2
-        x: 3379
-        y: 1389
-        width: 42
-        height: 72
+        x: 350
+        y: 130
+        width: 7
+        height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -280,10 +250,10 @@ TextureImporter:
       name: atk29_5
       rect:
         serializedVersion: 2
-        x: 3439
-        y: 1459
-        width: 12
-        height: 12
+        x: 432
+        y: 128
+        width: 17
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -302,10 +272,10 @@ TextureImporter:
       name: atk29_6
       rect:
         serializedVersion: 2
-        x: 3519
-        y: 1349
-        width: 12
-        height: 12
+        x: 359
+        y: 120
+        width: 7
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -324,10 +294,10 @@ TextureImporter:
       name: atk29_7
       rect:
         serializedVersion: 2
-        x: 4339
-        y: 1309
-        width: 132
-        height: 52
+        x: 368
+        y: 113
+        width: 6
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -346,10 +316,10 @@ TextureImporter:
       name: atk29_8
       rect:
         serializedVersion: 2
-        x: 3539
-        y: 1319
-        width: 12
-        height: 12
+        x: 441
+        y: 103
+        width: 11
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -360,226 +330,6 @@ TextureImporter:
       bones: []
       spriteID: eac12ed4cf8df9ef0800000000000000
       internalID: -99122088628839250
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk29_9
-      rect:
-        serializedVersion: 2
-        x: 3609
-        y: 1269
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 40dbe9d5314f6a130800000000000000
-      internalID: 3577815318004677892
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk29_10
-      rect:
-        serializedVersion: 2
-        x: 3619
-        y: 1239
-        width: 12
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4dd3ff79793dbcd10800000000000000
-      internalID: 2147042295415782868
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk29_11
-      rect:
-        serializedVersion: 2
-        x: 3629
-        y: 1219
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ec0bd8fdbc1c21200800000000000000
-      internalID: 149394819029774542
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk29_12
-      rect:
-        serializedVersion: 2
-        x: 3699
-        y: 1209
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cca2130f8b4cbb1f0800000000000000
-      internalID: -1028011791341245748
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk29_13
-      rect:
-        serializedVersion: 2
-        x: 4169
-        y: 1139
-        width: 162
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f54bb4a0db8357480800000000000000
-      internalID: -8902146703855209377
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk29_14
-      rect:
-        serializedVersion: 2
-        x: 3709
-        y: 1159
-        width: 12
-        height: 42
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: addd545d361c2d7f0800000000000000
-      internalID: -589195966708064806
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk29_15
-      rect:
-        serializedVersion: 2
-        x: 3749
-        y: 1079
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8d4bafcab57555180800000000000000
-      internalID: -9127293018540690216
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk29_16
-      rect:
-        serializedVersion: 2
-        x: 4429
-        y: 1049
-        width: 62
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 10cee1dcc2fa85ef0800000000000000
-      internalID: -119152783170540543
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk29_17
-      rect:
-        serializedVersion: 2
-        x: 4299
-        y: 979
-        width: 52
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d6b283023385d7bd0800000000000000
-      internalID: -2630849630707373203
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk29_18
-      rect:
-        serializedVersion: 2
-        x: 2799
-        y: 779
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6ca26279c939bb2c0800000000000000
-      internalID: -4414772708946597178
       vertices: []
       indices: 
       edges: []
@@ -600,15 +350,6 @@ TextureImporter:
     nameFileIdTable:
       atk29_0: -5239610411956468380
       atk29_1: 4221959522920864285
-      atk29_10: 2147042295415782868
-      atk29_11: 149394819029774542
-      atk29_12: -1028011791341245748
-      atk29_13: -8902146703855209377
-      atk29_14: -589195966708064806
-      atk29_15: -9127293018540690216
-      atk29_16: -119152783170540543
-      atk29_17: -2630849630707373203
-      atk29_18: -4414772708946597178
       atk29_2: -8832290303918723752
       atk29_3: -629770231431602188
       atk29_4: -3159682655217512032
@@ -616,7 +357,6 @@ TextureImporter:
       atk29_6: -5437254603450415141
       atk29_7: -4585147760668772884
       atk29_8: -99122088628839250
-      atk29_9: 3577815318004677892
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

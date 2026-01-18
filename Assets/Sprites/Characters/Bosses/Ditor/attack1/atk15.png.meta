@@ -32,12 +32,6 @@ TextureImporter:
   - first:
       213: 4438986273448208448
     second: atk15_9
-  - first:
-      213: -1656612793193644479
-    second: atk15_10
-  - first:
-      213: 6108153478857801124
-    second: atk15_11
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -150,11 +144,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 6400
-        height: 2650
-      alignment: 9
-      pivot: {x: 0.23, y: 0.25}
+        y: 20
+        width: 450
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -171,7 +165,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e3ab2d3b693b36d4087eac7a60e71ea9
+    spriteID: 8aa1a240057643041b2b63605a3df7a5
     internalID: 0
     vertices: []
     indices: 
@@ -183,8 +177,6 @@ TextureImporter:
     nameFileIdTable:
       atk15_0: -2446828894245706937
       atk15_1: -898513014024763435
-      atk15_10: -1656612793193644479
-      atk15_11: 6108153478857801124
       atk15_2: -8690520099276359663
       atk15_3: -4731520493013528288
       atk15_4: -662139607052521637

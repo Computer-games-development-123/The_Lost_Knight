@@ -5,9 +5,6 @@ TextureImporter:
   - first:
       213: 2292432434647731931
     second: atk9_0
-  - first:
-      213: 2684606993181103805
-    second: atk9_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -119,10 +116,10 @@ TextureImporter:
       name: atk9_0
       rect:
         serializedVersion: 2
-        x: 1139
-        y: 499
-        width: 12
-        height: 12
+        x: 112
+        y: 7
+        width: 185
+        height: 218
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -133,28 +130,6 @@ TextureImporter:
       bones: []
       spriteID: bde03ca472b50df10800000000000000
       internalID: 2292432434647731931
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk9_1
-      rect:
-        serializedVersion: 2
-        x: 1499
-        y: 89
-        width: 1442
-        height: 2142
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: db6d61e26d3a14520800000000000000
-      internalID: 2684606993181103805
       vertices: []
       indices: 
       edges: []
@@ -174,7 +149,6 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       atk9_0: 2292432434647731931
-      atk9_1: 2684606993181103805
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

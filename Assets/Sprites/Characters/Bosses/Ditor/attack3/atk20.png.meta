@@ -26,27 +26,6 @@ TextureImporter:
   - first:
       213: -6639359463345516978
     second: atk20_7
-  - first:
-      213: 8378888093497033802
-    second: atk20_8
-  - first:
-      213: -3113910025153334073
-    second: atk20_9
-  - first:
-      213: 6305231587603163608
-    second: atk20_10
-  - first:
-      213: 6771884412051547699
-    second: atk20_11
-  - first:
-      213: -6699881120896826590
-    second: atk20_12
-  - first:
-      213: -8599102753988194083
-    second: atk20_13
-  - first:
-      213: -6096441105269515146
-    second: atk20_14
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -158,10 +137,10 @@ TextureImporter:
       name: atk20_0
       rect:
         serializedVersion: 2
-        x: 1209
-        y: 1889
-        width: 102
-        height: 132
+        x: 88
+        y: 118
+        width: 29
+        height: 69
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -180,10 +159,10 @@ TextureImporter:
       name: atk20_1
       rect:
         serializedVersion: 2
-        x: 1399
-        y: 1859
-        width: 272
-        height: 142
+        x: 115
+        y: 187
+        width: 18
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -202,10 +181,10 @@ TextureImporter:
       name: atk20_2
       rect:
         serializedVersion: 2
-        x: 1679
-        y: 1999
-        width: 12
-        height: 12
+        x: 121
+        y: 180
+        width: 6
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,10 +203,10 @@ TextureImporter:
       name: atk20_3
       rect:
         serializedVersion: 2
-        x: 1189
-        y: 1959
-        width: 32
-        height: 32
+        x: 138
+        y: 183
+        width: 34
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -246,10 +225,10 @@ TextureImporter:
       name: atk20_4
       rect:
         serializedVersion: 2
-        x: 1169
-        y: 1929
-        width: 12
-        height: 12
+        x: 98
+        y: 7
+        width: 227
+        height: 178
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -268,10 +247,10 @@ TextureImporter:
       name: atk20_5
       rect:
         serializedVersion: 2
-        x: 899
-        y: 1209
-        width: 222
-        height: 632
+        x: 113
+        y: 143
+        width: 27
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -290,10 +269,10 @@ TextureImporter:
       name: atk20_6
       rect:
         serializedVersion: 2
-        x: 1229
-        y: 1819
-        width: 22
-        height: 32
+        x: 77
+        y: 51
+        width: 27
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -312,10 +291,10 @@ TextureImporter:
       name: atk20_7
       rect:
         serializedVersion: 2
-        x: 2629
-        y: 1819
-        width: 12
-        height: 12
+        x: 198
+        y: 3
+        width: 8
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -326,160 +305,6 @@ TextureImporter:
       bones: []
       spriteID: e4e8923beb14cd3a0800000000000000
       internalID: -6639359463345516978
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_8
-      rect:
-        serializedVersion: 2
-        x: 1119
-        y: 1749
-        width: 32
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a4404a9e35ac74470800000000000000
-      internalID: 8378888093497033802
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_9
-      rect:
-        serializedVersion: 2
-        x: 1159
-        y: 1479
-        width: 222
-        height: 292
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7c43530945b29c4d0800000000000000
-      internalID: -3113910025153334073
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_10
-      rect:
-        serializedVersion: 2
-        x: 789
-        y: 529
-        width: 232
-        height: 722
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8d9a8ade8bea08750800000000000000
-      internalID: 6305231587603163608
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_11
-      rect:
-        serializedVersion: 2
-        x: 1009
-        y: 799
-        width: 22
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 33666586ef09afd50800000000000000
-      internalID: 6771884412051547699
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_12
-      rect:
-        serializedVersion: 2
-        x: 1049
-        y: 89
-        width: 2182
-        height: 1652
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 22349973e9d3503a0800000000000000
-      internalID: -6699881120896826590
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_13
-      rect:
-        serializedVersion: 2
-        x: 1999
-        y: 59
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dd05371fa99d9a880800000000000000
-      internalID: -8599102753988194083
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk20_14
-      rect:
-        serializedVersion: 2
-        x: 2029
-        y: 69
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 67c12567d17156ba0800000000000000
-      internalID: -6096441105269515146
       vertices: []
       indices: 
       edges: []
@@ -500,19 +325,12 @@ TextureImporter:
     nameFileIdTable:
       atk20_0: -8033445899425044210
       atk20_1: -7603351798137674991
-      atk20_10: 6305231587603163608
-      atk20_11: 6771884412051547699
-      atk20_12: -6699881120896826590
-      atk20_13: -8599102753988194083
-      atk20_14: -6096441105269515146
       atk20_2: -8981994466396468519
       atk20_3: 2009355318458383716
       atk20_4: 6203028808391053435
       atk20_5: -2821485579628148870
       atk20_6: 9195574275247361763
       atk20_7: -6639359463345516978
-      atk20_8: 8378888093497033802
-      atk20_9: -3113910025153334073
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

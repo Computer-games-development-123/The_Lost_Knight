@@ -4,8 +4,8 @@ using System.Collections;
 public class PhilipBoss : BossBase
 {
     [Header("Portal Attack (Prefab-based)")]
-    public GameObject portalPrefab;          // Prefab של הפורטל
-    public Transform portalSpawnPoint;        // נקודה מעל פיליפ
+    public GameObject portalPrefab;
+    public Transform portalSpawnPoint;
     public float portalAttackCooldown = 5f;
     public float portalTelegraphDelay = 0.25f;
     public float portalLifetime = 1.2f;
@@ -24,6 +24,8 @@ public class PhilipBoss : BossBase
     private float lastMeleeAttackTime = -999f;
     private bool isAttacking = false;
 
+    private GameObject activePortal; // <-- חדש
+
     protected override void Start()
     {
         base.Start();
@@ -37,19 +39,15 @@ public class PhilipBoss : BossBase
 
         bossName = "Philip, Bringer of Death";
 
-        // Set Yoji as dead when Philip appears
         if (GameManager.Instance != null)
         {
             GameManager.Instance.SetFlag(GameFlag.YojiDead, true);
             GameManager.Instance.SaveProgress();
-            Debug.Log("Philip has killed Yoji - YojiDead flag set");
         }
 
-        // Update store to free (PostPhilip state)
         if (StoreStateManager.Instance != null)
         {
             StoreStateManager.Instance.SetStoreState(StoreStateManager.StoreState.PostPhilip);
-            Debug.Log("Store is now free - Yoji's Legacy");
         }
     }
 
@@ -81,40 +79,65 @@ public class PhilipBoss : BossBase
 
     private IEnumerator PerformPortalAttack()
     {
+        if (isAttacking) yield break;
+
         isAttacking = true;
         lastPortalAttackTime = Time.time;
 
         if (rb != null) rb.linearVelocity = Vector2.zero;
-        if (anim != null) anim.SetBool("IsMoving", false);
-        if (anim != null) anim.SetTrigger("Attack2");
+        if (anim != null)
+        {
+            anim.SetBool("IsMoving", false);
+
+            anim.SetBool("IsSpecial", true);
+
+            anim.SetTrigger("Attack2");
+        }
 
         yield return new WaitForSeconds(portalTelegraphDelay);
 
-        if (portalPrefab == null || portalSpawnPoint == null)
-        {
-            Debug.LogWarning("PhilipBoss: Portal prefab or spawn point missing!");
-        }
-        else
-        {
-            GameObject portal = Instantiate(
-                portalPrefab,
-                portalSpawnPoint.position,
-                Quaternion.identity
-            );
+        GameObject portal = null;
 
-            Animator portalAnim = portal.GetComponentInChildren<Animator>();
+        if (portalPrefab != null && portalSpawnPoint != null)
+        {
+            portal = Instantiate(portalPrefab, portalSpawnPoint.position, Quaternion.identity);
+
+            Animator portalAnim = portal.GetComponentInChildren<Animator>(true);
             if (portalAnim != null)
                 portalAnim.SetTrigger("Open");
 
             Destroy(portal, portalLifetime);
         }
+        else
+        {
+            Debug.LogWarning("PhilipBoss: Portal prefab or spawn point missing!");
+        }
 
-        yield return new WaitForSeconds(0.3f);
+        float t = 0f;
+        while (t < portalLifetime)
+        {
+            if (isDead) yield break;
+
+            if (rb != null) rb.linearVelocity = Vector2.zero;
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        if (anim != null)
+        {
+            anim.SetTrigger("ClosePortal");
+
+            yield return new WaitForSeconds(0.6f);
+        }
+
         isAttacking = false;
     }
 
+
     private IEnumerator PerformMeleeAttack()
     {
+        if (isAttacking) yield break;
+
         isAttacking = true;
         lastMeleeAttackTime = Time.time;
 
@@ -153,37 +176,45 @@ public class PhilipBoss : BossBase
             return;
         }
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(
-            meleeAttackPoint.position,
-            meleeAttackRange
-        );
+        Collider2D[] hits = Physics2D.OverlapCircleAll(meleeAttackPoint.position, meleeAttackRange);
 
         foreach (Collider2D hit in hits)
         {
             if (!hit.CompareTag("Player")) continue;
 
-            PlayerHealth playerHealth = hit.GetComponent<PlayerHealth>();
-            if (playerHealth == null)
-                playerHealth = hit.GetComponentInParent<PlayerHealth>();
+            PlayerHealth ph = hit.GetComponent<PlayerHealth>();
+            if (ph == null) ph = hit.GetComponentInParent<PlayerHealth>();
 
-            if (playerHealth != null)
-            {
-                playerHealth.TakeDamage(damage);
-                Debug.Log($"Philip melee hit for {damage} damage!");
-            }
+            if (ph != null)
+                ph.TakeDamage(damage);
         }
     }
 
-    protected override void OnDeathDialogueComplete()
+    public override void TakeDamage(int damageAmount)
     {
-        // Call base to handle coins and slain dialogue
-        base.OnDeathDialogueComplete();
+        if (isDead) return;
 
-        Debug.Log($"Philip defeated - unlocking final area...");
-
-        if (GameManager.Instance != null)
+        if (isInvulnerable)
         {
-            GameManager.Instance.OnPhilipDefeated();
+            Debug.Log($"{bossName} is invulnerable!");
+            OnInvulnerableHit();
+            return;
+        }
+
+        currentHP -= damageAmount;
+
+        if (anim != null && !isAttacking)
+        {
+            anim.SetTrigger("Hurt");
+        }
+
+
+        StartCoroutine(FlashRed());
+        Debug.Log($"{bossName} took {damageAmount} damage. HP: {currentHP}/{maxHP}");
+
+        if (currentHP <= 0)
+        {
+            Die();
         }
     }
 
@@ -192,31 +223,30 @@ public class PhilipBoss : BossBase
         if (isDead) return;
         isDead = true;
 
-        Debug.Log($"{bossName} defeated!");
-
-        // Stop all movement and attacks
         isAttacking = false;
         StopAllCoroutines();
 
-        if (rb != null)
-            rb.linearVelocity = Vector2.zero;
+        if (rb != null) rb.linearVelocity = Vector2.zero;
 
-        if (anim != null)
-            anim.SetTrigger("Death");
-
-        if (waveManager != null)
+        if (activePortal != null)
         {
-            waveManager.OnBossDied(this);
+            Destroy(activePortal);
+            activePortal = null;
         }
+
+        if (anim != null) anim.SetTrigger("Death");
+
+        if (waveManager != null) waveManager.OnBossDied(this);
 
         if (DialogueManager.Instance != null && deathDialogue != null)
-        {
             DialogueManager.Instance.Play(deathDialogue, OnDeathDialogueComplete);
-        }
         else
-        {
             OnDeathDialogueComplete();
-        }
     }
 
+    protected override void OnDeathDialogueComplete()
+    {
+        base.OnDeathDialogueComplete();
+        if (GameManager.Instance != null) GameManager.Instance.OnPhilipDefeated();
+    }
 }

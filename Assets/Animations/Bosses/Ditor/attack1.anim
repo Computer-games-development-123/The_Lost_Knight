@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: attack_2
+  m_Name: attack1
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -23,11 +23,11 @@ AnimationClip:
     - time: 0
       value: {fileID: 7530555281797389559, guid: 0e7bfeef757554848b89d96f892fa39f, type: 3}
     - time: 0.083333336
-      value: {fileID: 6815424004865809576, guid: 77360315606f64c44a7e8a924d9650bd, type: 3}
+      value: {fileID: 6697495368085710345, guid: 77360315606f64c44a7e8a924d9650bd, type: 3}
     - time: 0.16666667
-      value: {fileID: 430179783330033826, guid: 8fbf601dd97f6f04e9c68027f40a772b, type: 3}
+      value: {fileID: -2684345698607025799, guid: 8fbf601dd97f6f04e9c68027f40a772b, type: 3}
     - time: 0.25
-      value: {fileID: 9078846583516418697, guid: a5a78c20659b4aa46be5514b03004811, type: 3}
+      value: {fileID: -7524433957829863914, guid: a5a78c20659b4aa46be5514b03004811, type: 3}
     - time: 0.33333334
       value: {fileID: -8561177769694542747, guid: 38e606c78241b5c46947944b107ad5d9, type: 3}
     - time: 0.41666666
@@ -59,9 +59,9 @@ AnimationClip:
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
     - {fileID: 7530555281797389559, guid: 0e7bfeef757554848b89d96f892fa39f, type: 3}
-    - {fileID: 6815424004865809576, guid: 77360315606f64c44a7e8a924d9650bd, type: 3}
-    - {fileID: 430179783330033826, guid: 8fbf601dd97f6f04e9c68027f40a772b, type: 3}
-    - {fileID: 9078846583516418697, guid: a5a78c20659b4aa46be5514b03004811, type: 3}
+    - {fileID: 6697495368085710345, guid: 77360315606f64c44a7e8a924d9650bd, type: 3}
+    - {fileID: -2684345698607025799, guid: 8fbf601dd97f6f04e9c68027f40a772b, type: 3}
+    - {fileID: -7524433957829863914, guid: a5a78c20659b4aa46be5514b03004811, type: 3}
     - {fileID: -8561177769694542747, guid: 38e606c78241b5c46947944b107ad5d9, type: 3}
     - {fileID: -2157757366771329314, guid: b096c89dcd8c6d245aa5c92cca27dc58, type: 3}
     - {fileID: 6558566288183572572, guid: 8996773b634ab614088d1f41fdfdc6c5, type: 3}
@@ -71,7 +71,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.6666667
+    m_StopTime: 0.6666666
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -92,21 +92,14 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.16666667
-    functionName: AE_HitUppercut
+    functionName: EnableAttack1HitCollider
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.41666666
-    functionName: AE_HitUppercut
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.6666667
-    functionName: AE_AttackEnd
+  - time: 0.5833333
+    functionName: DisableCurrentHitCollider
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

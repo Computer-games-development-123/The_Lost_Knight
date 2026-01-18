@@ -8,39 +8,6 @@ TextureImporter:
   - first:
       213: -7191584918098916155
     second: atk11_1
-  - first:
-      213: -7068214769469068302
-    second: atk11_2
-  - first:
-      213: -3847686091911594961
-    second: atk11_3
-  - first:
-      213: -2664490959865885347
-    second: atk11_4
-  - first:
-      213: 1738928759335424188
-    second: atk11_5
-  - first:
-      213: 3378306856219871410
-    second: atk11_6
-  - first:
-      213: 4681460387354689401
-    second: atk11_7
-  - first:
-      213: 7097776709624382159
-    second: atk11_8
-  - first:
-      213: 7975328509947209009
-    second: atk11_9
-  - first:
-      213: -1920167001580478737
-    second: atk11_10
-  - first:
-      213: 140338018079347489
-    second: atk11_11
-  - first:
-      213: -3764936042495137005
-    second: atk11_12
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -152,12 +119,12 @@ TextureImporter:
       name: atk11_0
       rect:
         serializedVersion: 2
-        x: 1779
-        y: 2029
-        width: 42
-        height: 182
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 160
+        y: 0
+        width: 445
+        height: 265
+      alignment: 9
+      pivot: {x: -0.03, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -170,275 +137,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: atk11_1
-      rect:
-        serializedVersion: 2
-        x: 1839
-        y: 19
-        width: 4202
-        height: 2631
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5cc48a0ae9b523c90800000000000000
-      internalID: -7191584918098916155
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk11_2
-      rect:
-        serializedVersion: 2
-        x: 1789
-        y: 1999
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2fb60adbd18a8ed90800000000000000
-      internalID: -7068214769469068302
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk11_3
-      rect:
-        serializedVersion: 2
-        x: 1799
-        y: 1969
-        width: 12
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f2cf564a2e54a9ac0800000000000000
-      internalID: -3847686091911594961
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk11_4
-      rect:
-        serializedVersion: 2
-        x: 1759
-        y: 1419
-        width: 332
-        height: 542
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d5d44fdc693d50bd0800000000000000
-      internalID: -2664490959865885347
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk11_5
-      rect:
-        serializedVersion: 2
-        x: 1649
-        y: 709
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cb016ed4e7ae12810800000000000000
-      internalID: 1738928759335424188
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk11_6
-      rect:
-        serializedVersion: 2
-        x: 1669
-        y: 719
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2b8804bcf2822ee20800000000000000
-      internalID: 3378306856219871410
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk11_7
-      rect:
-        serializedVersion: 2
-        x: 1759
-        y: 709
-        width: 22
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 97fb65a3b63e7f040800000000000000
-      internalID: 4681460387354689401
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk11_8
-      rect:
-        serializedVersion: 2
-        x: 1819
-        y: 709
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fc2c330df4e508260800000000000000
-      internalID: 7097776709624382159
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk11_9
-      rect:
-        serializedVersion: 2
-        x: 1639
-        y: 679
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 135e272560f0eae60800000000000000
-      internalID: 7975328509947209009
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk11_10
-      rect:
-        serializedVersion: 2
-        x: 1719
-        y: 599
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fee5e5919423a55e0800000000000000
-      internalID: -1920167001580478737
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk11_11
-      rect:
-        serializedVersion: 2
-        x: 1719
-        y: 569
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1231a141fa492f100800000000000000
-      internalID: 140338018079347489
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk11_12
-      rect:
-        serializedVersion: 2
-        x: 1629
-        y: 539
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 31b2309ed9240cbc0800000000000000
-      internalID: -3764936042495137005
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 9dc381ed442faad488e1d27e1d52f7d7
     internalID: 0
     vertices: []
     indices: 
@@ -450,17 +153,6 @@ TextureImporter:
     nameFileIdTable:
       atk11_0: -2783361270492012807
       atk11_1: -7191584918098916155
-      atk11_10: -1920167001580478737
-      atk11_11: 140338018079347489
-      atk11_12: -3764936042495137005
-      atk11_2: -7068214769469068302
-      atk11_3: -3847686091911594961
-      atk11_4: -2664490959865885347
-      atk11_5: 1738928759335424188
-      atk11_6: 3378306856219871410
-      atk11_7: 4681460387354689401
-      atk11_8: 7097776709624382159
-      atk11_9: 7975328509947209009
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

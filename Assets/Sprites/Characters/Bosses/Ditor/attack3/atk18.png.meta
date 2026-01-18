@@ -14,9 +14,6 @@ TextureImporter:
   - first:
       213: 486816525795298090
     second: atk18_3
-  - first:
-      213: -7218198919508735233
-    second: atk18_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -128,10 +125,10 @@ TextureImporter:
       name: atk18_0
       rect:
         serializedVersion: 2
-        x: 789
-        y: 529
-        width: 522
-        height: 1492
+        x: 77
+        y: 51
+        width: 56
+        height: 153
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,10 +147,10 @@ TextureImporter:
       name: atk18_1
       rect:
         serializedVersion: 2
-        x: 1019
-        y: 89
-        width: 2572
-        height: 1862
+        x: 97
+        y: 7
+        width: 265
+        height: 190
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,10 +169,10 @@ TextureImporter:
       name: atk18_2
       rect:
         serializedVersion: 2
-        x: 1399
-        y: 1829
-        width: 1022
-        height: 282
+        x: 138
+        y: 181
+        width: 106
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,10 +191,10 @@ TextureImporter:
       name: atk18_3
       rect:
         serializedVersion: 2
-        x: 1999
-        y: 59
-        width: 12
-        height: 12
+        x: 198
+        y: 3
+        width: 8
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,28 +205,6 @@ TextureImporter:
       bones: []
       spriteID: a2b81da0d0581c600800000000000000
       internalID: 486816525795298090
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk18_4
-      rect:
-        serializedVersion: 2
-        x: 2029
-        y: 69
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ffac29c835ec3db90800000000000000
-      internalID: -7218198919508735233
       vertices: []
       indices: 
       edges: []
@@ -252,7 +227,6 @@ TextureImporter:
       atk18_1: 6315119181322023972
       atk18_2: -7983490981996090096
       atk18_3: 486816525795298090
-      atk18_4: -7218198919508735233
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
