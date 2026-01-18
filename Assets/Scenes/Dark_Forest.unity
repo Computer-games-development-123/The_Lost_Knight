@@ -1670,6 +1670,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WavesCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1062879833351468741, guid: 1e26d4e87a35c3f49bc6e3c376bb8a8b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1535491965377922261, guid: 1e26d4e87a35c3f49bc6e3c376bb8a8b, type: 3}
       propertyPath: m_Pivot.x
       value: 0
