@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 2
   flag: 1
-  speakerName: Welcome
+  speakerName: Controls
   lines:
-  - Press Arrows To move, Up arrow to Jump.
-  portrait: {fileID: -1033766676993296678, guid: 1d89e91bf9e89aa4f99ded252d1d5552, type: 3}
+  - Press Arrows to move, Press Up arrow to Jump, Press P to Pause the game.
+  portrait: {fileID: 3348862932474825598, guid: 59cd5dbe970bea049950104ba24d2f7b, type: 3}
   pauseGameDuringDialogue: 1

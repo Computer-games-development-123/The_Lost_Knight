@@ -117,11 +117,10 @@ public class FikaBossCutsceneManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        // Play battle start dialogue (quick intro)
+        // Play battle start dialogue (quick intro) - keep input disabled
         if (FikaBattleStartDialogue != null)
         {
-            yield return PlayDialogueIfAny(FikaBattleStartDialogue);
-            UserInputManager.Instance.DisableInput();
+            yield return PlayDialogueIfAny(FikaBattleStartDialogue, keepInputDisabled: true);
         }
 
         yield return new WaitForSeconds(0.3f);
@@ -172,13 +171,11 @@ public class FikaBossCutsceneManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.25f);
 
-        // Dialogue 1
-        yield return PlayDialogueIfAny(MonaFirstDialogue);
-        UserInputManager.Instance.DisableInput();
+        // Dialogue 1 - Keep input disabled (not the last dialogue)
+        yield return PlayDialogueIfAny(MonaFirstDialogue, keepInputDisabled: true);
 
-        // Dialogue 2
-        yield return PlayDialogueIfAny(FikaFirstDialogue);
-        UserInputManager.Instance.DisableInput();
+        // Dialogue 2 - Keep input disabled (not the last dialogue)
+        yield return PlayDialogueIfAny(FikaFirstDialogue, keepInputDisabled: true);
 
         // Spawn Yoji
         yojiInstance = Instantiate(yojiPrefab, yojiSpawnPoint.position, Quaternion.identity);
@@ -204,9 +201,8 @@ public class FikaBossCutsceneManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        // Dialogue 3
-        yield return PlayDialogueIfAny(yojiInterruptsDialogue);
-        UserInputManager.Instance.DisableInput();
+        // Dialogue 3 - Keep input disabled because cutscene continues (Yoji attacks Mona)
+        yield return PlayDialogueIfAny(yojiInterruptsDialogue, keepInputDisabled: true);
 
         // Move to Mona
         yield return MoveYojiToMona();
@@ -318,12 +314,12 @@ public class FikaBossCutsceneManager : MonoBehaviour
         t.localScale = s;
     }
 
-    private IEnumerator PlayDialogueIfAny(DialogueData data)
+    private IEnumerator PlayDialogueIfAny(DialogueData data, bool keepInputDisabled = false)
     {
         if (DialogueManager.Instance == null || data == null) yield break;
 
         bool done = false;
-        DialogueManager.Instance.Play(data, () => done = true);
+        DialogueManager.Instance.Play(data, () => done = true, keepInputDisabled);
         while (!done) yield return null;
     }
 

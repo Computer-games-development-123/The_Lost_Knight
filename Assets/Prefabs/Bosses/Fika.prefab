@@ -211,11 +211,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FikaBoss
   bossName: Fika
-  maxHP: 100
-  damage: 10
+  maxHP: 200
+  damage: 20
   moveSpeed: 2
   isInvulnerable: 0
-  coinsReward: 300
+  coinsReward: 200
   spawnDialogue: {fileID: 11400000, guid: dd885bea939866a40b7c8f45710192af, type: 2}
   deathDialogue: {fileID: 11400000, guid: 5dad799ed2f35c1439f8f9b2479266b1, type: 2}
   slainDialogue: {fileID: 11400000, guid: 828b3a4690630c744ad270599becab99, type: 2}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
   flag: 0
-  speakerName: Game Progress
+  speakerName: 'Achievement Unlocked '
   lines:
   - You have slain The King's Royal Beast.
   portrait: {fileID: -2138534889620764463, guid: 8499aa222c9ccfd4198291b7557eb4f1, type: 3}

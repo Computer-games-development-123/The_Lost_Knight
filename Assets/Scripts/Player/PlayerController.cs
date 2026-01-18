@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public float hurtDuration = 0.4f; // How long the hurt state lasts
 
     [Header("Potions")]
-    [SerializeField] private float healAmountPerPotion = 10f;
+    [SerializeField] private float healAmountPerPotion = 20f;
 
     // Public property to check if player is hurt
     public bool isHurt { get; private set; } = false;
@@ -46,8 +46,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!UserInputManager.Instance.IsInputEnabled)
+        // Check if input is enabled (with null safety)
+        if (UserInputManager.Instance == null || !UserInputManager.Instance.IsInputEnabled)
             return;
+
         // Ground Check
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
@@ -85,7 +87,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("⚠️ PlayerInventory not found!");
+                Debug.LogWarning("PlayerInventory not found!");
             }
         }
 

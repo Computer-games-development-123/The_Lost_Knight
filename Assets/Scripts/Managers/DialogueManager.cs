@@ -29,6 +29,7 @@ public class DialogueManager : MonoBehaviour
     private bool _isTyping;
     private Coroutine _typingRoutine;
     private Action _onComplete;
+    private bool _keepInputDisabled; // Flag to keep input disabled after dialogue ends
 
     private readonly Dictionary<string, DialogueData> _byId =
         new Dictionary<string, DialogueData>();
@@ -84,13 +85,27 @@ public class DialogueManager : MonoBehaviour
     // Public API
     // =============================
 
-    public void Play(DialogueData data, Action onComplete = null)
+    public void Play(DialogueData data, Action onComplete = null, bool keepInputDisabled = false)
     {
-        UserInputManager.Instance.DisableInput();
+        // Disable player input (with null safety)
+        if (UserInputManager.Instance != null)
+        {
+            UserInputManager.Instance.DisableInput();
+        }
+        else
+        {
+            Debug.LogWarning("DialogueManager: UserInputManager instance not found!");
+        }
+
         if (data == null)
         {
             Debug.LogWarning("DialogueManager.Play called with null data");
             onComplete?.Invoke();
+            // Only re-enable if not keeping disabled
+            if (!keepInputDisabled && UserInputManager.Instance != null)
+            {
+                UserInputManager.Instance.EnableInput();
+            }
             return;
         }
 
@@ -104,6 +119,7 @@ public class DialogueManager : MonoBehaviour
         _currentIndex = 0;
         _onComplete = onComplete;
         _isActive = true;
+        _keepInputDisabled = keepInputDisabled; // Store the flag
 
         if (dialogueUI != null)
             dialogueUI.SetActive(true);
@@ -240,7 +256,15 @@ public class DialogueManager : MonoBehaviour
         ApplyPortrait(null);
 
         cb?.Invoke();
-        UserInputManager.Instance.EnableInput();
+
+        // Re-enable player input (with null safety) - but only if not keeping it disabled
+        if (!_keepInputDisabled && UserInputManager.Instance != null)
+        {
+            UserInputManager.Instance.EnableInput();
+        }
+
+        // Reset the flag
+        _keepInputDisabled = false;
     }
 
     private void ApplyPortrait(Sprite sprite)
