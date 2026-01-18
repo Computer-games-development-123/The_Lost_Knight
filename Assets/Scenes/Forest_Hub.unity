@@ -4811,6 +4811,14 @@ PrefabInstance:
       propertyPath: fireballPrefab
       value: 
       objectReference: {fileID: 6368996947615989597, guid: 8217b52b0e5d87f4fa521878058f5250, type: 3}
+    - target: {fileID: 524193434095801508, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
+      propertyPath: fireballCooldown
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 524193434095801508, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
+      propertyPath: breathOfFireCooldown
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 998392704380348123, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
       propertyPath: fireFormFlag
       value: 10
