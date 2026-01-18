@@ -10,15 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10218a061c572484faf9e08ab7ff6a87, type: 3}
-  m_Name: Ending
+  m_Name: SurvivorAchievement
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
   flag: 0
-  speakerName: Ending
+  speakerName: Achievement Unlocked
   lines:
-  - Ditor has started burning the whole forest.
-  - 'What would you do next?
-
-'
+  - Survivor of the Forest
   portrait: {fileID: -2138534889620764463, guid: 8499aa222c9ccfd4198291b7557eb4f1, type: 3}
   pauseGameDuringDialogue: 1
