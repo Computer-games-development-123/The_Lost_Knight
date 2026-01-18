@@ -9,8 +9,8 @@ public class Abilities : MonoBehaviour
 {
     [Header("Ability Unlocks")]
     public bool hasTeleport = false;
-    public bool hasBreathOfFire = false;      // Previously hasWaveOfFire
-    public bool hasFireballSpell = false;     // NEW
+    public bool hasBreathOfFire = false;
+    public bool hasFireballSpell = false;
     public bool hasUpgradedSword = false;
 
     [Header("Teleport Settings")]
@@ -19,7 +19,7 @@ public class Abilities : MonoBehaviour
     public LayerMask groundLayer;
 
     [Header("Upgraded Sword Settings")]
-    public int upgradeSwordValue = 2;
+    public int upgradeSwordValue = 4;
 
     private PlayerController controller;
     private PlayerAttack PA;
@@ -41,7 +41,7 @@ public class Abilities : MonoBehaviour
         hasFireballSpell = GameManager.Instance.GetFlag(GameFlag.hasFireballSpell);
 
         if (hasUpgradedSword)
-            Debug.Log("✅ Abilities Start: Loaded hasUpgradedSword = true from save");
+            Debug.Log("Abilities Start: Loaded hasUpgradedSword = true from save");
     }
 
     private void Update()
@@ -63,14 +63,14 @@ public class Abilities : MonoBehaviour
     {
         if (controller == null)
         {
-            Debug.LogWarning("⚠️ PlayerController not found!");
+            Debug.LogWarning("PlayerController not found!");
             return;
         }
 
         if (Time.time < lastTeleportTime + teleportCooldown)
         {
             float remainingCooldown = (lastTeleportTime + teleportCooldown) - Time.time;
-            Debug.Log($"⏳ Teleport on cooldown! Wait {remainingCooldown:F1}s");
+            Debug.Log($"Teleport on cooldown! Wait {remainingCooldown:F1}s");
             return;
         }
 
@@ -85,11 +85,11 @@ public class Abilities : MonoBehaviour
 
             lastTeleportTime = Time.time;
 
-            Debug.Log("✨ Teleported!");
+            Debug.Log("Teleported!");
         }
         else
         {
-            Debug.Log("⚠️ Can't teleport - obstacle in the way!");
+            Debug.Log("Can't teleport - obstacle in the way!");
         }
     }
 
@@ -120,7 +120,7 @@ public class Abilities : MonoBehaviour
         GameManager.Instance.SetFlag(GameFlag.hasBreathOfFire, true);
         GameManager.Instance.SaveProgress();
 
-        Debug.Log("✨ Breath of Fire ability unlocked!");
+        Debug.Log("Breath of Fire ability unlocked!");
     }
 
     /// <summary>
@@ -134,7 +134,7 @@ public class Abilities : MonoBehaviour
         GameManager.Instance.SetFlag(GameFlag.hasFireballSpell, true);
         GameManager.Instance.SaveProgress();
 
-        Debug.Log("✨ Fireball Spell ability unlocked!");
+        Debug.Log("Fireball Spell ability unlocked!");
     }
 
     /// <summary>
@@ -149,7 +149,7 @@ public class Abilities : MonoBehaviour
         GameManager.Instance.SetFlag(GameFlag.hasUpgradedSword, true);
         GameManager.Instance.SaveProgress();
 
-        Debug.Log("⚔️ Sword upgraded by Yoji! Can now damage George!");
+        Debug.Log("Sword upgraded by Yoji! Can now damage George!");
     }
 
     #endregion

@@ -557,7 +557,7 @@ public class ListStoreController : MonoBehaviour
             case ShopItem.ShopItemType.DamageUpgrade:
                 if (playerAttack != null)
                 {
-                    playerAttack.IncreaseDamage(2);
+                    playerAttack.IncreaseDamage(5);
                     Debug.Log($"Damage increased! New damage: {playerAttack.swordDamage}");
                 }
                 break;
