@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: attack_1
+  m_Name: attack2
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -69,7 +69,7 @@ AnimationClip:
     - time: 1.9166666
       value: {fileID: -3340567184245448513, guid: 51d795e13ff8d9e47a9c78720885234f, type: 3}
     - time: 2
-      value: {fileID: 8654082628535446652, guid: fde6ed4b601a8be4cb9ab5e50c5ccbf3, type: 3}
+      value: {fileID: 2696011923633262407, guid: fde6ed4b601a8be4cb9ab5e50c5ccbf3, type: 3}
     - time: 2.0833333
       value: {fileID: 9042145852765806358, guid: da7c989ec51def3419444cc3aa142ee1, type: 3}
     attribute: m_Sprite
@@ -118,7 +118,7 @@ AnimationClip:
     - {fileID: 7566640762274112287, guid: 6618ca66cdfcfbf4cad9eb4573d65744, type: 3}
     - {fileID: -7052618146114396526, guid: 9cc3197011e3c2a4c87a71fc59869e18, type: 3}
     - {fileID: -3340567184245448513, guid: 51d795e13ff8d9e47a9c78720885234f, type: 3}
-    - {fileID: 8654082628535446652, guid: fde6ed4b601a8be4cb9ab5e50c5ccbf3, type: 3}
+    - {fileID: 2696011923633262407, guid: fde6ed4b601a8be4cb9ab5e50c5ccbf3, type: 3}
     - {fileID: 9042145852765806358, guid: da7c989ec51def3419444cc3aa142ee1, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
@@ -145,15 +145,15 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.33333334
-    functionName: AE_HitForward
+  - time: 0.41666666
+    functionName: EnableAttack2HitCollider
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 2.0833333
-    functionName: AE_AttackEnd
+  - time: 1.9166666
+    functionName: DisableCurrentHitCollider
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

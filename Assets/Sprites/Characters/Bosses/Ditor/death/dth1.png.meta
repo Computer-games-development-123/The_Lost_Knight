@@ -116,10 +116,10 @@ TextureImporter:
       name: dth1_0
       rect:
         serializedVersion: 2
-        x: 689
-        y: 119
-        width: 1262
-        height: 1452
+        x: 67
+        y: 10
+        width: 130
+        height: 149
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

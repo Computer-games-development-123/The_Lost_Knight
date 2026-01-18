@@ -8,12 +8,6 @@ TextureImporter:
   - first:
       213: 6779753882439177566
     second: atk10_1
-  - first:
-      213: 4040429612450941736
-    second: atk10_2
-  - first:
-      213: 3802352072095613274
-    second: atk10_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -125,10 +119,10 @@ TextureImporter:
       name: atk10_0
       rect:
         serializedVersion: 2
-        x: 1499
-        y: 89
-        width: 1342
-        height: 2142
+        x: 112
+        y: 7
+        width: 175
+        height: 218
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,10 +141,10 @@ TextureImporter:
       name: atk10_1
       rect:
         serializedVersion: 2
-        x: 2869
-        y: 1339
-        width: 72
-        height: 262
+        x: 285
+        y: 132
+        width: 12
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,50 +155,6 @@ TextureImporter:
       bones: []
       spriteID: e55dc534c36861e50800000000000000
       internalID: 6779753882439177566
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk10_2
-      rect:
-        serializedVersion: 2
-        x: 2829
-        y: 979
-        width: 22
-        height: 302
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 82b8b1e435d721830800000000000000
-      internalID: 4040429612450941736
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk10_3
-      rect:
-        serializedVersion: 2
-        x: 1139
-        y: 499
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a51ca38501ba4c430800000000000000
-      internalID: 3802352072095613274
       vertices: []
       indices: 
       edges: []
@@ -225,8 +175,6 @@ TextureImporter:
     nameFileIdTable:
       atk10_0: -5915455823446641847
       atk10_1: 6779753882439177566
-      atk10_2: 4040429612450941736
-      atk10_3: 3802352072095613274
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -17,9 +17,6 @@ TextureImporter:
   - first:
       213: 5905638657551654592
     second: atk8_4
-  - first:
-      213: -158405109395530932
-    second: atk8_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -131,10 +128,10 @@ TextureImporter:
       name: atk8_0
       rect:
         serializedVersion: 2
-        x: 789
-        y: 529
-        width: 522
-        height: 1492
+        x: 77
+        y: 51
+        width: 56
+        height: 153
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,10 +150,10 @@ TextureImporter:
       name: atk8_1
       rect:
         serializedVersion: 2
-        x: 1019
-        y: 89
-        width: 2212
-        height: 1762
+        x: 97
+        y: 7
+        width: 228
+        height: 180
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -175,10 +172,10 @@ TextureImporter:
       name: atk8_2
       rect:
         serializedVersion: 2
-        x: 1289
-        y: 1809
-        width: 82
-        height: 82
+        x: 127
+        y: 178
+        width: 12
+        height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,10 +194,10 @@ TextureImporter:
       name: atk8_3
       rect:
         serializedVersion: 2
-        x: 1399
-        y: 1829
-        width: 1022
-        height: 282
+        x: 138
+        y: 181
+        width: 106
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -219,10 +216,10 @@ TextureImporter:
       name: atk8_4
       rect:
         serializedVersion: 2
-        x: 1999
-        y: 59
-        width: 12
-        height: 12
+        x: 198
+        y: 3
+        width: 8
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -233,28 +230,6 @@ TextureImporter:
       bones: []
       spriteID: 0ce5e23d11b05f150800000000000000
       internalID: 5905638657551654592
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk8_5
-      rect:
-        serializedVersion: 2
-        x: 2029
-        y: 69
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c4b5fdb646b3dcdf0800000000000000
-      internalID: -158405109395530932
       vertices: []
       indices: 
       edges: []
@@ -278,7 +253,6 @@ TextureImporter:
       atk8_2: -5337328312570306843
       atk8_3: 7370499370319300521
       atk8_4: 5905638657551654592
-      atk8_5: -158405109395530932
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

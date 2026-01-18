@@ -38,24 +38,6 @@ TextureImporter:
   - first:
       213: -6146924984938905371
     second: atk24_11
-  - first:
-      213: -4437143397205367146
-    second: atk24_12
-  - first:
-      213: 4366346372023068344
-    second: atk24_13
-  - first:
-      213: -8521618016611461903
-    second: atk24_14
-  - first:
-      213: 4497093107036907665
-    second: atk24_15
-  - first:
-      213: -1274679399373929961
-    second: atk24_16
-  - first:
-      213: -6262145267179495544
-    second: atk24_17
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -167,10 +149,10 @@ TextureImporter:
       name: atk24_0
       rect:
         serializedVersion: 2
-        x: 1249
-        y: 129
-        width: 1652
-        height: 2482
+        x: 123
+        y: 11
+        width: 169
+        height: 252
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -189,10 +171,10 @@ TextureImporter:
       name: atk24_1
       rect:
         serializedVersion: 2
-        x: 2959
-        y: 129
-        width: 1312
-        height: 2082
+        x: 293
+        y: 11
+        width: 136
+        height: 212
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -211,10 +193,10 @@ TextureImporter:
       name: atk24_2
       rect:
         serializedVersion: 2
-        x: 4529
-        y: 749
-        width: 12
-        height: 12
+        x: 423
+        y: 48
+        width: 10
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -233,10 +215,10 @@ TextureImporter:
       name: atk24_3
       rect:
         serializedVersion: 2
-        x: 4539
-        y: 669
-        width: 42
-        height: 72
+        x: 425
+        y: 36
+        width: 17
+        height: 19
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -255,10 +237,10 @@ TextureImporter:
       name: atk24_4
       rect:
         serializedVersion: 2
-        x: 4499
-        y: 609
-        width: 12
-        height: 42
+        x: 428
+        y: 53
+        width: 7
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -277,10 +259,10 @@ TextureImporter:
       name: atk24_5
       rect:
         serializedVersion: 2
-        x: 4309
-        y: 559
-        width: 22
-        height: 22
+        x: 438
+        y: 53
+        width: 6
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -299,10 +281,10 @@ TextureImporter:
       name: atk24_6
       rect:
         serializedVersion: 2
-        x: 4409
-        y: 559
+        x: 448
+        y: 53
         width: 12
-        height: 22
+        height: 25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -321,10 +303,10 @@ TextureImporter:
       name: atk24_7
       rect:
         serializedVersion: 2
-        x: 4499
-        y: 549
-        width: 12
-        height: 32
+        x: 455
+        y: 53
+        width: 7
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -343,10 +325,10 @@ TextureImporter:
       name: atk24_8
       rect:
         serializedVersion: 2
-        x: 4569
-        y: 549
-        width: 22
-        height: 32
+        x: 78
+        y: 45
+        width: 8
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -365,10 +347,10 @@ TextureImporter:
       name: atk24_9
       rect:
         serializedVersion: 2
-        x: 4259
-        y: 529
-        width: 22
-        height: 12
+        x: 88
+        y: 28
+        width: 10
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -387,10 +369,10 @@ TextureImporter:
       name: atk24_10
       rect:
         serializedVersion: 2
-        x: 4369
-        y: 499
-        width: 22
-        height: 32
+        x: 100
+        y: 30
+        width: 8
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -409,10 +391,10 @@ TextureImporter:
       name: atk24_11
       rect:
         serializedVersion: 2
-        x: 4299
-        y: 509
-        width: 12
-        height: 12
+        x: 122
+        y: 28
+        width: 6
+        height: 6
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -423,138 +405,6 @@ TextureImporter:
       bones: []
       spriteID: 5e04eb34b4cb1baa0800000000000000
       internalID: -6146924984938905371
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk24_12
-      rect:
-        serializedVersion: 2
-        x: 809
-        y: 469
-        width: 32
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 696aa18d6991c62c0800000000000000
-      internalID: -4437143397205367146
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk24_13
-      rect:
-        serializedVersion: 2
-        x: 4349
-        y: 439
-        width: 32
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8b620c634e0689c30800000000000000
-      internalID: 4366346372023068344
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk24_14
-      rect:
-        serializedVersion: 2
-        x: 4269
-        y: 379
-        width: 72
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1f41e4830912db980800000000000000
-      internalID: -8521618016611461903
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk24_15
-      rect:
-        serializedVersion: 2
-        x: 909
-        y: 309
-        width: 52
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 198eaceaa52e86e30800000000000000
-      internalID: 4497093107036907665
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk24_16
-      rect:
-        serializedVersion: 2
-        x: 1019
-        y: 319
-        width: 42
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7120fcdf6dd6f4ee0800000000000000
-      internalID: -1274679399373929961
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk24_17
-      rect:
-        serializedVersion: 2
-        x: 1239
-        y: 309
-        width: 22
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 88f5fd9ce046819a0800000000000000
-      internalID: -6262145267179495544
       vertices: []
       indices: 
       edges: []
@@ -577,12 +427,6 @@ TextureImporter:
       atk24_1: 523510696232066002
       atk24_10: -6421462809236935927
       atk24_11: -6146924984938905371
-      atk24_12: -4437143397205367146
-      atk24_13: 4366346372023068344
-      atk24_14: -8521618016611461903
-      atk24_15: 4497093107036907665
-      atk24_16: -1274679399373929961
-      atk24_17: -6262145267179495544
       atk24_2: -6548122428133161925
       atk24_3: 194945307790713769
       atk24_4: -6569125964728495987

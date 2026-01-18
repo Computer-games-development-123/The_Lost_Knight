@@ -116,12 +116,12 @@ TextureImporter:
       name: atk10_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 6400
-        height: 1400
+        x: 78
+        y: 7
+        width: 414
+        height: 151
       alignment: 9
-      pivot: {x: 0.24, y: 0.5}
+      pivot: {x: 0.15, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 6fc4a771188d1194a8a64e0182a41d2f
+    spriteID: dd9aa11779a16064e9a0acaf75a1405c
     internalID: 0
     vertices: []
     indices: 

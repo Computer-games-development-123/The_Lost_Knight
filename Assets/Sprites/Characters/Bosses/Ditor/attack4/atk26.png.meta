@@ -41,48 +41,6 @@ TextureImporter:
   - first:
       213: -9154199266406255764
     second: atk26_12
-  - first:
-      213: 2571564747234163176
-    second: atk26_13
-  - first:
-      213: -2253456079441971652
-    second: atk26_14
-  - first:
-      213: -842070408319044104
-    second: atk26_15
-  - first:
-      213: -4374013929513711247
-    second: atk26_16
-  - first:
-      213: 4720961601546983562
-    second: atk26_17
-  - first:
-      213: 8646454243967903909
-    second: atk26_18
-  - first:
-      213: 6317776626682910239
-    second: atk26_19
-  - first:
-      213: -8540867816247107982
-    second: atk26_20
-  - first:
-      213: 6048130208212238497
-    second: atk26_21
-  - first:
-      213: 3070967523312187660
-    second: atk26_22
-  - first:
-      213: -2991309788163440884
-    second: atk26_23
-  - first:
-      213: 4237791115616529270
-    second: atk26_24
-  - first:
-      213: -1110386078724838363
-    second: atk26_25
-  - first:
-      213: 2317754217347633347
-    second: atk26_26
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -194,12 +152,12 @@ TextureImporter:
       name: atk26_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 6400
-        height: 1400
+        x: 78
+        y: 10
+        width: 414
+        height: 151
       alignment: 9
-      pivot: {x: 0.24, y: 0.5}
+      pivot: {x: 0.13, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -216,7 +174,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b9f4bcebc8283c94ca28cb04c1efc85a
+    spriteID: e4cd587853ca7da4b8d3f6a109575556
     internalID: 0
     vertices: []
     indices: 
@@ -231,21 +189,7 @@ TextureImporter:
       atk26_10: -5299518486558460325
       atk26_11: -3619986973865515955
       atk26_12: -9154199266406255764
-      atk26_13: 2571564747234163176
-      atk26_14: -2253456079441971652
-      atk26_15: -842070408319044104
-      atk26_16: -4374013929513711247
-      atk26_17: 4720961601546983562
-      atk26_18: 8646454243967903909
-      atk26_19: 6317776626682910239
       atk26_2: 5849558044066428513
-      atk26_20: -8540867816247107982
-      atk26_21: 6048130208212238497
-      atk26_22: 3070967523312187660
-      atk26_23: -2991309788163440884
-      atk26_24: 4237791115616529270
-      atk26_25: -1110386078724838363
-      atk26_26: 2317754217347633347
       atk26_3: 2138895560704097290
       atk26_4: 6393779397286216824
       atk26_5: 3674252240251148702
