@@ -212,11 +212,13 @@ MonoBehaviour:
   secondEncounterDialogue: {fileID: 11400000, guid: a32fdae27b777f64caf222d639f708a5, type: 2}
   hitsToTriggerTaunt: 5
   attackCooldown: 4
+  attackWindupTime: 0.8
   closeRangeThreshold: 2
   attackPoint: {fileID: 2797142204784070127}
   attackRange: 1
   flySpeed: 6
   walkSpeed: 3
+  retreatDistance: 5
   minX: -8
   maxX: 8
   minY: -4
