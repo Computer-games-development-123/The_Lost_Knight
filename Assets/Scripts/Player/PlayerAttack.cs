@@ -32,11 +32,11 @@ public class PlayerAttack : MonoBehaviour
     [Header("Fireball")]
     public GameObject fireballPrefab;
     public Transform firePoint;
-    public float fireballCooldown = 5f;
+    public float fireballCooldown = 3f;
     public float fireballSpeed = 5f;
 
     [Header("Breath of Fire")]
-    public float breathOfFireCooldown = 5f;
+    public float breathOfFireCooldown = 4f;
     public float breathOfFireRange = 3f;      // How far the fire breath reaches
     public float breathOfFireWidth = 1.5f;    // How wide the fire breath is
     public Transform breathOrigin;             // Where the fire breath starts (player's mouth)

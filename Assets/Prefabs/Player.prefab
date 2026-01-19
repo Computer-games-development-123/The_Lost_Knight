@@ -323,9 +323,9 @@ MonoBehaviour:
   attackIndexIntName: AttackIndex
   fireballPrefab: {fileID: 6368996947615989597, guid: 8217b52b0e5d87f4fa521878058f5250, type: 3}
   firePoint: {fileID: 6633376722634027389}
-  fireballCooldown: 5
+  fireballCooldown: 3
   fireballSpeed: 5
-  breathOfFireCooldown: 5
+  breathOfFireCooldown: 4
   breathOfFireRange: 3
   breathOfFireWidth: 1.5
   breathOrigin: {fileID: 0}
