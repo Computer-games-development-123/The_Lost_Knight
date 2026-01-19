@@ -12,7 +12,7 @@ public class YojiDialogueHandler : MonoBehaviour
     public GameObject interactionPrompt;
 
     [Header("Portal Control")]
-    [Tooltip("The Green Forest portal GameObject - starts INACTIVE, becomes active after dialogue")]
+    [Tooltip("The Green Forest portal GameObject - controlled based on dialogue availability")]
     public GameObject greenForestPortal;
 
     [Header("Yoji Visual")]
@@ -94,6 +94,28 @@ public class YojiDialogueHandler : MonoBehaviour
             return true;
 
         return false;
+    }
+
+    /// <summary>
+    /// Updates the portal state based on dialogue availability
+    /// Portal is OFF when dialogue is available, ON when all dialogues are exhausted
+    /// </summary>
+    private void UpdatePortalState()
+    {
+        if (greenForestPortal == null) return;
+        if (GM == null) return;
+
+        bool hasDialogue = ShouldShowDialoguePrompt();
+        
+        // Portal should be INACTIVE when Yoji has dialogue
+        // Portal should be ACTIVE when Yoji has NO dialogue (or is dead but dialogue was completed)
+        bool shouldPortalBeActive = !hasDialogue && GM.GetFlag(GameFlag.YojiFirstDialogueCompleted);
+
+        if (greenForestPortal.activeSelf != shouldPortalBeActive)
+        {
+            greenForestPortal.SetActive(shouldPortalBeActive);
+            Debug.Log($"Portal state updated: {(shouldPortalBeActive ? "OPEN" : "CLOSED")} - Has dialogue: {hasDialogue}");
+        }
     }
 
     /// <summary>
@@ -179,15 +201,8 @@ public class YojiDialogueHandler : MonoBehaviour
             GM.SetFlag(GameFlag.OpeningDialogueSeen, true);
         }
 
-        if (greenForestPortal != null)
-        {
-            greenForestPortal.SetActive(true);
-            Debug.Log("Green Forest portal activated!");
-        }
-        else
-        {
-            Debug.LogError("greenForestPortal is not assigned! Please drag the portal GameObject to YojiDialogueHandler in Inspector!");
-        }
+        // Update portal state after dialogue completion
+        UpdatePortalState();
 
         // Save progress
         if (GM != null)
@@ -195,7 +210,7 @@ public class YojiDialogueHandler : MonoBehaviour
             GM.SaveProgress();
         }
 
-        Debug.Log("Opening dialogue complete - portal opened");
+        Debug.Log("Opening dialogue complete - checking portal state");
 
         // Re-show prompt if player is still in range and has more dialogue
         if (playerInRange && ShouldShowDialoguePrompt())
@@ -218,6 +233,9 @@ public class YojiDialogueHandler : MonoBehaviour
         }
 
         Debug.Log("Post-George dialogue complete - player needs to talk again for upgrade");
+
+        // Portal should stay CLOSED because there's still dialogue available
+        UpdatePortalState();
 
         // Save progress
         if (GM != null)
@@ -259,6 +277,9 @@ public class YojiDialogueHandler : MonoBehaviour
 
         Debug.Log("Post-George UPGRADE dialogue complete - sword upgraded, store unlocked");
 
+        // Update portal state - should OPEN now since no more dialogues available (until Fika)
+        UpdatePortalState();
+
         // Notify the store interaction handler that store is now available
         YojiStoreHandler storeHandler = GetComponent<YojiStoreHandler>();
         if (storeHandler != null)
@@ -298,6 +319,9 @@ public class YojiDialogueHandler : MonoBehaviour
         }
 
         Debug.Log("Post-Fika dialogue complete - Congratulations given, store upgraded!");
+
+        // Update portal state - should OPEN now since all dialogues exhausted
+        UpdatePortalState();
 
         // Notify the store interaction handler that new items are available
         YojiStoreHandler storeHandler = GetComponent<YojiStoreHandler>();
@@ -348,13 +372,12 @@ public class YojiDialogueHandler : MonoBehaviour
     {
         if (GM == null || !GM.IsProgressLoaded) return;
 
-        // Check if Yoji is dead AND handle portal activation
+        // Check if Yoji is dead
         if (GM.GetFlag(GameFlag.YojiDead))
         {
             HideYoji();
 
-            // Still need to activate portal if dialogue was completed
-            // Even though Yoji is dead, the portal should remain open
+            // If Yoji is dead, portal should be active if first dialogue was completed
             if (GM.GetFlag(GameFlag.YojiFirstDialogueCompleted))
             {
                 if (greenForestPortal != null)
@@ -364,20 +387,16 @@ public class YojiDialogueHandler : MonoBehaviour
                 }
             }
 
-            return; // Now we can return after handling portal
+            return;
         }
 
-        // If Yoji is alive and dialogue was completed, activate portal
-        if (GM.GetFlag(GameFlag.YojiFirstDialogueCompleted))
-        {
-            if (greenForestPortal != null)
-                greenForestPortal.SetActive(true);
+        // If Yoji is alive, update portal based on dialogue availability
+        UpdatePortalState();
 
-            if (interactionPrompt != null)
-                interactionPrompt.SetActive(false);
+        if (interactionPrompt != null)
+            interactionPrompt.SetActive(false);
 
-            Debug.Log("Saved state applied: Yoji talked -> portal active");
-        }
+        Debug.Log("Saved state applied: Portal state updated based on dialogue availability");
     }
 
     /// <summary>
