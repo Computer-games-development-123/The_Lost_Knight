@@ -19,7 +19,6 @@ MonoBehaviour:
   - Hmmf...?
   - eh, You're lost..
   - well, if you're looking for a way out of the forest, you should head right.
-  - 'The Red Forest is your way out. '
   - Good luck on your travels, i will be here.
   portrait: {fileID: -5898556967480879587, guid: 308c2cc3ccc747546b66362cd154ddbb, type: 3}
   pauseGameDuringDialogue: 1

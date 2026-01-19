@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8499aa222c9ccfd4198291b7557eb4f1
+guid: 89f8db1be98944240921de055a1adbc2
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -116,10 +116,10 @@ TextureImporter:
       name: Trophy_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 980
-        height: 980
+        x: 96
+        y: 94
+        width: 310
+        height: 310
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

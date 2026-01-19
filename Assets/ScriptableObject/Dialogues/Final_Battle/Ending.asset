@@ -20,5 +20,5 @@ MonoBehaviour:
   - 'What would you do next?
 
 '
-  portrait: {fileID: -2138534889620764463, guid: 8499aa222c9ccfd4198291b7557eb4f1, type: 3}
+  portrait: {fileID: 0}
   pauseGameDuringDialogue: 1
