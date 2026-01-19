@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Ending
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
-  flag: 19
-  speakerName: Game Progress
+  flag: 0
+  speakerName: Ending
   lines:
   - Ditor has started burning the whole forest.
   - 'What would you do next?

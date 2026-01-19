@@ -59,37 +59,32 @@ public class GreenBattleStartIntro : MonoBehaviour
             yield break;
         }
 
-        Debug.Log("tarting Green Battle intro dialogue sequence");
+        Debug.Log("Starting Green Battle intro dialogue sequence");
 
-        // dialogue 1: HP and Potions
+        // Dialogue 1: HP and Potions
         if (hpAndPotionsDialogue != null)
         {
             bool dialogue1Done = false;
-            DialogueManager.Instance.Play(hpAndPotionsDialogue, () => dialogue1Done = true);
-
-            // Wait for player to finish this dialogue (pressing F)
+            // Keep input disabled (not the last dialogue)
+            DialogueManager.Instance.Play(hpAndPotionsDialogue, () => dialogue1Done = true, keepInputDisabled: true);
             yield return new WaitUntil(() => dialogue1Done);
-            // immediately start next dialogue
         }
 
-        // dialogue 2: Coins
+        // Dialogue 2: Coins
         if (coinsDialogue != null)
         {
             bool dialogue2Done = false;
-            DialogueManager.Instance.Play(coinsDialogue, () => dialogue2Done = true);
-
-            // Wait for player to finish this dialogue (pressing F)
+            // Keep input disabled (not the last dialogue)
+            DialogueManager.Instance.Play(coinsDialogue, () => dialogue2Done = true, keepInputDisabled: true);
             yield return new WaitUntil(() => dialogue2Done);
-            // immediately start next dialogue
         }
 
-        // dialogue 3: Prepare for Battle
+        // Dialogue 3: Prepare for Battle
         if (prepareForBattleDialogue != null)
         {
             bool dialogue3Done = false;
-            DialogueManager.Instance.Play(prepareForBattleDialogue, () => dialogue3Done = true);
-
-            // Wait for player to finish this dialogue (pressing F)
+            // This is the last dialogue, so input will be re-enabled automatically
+            DialogueManager.Instance.Play(prepareForBattleDialogue, () => dialogue3Done = true, keepInputDisabled: false);
             yield return new WaitUntil(() => dialogue3Done);
         }
 

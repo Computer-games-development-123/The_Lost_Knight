@@ -1582,6 +1582,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 362484360153394696, guid: 1e26d4e87a35c3f49bc6e3c376bb8a8b, type: 3}
+      propertyPath: m_Name
+      value: WaveText
+      objectReference: {fileID: 0}
     - target: {fileID: 1062879833351468741, guid: 1e26d4e87a35c3f49bc6e3c376bb8a8b, type: 3}
       propertyPath: m_Name
       value: WavesCanvas
@@ -1669,6 +1673,10 @@ PrefabInstance:
     - target: {fileID: 1535491965377922261, guid: 1e26d4e87a35c3f49bc6e3c376bb8a8b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7034127931780322250, guid: 1e26d4e87a35c3f49bc6e3c376bb8a8b, type: 3}
+      propertyPath: m_Name
+      value: WavePanel
       objectReference: {fileID: 0}
     - target: {fileID: 9065727907555306495, guid: 1e26d4e87a35c3f49bc6e3c376bb8a8b, type: 3}
       propertyPath: m_UiScaleMode

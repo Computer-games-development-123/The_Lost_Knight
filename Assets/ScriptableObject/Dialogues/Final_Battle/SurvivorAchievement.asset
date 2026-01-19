@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10218a061c572484faf9e08ab7ff6a87, type: 3}
-  m_Name: OpeningDialogue
+  m_Name: SurvivorAchievement
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
-  id: 2
-  flag: 1
-  speakerName: Controls
+  id: 
+  flag: 0
+  speakerName: Achievement Unlocked
   lines:
-  - Press Arrows to move, Press Up arrow to Jump, Press P to Pause the game.
-  portrait: {fileID: 3348862932474825598, guid: 59cd5dbe970bea049950104ba24d2f7b, type: 3}
+  - Survivor of the Forest
+  portrait: {fileID: -2138534889620764463, guid: 8499aa222c9ccfd4198291b7557eb4f1, type: 3}
   pauseGameDuringDialogue: 1

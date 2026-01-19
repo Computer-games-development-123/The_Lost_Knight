@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 4
   flag: 13
-  speakerName: Game Progress
+  speakerName: 'Achievement Unlocked '
   lines:
   - Nice!, You've hit the dummy 3 times.
   - Now you should head back to the forest.

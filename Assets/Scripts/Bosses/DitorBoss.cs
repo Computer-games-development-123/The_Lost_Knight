@@ -26,6 +26,10 @@ public class DitorBoss : BossBase
     public Collider2D comboHitPoint1;
     public Collider2D comboHitPoint2;
 
+    [Header("Ending Dialogue")]
+    [Tooltip("The dialogue that triggers the ending choice (should be the 'Ending' dialogue)")]
+    public DialogueData endingDialogue;
+
     private float lastAttackTime;
     private float lastComboAttackTime;
     private float currentAttackCooldown;
@@ -440,5 +444,48 @@ public class DitorBoss : BossBase
         comboAttackCooldown *= 0.8f;
 
         Debug.Log("Ditor is now enraged!");
+    }
+
+    protected override void Die()
+    {
+        // Call base Die() which handles animation, wave manager, and death dialogue
+        base.Die();
+
+        Debug.Log("Ditor defeated - ending sequence will start after death dialogue");
+    }
+
+    protected override void OnDeathDialogueComplete()
+    {
+        // Award coins and play slain dialogue (from base class)
+        base.OnDeathDialogueComplete();
+
+        // After the death dialogue and slain dialogue, play the ending dialogue
+        if (DialogueManager.Instance != null && endingDialogue != null)
+        {
+            Debug.Log("Playing ending dialogue...");
+            DialogueManager.Instance.Play(endingDialogue, OnEndingDialogueComplete);
+        }
+        else
+        {
+            Debug.LogError("DitorBoss: Ending dialogue not assigned!");
+        }
+    }
+
+    /// <summary>
+    /// Called when the ending dialogue ("What would you do next?") completes
+    /// This triggers the EndingChoiceManager to show the two choice buttons
+    /// </summary>
+    private void OnEndingDialogueComplete()
+    {
+        Debug.Log("Ending dialogue complete - showing player choice");
+
+        if (EndingChoiceManager.Instance != null)
+        {
+            EndingChoiceManager.Instance.ShowEndingChoice();
+        }
+        else
+        {
+            Debug.LogError("DitorBoss: EndingChoiceManager.Instance not found in scene!");
+        }
     }
 }

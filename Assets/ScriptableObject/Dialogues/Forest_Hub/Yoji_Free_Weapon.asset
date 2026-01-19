@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
   flag: 4
-  speakerName: Game Progress
+  speakerName: Achievement Unlocked
   lines:
-  - Yoji has given you a free weapon upgrade
-  - The store in now open.
-  - Press E to open the shop, use arrows to move in shop, Enter to buy!
+  - Fire Sword Recieved.
+  - 'Store Has Been Unlocked. Press E to open the shop, use Enter Key to buy and
+    up-down arrows to move in shop! '
   portrait: {fileID: -2138534889620764463, guid: 8499aa222c9ccfd4198291b7557eb4f1, type: 3}
   pauseGameDuringDialogue: 1

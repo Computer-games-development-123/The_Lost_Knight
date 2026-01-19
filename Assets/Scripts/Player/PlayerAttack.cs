@@ -11,15 +11,9 @@ public class PlayerAttack : MonoBehaviour
     [Tooltip("Minimum time between attacks (0.33s = 3 attacks per second)")]
     public float attackCooldown = 0.33f;
 
-    [Header("Attack 1 & 2 (Close Range)")]
+    [Header("Attack Range")]
     public float normalAttackRange = 1.5f;
     public Transform attackPoint;
-
-    [Header("Attack 3 (Dash Attack)")]
-    public float dashAttackRange = 2.5f;
-    public float dashDistance = 1.5f;
-    public float dashSpeed = 15f;
-    public float dashKnockbackMultiplier = 1.5f;
 
     [Header("General")]
     public LayerMask enemyLayer;
@@ -36,7 +30,7 @@ public class PlayerAttack : MonoBehaviour
     public float fireballSpeed = 5f;
 
     [Header("Breath of Fire")]
-    public float breathOfFireCooldown = 4f;
+    public float breathOfFireCooldown = 3f;
     public float breathOfFireRange = 3f;      // How far the fire breath reaches
     public float breathOfFireWidth = 1.5f;    // How wide the fire breath is
     public Transform breathOrigin;             // Where the fire breath starts (player's mouth)
@@ -45,7 +39,6 @@ public class PlayerAttack : MonoBehaviour
     // Runtime - Attack State
     private int currentAttackIndex = 0;  // 0, 1, or 2 (for attacks 1, 2, 3)
     private bool isAttacking = false;
-    private bool isDashing = false;
     private float lastAttackTime = -999f;  // Time when last attack was started
     private bool canAttack = true;  // Simple flag to allow attacks
 
@@ -169,12 +162,6 @@ public class PlayerAttack : MonoBehaviour
             anim.SetTrigger(attackTriggerName);
         }
 
-        // If this is attack 3 (dash attack), perform dash
-        if (currentAttackIndex == 2)
-        {
-            StartDashAttack();
-        }
-
         Debug.Log($"Performing Attack {animatorIndex}, current time: {Time.time:F2}");
 
         // Cycle to next attack for the next input (0 → 1 → 2 → 0...)
@@ -192,33 +179,6 @@ public class PlayerAttack : MonoBehaviour
         isAttacking = false;
         canAttack = true;
         Debug.Log($"Attack state reset at {Time.time:F2}");
-    }
-
-    /// <summary>
-    /// Dash forward for attack 3
-    /// </summary>
-    private void StartDashAttack()
-    {
-        if (movement == null || rb == null) return;
-
-        isDashing = true;
-
-        // Dash in facing direction
-        Vector2 dashDirection = movement.facingDir();
-        rb.linearVelocity = new Vector2(dashDirection.x * dashSpeed, rb.linearVelocity.y);
-
-        // Stop dash after short time
-        float dashDuration = dashDistance / dashSpeed;
-        Invoke(nameof(StopDash), dashDuration);
-    }
-
-    private void StopDash()
-    {
-        isDashing = false;
-        if (rb != null)
-        {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-        }
     }
 
     // ==========================================
@@ -242,18 +202,14 @@ public class PlayerAttack : MonoBehaviour
         // currentAttackIndex has already moved forward, so we check the previous one
         int performedAttackIndex = (currentAttackIndex - 1 + 3) % 3;
 
-        // Attack 3 (index 2) uses longer range
-        float range = (performedAttackIndex == 2) ? dashAttackRange : normalAttackRange;
-
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, range, enemyLayer);
+        // All attacks use the same range now
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, normalAttackRange, enemyLayer);
 
         if (hitEnemies.Length > 0)
         {
             foreach (Collider2D enemy in hitEnemies)
             {
-                // Apply extra knockback if it's the dash attack (attack 3)
-                bool isDashAttack = (performedAttackIndex == 2);
-                DealDamageToEnemy(enemy, isDashAttack);
+                DealDamageToEnemy(enemy);
             }
 
             Debug.Log($"Hit {hitEnemies.Length} target(s) with Attack {performedAttackIndex + 1} for {swordDamage} damage!");
@@ -274,30 +230,18 @@ public class PlayerAttack : MonoBehaviour
 
         ResetAttackState();
 
-        if (isDashing)
-        {
-            StopDash();
-        }
-
         Debug.Log("Attack animation ended (called by animation event)");
     }
 
     /// <summary>
     /// Deal damage to a specific enemy
     /// </summary>
-    private void DealDamageToEnemy(Collider2D enemy, bool extraKnockback)
+    private void DealDamageToEnemy(Collider2D enemy)
     {
         EnemyBase enemyScript = enemy.GetComponent<EnemyBase>();
         if (enemyScript != null)
         {
             Vector2 knockDir = (enemy.transform.position - transform.position).normalized;
-
-            // Apply extra knockback for dash attack
-            if (extraKnockback)
-            {
-                knockDir *= dashKnockbackMultiplier;
-            }
-
             enemyScript.TakeDamage(swordDamage, knockDir);
             Debug.Log($"Hit {enemy.name} for {swordDamage} damage!");
             return;
@@ -483,10 +427,6 @@ public class PlayerAttack : MonoBehaviour
             // Draw normal attack range
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(attackPoint.position, normalAttackRange);
-
-            // Draw dash attack range
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(attackPoint.position, dashAttackRange);
         }
 
         // Draw Breath of Fire range

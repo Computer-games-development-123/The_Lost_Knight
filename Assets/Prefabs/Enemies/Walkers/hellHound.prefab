@@ -195,8 +195,8 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: 0cc75135b9032f7419cd9dc897daca68, type: 2}
   fallbackMaxHP: 10
   fallbackDamage: 15
-  fallbackMoveSpeed: 5
-  fallbackCoinsDropped: 1
+  fallbackMoveSpeed: 6
+  fallbackCoinsDropped: 15
   knockbackForce: 8
   knockbackDuration: 0.12
   jumperJumpForce: 15
