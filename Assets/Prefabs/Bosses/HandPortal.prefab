@@ -122,7 +122,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9004577169421428112}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -164,14 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 995618d61d0af3844bbf5583d6420e3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  target: {fileID: 0}
-  followSpeed: 5
-  yOffset: 4
-  sprite: {fileID: 0}
-  animator: {fileID: 0}
-  hitbox: {fileID: 0}
-  openTrigger: Open
   damage: 20
   playerMask:
     serializedVersion: 2
     m_Bits: 128
+  collider2d: {fileID: 6195598717718417684}
