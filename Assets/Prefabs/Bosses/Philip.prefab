@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1587187198452925663}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0.3, z: 0}
+  m_LocalPosition: {x: -1.2, y: 0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -242,14 +242,14 @@ MonoBehaviour:
   facingRight: 0
   portalPrefab: {fileID: 9004577169421428112, guid: 1bd391634eb1a394986b0f64a9257dfb, type: 3}
   portalSpawnPoint: {fileID: 6315420176010083655}
-  portalAttackCooldown: 5
+  portalAttackCooldown: 10
   portalTelegraphDelay: 0.25
   portalLifetime: 1.5
   meleeAttackPoint: {fileID: 2797142204784070127}
   meleeAttackRange: 2
-  meleeAttackCooldown: 3
+  meleeAttackCooldown: 2
   floatSpeed: 2
-  attackRange: 6
+  attackRange: 4
   meleeRange: 2.5
 --- !u!114 &6400573088821524354
 MonoBehaviour:

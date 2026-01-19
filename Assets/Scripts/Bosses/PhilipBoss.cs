@@ -6,14 +6,14 @@ public class PhilipBoss : BossBase
     [Header("Portal Attack (Prefab-based)")]
     public GameObject portalPrefab;
     public Transform portalSpawnPoint;
-    public float portalAttackCooldown = 5f;
+    public float portalAttackCooldown = 10f;
     public float portalTelegraphDelay = 0.25f;
     public float portalLifetime = 1.2f;
 
     [Header("Melee Attack")]
     public Transform meleeAttackPoint;
     public float meleeAttackRange = 2f;
-    public float meleeAttackCooldown = 3f;
+    public float meleeAttackCooldown = 2f;
 
     [Header("Movement")]
     public float floatSpeed = 2f;
@@ -24,7 +24,7 @@ public class PhilipBoss : BossBase
     private float lastMeleeAttackTime = -999f;
     private bool isAttacking = false;
 
-    private GameObject activePortal; // <-- חדש
+    private GameObject activePortal;
 
     protected override void Start()
     {
@@ -62,7 +62,7 @@ public class PhilipBoss : BossBase
         {
             StartCoroutine(PerformMeleeAttack());
         }
-        else if (dist <= attackRange && Time.time >= lastPortalAttackTime + portalAttackCooldown)
+        else if (dist >= attackRange && Time.time >= lastPortalAttackTime + portalAttackCooldown)
         {
             StartCoroutine(PerformPortalAttack());
         }
