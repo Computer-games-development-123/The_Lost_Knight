@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PhilipBoss
   bossName: Boss
-  maxHP: 300
+  maxHP: 500
   damage: 10
   moveSpeed: 3
   isInvulnerable: 0
