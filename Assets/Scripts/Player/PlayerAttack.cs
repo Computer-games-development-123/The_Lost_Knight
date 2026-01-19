@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Threading.Tasks;
+using Unity.Services.CloudSave.Models;
 
 [RequireComponent(typeof(PlayerController))]
 public class PlayerAttack : MonoBehaviour
@@ -60,8 +62,8 @@ public class PlayerAttack : MonoBehaviour
         movement = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
 
-        // Load saved damage from GameManager
-        LoadDamageFromSave();
+        // Load saved damage from Cloud Save
+        _ = LoadDamageFromSave();
     }
 
     void Update()
@@ -370,50 +372,87 @@ public class PlayerAttack : MonoBehaviour
     // =========================
 
     /// <summary>
-    /// Load damage from save when script starts
+    /// Load damage from Cloud Save when script starts
     /// </summary>
-    private void LoadDamageFromSave()
+    private async Task LoadDamageFromSave()
     {
-        if (GameManager.Instance == null) return;
-
-        // Check if sword has been upgraded
-        bool hasUpgrade = GameManager.Instance.GetFlag(GameFlag.hasUpgradedSword);
-
-        if (hasUpgrade)
+        // Wait for GameManager to be ready
+        while (GameManager.Instance == null || !GameManager.Instance.IsProgressLoaded)
         {
-            swordDamage = 10;  // Upgraded damage
-            Debug.Log("Loaded upgraded sword damage, damage forced - set to: 10");
+            await Task.Yield();
         }
-        else
+
+        try
         {
-            swordDamage = baseSwordDamage;  // Base damage (8)
-            Debug.Log($"Loaded base sword damage: {baseSwordDamage}");
+            // Try to load saved sword damage from cloud
+            var cloudData = await DatabaseManager.LoadData("PlayerSwordDamage");
+
+            if (cloudData.ContainsKey("PlayerSwordDamage"))
+            {
+                swordDamage = cloudData["PlayerSwordDamage"].Value.GetAs<int>();
+                Debug.Log($"Loaded sword damage from cloud: {swordDamage}");
+            }
+            else
+            {
+                // No saved damage - use base damage
+                swordDamage = baseSwordDamage;
+                Debug.Log($"No saved damage found, using base: {baseSwordDamage}");
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogWarning($"Failed to load sword damage: {e.Message}");
+            swordDamage = baseSwordDamage;
+        }
+    }
+
+    /// <summary>
+    /// Save current damage to Cloud Save
+    /// </summary>
+    private async void SaveDamageToCloud()
+    {
+        try
+        {
+            await DatabaseManager.SaveData(("PlayerSwordDamage", swordDamage));
+            Debug.Log($"Saved sword damage to cloud: {swordDamage}");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Failed to save sword damage: {e.Message}");
         }
     }
 
     /// <summary>
     /// Increase damage by amount (used by upgrades)
+    /// Called by: Yoji's free upgrade (4 dmg) and Shop damage upgrades (5 dmg each)
     /// </summary>
     public void IncreaseDamage(int amount)
     {
         swordDamage += amount;
 
-        // Save to GameManager flag
+        // Set the upgraded sword flag (for Yoji's initial upgrade check)
         if (swordDamage > baseSwordDamage)
         {
             GameManager.Instance.SetFlag(GameFlag.hasUpgradedSword, true);
             GameManager.Instance.SaveProgress();
         }
 
+        // Save the actual damage value to cloud
+        SaveDamageToCloud();
+
         Debug.Log($"Damage increased by {amount}. New damage: {swordDamage}");
     }
 
     /// <summary>
-    /// Multiply damage (used by shop upgrades)
+    /// Multiply damage (used by Breath of Fire purchase)
     /// </summary>
     public void MultiplyDamage(int multiplier)
     {
         swordDamage *= multiplier;
+
+        // Save the new damage value
+        SaveDamageToCloud();
+
         Debug.Log($"Damage multiplied by {multiplier}. New damage: {swordDamage}");
     }
 
