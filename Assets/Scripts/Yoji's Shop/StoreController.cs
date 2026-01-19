@@ -358,12 +358,21 @@ public class ListStoreController : MonoBehaviour
 
         if (row.itemIcon != null)
         {
-            if (isLocked && lockedItemIcon != null)
-                row.itemIcon.sprite = lockedItemIcon;
-            else if (row.itemData.itemIcon != null)
+            // Always show the actual item icon
+            if (row.itemData.itemIcon != null)
                 row.itemIcon.sprite = row.itemData.itemIcon;
 
-            row.itemIcon.color = Color.white;
+            // Apply blur/grayscale effect if locked
+            if (isLocked)
+            {
+                // Make locked items grayscale and semi-transparent (blurred effect)
+                row.itemIcon.color = new Color(0.4f, 0.4f, 0.4f, 0.6f);
+            }
+            else
+            {
+                // Show unlocked items in full color
+                row.itemIcon.color = Color.white;
+            }
         }
 
         if (row.itemNameText != null)

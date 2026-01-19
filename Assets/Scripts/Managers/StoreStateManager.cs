@@ -86,26 +86,14 @@ public class StoreStateManager : MonoBehaviour
     {
         // Fireball spell unlocks ONLY after George is actually defeated
         bool georgeDefeated = GameManager.Instance != null && GameManager.Instance.GetFlag(GameFlag.GeorgeDefeated);
-        bool revealed = georgeDefeated;
-        Debug.Log($"[StoreStateManager] IsFireballRevealed check: GeorgeDefeated={georgeDefeated}, revealed={revealed}");
-        return revealed;
+        return georgeDefeated;
     }
 
     public bool IsBreathOfFireRevealed()
     {
         // Breath of Fire unlocks after Fika is defeated
-        bool revealed = currentState >= StoreState.PostFika;
-        Debug.Log($"[StoreStateManager] IsBreathOfFireRevealed check: currentState={currentState}, PostFika={StoreState.PostFika}, revealed={revealed}");
-        return revealed;
+        return currentState >= StoreState.PostFika;
     }
-
-    // Legacy method for backwards compatibility
-    public bool IsWaveOfFireRevealed()
-    {
-        // Keep for any other code that might use it
-        return IsFireballRevealed();
-    }
-
     public bool IsStoreFree()
     {
         return currentState == StoreState.PostPhilip;
