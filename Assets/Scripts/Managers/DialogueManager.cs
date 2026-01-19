@@ -70,6 +70,12 @@ public class DialogueManager : MonoBehaviour
 
         if (Input.GetKeyDown(advanceKey))
         {
+            // Play dialogue advance sound effect
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayDialogueAdvance();
+            }
+
             if (_isTyping)
             {
                 FinishTypingInstantly();
