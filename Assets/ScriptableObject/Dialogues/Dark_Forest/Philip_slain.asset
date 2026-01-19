@@ -17,5 +17,5 @@ MonoBehaviour:
   speakerName: 'Achievement Unlocked '
   lines:
   - You have slain Philip, The Prince Of Darkness
-  portrait: {fileID: -2138534889620764463, guid: 8499aa222c9ccfd4198291b7557eb4f1, type: 3}
+  portrait: {fileID: -2138534889620764463, guid: 89f8db1be98944240921de055a1adbc2, type: 3}
   pauseGameDuringDialogue: 1

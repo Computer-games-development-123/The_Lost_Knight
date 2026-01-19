@@ -35,6 +35,7 @@ public class PlayerAttack : MonoBehaviour
     public float breathOfFireCooldown = 3f;
     public float breathOfFireRange = 3f;      // How far the fire breath reaches
     public float breathOfFireWidth = 1.5f;    // How wide the fire breath is
+    public int breathDamageAddition = 30;
     public Transform breathOrigin;             // Where the fire breath starts (player's mouth)
     // Note: Breath of Fire is animation-only, damage is dealt via area detection
 
@@ -344,8 +345,7 @@ public class PlayerAttack : MonoBehaviour
     /// </summary>
     private void DealBreathOfFireDamage(Collider2D enemy)
     {
-        // Breath of Fire deals 3x sword damage (more than regular attacks)
-        int breathDamage = swordDamage * 3;
+        int breathDamage = swordDamage + breathDamageAddition;
 
         EnemyBase enemyScript = enemy.GetComponent<EnemyBase>();
         if (enemyScript != null)

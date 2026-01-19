@@ -18,5 +18,5 @@ MonoBehaviour:
   lines:
   - Nice!, You've hit the dummy 3 times.
   - Now you should head back to the forest.
-  portrait: {fileID: -2138534889620764463, guid: 8499aa222c9ccfd4198291b7557eb4f1, type: 3}
+  portrait: {fileID: -2138534889620764463, guid: 89f8db1be98944240921de055a1adbc2, type: 3}
   pauseGameDuringDialogue: 1
