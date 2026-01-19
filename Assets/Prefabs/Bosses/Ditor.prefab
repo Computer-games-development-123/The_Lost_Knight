@@ -199,14 +199,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DitorBoss
   bossName: Boss
-  maxHP: 500
+  maxHP: 800
   damage: 20
   moveSpeed: 2
   isInvulnerable: 0
   coinsReward: 1000
   spawnDialogue: {fileID: 11400000, guid: 19a5090e8da74154e95af77d8ce0de15, type: 2}
   deathDialogue: {fileID: 11400000, guid: cf615dccbb793c243bbcc67fe945a258, type: 2}
-  slainDialogue: {fileID: 11400000, guid: b1f8718d248daed4d8497176400e6e8a, type: 2}
+  slainDialogue: {fileID: 0}
   waveManager: {fileID: 0}
   player: {fileID: 6415566011707803852, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
   currentHP: 0
@@ -224,6 +224,7 @@ MonoBehaviour:
   attack2HitCollider: {fileID: 1751340364723920845}
   comboHitPoint1: {fileID: 818504905620309996}
   comboHitPoint2: {fileID: 7287418107412065632}
+  endingDialogue: {fileID: 11400000, guid: b1f8718d248daed4d8497176400e6e8a, type: 2}
 --- !u!114 &6400573088821524354
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GeorgeBoss
   bossName: George
-  maxHP: 100
+  maxHP: 200
   damage: 10
   moveSpeed: 3
   isInvulnerable: 0
