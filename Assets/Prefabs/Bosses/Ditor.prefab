@@ -204,7 +204,7 @@ MonoBehaviour:
   moveSpeed: 2
   isInvulnerable: 0
   coinsReward: 1000
-  spawnDialogue: {fileID: 11400000, guid: 19a5090e8da74154e95af77d8ce0de15, type: 2}
+  spawnDialogue: {fileID: 0}
   deathDialogue: {fileID: 11400000, guid: cf615dccbb793c243bbcc67fe945a258, type: 2}
   slainDialogue: {fileID: 0}
   waveManager: {fileID: 0}

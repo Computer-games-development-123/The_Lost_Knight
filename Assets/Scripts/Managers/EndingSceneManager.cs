@@ -56,11 +56,14 @@ public class EndingSceneManager : MonoBehaviour
             UserInputManager.Instance.DisableInput();
         }
 
-        // Start the epilogue music
+        // CRITICAL: Force epilogue music to play and prevent any scene music from overriding it
         if (AudioManager.Instance != null)
         {
-            AudioManager.Instance.PlayMusic(AudioManager.Instance.epilogueMusic);
-            if (showDebugLogs) Debug.Log("Started epilogue music");
+            // Stop any current music first
+            AudioManager.Instance.StopMusicImmediately();
+
+            // Wait a frame, then start epilogue music
+            StartCoroutine(StartEpilogueMusicDelayed());
         }
 
         // Initialize UI
@@ -70,6 +73,31 @@ public class EndingSceneManager : MonoBehaviour
 
         // Start the cutscene sequence
         StartCoroutine(PlayEndingSequence());
+    }
+
+    private IEnumerator StartEpilogueMusicDelayed()
+    {
+        yield return null; // Wait one frame
+
+        if (AudioManager.Instance != null && AudioManager.Instance.epilogueMusic != null)
+        {
+            // Clear the stored boss music so ReturnToSceneMusic() won't override epilogue
+            AudioManager.Instance.ForceStopBossMusic();
+
+            // Force restart the epilogue music
+            AudioManager.Instance.PlayMusic(AudioManager.Instance.epilogueMusic, forceRestart: true);
+            if (showDebugLogs) Debug.Log("Started epilogue music (forced)");
+
+            // Wait a bit and check if music is still correct
+            yield return new WaitForSeconds(0.5f);
+
+            // Double-check that epilogue music is still playing
+            if (AudioManager.Instance.epilogueMusic != null)
+            {
+                AudioManager.Instance.PlayMusic(AudioManager.Instance.epilogueMusic, forceRestart: false);
+                if (showDebugLogs) Debug.Log("Verified epilogue music is playing");
+            }
+        }
     }
 
     private IEnumerator PlayEndingSequence()

@@ -217,7 +217,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   normalOverride: {fileID: 9100000, guid: 8a9ee0af6e2b96d4bab8cb7325ec24f6, type: 2}
   fireOverride: {fileID: 22100000, guid: 6003e38a102dd5548b1339092d8b680f, type: 2}
-  fireFormFlag: 10
+  fireFormFlag: 11
 --- !u!114 &4905180846096170032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,10 +311,6 @@ MonoBehaviour:
   attackCooldown: 0.33
   normalAttackRange: 0.75
   attackPoint: {fileID: 6633376722634027389}
-  dashAttackRange: 0.75
-  dashDistance: 1.5
-  dashSpeed: 15
-  dashKnockbackMultiplier: 1.5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -328,6 +324,7 @@ MonoBehaviour:
   breathOfFireCooldown: 4
   breathOfFireRange: 3
   breathOfFireWidth: 1.5
+  breathDamageAddition: 30
   breathOrigin: {fileID: 0}
 --- !u!114 &8192387872576722755
 MonoBehaviour:
