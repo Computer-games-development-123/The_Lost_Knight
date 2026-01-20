@@ -4,8 +4,9 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 
 /// <summary>
+/// SIMPLIFIED EndingChoiceManager
 /// Only handles button selection and loading the appropriate ending scene
-/// All cutscene logic is in the ending scenes themselves via EndingSceneManager
+/// All cutscene logic is now in the ending scenes themselves via EndingSceneManager
 /// </summary>
 public class EndingChoiceManager : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class EndingChoiceManager : MonoBehaviour
 
     private int currentButtonIndex = 0; // 0 = Finish Ditor, 1 = Escape Forest
     private bool isChoosingEnding = false;
+    private bool canAcceptInput = false; // NEW: Prevent immediate input
     private Image finishDitorImage;
     private Image escapeForestImage;
 
@@ -52,19 +54,19 @@ public class EndingChoiceManager : MonoBehaviour
         if (finishDitorButton != null)
         {
             finishDitorImage = finishDitorButton.GetComponent<Image>();
-            finishDitorButton.onClick.AddListener(OnFinishDitorChosen);
+            // DON'T add onClick listener here - we'll handle it manually to prevent auto-triggering
         }
 
         if (escapeForestButton != null)
         {
             escapeForestImage = escapeForestButton.GetComponent<Image>();
-            escapeForestButton.onClick.AddListener(OnEscapeForestChosen);
+            // DON'T add onClick listener here - we'll handle it manually to prevent auto-triggering
         }
     }
 
     private void Update()
     {
-        if (!isChoosingEnding) return;
+        if (!isChoosingEnding || !canAcceptInput) return;
 
         // Handle navigation between buttons (use arrow keys only to avoid conflicts)
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -80,9 +82,10 @@ public class EndingChoiceManager : MonoBehaviour
             if (showDebugLogs) Debug.Log("Selected: Escape Forest button");
         }
 
-        // Confirm selection with F key
-        if (Input.GetKeyDown(KeyCode.F))
+        // Confirm selection with Enter key
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
+            if (showDebugLogs) Debug.Log("Enter key pressed - confirming selection");
             ConfirmSelection();
         }
     }
@@ -95,10 +98,19 @@ public class EndingChoiceManager : MonoBehaviour
     {
         if (showDebugLogs) Debug.Log("EndingChoiceManager: Showing ending choice");
 
+        StartCoroutine(ShowChoiceWithDelay());
+    }
+
+    private IEnumerator ShowChoiceWithDelay()
+    {
+        // Small delay to ensure dialogue system has fully released input
+        yield return new WaitForSeconds(0.3f);
+
         if (choicePanel != null)
             choicePanel.SetActive(true);
 
         isChoosingEnding = true;
+        canAcceptInput = false; // Not yet!
         currentButtonIndex = 0;
         UpdateButtonSelection();
 
@@ -107,6 +119,14 @@ public class EndingChoiceManager : MonoBehaviour
         {
             UserInputManager.Instance.DisableInput();
         }
+
+        if (showDebugLogs) Debug.Log("Choice panel shown - waiting for input cooldown");
+
+        // Wait a bit more before accepting input (prevents accidental F key from dialogue)
+        yield return new WaitForSeconds(0.5f);
+
+        canAcceptInput = true;
+        if (showDebugLogs) Debug.Log("Now accepting input! Use UP/DOWN to select, ENTER to confirm");
     }
 
     private void UpdateButtonSelection()
@@ -132,6 +152,15 @@ public class EndingChoiceManager : MonoBehaviour
 
     private void ConfirmSelection()
     {
+        if (!canAcceptInput)
+        {
+            if (showDebugLogs) Debug.Log("Input not ready yet - ignoring confirmation");
+            return;
+        }
+
+        canAcceptInput = false; // Prevent multiple confirmations
+        isChoosingEnding = false;
+
         if (currentButtonIndex == 0)
         {
             OnFinishDitorChosen();
