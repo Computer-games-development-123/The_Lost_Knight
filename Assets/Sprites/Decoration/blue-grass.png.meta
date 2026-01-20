@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ae453ee1451f5324ba5cc34e1fbaa15e
+guid: 7aad449f5ffd3dc4685684447aa0fdd6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2117076532586398163
-    second: Final_Forest_0
+      213: -3875157683342599068
+    second: blue-grass_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Final_Forest_0
+      name: blue-grass_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 463
-        height: 261
+        width: 128
+        height: 55
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d2e3fd04c12ae92e0800000000000000
-      internalID: -2117076532586398163
+      spriteID: 46c1db35e9ca83ac0800000000000000
+      internalID: -3875157683342599068
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 0912f32bebbbc8e439f6d96f34b15797
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,8 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Final_Forest_0: -2117076532586398163
-      Final_Forest_1: -2125650958
+      blue-grass_0: -3875157683342599068
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
