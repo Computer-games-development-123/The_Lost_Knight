@@ -12,6 +12,8 @@ using Unity.Services.CloudSave.Models;
 /// </summary>
 public class ListStoreController : MonoBehaviour
 {
+    public static ListStoreController Instance { get; private set; }
+
     [Header("Store UI")]
     public GameObject storePanel;
     public TextMeshProUGUI storeTitleText;
@@ -74,8 +76,17 @@ public class ListStoreController : MonoBehaviour
 
     private bool stockLoaded = false;
 
-    async void Start()
+    async void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
         if (storePanel != null)
             storePanel.SetActive(false);
 
