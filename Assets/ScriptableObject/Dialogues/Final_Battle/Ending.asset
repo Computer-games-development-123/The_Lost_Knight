@@ -14,11 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
   flag: 0
-  speakerName: Ending
+  speakerName: Kight
   lines:
   - Ditor has started burning the whole forest.
-  - 'What would you do next?
-
-'
-  portrait: {fileID: 0}
+  - What should i do ??
+  portrait: {fileID: 4033487972480862772, guid: f6694ec89bfc1694d96be88fb06bcf0f, type: 3}
   pauseGameDuringDialogue: 1

@@ -8,11 +8,14 @@ using UnityEngine;
 public class FinalBattleStartIntro : MonoBehaviour
 {
     [Header("Dialogue Sequence")]
-    [Tooltip("First dialogue - typically introduction to final battle")]
+    [Tooltip("First dialogue")]
     public DialogueData firstDialogue;
 
-    [Tooltip("Second dialogue - typically warning or dramatic moment")]
+    [Tooltip("Second dialogue")]
     public DialogueData secondDialogue;
+
+    [Tooltip("Third dialogue")]
+    public DialogueData thirdDialogue;
 
     [Header("Flag to Check")]
     [Tooltip("Which flag determines if this dialogue has been seen?")]
@@ -56,12 +59,40 @@ public class FinalBattleStartIntro : MonoBehaviour
 
     private IEnumerator PlayDialogueSequence()
     {
+        // Wait a frame for scene to initialize
         yield return null;
 
         if (DialogueManager.Instance == null)
         {
             Debug.LogError("FinalBattleStartIntro: DialogueManager not found!");
             yield break;
+        }
+
+        // IMPORTANT: Wait for Ditor to spawn before playing intro dialogues
+        // This ensures the boss is visible during the dramatic intro
+        if (showDebugLogs) Debug.Log("Waiting for Ditor to spawn...");
+
+        DitorBoss ditor = null;
+        float maxWaitTime = 5f; // Don't wait forever
+        float waitedTime = 0f;
+
+        while (ditor == null && waitedTime < maxWaitTime)
+        {
+            ditor = FindFirstObjectByType<DitorBoss>();
+            if (ditor == null)
+            {
+                yield return new WaitForSeconds(0.1f);
+                waitedTime += 0.1f;
+            }
+        }
+
+        if (ditor != null)
+        {
+            if (showDebugLogs) Debug.Log("Ditor found! Starting intro dialogues");
+        }
+        else
+        {
+            Debug.LogWarning("FinalBattleStartIntro: Ditor not found after waiting, playing dialogues anyway");
         }
 
         if (showDebugLogs) Debug.Log("Starting Final Battle intro dialogue sequence");
@@ -85,8 +116,8 @@ public class FinalBattleStartIntro : MonoBehaviour
         if (secondDialogue != null)
         {
             bool dialogue2Done = false;
-            // This is the last dialogue, so input will be re-enabled automatically
-            DialogueManager.Instance.Play(secondDialogue, () => dialogue2Done = true, keepInputDisabled: false);
+            // Keep input disabled (not the last dialogue)
+            DialogueManager.Instance.Play(secondDialogue, () => dialogue2Done = true, keepInputDisabled: true);
             yield return new WaitUntil(() => dialogue2Done);
 
             if (showDebugLogs) Debug.Log("Second dialogue complete");
@@ -94,6 +125,21 @@ public class FinalBattleStartIntro : MonoBehaviour
         else
         {
             Debug.LogWarning("FinalBattleStartIntro: Second dialogue not assigned!");
+        }
+
+        // Dialogue 3: Third dialogue
+        if (thirdDialogue != null)
+        {
+            bool dialogue3Done = false;
+            // This is the last dialogue, so input will be re-enabled automatically
+            DialogueManager.Instance.Play(thirdDialogue, () => dialogue3Done = true, keepInputDisabled: false);
+            yield return new WaitUntil(() => dialogue3Done);
+
+            if (showDebugLogs) Debug.Log("Third dialogue complete");
+        }
+        else
+        {
+            Debug.LogWarning("FinalBattleStartIntro: Third dialogue not assigned!");
         }
 
         // Mark dialogues as seen after the sequence completes
