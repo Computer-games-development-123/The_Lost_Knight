@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fika_Death
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
-  flag: 17
+  flag: 18
   speakerName: Fika, Sister Of Malice.
   lines:
   - You will pay for this...
