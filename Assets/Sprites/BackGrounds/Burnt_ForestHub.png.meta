@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d063f430c02875c449921c5071478404
+guid: f41b034f34afe0943a5ba75a68229242
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7335253737980009713
-    second: WaveOfFire_0
+      213: -7468180288576824676
+    second: Burnt_ForestHub_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WaveOfFire_0
+      name: Burnt_ForestHub_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 61
-        height: 61
+        width: 1536
+        height: 1024
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1fc97ad296e0cc560800000000000000
-      internalID: 7335253737980009713
+      spriteID: c9addcc7891bb5890800000000000000
+      internalID: -7468180288576824676
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7a642d40ed98abb41be7d1396250e212
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      WaveOfFire_0: 7335253737980009713
+      Burnt_ForestHub_0: -7468180288576824676
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
