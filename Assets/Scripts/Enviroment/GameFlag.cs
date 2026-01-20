@@ -11,6 +11,7 @@ public enum GameFlag
     GreenBattleIntroSeen,
     RedBattleIntroSeen,
     DarkBattleIntroSeen,
+    FinalBattleIntroSeen,
 
     // -- Upgrades --
     hasTeleport,

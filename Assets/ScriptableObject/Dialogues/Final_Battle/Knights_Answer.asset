@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Knights_Answer
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
-  flag: 0
+  flag: 9
   speakerName: Knight
   lines:
   - I will get my revenge for Yoji.

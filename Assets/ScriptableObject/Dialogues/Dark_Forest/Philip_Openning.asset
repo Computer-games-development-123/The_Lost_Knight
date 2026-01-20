@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Philip_Openning
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
-  flag: 20
+  flag: 21
   speakerName: Philip, Prince Of Darkness
   lines:
   - Its Over, Give up now.
