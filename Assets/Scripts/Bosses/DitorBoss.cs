@@ -448,16 +448,56 @@ public class DitorBoss : BossBase
 
     protected override void Die()
     {
-        // Call base Die() which handles animation, wave manager, and death dialogue
-        base.Die();
+        isDead = true;
 
+        if (anim != null)
+            anim.SetTrigger("Death");
+
+        Debug.Log($"{bossName} defeated!");
+
+        if (waveManager != null)
+        {
+            waveManager.OnBossDied(this);
+        }
+
+        if (DialogueManager.Instance != null && deathDialogue != null)
+        {
+            DialogueManager.Instance.Play(deathDialogue, OnDeathDialogueComplete);
+        }
+        else
+        {
+            OnDeathDialogueComplete();
+        }
+
+        // DON'T destroy Ditor yet - he needs to stay visible until player chooses ending and scene fades
         Debug.Log("Ditor defeated - ending sequence will start after death dialogue");
     }
 
     protected override void OnDeathDialogueComplete()
     {
-        // Award coins and play slain dialogue (from base class)
-        base.OnDeathDialogueComplete();
+        // Award coins to player
+        if (player != null && coinsReward > 0)
+        {
+            PlayerInventory inventory = player.GetComponent<PlayerInventory>();
+            if (inventory != null)
+            {
+                inventory.AddCoins(coinsReward);
+                Debug.Log($"Player received {coinsReward} coins for defeating {bossName}!");
+            }
+            else
+            {
+                Debug.LogWarning($"PlayerInventory component not found on player - could not award {coinsReward} coins!");
+            }
+        }
+
+        // Play slain dialogue if available
+        if (DialogueManager.Instance != null && slainDialogue != null)
+        {
+            DialogueManager.Instance.Play(slainDialogue);
+        }
+
+        // DON'T destroy Ditor yet - wait until after player chooses ending and scene fades
+        // The scene load will clean up Ditor automatically
 
         // After the death dialogue and slain dialogue, play the ending dialogue
         if (DialogueManager.Instance != null && endingDialogue != null)
@@ -487,5 +527,8 @@ public class DitorBoss : BossBase
         {
             Debug.LogError("DitorBoss: EndingChoiceManager.Instance not found in scene!");
         }
+
+        // Ditor will be destroyed when the ending scene loads
+        // No need to manually destroy here
     }
 }
