@@ -4827,6 +4827,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4376152552779809795, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6415566011707803852, guid: 4c2518e2ef289d04b800de7db77f4390, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5036,6 +5040,10 @@ PrefabInstance:
     - target: {fileID: 5941508025268686040, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
       propertyPath: m_Name
       value: Yoji
+      objectReference: {fileID: 0}
+    - target: {fileID: 5941508025268686040, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6506609825868262242, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
       propertyPath: storeController

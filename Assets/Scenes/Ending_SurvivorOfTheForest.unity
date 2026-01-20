@@ -473,7 +473,7 @@ MonoBehaviour:
   textCanvasGroup: {fileID: 34991563}
   backgroundCanvasGroup: {fileID: 1884402857}
   endingType: 1
-  endingBackground: {fileID: -4883668594414795909, guid: 2f42e8c2764a36f49a58bf81450bb3f5, type: 3}
+  endingBackground: {fileID: -7468180288576824676, guid: f41b034f34afe0943a5ba75a68229242, type: 3}
   achievementDialogue: {fileID: 11400000, guid: 3f455e9d0d9607840a801d2079077c85, type: 2}
   textFadeInDuration: 2
   textDisplayDuration: 3
