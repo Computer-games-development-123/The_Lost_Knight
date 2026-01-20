@@ -3,22 +3,21 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class CameraAutoSize : MonoBehaviour
 {
-    [SerializeField] float referenceOrthographicSize = 5f;
-    [SerializeField] float referenceAspectWidth = 16f;
-    [SerializeField] float referenceAspectHeight = 9f;
+    public SpriteRenderer background;
 
-    Camera cam;
-
-    void Awake()
+    void Start()
     {
-        cam = GetComponent<Camera>();
-    }
+        float screenRatio = (float)Screen.width / (float)Screen.height;
+        float targetRatio = background.bounds.size.x / background.bounds.size.y;
 
-    void Update()
-    {
-        float referenceAspect = referenceAspectWidth / referenceAspectHeight;
-        float currentAspect = (float)Screen.width / Screen.height;
-
-        cam.orthographicSize = referenceOrthographicSize * (referenceAspect / currentAspect);
+        if (screenRatio >= targetRatio)
+        {
+            Camera.main.orthographicSize = background.bounds.size.y / 2;
+        }
+        else
+        {
+            float differenceInSize = targetRatio / screenRatio;
+            Camera.main.orthographicSize = background.bounds.size.y / 2 * differenceInSize;
+        }
     }
 }
