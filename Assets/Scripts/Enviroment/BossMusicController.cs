@@ -87,16 +87,17 @@ public class BossMusicController : MonoBehaviour
 
     private void OnDestroy()
     {
-        // DON'T stop music on destroy - this runs even when scene changes!
-        // Music should be handled by ReturnToSceneMusic() or scene music triggers
+        // Only return to scene music if the boss was actually defeated in normal gameplay
+        // DON'T return to scene music if we're transitioning to an ending scene
 
-        // Only return to scene music if the boss was actually defeated (not just scene change)
         if (AudioManager.Instance != null && GetComponent<BossBase>() != null)
         {
             BossBase boss = GetComponent<BossBase>();
 
-            // Only return to scene music if boss is dead (not if object destroyed by scene load)
-            if (boss.CurrentHP <= 0)
+            // Only return to scene music if:
+            // 1. Boss is dead (HP <= 0)
+            // 2. We're NOT transitioning to an ending (checked via a flag in AudioManager)
+            if (boss.CurrentHP <= 0 && !AudioManager.Instance.isTransitioningToEnding)
             {
                 AudioManager.Instance.ReturnToSceneMusic();
                 Debug.Log("Boss defeated - returning to scene music");

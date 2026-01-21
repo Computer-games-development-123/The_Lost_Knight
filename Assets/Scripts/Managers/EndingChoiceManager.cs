@@ -197,6 +197,13 @@ public class EndingChoiceManager : MonoBehaviour
 
     private IEnumerator LoadEndingScene(string sceneName)
     {
+        // Set flag to prevent boss music from being restored
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.isTransitioningToEnding = true;
+            if (showDebugLogs) Debug.Log("Set isTransitioningToEnding = true");
+        }
+
         // Fade to black
         if (SceneFadeManager.Instance != null)
         {
