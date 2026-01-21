@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1748609232503493373}
   - component: {fileID: 2562608003308250898}
   m_Layer: 6
-  m_Name: rising_dead
+  m_Name: Horse
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 7219932414428029039}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.9, y: -0.63, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -997972493423046422, guid: 4771cac33caa26f44b04fbf831a5a0e7, type: 3}
+  m_Sprite: {fileID: -1882347247711912902, guid: db8b3b9d7f5987b4a8a62b3281e30019, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -101,7 +101,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7219932414428029039}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -128,9 +128,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.01}
-  m_Size: {x: 0.1315788, y: 0.33869183}
-  m_Direction: 0
+  m_Offset: {x: -0.19536832, y: -0.041025575}
+  m_Size: {x: 0.63428134, y: 0.496934}
+  m_Direction: 1
 --- !u!50 &8780919851282773113
 Rigidbody2D:
   serializedVersion: 5
@@ -139,7 +139,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7219932414428029039}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -168,7 +168,7 @@ Animator:
   m_GameObject: {fileID: 7219932414428029039}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b0ee5f98c6769cb4b89b62b1b281962c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1425749391d960547be1c1bb85b59dbd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -192,13 +192,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76959cc1a25b07845b8036c861139c2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBase
-  enemyData: {fileID: 11400000, guid: 0cc75135b9032f7419cd9dc897daca68, type: 2}
-  fallbackMaxHP: 25
-  fallbackDamage: 5
-  fallbackMoveSpeed: 2
-  fallbackCoinsDropped: 5
+  enemyData: {fileID: 11400000, guid: 20bbd40e5f619d845acf694a76a3e4f2, type: 2}
+  fallbackMaxHP: 10
+  fallbackDamage: 15
+  fallbackMoveSpeed: 6
+  fallbackCoinsDropped: 15
   knockbackForce: 8
   knockbackDuration: 0.12
+  leftBorder: -8
+  rightBorder: 8
   jumperJumpForce: 15
   jumperJumpCooldown: 1.5
   projectilePrefab: {fileID: 0}
@@ -207,5 +209,5 @@ MonoBehaviour:
   attackCooldown: 2
   projectileSpeed: 8
   waveManager: {fileID: 0}
-  isFacingLeft: 0
-  hasEntringAnimation: 1
+  isFacingLeft: 1
+  hasEntringAnimation: 0

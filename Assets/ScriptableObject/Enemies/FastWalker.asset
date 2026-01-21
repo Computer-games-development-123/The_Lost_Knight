@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6db8b1222c5259345876881bb6d99e5a, type: 3}
-  m_Name: JumperData 3
+  m_Script: {fileID: 11500000, guid: 43b48c487047e944d84f4c0f8c042b03, type: 3}
+  m_Name: FastWalker
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  baseMaxHP: 30
-  moveSpeed: 0
-  baseDamage: 10
-  attackRange: 0
-  attackCooldown: 0
   enemyName: 
-  behaviorType: 2
+  behaviorType: 1
+  maxHP: 150
+  damage: 10
+  moveSpeed: 4
   coinsDropped: 1
+  enemySprite: {fileID: 0}
+  animatorController: {fileID: 0}
