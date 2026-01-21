@@ -26,6 +26,13 @@ public class DitorBoss : BossBase
     public Collider2D comboHitPoint1;
     public Collider2D comboHitPoint2;
 
+    [Header("Phase 2 Settings")]
+    [Tooltip("Aura object to activate on phase 2")]
+    public DialogueData Phase2Dialogue;
+    public GameObject Aura;
+    public float auraDuration = 1f;
+    private bool inTransition = false;
+
     [Header("Ending Dialogue")]
     [Tooltip("The dialogue that triggers the ending choice (should be the 'Ending' dialogue)")]
     public DialogueData endingDialogue;
@@ -51,7 +58,7 @@ public class DitorBoss : BossBase
 
     protected override void Update()
     {
-        if (isDead || player == null) return;
+        if (isDead || player == null || inTransition) return;
 
         distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
@@ -202,9 +209,11 @@ public class DitorBoss : BossBase
         StartCoroutine(TelegraphFlash());
 
         yield return new WaitForSeconds(comboTelegraphDuration);
-
+        Collider2D col = GetComponent<Collider2D>();
         isTelegraphing = false;
         isAttacking = true;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        col.enabled = false;
         hasDealtDamageThisAttack = false;
 
         if (anim != null)
@@ -215,8 +224,9 @@ public class DitorBoss : BossBase
         currentAttackCooldown = attack3Cooldown;
 
         // Wait for animation to complete
-        yield return new WaitForSeconds(1.5f);
-
+        yield return new WaitForSeconds(1.1f);
+        col.enabled = true;
+        rb.bodyType = RigidbodyType2D.Dynamic;
         DisableAllHitColliders();
 
         isAttacking = false;
@@ -396,7 +406,6 @@ public class DitorBoss : BossBase
         {
             Debug.Log("Player in OnTriggerStay2D");
 
-            // Only deal damage once per attack
             if (attack1HitCollider != null && attack1HitCollider.enabled)
             {
                 Debug.Log("Attack1 collider active (Stay) - dealing damage");
@@ -436,14 +445,34 @@ public class DitorBoss : BossBase
     }
     protected override void EnterPhase2()
     {
+        StartCoroutine(Phase2());
         base.EnterPhase2();
 
-        attack1Cooldown *= 0.7f;
-        attack2Cooldown *= 0.7f;
-        attack3Cooldown *= 0.7f;
-        comboAttackCooldown *= 0.8f;
+        attack1Cooldown *= 0.5f;
+        attack2Cooldown *= 0.5f;
+        attack3Cooldown *= 0.5f;
+        comboAttackCooldown *= 0.7f;
 
         Debug.Log("Ditor is now enraged!");
+    }
+
+    private IEnumerator Phase2()
+    {
+        if (isAttacking) yield return new WaitForSeconds(1f);
+        inTransition = true;
+        if (Phase2Dialogue)
+            DialogueManager.Instance.Play(Phase2Dialogue);
+        yield return new WaitForSeconds(0.5f);
+        Aura.SetActive(true);
+        yield return new WaitForSeconds(auraDuration);
+        Aura.SetActive(false);
+        inTransition = false;
+    }
+
+    public override void TakeDamage(int damageAmount)
+    {
+        if (!inTransition)
+            base.TakeDamage(damageAmount);
     }
 
     protected override void Die()
@@ -469,7 +498,6 @@ public class DitorBoss : BossBase
             OnDeathDialogueComplete();
         }
 
-        // DON'T destroy Ditor yet - he needs to stay visible until player chooses ending and scene fades
         Debug.Log("Ditor defeated - ending sequence will start after death dialogue");
     }
 
@@ -490,16 +518,11 @@ public class DitorBoss : BossBase
             }
         }
 
-        // Play slain dialogue if available
         if (DialogueManager.Instance != null && slainDialogue != null)
         {
             DialogueManager.Instance.Play(slainDialogue);
         }
 
-        // DON'T destroy Ditor yet - wait until after player chooses ending and scene fades
-        // The scene load will clean up Ditor automatically
-
-        // After the death dialogue and slain dialogue, play the ending dialogue
         if (DialogueManager.Instance != null && endingDialogue != null)
         {
             Debug.Log("Playing ending dialogue...");
@@ -511,10 +534,6 @@ public class DitorBoss : BossBase
         }
     }
 
-    /// <summary>
-    /// Called when the ending dialogue ("What would you do next?") completes
-    /// This triggers the EndingChoiceManager to show the two choice buttons
-    /// </summary>
     private void OnEndingDialogueComplete()
     {
         Debug.Log("Ending dialogue complete - showing player choice");
@@ -528,7 +547,5 @@ public class DitorBoss : BossBase
             Debug.LogError("DitorBoss: EndingChoiceManager.Instance not found in scene!");
         }
 
-        // Ditor will be destroyed when the ending scene loads
-        // No need to manually destroy here
     }
 }
