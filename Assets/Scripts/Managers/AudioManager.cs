@@ -58,6 +58,9 @@ public class AudioManager : MonoBehaviour
     private AudioClip musicBeforeBoss;
     private bool isFading = false;
 
+    // Flag to prevent music restoration when transitioning to ending scenes
+    public bool isTransitioningToEnding = false;
+
     private void Awake()
     {
         if (Instance == null)
