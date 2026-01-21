@@ -56,10 +56,27 @@ public class EndingSceneManager : MonoBehaviour
             UserInputManager.Instance.DisableInput();
         }
 
+        // CRITICAL: Stop any existing music immediately to prevent conflicts
+        // This ensures boss music is fully cleared before starting epilogue
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopMusicImmediately();
+            if (showDebugLogs) Debug.Log("Stopped all music before epilogue");
+        }
+
+        // Small delay to ensure music is fully stopped
+        StartCoroutine(StartEpilogueWithDelay());
+    }
+
+    private IEnumerator StartEpilogueWithDelay()
+    {
+        // Brief delay to ensure clean audio transition
+        yield return new WaitForSeconds(0.1f);
+
         // Start the epilogue music
         if (AudioManager.Instance != null)
         {
-            AudioManager.Instance.PlayMusic(AudioManager.Instance.epilogueMusic);
+            AudioManager.Instance.PlayMusic(AudioManager.Instance.epilogueMusic, forceRestart: true);
             if (showDebugLogs) Debug.Log("Started epilogue music");
         }
 
