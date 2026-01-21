@@ -276,7 +276,7 @@ MonoBehaviour:
   knockbackUpForce: 2
   knockbackDuration: 0.15
   hurtDuration: 0.4
-  healAmountPerPotion: 10
+  healAmountPerPotion: 20
   isGrounded: 0
   facingRight: 1
 --- !u!114 &4003226436323456006
@@ -340,6 +340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
   coins: 0
   potions: 5
+  potionHoarderDialogue: {fileID: 11400000, guid: 18a385c51fdc3c34eadce99180c8d897, type: 2}
 --- !u!1 &4695522883229318128
 GameObject:
   m_ObjectHideFlags: 0

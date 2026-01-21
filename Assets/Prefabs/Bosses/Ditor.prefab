@@ -202,7 +202,7 @@ MonoBehaviour:
   bossName: Boss
   maxHP: 2000
   damage: 60
-  moveSpeed: 2
+  moveSpeed: 2.5
   isInvulnerable: 0
   coinsReward: 1000
   spawnDialogue: {fileID: 0}

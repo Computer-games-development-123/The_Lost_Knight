@@ -31,8 +31,8 @@ public class EndingSceneManager : MonoBehaviour
     [SerializeField]
     private string[] heroEndingTexts = new string[]
     {
-        "You have slain Ditor, King Of The Dark Forest.",
         "You have successfully saved the forest.",
+        "You have slain Ditor, King Of The Dark Forest.",
         "But Ditor has managed to kill you too..",
         "You Died..."
     };
@@ -42,7 +42,9 @@ public class EndingSceneManager : MonoBehaviour
     private string[] survivorEndingTexts = new string[]
     {
         "You have successfully escaped the forest.",
-        "But The Forest Burned.."
+        "The path behind you vanished in fire.",
+        "The forest burned.",
+        "You survived..."
     };
 
     [Header("Debug")]

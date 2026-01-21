@@ -480,13 +480,15 @@ MonoBehaviour:
   textFadeOutDuration: 2
   backgroundFadeDuration: 3
   heroEndingTexts:
-  - You have slain Ditor, King Of The Dark Forest.
   - You have successfully saved the forest.
+  - You have slain Ditor, King Of The Dark Forest.
   - But Ditor has managed to kill you too..
   - You Died...
   survivorEndingTexts:
   - You have successfully escaped the forest.
-  - But The Forest Burned..
+  - The path behind you vanished in fire.
+  - The forest burned.
+  - You survived...
   showDebugLogs: 1
 --- !u!4 &1339514187
 Transform:
