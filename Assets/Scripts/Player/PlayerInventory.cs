@@ -13,6 +13,10 @@ public class PlayerInventory : MonoBehaviour
     public int coins = 0;
     public int potions = 5;
 
+    [Header("Achievement Dialogue")]
+    [Tooltip("Dialogue that plays when player reaches 100+ potions (plays once)")]
+    public DialogueData potionHoarderDialogue;
+
     private PlayerHealth playerHealth;
     private static bool cloudReady = false;
     private async void Awake()
@@ -56,6 +60,9 @@ public class PlayerInventory : MonoBehaviour
         potions += amount;
         Debug.Log($"Potions added: {amount}. Total: {potions}");
         SaveInventory(); // Auto-save on change
+
+        // Check for 100+ potions achievement
+        CheckPotionHoarderAchievement();
     }
 
     public bool UsePotion(float healAmount)
@@ -90,6 +97,32 @@ public class PlayerInventory : MonoBehaviour
     public bool HasPotions()
     {
         return potions > 0;
+    }
+
+    private void CheckPotionHoarderAchievement()
+    {
+        // Only trigger if we have 100+ potions and haven't shown the dialogue yet
+        if (potions >= 100 && GameManager.Instance != null && DialogueManager.Instance != null)
+        {
+            // Check if we've already shown this dialogue
+            if (!GameManager.Instance.GetFlag(GameFlag.PotionHoarderDialogueSeen))
+            {
+                // Show the dialogue if it's assigned
+                if (potionHoarderDialogue != null)
+                {
+                    Debug.Log("🧪 Player has 100+ potions! Showing achievement dialogue...");
+                    DialogueManager.Instance.Play(potionHoarderDialogue);
+
+                    // Mark as seen so it never shows again
+                    GameManager.Instance.SetFlag(GameFlag.PotionHoarderDialogueSeen, true);
+                    GameManager.Instance.SaveProgress();
+                }
+                else
+                {
+                    Debug.LogWarning("Potion Hoarder dialogue not assigned in PlayerInventory!");
+                }
+            }
+        }
     }
 
     #endregion

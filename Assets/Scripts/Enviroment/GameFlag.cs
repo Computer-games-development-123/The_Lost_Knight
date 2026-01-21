@@ -27,5 +27,9 @@ public enum GameFlag
     FikaDefeated,
     PhilipDefeated,
     DitorDefeated,
-    YojiDead
+    YojiDead,
+
+    // --- NEW FLAGS (always add at bottom!) ---
+    PhilipSpawnDialogueSeen,  // Track if Philip's spawn dialogue has played
+    PotionHoarderDialogueSeen  // Track if 100+ potions dialogue has been shown
 }

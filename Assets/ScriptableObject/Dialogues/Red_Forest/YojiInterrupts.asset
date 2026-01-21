@@ -16,7 +16,9 @@ MonoBehaviour:
   flag: 0
   speakerName: Yoji, The Brave.
   lines:
-  - Im here brave knight!
+  - 'Im here brave knight!
+
+    I will Stand by your side!'
   - I will Stand by your side!
   - For my name is Yoji, The Old Hero of the forest!
   - Let me handle Mona, i will wait for you back at the store.

@@ -10,23 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10218a061c572484faf9e08ab7ff6a87, type: 3}
-  m_Name: Philip_Openning
+  m_Name: PotionsAchievement
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
-  flag: 21
-  speakerName: Philip, Prince Of Darkness
+  flag: 23
+  speakerName: Achievement Unlocked
   lines:
-  - Its Over..
-  - Dont you see?..
-  - "Oh\u2026 you didn\u2019t notice."
-  - Your friend.. Yoji..
-  - He's dead.
-  - I made sure of it.
-  - The end of the legendery hero of the old forest.
-  - And now..
-  - 'Its your turn to join him.
-
-'
-  - "Let\u2019s end this now, shall we?"
-  portrait: {fileID: -4820138417903964484, guid: 65550d09339df2b49ad54eae4acf18cd, type: 3}
+  - Well Stocked.
+  portrait: {fileID: -2138534889620764463, guid: 89f8db1be98944240921de055a1adbc2, type: 3}
   pauseGameDuringDialogue: 1

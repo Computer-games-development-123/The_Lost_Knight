@@ -35,7 +35,8 @@ public class PhilipBoss : BossBase
 
     protected override void OnBossStart()
     {
-        base.OnBossStart();
+        // Don't call base.OnBossStart() - we'll handle dialogue ourselves
+        // base.OnBossStart();
 
         bossName = "Philip, Bringer of Death";
 
@@ -43,6 +44,26 @@ public class PhilipBoss : BossBase
         {
             GameManager.Instance.SetFlag(GameFlag.YojiDead, true);
             GameManager.Instance.SaveProgress();
+
+            // Only play spawn dialogue if this is the first time fighting Philip
+            if (!GameManager.Instance.GetFlag(GameFlag.PhilipSpawnDialogueSeen))
+            {
+                Debug.Log($"{bossName} battle started! (First time - playing spawn dialogue)");
+
+                // Play the spawn dialogue
+                if (DialogueManager.Instance != null && spawnDialogue != null)
+                {
+                    DialogueManager.Instance.Play(spawnDialogue);
+                }
+
+                // Mark the dialogue as seen so it won't play again
+                GameManager.Instance.SetFlag(GameFlag.PhilipSpawnDialogueSeen, true);
+                GameManager.Instance.SaveProgress();
+            }
+            else
+            {
+                Debug.Log($"{bossName} battle started! (Return fight - skipping spawn dialogue)");
+            }
         }
 
         if (StoreStateManager.Instance != null)
