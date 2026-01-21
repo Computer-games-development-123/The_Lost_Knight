@@ -118,6 +118,9 @@ public class EnemyBase : MonoBehaviour
 
     public void OnEntringAnimationEnd()
     {
+        Collider2D col = GetComponent<Collider2D>();
+        col.enabled = true;
+        rb.bodyType = RigidbodyType2D.Dynamic;
         hasEntringAnimation = false;
         Start();
     }
