@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DitorBoss
   bossName: Boss
-  maxHP: 1000
+  maxHP: 2000
   damage: 20
   moveSpeed: 2
   isInvulnerable: 0

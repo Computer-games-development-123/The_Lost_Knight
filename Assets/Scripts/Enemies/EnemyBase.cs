@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -17,6 +18,11 @@ public class EnemyBase : MonoBehaviour
     public float knockbackForce = 8f;
     public float knockbackDuration = 0.12f;
     private bool isKnocked = false;
+
+    [Header("FastWalker Settings")]
+    public float leftBorder = -8f;
+    public float rightBorder = 8f;
+    private bool movingRight = true;
 
     [Header("Jumper Settings")]
     public float jumperJumpForce = 15f;
@@ -113,7 +119,7 @@ public class EnemyBase : MonoBehaviour
             WalkerBehavior();
         }
 
-        UpdateAnimations();
+        //UpdateAnimations();
     }
 
     public void OnEntringAnimationEnd()
@@ -175,12 +181,28 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void FastWalkerBehavior()
     {
-        if (player == null) return;
+        // Check if reached borders
+        if (transform.position.x >= rightBorder)
+        {
+            // Reached right border - start moving left
+            movingRight = false;
+            UpdateFacing(-1); // Face left
+        }
+        else if (transform.position.x <= leftBorder)
+        {
+            // Reached left border - start moving right
+            movingRight = true;
+            UpdateFacing(1); // Face right
+        }
 
-        Vector2 direction = (player.position - transform.position).normalized;
-        rb.linearVelocity = new Vector2(direction.x * MoveSpeed * 1.5f, rb.linearVelocity.y);
+        // Move in current direction
+        float direction = movingRight ? 1 : -1;
+        rb.linearVelocity = new Vector2(direction * MoveSpeed * 1.5f, rb.linearVelocity.y);
+    }
 
-        UpdateFacing(direction.x);
+    private Vector2 FlipDirection(Vector2 v)
+    {
+        return v *= new Vector2(-v.x, v.y);
     }
 
     protected virtual void JumperBehavior()
