@@ -194,11 +194,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBase
   enemyData: {fileID: 11400000, guid: 0cc75135b9032f7419cd9dc897daca68, type: 2}
   fallbackMaxHP: 25
-  fallbackDamage: 5
+  fallbackDamage: 10
   fallbackMoveSpeed: 2
   fallbackCoinsDropped: 4
   knockbackForce: 8
   knockbackDuration: 0.12
+  leftBorder: -8
+  rightBorder: 8
   jumperJumpForce: 15
   jumperJumpCooldown: 1.5
   projectilePrefab: {fileID: 0}

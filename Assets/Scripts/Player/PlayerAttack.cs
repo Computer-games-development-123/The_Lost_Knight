@@ -6,8 +6,9 @@ using Unity.Services.CloudSave.Models;
 public class PlayerAttack : MonoBehaviour
 {
     [Header("Attack Settings")]
-    public int baseSwordDamage = 8;
-    [HideInInspector] public int swordDamage = 8;  // Runtime damage (can be upgraded)
+    [HideInInspector] public int baseSwordDamage = 8;
+    [Tooltip("Current sword damage (upgrades at runtime)")]
+    public int swordDamage = 8;  // Runtime damage (can be upgraded)
 
     [Header("Attack Timing")]
     [Tooltip("Minimum time between attacks (0.33s = 3 attacks per second)")]
