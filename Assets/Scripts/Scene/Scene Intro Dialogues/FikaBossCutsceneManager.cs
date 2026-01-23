@@ -87,14 +87,27 @@ public class FikaBossCutsceneManager : MonoBehaviour
     /// </summary>
     private IEnumerator SkipToBattle()
     {
-        // Lock player briefly
-        UserInputManager.Instance.DisableInput();
+        // Lock player completely
         GameObject player = playerOverride != null ? playerOverride : GameObject.FindGameObjectWithTag("Player");
         PlayerController pc = player != null ? player.GetComponent<PlayerController>() : null;
         Rigidbody2D playerRB = player != null ? player.GetComponent<Rigidbody2D>() : null;
+        Animator playerAnim = player != null ? player.GetComponentInChildren<Animator>() : null;
+
+        UserInputManager.Instance.DisableInput();
 
         if (pc != null) pc.enabled = false;
-        if (playerRB != null) playerRB.linearVelocity = Vector2.zero;
+        if (playerRB != null)
+        {
+            playerRB.linearVelocity = Vector2.zero;
+            playerRB.bodyType = RigidbodyType2D.Kinematic; // Make kinematic to prevent any physics
+        }
+        if (playerAnim != null)
+        {
+            // Reset animator to idle
+            playerAnim.SetFloat("Speed", 0f);
+            playerAnim.SetBool("IsGrounded", true);
+            playerAnim.Play("Idle"); // Force idle animation
+        }
 
         yield return new WaitForSeconds(0.2f);
 
@@ -125,6 +138,12 @@ public class FikaBossCutsceneManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
 
+        // Restore player physics and enable controls
+        if (playerRB != null)
+        {
+            playerRB.bodyType = RigidbodyType2D.Dynamic;
+        }
+
         // Start fight
         if (fikaAI != null) fikaAI.enabled = true;
         if (FikaHealthBar != null) FikaHealthBar.SetActive(true);
@@ -136,14 +155,27 @@ public class FikaBossCutsceneManager : MonoBehaviour
 
     private IEnumerator CutsceneSequence()
     {
-        // Lock player
-        UserInputManager.Instance.DisableInput();
+        // Lock player completely
         GameObject player = playerOverride != null ? playerOverride : GameObject.FindGameObjectWithTag("Player");
         PlayerController pc = player != null ? player.GetComponent<PlayerController>() : null;
         Rigidbody2D playerRB = player != null ? player.GetComponent<Rigidbody2D>() : null;
+        Animator playerAnim = player != null ? player.GetComponentInChildren<Animator>() : null;
+
+        UserInputManager.Instance.DisableInput();
 
         if (pc != null) pc.enabled = false;
-        if (playerRB != null) playerRB.linearVelocity = Vector2.zero;
+        if (playerRB != null)
+        {
+            playerRB.linearVelocity = Vector2.zero;
+            playerRB.bodyType = RigidbodyType2D.Kinematic; // Make kinematic to prevent any physics
+        }
+        if (playerAnim != null)
+        {
+            // Reset animator to idle
+            playerAnim.SetFloat("Speed", 0f);
+            playerAnim.SetBool("IsGrounded", true);
+            playerAnim.Play("Idle"); // Force idle animation
+        }
 
         // Spawn Fika + Mona
         fikaInstance = Instantiate(fikaBossPrefab, fikaSpawnPoint.position, Quaternion.identity);
@@ -229,12 +261,18 @@ public class FikaBossCutsceneManager : MonoBehaviour
         Destroy(monaInstance);
         Destroy(yojiInstance);
 
-        //Mark cutscene as seen BEFORE starting the fight
+        // Mark cutscene as seen BEFORE starting the fight
         if (GameManager.Instance != null)
         {
             GameManager.Instance.SetFlag(GameFlag.FikaCutsceneSeen, true);
             GameManager.Instance.SaveProgress();
             Debug.Log("Fika cutscene completed - FikaCutsceneSeen flag set to true");
+        }
+
+        // Restore player physics and enable controls
+        if (playerRB != null)
+        {
+            playerRB.bodyType = RigidbodyType2D.Dynamic;
         }
 
         // Start fight + unlock player
