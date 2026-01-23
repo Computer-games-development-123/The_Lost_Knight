@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource sfxSource;
 
     [Header("Music Clips")]
+    public AudioClip menuMusic;           // Main Menu, Login, Register
     public AudioClip forestHubMusic;      // Forest Hub + Tutorial
     public AudioClip greenForestMusic;    // Green Forest battle
     public AudioClip redForestMusic;      // Red Forest battle

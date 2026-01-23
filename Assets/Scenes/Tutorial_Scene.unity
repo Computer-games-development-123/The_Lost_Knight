@@ -722,7 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b40e90b71abca4a9ba2542df9c1a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneMusicTrigger
-  sceneMusic: 0
+  sceneMusic: 1
   customMusic: {fileID: 0}
   playOnStart: 1
 --- !u!4 &1033349684
@@ -1063,6 +1063,8 @@ MonoBehaviour:
   fallbackCoinsDropped: 1
   knockbackForce: 8
   knockbackDuration: 0.12
+  leftBorder: -8
+  rightBorder: 8
   jumperJumpForce: 15
   jumperJumpCooldown: 1.5
   projectilePrefab: {fileID: 0}

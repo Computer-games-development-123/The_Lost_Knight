@@ -8,7 +8,7 @@ public class SceneMusicTrigger : MonoBehaviour
 {
     [Header("Scene Music")]
     [Tooltip("Which music should play in this scene?")]
-    public SceneMusic sceneMusic = SceneMusic.ForestHub;
+    public SceneMusic sceneMusic = SceneMusic.Menu;
 
     [Header("Custom Music (Optional)")]
     [Tooltip("Use a custom AudioClip instead of predefined music")]
@@ -20,6 +20,7 @@ public class SceneMusicTrigger : MonoBehaviour
 
     public enum SceneMusic
     {
+        Menu,           // Main Menu, Login, Register
         ForestHub,      // Forest Hub + Tutorial
         GreenForest,    // Green Forest battle
         RedForest,      // Red Forest battle
@@ -56,6 +57,9 @@ public class SceneMusicTrigger : MonoBehaviour
 
         switch (sceneMusic)
         {
+            case SceneMusic.Menu:
+                musicToPlay = AudioManager.Instance.menuMusic;
+                break;
             case SceneMusic.ForestHub:
                 musicToPlay = AudioManager.Instance.forestHubMusic;
                 break;

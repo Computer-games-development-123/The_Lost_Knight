@@ -661,7 +661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b40e90b71abca4a9ba2542df9c1a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneMusicTrigger
-  sceneMusic: 2
+  sceneMusic: 3
   customMusic: {fileID: 0}
   playOnStart: 1
 --- !u!4 &858666949
