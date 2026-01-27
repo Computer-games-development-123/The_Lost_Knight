@@ -19,7 +19,7 @@ MonoBehaviour:
   - Think you are a hero?
   - Well, soon we will see...
   - But i dont think you will survive soon enough.
-  - Like all the other heros..
-  - Your end is soon coming.
+  - "Like every other hero who stood before me\u2026"
+  - your end draws near.
   portrait: {fileID: 6909738974090149135, guid: 6316b682b062233489375eee9663da9c, type: 3}
   pauseGameDuringDialogue: 1
