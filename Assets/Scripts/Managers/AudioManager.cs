@@ -62,6 +62,12 @@ public class AudioManager : MonoBehaviour
     // Flag to prevent music restoration when transitioning to ending scenes
     public bool isTransitioningToEnding = false;
 
+    // Mute state
+    private bool isMusicMuted = false;
+    private bool isSFXMuted = false;
+    private float savedMusicVolume;
+    private float savedSFXVolume;
+
     private void Awake()
     {
         if (Instance == null)
@@ -129,12 +135,15 @@ public class AudioManager : MonoBehaviour
         musicSource.clip = newClip;
         musicSource.Play();
 
+        // Respect mute state - only fade in if not muted
+        float targetVolume = isMusicMuted ? 0f : musicVolume;
+
         for (float t = 0; t < fadeDuration / 2; t += Time.deltaTime)
         {
-            musicSource.volume = Mathf.Lerp(0, musicVolume, t / (fadeDuration / 2));
+            musicSource.volume = Mathf.Lerp(0, targetVolume, t / (fadeDuration / 2));
             yield return null;
         }
-        musicSource.volume = musicVolume;
+        musicSource.volume = targetVolume;
 
         isFading = false;
         Debug.Log($"🎵 Now playing: {newClip.name}");
@@ -240,12 +249,149 @@ public class AudioManager : MonoBehaviour
     public void SetMusicVolume(float volume)
     {
         musicVolume = Mathf.Clamp01(volume);
-        musicSource.volume = musicVolume;
+        // Only update actual volume if not muted
+        if (!isMusicMuted)
+        {
+            musicSource.volume = musicVolume;
+        }
     }
 
     public void SetSFXVolume(float volume)
     {
         sfxVolume = Mathf.Clamp01(volume);
-        sfxSource.volume = sfxVolume;
+        // Only update actual volume if not muted
+        if (!isSFXMuted)
+        {
+            sfxSource.volume = sfxVolume;
+        }
+    }
+
+    // ========== MUTE/UNMUTE FUNCTIONALITY ==========
+
+    /// <summary>
+    /// Toggle music mute on/off
+    /// </summary>
+    public void ToggleMusicMute()
+    {
+        if (isMusicMuted)
+        {
+            UnmuteMusic();
+        }
+        else
+        {
+            MuteMusic();
+        }
+    }
+
+    /// <summary>
+    /// Toggle SFX mute on/off
+    /// </summary>
+    public void ToggleSFXMute()
+    {
+        if (isSFXMuted)
+        {
+            UnmuteSFX();
+        }
+        else
+        {
+            MuteSFX();
+        }
+    }
+
+    /// <summary>
+    /// Toggle both music and SFX mute on/off
+    /// </summary>
+    public void ToggleAllMute()
+    {
+        bool shouldMute = !isMusicMuted || !isSFXMuted; // If either is unmuted, mute both
+
+        if (shouldMute)
+        {
+            MuteMusic();
+            MuteSFX();
+        }
+        else
+        {
+            UnmuteMusic();
+            UnmuteSFX();
+        }
+    }
+
+    /// <summary>
+    /// Mute music
+    /// </summary>
+    public void MuteMusic()
+    {
+        if (!isMusicMuted)
+        {
+            savedMusicVolume = musicVolume;
+            musicSource.volume = 0f;
+            isMusicMuted = true;
+            Debug.Log("🔇 Music muted");
+        }
+    }
+
+    /// <summary>
+    /// Unmute music
+    /// </summary>
+    public void UnmuteMusic()
+    {
+        if (isMusicMuted)
+        {
+            musicSource.volume = savedMusicVolume;
+            isMusicMuted = false;
+            Debug.Log("🔊 Music unmuted");
+        }
+    }
+
+    /// <summary>
+    /// Mute SFX
+    /// </summary>
+    public void MuteSFX()
+    {
+        if (!isSFXMuted)
+        {
+            savedSFXVolume = sfxVolume;
+            sfxSource.volume = 0f;
+            isSFXMuted = true;
+            Debug.Log("🔇 SFX muted");
+        }
+    }
+
+    /// <summary>
+    /// Unmute SFX
+    /// </summary>
+    public void UnmuteSFX()
+    {
+        if (isSFXMuted)
+        {
+            sfxSource.volume = savedSFXVolume;
+            isSFXMuted = false;
+            Debug.Log("🔊 SFX unmuted");
+        }
+    }
+
+    /// <summary>
+    /// Check if music is currently muted
+    /// </summary>
+    public bool IsMusicMuted()
+    {
+        return isMusicMuted;
+    }
+
+    /// <summary>
+    /// Check if SFX is currently muted
+    /// </summary>
+    public bool IsSFXMuted()
+    {
+        return isSFXMuted;
+    }
+
+    /// <summary>
+    /// Check if all audio is muted
+    /// </summary>
+    public bool IsAllMuted()
+    {
+        return isMusicMuted && isSFXMuted;
     }
 }
