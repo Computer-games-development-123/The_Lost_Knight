@@ -17,5 +17,5 @@ MonoBehaviour:
   speakerName: Pause
   lines:
   - Press P to pause the game and view controls.
-  portrait: {fileID: 450080780327903475, guid: a90defa6e85066e4d96a1a50e590694c, type: 3}
+  portrait: {fileID: 450080780327903475, guid: 398961d0514af364fb5191f3890c74bf, type: 3}
   pauseGameDuringDialogue: 1
