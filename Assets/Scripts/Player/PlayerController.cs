@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Use Potion (allowed during knockback)
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             if (playerInventory != null)
             {
