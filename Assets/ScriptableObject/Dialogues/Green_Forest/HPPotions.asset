@@ -16,6 +16,6 @@ MonoBehaviour:
   flag: 0
   speakerName: HP & Potions
   lines:
-  - 'Press H to heal, Your HP and potions are on the top-left corner. '
+  - 'Press Z to heal, Your HP and potions are on the top-left corner. '
   portrait: {fileID: -505430822247763581, guid: ecdc770c10aba6e45a1b252127b17eee, type: 3}
   pauseGameDuringDialogue: 1

@@ -19,7 +19,7 @@ MonoBehaviour:
   - So you've met Geroge eh?
   - Yeah, i dont like him either.
   - His king, Ditor, is the one who created him.
-  - To get out of the green forest, You wiil need to take care of him.
+  - To get out of the green forest, You will need to take care of him.
   - Take this and finish him for good.
   portrait: {fileID: -5898556967480879587, guid: 308c2cc3ccc747546b66362cd154ddbb, type: 3}
   pauseGameDuringDialogue: 1
