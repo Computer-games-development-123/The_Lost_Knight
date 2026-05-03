@@ -73,7 +73,7 @@ public class ScenePortal : MonoBehaviour
         }
     }
 
-    private void EnterPortal()
+    public void EnterPortal()
     {
         if (isTransitioning) return;
 

@@ -46,7 +46,9 @@ public class Abilities : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        bool teleportPressed = Input.GetKeyDown(KeyCode.LeftAlt) ||
+            (MobileInputBridge.Instance != null && MobileInputBridge.Instance.TeleportPressed);
+        if (teleportPressed)
         {
             if (hasTeleport)
             {
@@ -106,7 +108,7 @@ public class Abilities : MonoBehaviour
         GameManager.Instance.SetFlag(GameFlag.hasTeleport, true);
         GameManager.Instance.SaveProgress();
 
-        Debug.Log("✨ Teleport ability unlocked!");
+        Debug.Log("Teleport ability unlocked!");
     }
 
     /// <summary>

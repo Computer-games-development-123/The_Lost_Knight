@@ -1061,6 +1061,34 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 985370995}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnterPortal
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ScenePortal, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2631059196294902293, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: targetSceneName
       value: Green_Forest
@@ -1167,7 +1195,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_text
-      value: Green Forest (F)
+      value: Green Forest
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_VerticalAlignment
@@ -1192,6 +1220,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2859922422059892669, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
   m_PrefabInstance: {fileID: 985370992}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &985370995 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2631059196294902293, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+  m_PrefabInstance: {fileID: 985370992}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985370994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfd7a1c21c3ddc246b03653db8fbf15a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScenePortal
 --- !u!1001 &997321725
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1267,6 +1306,34 @@ PrefabInstance:
     - target: {fileID: 1869856069330488530, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 997321728}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnterPortal
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ScenePortal, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2631059196294902293, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: targetSceneName
@@ -1374,7 +1441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_text
-      value: Dark Forest (F)
+      value: Dark Forest
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_VerticalAlignment
@@ -1399,6 +1466,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2859922422059892669, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
   m_PrefabInstance: {fileID: 997321725}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &997321728 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2631059196294902293, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+  m_PrefabInstance: {fileID: 997321725}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997321727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfd7a1c21c3ddc246b03653db8fbf15a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScenePortal
 --- !u!1 &1201971797
 GameObject:
   m_ObjectHideFlags: 0

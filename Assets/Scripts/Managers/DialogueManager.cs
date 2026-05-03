@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.UI;
 
@@ -23,6 +24,13 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private bool useTypewriter = true;
     [SerializeField] private float charactersPerSecond = 40f;
 
+    [Header("Touch Input (Mobile)")]
+    [Tooltip("If true, tapping anywhere on screen advances the dialogue")]
+    [SerializeField] private bool tapAnywhereToAdvance = true;
+
+    [Tooltip("Delay before tap input becomes valid after dialogue starts (prevents tap-through)")]
+    [SerializeField] private float tapInputDelay = 0.15f;
+
     private DialogueData _currentData;
     private int _currentIndex;
     private bool _isActive;
@@ -30,6 +38,7 @@ public class DialogueManager : MonoBehaviour
     private Coroutine _typingRoutine;
     private Action _onComplete;
     private bool _keepInputDisabled; // Flag to keep input disabled after dialogue ends
+    private float _dialogueStartTime; // Used to ignore taps that started before dialogue opened
 
     private readonly Dictionary<string, DialogueData> _byId =
         new Dictionary<string, DialogueData>();
@@ -68,9 +77,49 @@ public class DialogueManager : MonoBehaviour
     {
         if (!_isActive) return;
 
+        bool advancePressed = false;
+
+        // Keyboard input (F key) - still works for PC
         if (Input.GetKeyDown(advanceKey))
         {
-            // Play dialogue advance sound effect
+            advancePressed = true;
+        }
+
+        // Mobile interact button
+        if (MobileInputBridge.Instance != null && MobileInputBridge.Instance.InteractPressed)
+        {
+            advancePressed = true;
+        }
+
+        // Touch / mobile mouse input — tap anywhere to advance
+        if (tapAnywhereToAdvance && Time.unscaledTime - _dialogueStartTime > tapInputDelay)
+        {
+            // Touch input
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                Touch touch = Input.GetTouch(i);
+                if (touch.phase == TouchPhase.Began)
+                {
+                    if (!IsPointerOverMobileButton(touch.position))
+                    {
+                        advancePressed = true;
+                        break;
+                    }
+                }
+            }
+
+            // Mouse input (for editor testing)
+            if (!advancePressed && Input.GetMouseButtonDown(0))
+            {
+                if (!IsPointerOverMobileButton(Input.mousePosition))
+                {
+                    advancePressed = true;
+                }
+            }
+        }
+
+        if (advancePressed)
+        {
             if (AudioManager.Instance != null)
             {
                 AudioManager.Instance.PlayDialogueAdvance();
@@ -85,6 +134,31 @@ public class DialogueManager : MonoBehaviour
                 AdvanceLine();
             }
         }
+    }
+
+    /// <summary>
+    /// Returns true if the screen position is over a UI element on the MobileControlsCanvas
+    /// (joystick or action buttons), so taps there don't accidentally advance dialogue.
+    /// </summary>
+    private bool IsPointerOverMobileButton(Vector2 screenPosition)
+    {
+        if (EventSystem.current == null) return false;
+
+        PointerEventData ped = new PointerEventData(EventSystem.current)
+        {
+            position = screenPosition
+        };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(ped, results);
+
+        foreach (var hit in results)
+        {
+            // Block taps on the mobile controls (joystick + action buttons)
+            if (hit.gameObject.transform.root.name.Contains("MobileControls"))
+                return true;
+        }
+        return false;
     }
 
     // =============================
@@ -126,6 +200,7 @@ public class DialogueManager : MonoBehaviour
         _onComplete = onComplete;
         _isActive = true;
         _keepInputDisabled = keepInputDisabled; // Store the flag
+        _dialogueStartTime = Time.unscaledTime; // Track start time for tap input delay
 
         if (dialogueUI != null)
             dialogueUI.SetActive(true);

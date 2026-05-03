@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System.Threading.Tasks;
 using Unity.Services.CloudSave.Models;
 
@@ -50,6 +51,10 @@ public class PlayerAttack : MonoBehaviour
     private float lastFireballTime = 0f;
     private float lastBreathOfFireTime = 0f;
 
+    // Public accessors for UI cooldown display
+    public float LastFireballTime => lastFireballTime;
+    public float LastBreathOfFireTime => lastBreathOfFireTime;
+
     // Components
     private Animator anim;
     private Abilities abilities;
@@ -72,30 +77,38 @@ public class PlayerAttack : MonoBehaviour
     {
         if (!UserInputManager.Instance.IsInputEnabled)
             return;
-        // Basic attack with cooldown
-        if (Input.GetKeyDown(attackKey))
+
+        // Basic attack with cooldown — keyboard OR mobile button
+        if (Input.GetKeyDown(attackKey) ||
+            (MobileInputBridge.Instance != null && MobileInputBridge.Instance.AttackPressed))
         {
             TryPerformAttack();
         }
 
-        // Fireball (C key)
-        if (Input.GetKeyDown(KeyCode.C) && Time.time >= lastFireballTime + fireballCooldown)
+        // Fireball (C key OR mobile button)
+        bool fireballInput = Input.GetKeyDown(KeyCode.C) ||
+            (MobileInputBridge.Instance != null && MobileInputBridge.Instance.FireballPressed);
+
+        if (fireballInput && Time.time >= lastFireballTime + fireballCooldown)
         {
             if (abilities != null && abilities.hasFireballSpell)
             {
                 if (anim != null)
-                    anim.SetTrigger("FireBall"); // Match Animator parameter name
+                    anim.SetTrigger("FireBall");
                 lastFireballTime = Time.time;
             }
         }
 
-        // Breath of Fire (V key)
-        if (Input.GetKeyDown(KeyCode.V) && Time.time >= lastBreathOfFireTime + breathOfFireCooldown)
+        // Breath of Fire (V key OR mobile button)
+        bool breathInput = Input.GetKeyDown(KeyCode.V) ||
+            (MobileInputBridge.Instance != null && MobileInputBridge.Instance.BreathOfFirePressed);
+
+        if (breathInput && Time.time >= lastBreathOfFireTime + breathOfFireCooldown)
         {
             if (abilities != null && abilities.hasBreathOfFire)
             {
                 if (anim != null)
-                    anim.SetTrigger("FireBreath"); // Match Animator parameter name
+                    anim.SetTrigger("FireBreath");
                 lastBreathOfFireTime = Time.time;
             }
         }
@@ -118,7 +131,6 @@ public class PlayerAttack : MonoBehaviour
 
         if (timeSinceLastAttack < attackCooldown)
         {
-            // Still on cooldown - ignore input
             Debug.Log($"Attack on cooldown. Wait {(attackCooldown - timeSinceLastAttack):F2}s more. Time since last: {timeSinceLastAttack:F2}s");
             return;
         }
@@ -292,11 +304,8 @@ public class PlayerAttack : MonoBehaviour
     // =========================
     // Breath of Fire
     // =========================
-    // Note: Breath of Fire is just an animation effect
-    // This method detects and damages enemies in a cone/area in front of the player
     void ShootBreathOfFire()
     {
-        // Determine spawn point (use breathOrigin if set, otherwise attackPoint)
         Transform origin = breathOrigin != null ? breathOrigin : attackPoint;
 
         if (origin == null)
@@ -305,13 +314,9 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
 
-        // Get facing direction
         Vector2 direction = movement != null ? movement.facingDir() : Vector2.right;
-
-        // Calculate the center point of the breath cone
         Vector2 centerPoint = (Vector2)origin.position + direction * (breathOfFireRange / 2f);
 
-        // Detect all enemies in the area
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(
             centerPoint,
             new Vector2(breathOfFireRange, breathOfFireWidth),
@@ -323,11 +328,10 @@ public class PlayerAttack : MonoBehaviour
         {
             foreach (Collider2D enemy in hitEnemies)
             {
-                // Check if enemy is actually in front of the player (not behind)
                 Vector2 toEnemy = (enemy.transform.position - origin.position).normalized;
                 float dotProduct = Vector2.Dot(direction, toEnemy);
 
-                if (dotProduct > 0.5f) // Enemy is in front (not behind or to the side)
+                if (dotProduct > 0.5f)
                 {
                     DealBreathOfFireDamage(enemy);
                 }
@@ -372,12 +376,8 @@ public class PlayerAttack : MonoBehaviour
     // Damage Persistence System
     // =========================
 
-    /// <summary>
-    /// Load damage from Cloud Save when script starts
-    /// </summary>
     private async Task LoadDamageFromSave()
     {
-        // Wait for GameManager to be ready
         while (GameManager.Instance == null || !GameManager.Instance.IsProgressLoaded)
         {
             await Task.Yield();
@@ -385,7 +385,6 @@ public class PlayerAttack : MonoBehaviour
 
         try
         {
-            // Try to load saved sword damage from cloud
             var cloudData = await DatabaseManager.LoadData("PlayerSwordDamage");
 
             if (cloudData.ContainsKey("PlayerSwordDamage"))
@@ -395,7 +394,6 @@ public class PlayerAttack : MonoBehaviour
             }
             else
             {
-                // No saved damage - use base damage
                 swordDamage = baseSwordDamage;
                 Debug.Log($"No saved damage found, using base: {baseSwordDamage}");
             }
@@ -407,9 +405,6 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Save current damage to Cloud Save
-    /// </summary>
     private async void SaveDamageToCloud()
     {
         try
@@ -423,37 +418,25 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Increase damage by amount (used by upgrades)
-    /// Called by: Yoji's free upgrade (4 dmg) and Shop damage upgrades (5 dmg each)
-    /// </summary>
     public void IncreaseDamage(int amount)
     {
         swordDamage += amount;
 
-        // Set the upgraded sword flag (for Yoji's initial upgrade check)
         if (swordDamage > baseSwordDamage)
         {
             GameManager.Instance.SetFlag(GameFlag.hasUpgradedSword, true);
             GameManager.Instance.SaveProgress();
         }
 
-        // Save the actual damage value to cloud
         SaveDamageToCloud();
 
         Debug.Log($"Damage increased by {amount}. New damage: {swordDamage}");
     }
 
-    /// <summary>
-    /// Multiply damage (used by Breath of Fire purchase)
-    /// </summary>
     public void MultiplyDamage(int multiplier)
     {
         swordDamage *= multiplier;
-
-        // Save the new damage value
         SaveDamageToCloud();
-
         Debug.Log($"Damage multiplied by {multiplier}. New damage: {swordDamage}");
     }
 
@@ -464,19 +447,17 @@ public class PlayerAttack : MonoBehaviour
     {
         if (attackPoint != null)
         {
-            // Draw normal attack range
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(attackPoint.position, normalAttackRange);
         }
 
-        // Draw Breath of Fire range
         if (breathOrigin != null || attackPoint != null)
         {
             Transform origin = breathOrigin != null ? breathOrigin : attackPoint;
             Vector2 direction = movement != null ? movement.facingDir() : Vector2.right;
             Vector2 centerPoint = (Vector2)origin.position + direction * (breathOfFireRange / 2f);
 
-            Gizmos.color = new Color(1f, 0.5f, 0f, 0.5f); // Orange, semi-transparent
+            Gizmos.color = new Color(1f, 0.5f, 0f, 0.5f);
             Gizmos.DrawWireCube(centerPoint, new Vector3(breathOfFireRange, breathOfFireWidth, 1f));
         }
     }

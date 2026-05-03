@@ -103,8 +103,11 @@ public class YojiStoreHandler : MonoBehaviour
                 UpdateStorePromptText();
             }
 
-            // Open store on key press
-            if (Input.GetKeyDown(shopKey))
+            // Open store - keyboard E key OR mobile shop button
+            bool shopOpenPressed = Input.GetKeyDown(shopKey) ||
+                (MobileInputBridge.Instance != null && MobileInputBridge.Instance.ShopPressed);
+
+            if (shopOpenPressed)
             {
                 OpenStore();
             }
@@ -148,7 +151,7 @@ public class YojiStoreHandler : MonoBehaviour
     /// <summary>
     /// Opens the store
     /// </summary>
-    private void OpenStore()
+    public void OpenStore()
     {
         if (storeController == null)
         {

@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 5688283901476304323}
   - component: {fileID: 2834119978060575397}
   - component: {fileID: 7483609410892120398}
+  - component: {fileID: 1940387431592039759}
   m_Layer: 0
   m_Name: PortalPrompt
   m_TagString: Untagged
@@ -307,6 +308,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 2834119978060575397}
   m_maskType: 0
+--- !u!114 &1940387431592039759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7159216176550064141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3687ed2fc83eff2448dff2ec57055652, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PromptTapHandler
+  OnTap:
+    m_PersistentCalls:
+      m_Calls: []
+  tapAreaPadding: 0.5
 --- !u!1 &7202207546776001102
 GameObject:
   m_ObjectHideFlags: 0
