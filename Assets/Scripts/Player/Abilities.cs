@@ -25,6 +25,7 @@ public class Abilities : MonoBehaviour
     private PlayerAttack PA;
     private FormSwitcher FS;
     private float lastTeleportTime = -999f;
+    public float LastTeleportTime => lastTeleportTime;
 
     private void Awake()
     {

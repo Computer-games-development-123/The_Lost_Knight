@@ -4,7 +4,8 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// On-screen virtual joystick for mobile movement.
 /// Reports horizontal axis to MobileInputBridge.MoveInput.
-/// Drag the handle within the background; release to snap back to center.
+/// HORIZONTAL ONLY - the handle only moves left/right since the player
+/// can only walk horizontally in this 2D platformer.
 /// </summary>
 public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
 {
@@ -19,9 +20,6 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerDownHandler,
     [Tooltip("Movement values below this magnitude register as 0 (deadzone)")]
     [Range(0f, 0.5f)]
     [SerializeField] private float deadzone = 0.15f;
-
-    [Tooltip("If true, joystick snaps to where the finger first touches inside the background")]
-    [SerializeField] private bool snapToTouch = false;
 
     private Vector2 inputVector = Vector2.zero;
 
@@ -40,7 +38,6 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerDownHandler,
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("Joystick clicked!"); // ADD THIS LINE
         OnDrag(eventData);
     }
 
@@ -54,16 +51,16 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerDownHandler,
         // Normalize position to [-1, 1] based on background size
         Vector2 size = background.sizeDelta;
         position.x = (position.x / size.x) * 2f;
-        position.y = (position.y / size.y) * 2f;
 
-        inputVector = (position.magnitude > 1f) ? position.normalized : position;
+        // HORIZONTAL ONLY - ignore Y axis since player can only walk left/right
+        inputVector = new Vector2(Mathf.Clamp(position.x, -1f, 1f), 0);
 
-        // Move the handle visually
+        // Move the handle visually - X only, stay centered vertically
         if (handle != null)
         {
             handle.anchoredPosition = new Vector2(
                 inputVector.x * (size.x / 2f),
-                inputVector.y * (size.y / 2f)
+                0  // Always centered vertically
             );
         }
 

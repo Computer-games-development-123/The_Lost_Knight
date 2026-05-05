@@ -5,8 +5,8 @@ using System.Collections;
 
 /// <summary>
 /// SIMPLIFIED EndingChoiceManager
-/// Only handles button selection and loading the appropriate ending scene
-/// All cutscene logic is now in the ending scenes themselves via EndingSceneManager
+/// Only handles button selection and loading the appropriate ending scene.
+/// Now supports both keyboard navigation AND direct button tap (mobile).
 /// </summary>
 public class EndingChoiceManager : MonoBehaviour
 {
@@ -30,7 +30,7 @@ public class EndingChoiceManager : MonoBehaviour
 
     private int currentButtonIndex = 0; // 0 = Finish Ditor, 1 = Escape Forest
     private bool isChoosingEnding = false;
-    private bool canAcceptInput = false; // NEW: Prevent immediate input
+    private bool canAcceptInput = false;
     private Image finishDitorImage;
     private Image escapeForestImage;
 
@@ -54,13 +54,17 @@ public class EndingChoiceManager : MonoBehaviour
         if (finishDitorButton != null)
         {
             finishDitorImage = finishDitorButton.GetComponent<Image>();
-            // DON'T add onClick listener here - we'll handle it manually to prevent auto-triggering
+
+            // Wire up the OnClick for direct tap support
+            finishDitorButton.onClick.AddListener(OnFinishDitorTapped);
         }
 
         if (escapeForestButton != null)
         {
             escapeForestImage = escapeForestButton.GetComponent<Image>();
-            // DON'T add onClick listener here - we'll handle it manually to prevent auto-triggering
+
+            // Wire up the OnClick for direct tap support
+            escapeForestButton.onClick.AddListener(OnEscapeForestTapped);
         }
     }
 
@@ -110,11 +114,11 @@ public class EndingChoiceManager : MonoBehaviour
             choicePanel.SetActive(true);
 
         isChoosingEnding = true;
-        canAcceptInput = false; // Not yet!
+        canAcceptInput = false;
         currentButtonIndex = 0;
         UpdateButtonSelection();
 
-        // Disable player movement/actions (should already be disabled, but just in case)
+        // Disable player movement/actions
         if (UserInputManager.Instance != null)
         {
             UserInputManager.Instance.DisableInput();
@@ -126,7 +130,7 @@ public class EndingChoiceManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         canAcceptInput = true;
-        if (showDebugLogs) Debug.Log("Now accepting input! Use UP/DOWN to select, ENTER to confirm");
+        if (showDebugLogs) Debug.Log("Now accepting input! Use UP/DOWN to select, ENTER to confirm, or TAP a button");
     }
 
     private void UpdateButtonSelection()
@@ -158,7 +162,7 @@ public class EndingChoiceManager : MonoBehaviour
             return;
         }
 
-        canAcceptInput = false; // Prevent multiple confirmations
+        canAcceptInput = false;
         isChoosingEnding = false;
 
         if (currentButtonIndex == 0)
@@ -169,6 +173,44 @@ public class EndingChoiceManager : MonoBehaviour
         {
             OnEscapeForestChosen();
         }
+    }
+
+    /// <summary>
+    /// Called when the player TAPS the Finish Ditor button (mobile)
+    /// </summary>
+    private void OnFinishDitorTapped()
+    {
+        if (!canAcceptInput || !isChoosingEnding)
+        {
+            if (showDebugLogs) Debug.Log("Tap ignored - input not ready");
+            return;
+        }
+
+        if (showDebugLogs) Debug.Log("Finish Ditor button TAPPED");
+
+        canAcceptInput = false;
+        isChoosingEnding = false;
+        currentButtonIndex = 0;
+        OnFinishDitorChosen();
+    }
+
+    /// <summary>
+    /// Called when the player TAPS the Escape Forest button (mobile)
+    /// </summary>
+    private void OnEscapeForestTapped()
+    {
+        if (!canAcceptInput || !isChoosingEnding)
+        {
+            if (showDebugLogs) Debug.Log("Tap ignored - input not ready");
+            return;
+        }
+
+        if (showDebugLogs) Debug.Log("Escape Forest button TAPPED");
+
+        canAcceptInput = false;
+        isChoosingEnding = false;
+        currentButtonIndex = 1;
+        OnEscapeForestChosen();
     }
 
     private void OnFinishDitorChosen()
@@ -212,13 +254,11 @@ public class EndingChoiceManager : MonoBehaviour
         }
         else
         {
-            // Fallback if no fade manager
             yield return new WaitForSeconds(1f);
         }
 
         if (showDebugLogs) Debug.Log($"Loading ending scene: {sceneName}");
 
-        // Load the ending scene
         SceneManager.LoadScene(sceneName);
     }
 }

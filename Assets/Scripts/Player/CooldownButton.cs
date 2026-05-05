@@ -3,13 +3,13 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Displays a cooldown overlay on a UI button.
-/// Reads cooldown state from PlayerAttack and disables the button during cooldown.
+/// Reads cooldown state from PlayerAttack (Fireball, BreathOfFire) or Abilities (Teleport).
 /// Hides button visuals when ability is locked WITHOUT disabling the GameObject,
 /// so the script can re-show the button when the ability is unlocked mid-game.
 /// </summary>
 public class CooldownButton : MonoBehaviour
 {
-    public enum AbilityType { Fireball, BreathOfFire }
+    public enum AbilityType { Fireball, BreathOfFire, Teleport }
 
     [Header("Settings")]
     [SerializeField] private AbilityType ability;
@@ -104,6 +104,7 @@ public class CooldownButton : MonoBehaviour
         {
             AbilityType.Fireball => abilities.hasFireballSpell,
             AbilityType.BreathOfFire => abilities.hasBreathOfFire,
+            AbilityType.Teleport => abilities.hasTeleport,
             _ => false,
         };
     }
@@ -122,6 +123,10 @@ public class CooldownButton : MonoBehaviour
             case AbilityType.BreathOfFire:
                 lastUseTime = playerAttack.LastBreathOfFireTime;
                 cooldownDuration = playerAttack.breathOfFireCooldown;
+                break;
+            case AbilityType.Teleport:
+                lastUseTime = abilities.LastTeleportTime;
+                cooldownDuration = abilities.teleportCooldown;
                 break;
         }
 

@@ -222,6 +222,19 @@ public class ListStoreController : MonoBehaviour
             }
 
             row.purchaseButton = rowObj.GetComponentInChildren<Button>(true);
+            // Wire purchase button for tap input (mobile + mouse)
+            if (row.purchaseButton != null)
+            {
+                StoreItemRow capturedRow = row; // Capture for closure
+                row.purchaseButton.onClick.RemoveAllListeners();
+                row.purchaseButton.onClick.AddListener(() =>
+                {
+                    if (capturedRow.purchaseButton.interactable)
+                    {
+                        PurchaseItem(capturedRow.itemData);
+                    }
+                });
+            }
             if (row.buttonText == null && row.purchaseButton != null)
             {
                 row.buttonText = row.purchaseButton.GetComponentInChildren<TextMeshProUGUI>();
