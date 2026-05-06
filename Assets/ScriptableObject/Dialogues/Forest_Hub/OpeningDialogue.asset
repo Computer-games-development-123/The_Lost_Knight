@@ -16,6 +16,6 @@ MonoBehaviour:
   flag: 0
   speakerName: Controls
   lines:
-  - 'Press Arrows to move, Press Up arrow to Jump. '
-  portrait: {fileID: 3348862932474825598, guid: 59cd5dbe970bea049950104ba24d2f7b, type: 3}
+  - 'Use Joystick to move, Tap Jump icon button to Jump. '
+  portrait: {fileID: -1194685025707199936, guid: a2100dc635d95d14aaccdc11b6471f7c, type: 3}
   pauseGameDuringDialogue: 1

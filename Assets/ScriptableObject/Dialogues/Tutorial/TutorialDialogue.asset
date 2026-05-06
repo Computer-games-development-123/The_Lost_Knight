@@ -16,7 +16,7 @@ MonoBehaviour:
   flag: 0
   speakerName: Tutorial Start
   lines:
-  - Press X to Attack.
+  - Tap the Sword icon to Attack.
   - The dummy cant hurt you.
   - Try to hit the dummy 3 Times!
   portrait: {fileID: -6939695964637348897, guid: 5b8f284fba5fde64e80b524f873b554f, type: 3}

@@ -123,7 +123,11 @@ public class EndingChoiceManager : MonoBehaviour
         {
             UserInputManager.Instance.DisableInput();
         }
-
+        // Hide mobile HUD during ending sequence
+        if (MobileInputBridge.Instance != null)
+        {
+            MobileInputBridge.Instance.gameObject.SetActive(false);
+        }
         if (showDebugLogs) Debug.Log("Choice panel shown - waiting for input cooldown");
 
         // Wait a bit more before accepting input (prevents accidental F key from dialogue)

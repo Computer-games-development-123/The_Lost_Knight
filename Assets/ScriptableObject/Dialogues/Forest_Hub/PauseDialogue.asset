@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   id: 
   flag: 1
-  speakerName: Pause
+  speakerName: Interact
   lines:
-  - Press P to pause the game and view controls.
-  portrait: {fileID: 450080780327903475, guid: 398961d0514af364fb5191f3890c74bf, type: 3}
+  - 'Tap NPCs and signs prompts to interact
+
+'
+  portrait: {fileID: -202057278494672996, guid: b82fd9e3c22e1af47a20fa081a1a51f6, type: 3}
   pauseGameDuringDialogue: 1
