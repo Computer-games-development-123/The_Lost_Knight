@@ -108,16 +108,9 @@ public class YojiDialogueHandler : MonoBehaviour
         if (GM == null) return;
 
         bool hasDialogue = ShouldShowDialoguePrompt();
-
-        // Portal should be INACTIVE when Yoji has dialogue
-        // Portal should be ACTIVE when Yoji has NO dialogue (or is dead but dialogue was completed)
         bool shouldPortalBeActive = !hasDialogue && GM.GetFlag(GameFlag.YojiFirstDialogueCompleted);
 
-        if (greenForestPortal.activeSelf != shouldPortalBeActive)
-        {
-            greenForestPortal.SetActive(shouldPortalBeActive);
-            Debug.Log($"Portal state updated: {(shouldPortalBeActive ? "OPEN" : "CLOSED")} - Has dialogue: {hasDialogue}");
-        }
+        greenForestPortal.SetActive(shouldPortalBeActive);
     }
 
     /// <summary>

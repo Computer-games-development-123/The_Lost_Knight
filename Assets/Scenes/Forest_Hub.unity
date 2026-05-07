@@ -312,6 +312,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1902161312776190917, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 2862995902270649122, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_Name
       value: StoreCanvas
@@ -560,30 +564,46 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5624433976648393796, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 650
+      objectReference: {fileID: 0}
     - target: {fileID: 6263740945958587201, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6594849069928141937, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 180
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 6594849069928141937, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -90.9
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 6594849069928141937, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -20.8
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 7519282709849790703, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_text
-      value: Close (P)
+      value: Close
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519282709849790703, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_fontSize
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519282709849790703, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_margin.w
+      value: -14.12178
       objectReference: {fileID: 0}
     - target: {fileID: 7519282709849790703, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+    - target: {fileID: 7519282709849790703, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 22
+      objectReference: {fileID: 0}
     - target: {fileID: 7519282709849790703, guid: 17c13e6ea412b2743bd1b1c2b329c6aa, type: 3}
       propertyPath: m_sharedMaterial
       value: 
@@ -4012,6 +4032,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 978291062}
   m_CullTransparentMesh: 1
+--- !u!114 &990905530 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5318802686532609789, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+  m_PrefabInstance: {fileID: 8568513963731150190}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bf00987d508aeb42b04ebbfac7572dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YojiDialogueHandler
 --- !u!1 &1001270624
 GameObject:
   m_ObjectHideFlags: 0
@@ -4165,7 +4196,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 300}
+  m_AnchoredPosition: {x: 0, y: 400}
   m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1023743893
@@ -6040,7 +6071,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -155, y: 41}
+  m_AnchoredPosition: {x: -208, y: 41}
   m_SizeDelta: {x: 400, y: 400}
   m_Pivot: {x: 1, y: 0}
 --- !u!1 &1733479875
@@ -6376,7 +6407,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 132, y: 42}
+  m_AnchoredPosition: {x: 168, y: 37}
   m_SizeDelta: {x: 300, y: 120}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1772306744
@@ -6843,7 +6874,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5044626344483555084, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5044626344483555084, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7791,7 +7822,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3501039901075882392, guid: 4061a98beba98f244b971448007db841, type: 3}
       propertyPath: m_LocalScale.x
-      value: 18
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3501039901075882392, guid: 4061a98beba98f244b971448007db841, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8343,7 +8374,7 @@ MonoBehaviour:
   OnTap:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5318802686532609789, guid: e9e419e32d8782c46906d0ad235665f9, type: 3}
+      - m_Target: {fileID: 990905530}
         m_TargetAssemblyTypeName: YojiDialogueHandler, Assembly-CSharp
         m_MethodName: HandleDialogueInteraction
         m_Mode: 1

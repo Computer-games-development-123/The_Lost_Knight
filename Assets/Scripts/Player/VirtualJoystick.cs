@@ -48,8 +48,13 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerDownHandler,
                 background, eventData.position, eventData.pressEventCamera, out position))
             return;
 
-        // Normalize position to [-1, 1] based on background size
         Vector2 size = background.sizeDelta;
+
+        // Adjust for pivot so (0,0) is the visual center of the background,
+        // regardless of how the RectTransform's pivot is set
+        position.x -= (0.5f - background.pivot.x) * size.x;
+
+        // Normalize to [-1, 1]
         position.x = (position.x / size.x) * 2f;
 
         // HORIZONTAL ONLY - ignore Y axis since player can only walk left/right
