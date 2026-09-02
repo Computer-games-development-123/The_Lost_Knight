@@ -106,3 +106,6 @@ $RECYCLE.BIN/
 
 # Pycharm project
 .idea
+
+# Unity 6 temp folder
+.utmp/

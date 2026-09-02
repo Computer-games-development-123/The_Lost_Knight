@@ -62,17 +62,14 @@ public class PauseMenuManager : MonoBehaviour
             return;
         }
 
-        // Toggle pause with P key
-        if (Input.GetKeyDown(pauseKey))
+        // Toggle pause with P key OR mobile pause button
+        bool pausePressed = Input.GetKeyDown(pauseKey) ||
+            (MobileInputBridge.Instance != null && MobileInputBridge.Instance.PausePressed);
+
+        if (pausePressed)
         {
-            if (isPaused)
-            {
-                ResumeGame();
-            }
-            else
-            {
-                PauseGame();
-            }
+            if (isPaused) ResumeGame();
+            else PauseGame();
         }
     }
 
@@ -109,6 +106,7 @@ public class PauseMenuManager : MonoBehaviour
     /// </summary>
     public void ResumeGame()
     {
+        Debug.Log("🔵 ResumeGame called!");
         if (!isPaused) return;
 
         isPaused = false;

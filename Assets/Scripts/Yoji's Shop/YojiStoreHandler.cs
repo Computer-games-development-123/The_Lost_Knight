@@ -103,8 +103,11 @@ public class YojiStoreHandler : MonoBehaviour
                 UpdateStorePromptText();
             }
 
-            // Open store on key press
-            if (Input.GetKeyDown(shopKey))
+            // Open store - keyboard E key OR mobile shop button
+            bool shopOpenPressed = Input.GetKeyDown(shopKey) ||
+                (MobileInputBridge.Instance != null && MobileInputBridge.Instance.ShopPressed);
+
+            if (shopOpenPressed)
             {
                 OpenStore();
             }
@@ -148,8 +151,14 @@ public class YojiStoreHandler : MonoBehaviour
     /// <summary>
     /// Opens the store
     /// </summary>
-    private void OpenStore()
+    public void OpenStore()
     {
+        // Self-heal: try to find store controller if not assigned
+        if (storeController == null)
+        {
+            FindStoreController();
+        }
+
         if (storeController == null)
         {
             Debug.LogError("YojiStoreHandler: storeController is not assigned!");
@@ -158,7 +167,6 @@ public class YojiStoreHandler : MonoBehaviour
 
         storeController.OpenStore();
 
-        // Hide prompt while store is open
         if (storePrompt != null)
             storePrompt.SetActive(false);
     }

@@ -54,8 +54,11 @@ public class YojiDialogueHandler : MonoBehaviour
             if (interactionPrompt != null && !interactionPrompt.activeSelf)
                 interactionPrompt.SetActive(true);
 
-            // Handle input
-            if (Input.GetKeyDown(KeyCode.F))
+            // Handle input - keyboard F key OR mobile interact button
+            bool interactPressed = Input.GetKeyDown(KeyCode.F) ||
+                (MobileInputBridge.Instance != null && MobileInputBridge.Instance.InteractPressed);
+
+            if (interactPressed)
             {
                 HandleDialogueInteraction();
             }
@@ -66,7 +69,6 @@ public class YojiDialogueHandler : MonoBehaviour
                 interactionPrompt.SetActive(false);
         }
     }
-
     /// <summary>
     /// Determines if Yoji has dialogue available for the player
     /// </summary>
@@ -106,22 +108,15 @@ public class YojiDialogueHandler : MonoBehaviour
         if (GM == null) return;
 
         bool hasDialogue = ShouldShowDialoguePrompt();
-
-        // Portal should be INACTIVE when Yoji has dialogue
-        // Portal should be ACTIVE when Yoji has NO dialogue (or is dead but dialogue was completed)
         bool shouldPortalBeActive = !hasDialogue && GM.GetFlag(GameFlag.YojiFirstDialogueCompleted);
 
-        if (greenForestPortal.activeSelf != shouldPortalBeActive)
-        {
-            greenForestPortal.SetActive(shouldPortalBeActive);
-            Debug.Log($"Portal state updated: {(shouldPortalBeActive ? "OPEN" : "CLOSED")} - Has dialogue: {hasDialogue}");
-        }
+        greenForestPortal.SetActive(shouldPortalBeActive);
     }
 
     /// <summary>
     /// Handles the dialogue interaction based on game state
     /// </summary>
-    private void HandleDialogueInteraction()
+    public void HandleDialogueInteraction()
     {
         if (GM == null || DM == null) return;
 

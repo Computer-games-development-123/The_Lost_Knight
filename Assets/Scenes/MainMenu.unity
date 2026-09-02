@@ -204,7 +204,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -100}
-  m_SizeDelta: {x: 500, y: 150}
+  m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &416535595
 MonoBehaviour:
@@ -359,8 +359,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -280}
-  m_SizeDelta: {x: 500, y: 150}
+  m_AnchoredPosition: {x: 0, y: -300}
+  m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &465784743
 MonoBehaviour:
@@ -562,8 +562,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -889,12 +889,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1221,21 +1221,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   musicSource: {fileID: 0}
   sfxSource: {fileID: 0}
-  menuMusic: {fileID: 8300000, guid: 187836822c9b6d940a82b22c573cf2ed, type: 3}
-  forestHubMusic: {fileID: 8300000, guid: 8915a027abc1a364490cac1754701f51, type: 3}
-  greenForestMusic: {fileID: 8300000, guid: 2d5227d2e09ba0b4385b7a8c84d33bee, type: 3}
-  redForestMusic: {fileID: 8300000, guid: 009e566e8ef93f540b2a7332ea12f000, type: 3}
-  darkForestMusic: {fileID: 8300000, guid: 9ec4733dd02baef4e93070ec2395e723, type: 3}
-  epilogueMusic: {fileID: 8300000, guid: bb21cea5ea166f84596c1618f85b5cd2, type: 3}
-  georgeMusic: {fileID: 8300000, guid: 46215b2c0ff83f442ac5fe0b0bb62dfe, type: 3}
-  fikaMusic: {fileID: 8300000, guid: 25fe2a781af3c5548bfbfbdd3ee221f9, type: 3}
-  philipMusic: {fileID: 8300000, guid: 8737e7804b3fe9e4c88d9e29ce63418c, type: 3}
-  ditorMusic: {fileID: 8300000, guid: 0374f2c4802b579468aef90046f15a30, type: 3}
+  menuMusic: {fileID: 8300000, guid: d529d4ce169917e408e91e34a601bad8, type: 3}
+  forestHubMusic: {fileID: 8300000, guid: ec113d1b2f8acfd47b69ffa98b0462aa, type: 3}
+  greenForestMusic: {fileID: 8300000, guid: 6799cc4c1044beb45b6bbf6b67079e22, type: 3}
+  redForestMusic: {fileID: 8300000, guid: c57b636b32d82d6429badeaa6eb336bc, type: 3}
+  darkForestMusic: {fileID: 8300000, guid: 038e122c0e272f243a4366c2a26627ec, type: 3}
+  epilogueMusic: {fileID: 8300000, guid: 51ed05fc992e6db44823e6a456e6eb24, type: 3}
+  georgeMusic: {fileID: 8300000, guid: 6fd2fffcac96279478206786fb4936af, type: 3}
+  fikaMusic: {fileID: 8300000, guid: 4d11c6f48b0185643a6a7ab223a128b4, type: 3}
+  philipMusic: {fileID: 8300000, guid: 19a278f0518366a49a36a1129f8fdea9, type: 3}
+  ditorMusic: {fileID: 8300000, guid: 0bfcab4289356a7468b4b67991923de0, type: 3}
   yojiDeathMusic: {fileID: 8300000, guid: b920d2ecc6e8dec42b9557d9b7eecc54, type: 3}
   playerJump: {fileID: 8300000, guid: eb2c701948b82b14da31b0e9af9d3a28, type: 3}
   playerAttack: {fileID: 8300000, guid: c86a0850a69f7c74fa3c60a8edb539ba, type: 3}
   playerTakeDamage: {fileID: 8300000, guid: fb6d286350f257347aafdafae35b51d7, type: 3}
-  playerDeath: {fileID: 8300000, guid: 3f12287b838540c4cb4bf0de1fce6726, type: 3}
+  playerDeath: {fileID: 8300000, guid: b9404c82b65db6f499296c4baabe2d80, type: 3}
   playerHeal: {fileID: 8300000, guid: 7558c8242715d294a92bd31639071d03, type: 3}
   enemyHit: {fileID: 0}
   enemyDeath: {fileID: 8300000, guid: 426316a2373c19544b2774f8267d83e2, type: 3}
@@ -1349,8 +1349,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

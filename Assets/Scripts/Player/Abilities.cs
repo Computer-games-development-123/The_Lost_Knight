@@ -25,6 +25,7 @@ public class Abilities : MonoBehaviour
     private PlayerAttack PA;
     private FormSwitcher FS;
     private float lastTeleportTime = -999f;
+    public float LastTeleportTime => lastTeleportTime;
 
     private void Awake()
     {
@@ -46,7 +47,9 @@ public class Abilities : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        bool teleportPressed = Input.GetKeyDown(KeyCode.LeftAlt) ||
+            (MobileInputBridge.Instance != null && MobileInputBridge.Instance.TeleportPressed);
+        if (teleportPressed)
         {
             if (hasTeleport)
             {
@@ -106,7 +109,7 @@ public class Abilities : MonoBehaviour
         GameManager.Instance.SetFlag(GameFlag.hasTeleport, true);
         GameManager.Instance.SaveProgress();
 
-        Debug.Log("✨ Teleport ability unlocked!");
+        Debug.Log("Teleport ability unlocked!");
     }
 
     /// <summary>

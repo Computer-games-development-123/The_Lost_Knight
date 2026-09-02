@@ -255,6 +255,10 @@ PrefabInstance:
       value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 3501039901075882392, guid: 4061a98beba98f244b971448007db841, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501039901075882392, guid: 4061a98beba98f244b971448007db841, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -448,6 +452,34 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 791205093}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnterPortal
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ScenePortal, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940387431592039759, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+      propertyPath: OnTap.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2631059196294902293, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: targetSceneName
       value: Forest_Hub
@@ -558,7 +590,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_text
-      value: Forest Hub (Press F)
+      value: Forest Hub
       objectReference: {fileID: 0}
     - target: {fileID: 7483609410892120398, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
       propertyPath: m_fontSize
@@ -596,6 +628,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+--- !u!114 &791205093 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2631059196294902293, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
+  m_PrefabInstance: {fileID: 791205092}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 791205094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfd7a1c21c3ddc246b03653db8fbf15a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScenePortal
 --- !u!1 &791205094 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2859922422059892669, guid: 5c0227bdea75523409b0aaafb3a4be7e, type: 3}
@@ -857,7 +900,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.45, z: 1}
-  m_LocalScale: {x: 3.9, y: 4.2, z: 1}
+  m_LocalScale: {x: 5, y: 4.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

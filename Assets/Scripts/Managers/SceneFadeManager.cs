@@ -61,7 +61,8 @@ public class SceneFadeManager : MonoBehaviour
         fadeCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
         fadeCanvas.sortingOrder = 9999; // Always on top
 
-        canvasObj.AddComponent<GraphicRaycaster>();
+        //removed due to blocking the joystick
+        //canvasObj.AddComponent<GraphicRaycaster>();
 
         // Create full-screen black image
         GameObject imageObj = new GameObject("FadeImage");
@@ -69,6 +70,7 @@ public class SceneFadeManager : MonoBehaviour
 
         fadeImage = imageObj.AddComponent<Image>();
         fadeImage.color = new Color(fadeColor.r, fadeColor.g, fadeColor.b, 1f); // Start BLACK
+        fadeImage.raycastTarget = false;  // ← NEW LINE
 
         // Stretch to fill screen
         RectTransform rect = fadeImage.GetComponent<RectTransform>();

@@ -58,7 +58,9 @@ public class PlayerController : MonoBehaviour
         {
             // Movement Input
             float moveInput = Input.GetAxisRaw("Horizontal");
-            rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+            if (MobileInputBridge.Instance != null)
+                moveInput += MobileInputBridge.Instance.MoveInput;
+            moveInput = Mathf.Clamp(moveInput, -1f, 1f); rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
 
             // Flip Sprite
             if (moveInput > 0 && !facingRight)
@@ -67,7 +69,9 @@ public class PlayerController : MonoBehaviour
                 Flip();
 
             // Jump
-            if (Input.GetButtonDown("Jump") && isGrounded)
+            bool jumpPressed = Input.GetButtonDown("Jump") ||
+            (MobileInputBridge.Instance != null && MobileInputBridge.Instance.JumpPressed);
+            if (jumpPressed && isGrounded)
             {
                 AudioManager.Instance?.PlayPlayerJump();
 
@@ -79,7 +83,8 @@ public class PlayerController : MonoBehaviour
         }
 
         // Use Potion (allowed during knockback)
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z) ||
+        (MobileInputBridge.Instance != null && MobileInputBridge.Instance.PotionPressed))
         {
             if (playerInventory != null)
             {
